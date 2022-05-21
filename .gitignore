@@ -43,6 +43,8 @@ logs
 # python
 __pycache__/
 *.pyc
+/build
+/pixiv_wahu.egg-info
 
 PipFile.lock
 

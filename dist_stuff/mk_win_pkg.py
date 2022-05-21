@@ -3,7 +3,7 @@ import os
 from zipfile import ZIP_DEFLATED, ZipFile as ZipFileOriginal
 
 backend_src = Path('wahu_backend')
-frontend_emit = Path('dist/frontend')
+frontend_emit = Path('dist/wahu_frontend')
 dist_base = Path('dist/package_base')
 dist_stuff = Path('dist_stuff')
 dist_bundle = Path('dist/PixivWahu.zip')

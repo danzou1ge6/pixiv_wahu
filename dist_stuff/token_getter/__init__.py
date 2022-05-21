@@ -187,6 +187,10 @@ def run_app(app):
     webbrowser.open('http://127.0.0.1:28687')
     web.run_app(app, port=28687, host="127.0.0.1")
 
-if __name__ == "__main__":
+def main():
     app = create_app()
     run_app(app)
+
+if __name__ == "__main__":
+    main()
+    

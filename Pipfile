@@ -7,6 +7,7 @@ name = "pypi"
 aiohttp = "*"
 click = "*"
 fuzzywuzzy = "*"
+toml = "*"
 
 [dev-packages]
 pytest = "*"

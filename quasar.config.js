@@ -80,7 +80,7 @@ module.exports = configure(function (/* ctx */) {
       // minify: false,
       // polyfillModulePreload: true,
       // distDir
-      distDir: 'dist/frontend',
+      distDir: 'dist/wahu_frontend',
 
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
