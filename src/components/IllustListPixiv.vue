@@ -5,7 +5,7 @@
 
       <div class="row q-col-gutter-sm q-ma-md">
         <transition-group appear enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-          <div class="col-md-3 col-sm-6 col-xs-6 col-lg-2" v-for="ilst in illusts" :key="ilst.iid">
+          <div class="col-md-3 col-sm-6 col-xs-12 col-lg-2" v-for="ilst in illusts" :key="ilst.iid">
             <IllustCardPixiv @update:select="toggle(ilst.iid, $event)" :detail="ilst" :selected="getState(ilst.iid)"
               height="300px">
             </IllustCardPixiv>

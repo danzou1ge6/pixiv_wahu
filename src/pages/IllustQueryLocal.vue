@@ -50,7 +50,7 @@
 
       <div class="row q-col-gutter-sm q-ma-md">
         <transition-group appear enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-          <div class="col-md-3 col-sm-6 col-xs-6 col-lg-2" v-for="(iid, i) in displayedIids" :key="iid">
+          <div class="col-md-3 col-sm-6 col-xs-12 col-lg-2" v-for="(iid, i) in displayedIids" :key="iid">
             <IllustCardLocal :iid="iid" :db-name="props.dbName" @update:select="toggle(iid, $event)"
               :selected="getState(iid)" :score="queryResultScores === undefined ? undefined : queryResultScores[i]"
               height="300px">
