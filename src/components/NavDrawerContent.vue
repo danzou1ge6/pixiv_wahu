@@ -244,7 +244,7 @@ export default defineComponent({
           .then(() => {
             pushNoti({
               level: 'success',
-              msg: `创建了新的插画储存库 ${newRepoName.value} 在 ${newRepoPrefix}`
+              msg: `创建了新的插画储存库 ${newRepoName.value} 在 ${newRepoPrefix.value}`
             })
 
             wm.ir_list().then(ls => { repoNameList.value = ls })

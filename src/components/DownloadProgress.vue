@@ -1,6 +1,7 @@
 <template>
   <transition appear enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp">
     <q-card class="dl-card" v-show="modelValue">
+      <q-checkbox v-model="showFinished" label="显示已完成"></q-checkbox>
       <q-markup-table>
         <thead>
           <tr>
@@ -10,10 +11,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="dl in dlProgList" :key="dl.gid">
+          <tr v-for="dl in dlProgList" :key="dl.gid" v-show="dl.status == 'inprogress' || showFinished">
             <td>{{ dl.descript }}</td>
             <td>
-              <q-linear-progress :value="dl.downloaded_size / dl.total_size">
+              <q-linear-progress :value="dl.downloaded_size / dl.total_size" :color="getColor(dl.status)">
               </q-linear-progress>
               <div class="text-body-2">
                 {{ `${(dl.downloaded_size / 1024).toFixed(0)} / ${(dl.total_size / 1024).toFixed(0)} kb`
@@ -33,16 +34,19 @@
 <script setup lang="ts">
 import * as wm from '../plugins/wahuBridge/methods'
 import { regDlProgressReportCbk } from '../plugins/wahuBridge/client'
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const props = defineProps<{ modelValue: boolean }>()
 const emits = defineEmits<{ (e: 'update:modelValue', v: boolean): void }>()
 
 const dlProgList = ref<Array<wm.DownloadProgress>>([])
 
+const showFinished = ref<boolean>(false)
+
 function updateDlProg(val: Array<wm.DownloadProgress>) {
   dlProgList.value = val
 }
+
 
 onMounted(() => {
   regDlProgressReportCbk(updateDlProg)
@@ -56,6 +60,17 @@ function statusStringFor(val: string) {
       return '完成'
     case 'error':
       return '失败'
+  }
+}
+
+function getColor(status: string) {
+  switch(status) {
+    case 'inprogress':
+      return 'primary'
+    case 'error':
+      return 'negative'
+    case 'finished':
+      return 'success'
   }
 }
 

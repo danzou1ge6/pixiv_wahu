@@ -6,12 +6,14 @@
         <div class="col-4 q-table__title">已索引的文件</div>
         <q-btn flat @click="loadIndex" color="primary" class="float-right q-ma-sm">刷新
         </q-btn>
-        <q-btn flat @click="updateIndex" color="primary" class="float-right q-ma-sm">更新
+        <q-btn flat @click="updateIndex" color="primary" class="float-right q-ma-sm"
+          :loading="updating">更新
           <q-tooltip>
             将索引缓存中下载完成的项移入索引
           </q-tooltip>
         </q-btn>
-        <q-btn flat @click="validate" color="primary" class="float-right q-ma-sm">校验
+        <q-btn flat @click="validate" color="primary" class="float-right q-ma-sm"
+        :loading="validating">校验
           <q-tooltip>
             检查是否存在未索引的文件和失效的索引
           </q-tooltip>
@@ -61,6 +63,9 @@ const emits = defineEmits<{
   (e: 'refreshCache'): void
 }>()
 
+const updating = ref<boolean>(false)
+const validating = ref<boolean>(false)
+
 watch(() => props.refresh, () => {
   loadIndex()
 })
@@ -79,12 +84,14 @@ function loadIndex() {
 }
 
 function updateIndex() {
+  updating.value = true
   wm.ir_update_index(props.repoName)
     .then(newEntries => {
       pushNoti({
         level: 'info',
         msg: `${props.repoName} 新增了 ${newEntries.length} 条索引`
       })
+      updating.value = false
 
       loadIndex()
       emits('refreshCache')
@@ -104,11 +111,13 @@ const selectedDelFile = ref<Array<FileWithPath>>([])
 const selectedDelIndex = ref<Array<wm.FileEntry>>([])
 
 function validate() {
+  validating.value = true
   wm.ir_validate(props.repoName)
     .then(([entries, files]) => {
       invalidFiles.value = files.map(item => {
         return { path: item }
       })
+      validating.value = false
       invalidIndex.value = entries
 
       if (files.length == 0 && entries.length == 0) {
