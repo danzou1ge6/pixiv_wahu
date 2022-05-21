@@ -12,6 +12,16 @@
             "label": "生成 动态组件 的 import 和 Interface",
             "type": "shell",
             "command": "pipenv run gen-dpage"
+        },
+        {
+            "label": "Windows 打包",
+            "type": "shell",
+            "command": "python mk_win_pkg.py"
+        },
+        {
+            "label": "Quasar 打包",
+            "type": "shell",
+            "command": "yarn quasar build"
         }
     ]
 }
