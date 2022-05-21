@@ -82,6 +82,17 @@ class RepoSyncAddReport:
     db_name: str
     entries: list[FileEntryWithURL]
 
+# ------------------------------------------------------------------- 工具
+INVALID_CHAR_CVT = [
+    ('?', '？'), ( '/', '-'), ( '\\', '、'), ( ',', '：'),
+    ('*', '^'), ( '"', "'"), ( '<', '《'), ( '>', '》'), ( '|', '+')
+]
+
+def _cvt_invalid_path_char(s: str):
+    for frm, t in INVALID_CHAR_CVT:
+        s = s.replace(frm, t)
+    return s
+
 
 # ------------------------------------------------------------------- 方法
 class IllustRepoMethods:
@@ -175,8 +186,12 @@ class IllustRepoMethods:
                     return [
                         FileEntryWithURL(
                             # 此处的路径不包括储存库根目录
-                            Path(ctx.config.file_name_template.format(
-                                dtl, i) + f'.{ext}'),
+                            Path(
+                                _cvt_invalid_path_char(  # 去除 Windows 无法作为路径的字符
+                                    ctx.config.file_name_template.format(
+                                    dtl, i) + f'.{ext}'
+                                )
+                            ),
                             fid,
                             dtl.image_origin[i]
                         )
