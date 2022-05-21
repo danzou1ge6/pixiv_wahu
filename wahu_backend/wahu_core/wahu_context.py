@@ -78,7 +78,9 @@ class WahuContext:
         self.image_pool = PixivImagePool(
             host=self.config.image_host_ip,
             size=self.config.image_pool_size,
-            timeout=self.config.image_timeout
+            timeout=self.config.image_timeout,
+            connection_limit=self.config.image_connection_limit,
+            num_parallel=self.config.image_num_parallel
         )
 
         # 异步生成器池

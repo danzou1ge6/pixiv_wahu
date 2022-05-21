@@ -1,4 +1,5 @@
 import logging
+from asyncio import Semaphore
 from typing import Any, MutableMapping, Optional
 
 import aiohttp
@@ -43,7 +44,7 @@ class PixivImageGetter(ManualDNSClient):
 
     def __init__(
         self, host: Optional[str] = None, timeout: float = 5, chunk: int = 2048,
-        connection_limit: int = 7) -> None:
+        connection_limit: int = 7, num_parallel: int = 3) -> None:
         """
         - `:param timeout:` 全局的超时
         - `:param host:` IP 地址；如果提供了，就不会再通过 DNS 查询
@@ -68,6 +69,8 @@ class PixivImageGetter(ManualDNSClient):
 
         self.log_adapter = PixivImageGetterLogAdapter(logger)
 
+        self.sem = Semaphore(num_parallel)
+
         super().__init__()
 
     async def get_image(self, file_path: str, descript: Optional[str]=None) -> bytes:
@@ -78,27 +81,31 @@ class PixivImageGetter(ManualDNSClient):
 
         await self._check_env()
 
-        logger.info('PixivImageGetter: get_image: 尝试获取 %s' % file_path)
+        async with self.sem:
 
-        try:
-            url = f'https://{self.host}/{file_path}'
-            async with self.session.get(url, ssl=True) as resp:
+            logger.info('PixivImageGetter: get_image: 尝试获取 %s' % file_path)
 
-                total_size = resp.headers.get('Content-Length', None)
+            try:
+                url = f'https://{self.host}/{file_path}'
+                async with self.session.get(url, ssl=True) as resp:
 
-                image = bytes()
+                    total_size = resp.headers.get('Content-Length', None)
 
-                # Add a new DownloadStatus object into `self.dl_stats` and return it as `st`
-                with self.dl_stats.new(
-                    url, total_size,
-                    descript=url.split('/')[-1] if descript is None else descript
-                ) as st:
+                    image = bytes()
 
-                    async for chk in resp.content.iter_chunked(self.chunk_size):
-                        image += chk
-                        st.update(self.chunk_size)
+                    # Add a new DownloadStatus object into `self.dl_stats` and return it as `st`
+                    with self.dl_stats.new(
+                        url, total_size,
+                        descript=url.split('/')[-1] if descript is None else descript
+                    ) as st:
 
-            return image
+                        async for chk in resp.content.iter_chunked(self.chunk_size):
+                            image += chk
+                            st.update(self.chunk_size)
 
-        except aiohttp.ClientError as client_error:
-            raise PixivImageGetError(file_path, self.host) from client_error
+                return image
+
+            except aiohttp.ClientError as client_error:
+                raise PixivImageGetError(file_path, self.host) from client_error
+
+

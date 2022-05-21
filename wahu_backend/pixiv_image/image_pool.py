@@ -10,12 +10,18 @@ class PixivImagePool(PixivImageGetter):
         host: Optional[str] = None,
         size: int = 100,
         timeout: float = 5.0,
-        chunk: int = 2048
+        chunk: int = 2048,
+        connection_limit: int = 7,
+        num_parallel: int = 2
     ) -> None:
 
         self.size = size
         self.pool: OrderedDict[str, bytes] = OrderedDict()
-        super().__init__(host, timeout, chunk)
+        super().__init__(
+            host, timeout, chunk,
+            connection_limit=connection_limit,
+            num_parallel=num_parallel
+        )
 
     async def get_image(self, file_path: str
                        , descript: Optional[str] = None) -> bytes:

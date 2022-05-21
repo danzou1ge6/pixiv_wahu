@@ -31,7 +31,9 @@ host_ip = -1
 # 这是通过设置请求头 'Accept-Language' 实现修改的
 tag_language = 'en-us'
 # 连接到 PixivAPI 服务器的最大连接数
-connection_limit = 10
+connection_limit = 6
+# 并行下载数
+num_parallel = 2
 
 [image]
 # 图片相关配置

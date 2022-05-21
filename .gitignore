@@ -38,6 +38,7 @@ logs
 
 # resources
 /public
+/static
 
 # python
 __pycache__/

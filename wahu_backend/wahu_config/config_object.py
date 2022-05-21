@@ -23,6 +23,7 @@ class WahuConfig:
     image_host_ip: Optional[str]
     fallback_image_size: Literal['original', 'medium', 'large', 'square_medium']
     image_connection_limit: int
+    image_num_parallel: int
     # app
     server_host: str
     server_port: int
