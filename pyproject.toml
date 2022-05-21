@@ -1,0 +1,7 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+console_output_style = "count"
+log_cli = true
+
+[tool.pyright]
+exclude = ["dist/**/*"]

@@ -1,0 +1,128 @@
+<template>
+  <div v-show="!modelValue" class="noti-box px-1">
+    <transition-group enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight">
+      <div v-for="(noti, i) in displayedNotifications" :key="i" class="pa-1">
+        <q-banner :class="bannerClass(noti.level)" class="q-ma-sm semi-transparent">
+          <template v-slot:avatar>
+            <q-icon :name="iconName(noti.level)"></q-icon>
+          </template>
+          <pre>{{ noti.msg }}</pre>
+        </q-banner>
+      </div>
+    </transition-group>
+  </div>
+
+  <transition appear enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp">
+    <div v-show="modelValue" class="noti-box-opened">
+      <q-card class="noti-card">
+        <div class="text-subtitle-2 q-ma-md">通知</div>
+        <transition-group enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight">
+          <div v-for="(noti, i) in appAllNoti" :key="i" class="py-1 px-0">
+            <q-banner :class="bannerClass(noti.level)" class="q-ma-sm">
+              <template v-slot:avatar>
+                <q-icon :name="iconName(noti.level)"></q-icon>
+              </template>
+              <pre>{{ noti.msg }}</pre>
+            </q-banner>
+          </div>
+        </transition-group>
+      </q-card>
+    </div>
+  </transition>
+</template>
+
+
+<script setup lang="ts">
+import { AppNotification, appAllNoti } from '../plugins/notifications'
+import { inject, Ref, ref, watch } from 'vue'
+import { notificationTime } from '../constants'
+
+
+interface Props {
+  modelValue: boolean,
+  maxDisp: number
+}
+const { modelValue, maxDisp = 5 } = defineProps<Props>()
+
+const emits = defineEmits<{
+  (e: 'update:modelValue', id: boolean): void
+}>()
+
+
+
+const displayedNotifications = ref<Array<AppNotification>>([])
+
+watch(appAllNoti.value, (n: Array<AppNotification>) => {
+
+  displayedNotifications.value.push(n.slice(-1)[0])
+
+  if (displayedNotifications.value.length > maxDisp) {
+    displayedNotifications.value.splice(
+      0, displayedNotifications.value.length - maxDisp)
+  }
+
+  setTimeout(() => {
+    displayedNotifications.value.splice(0, 1)
+  }, notificationTime)
+})
+
+function bannerClass(level: 'error' | 'warning' | 'info' | 'success'): string {
+  switch (level) {
+    case 'error':
+      return 'bg-negative text-white'
+    case 'info':
+      return 'bg-info text-white'
+    case 'success':
+      return 'bg-positive text-white'
+    case 'warning':
+      return 'bg-warning text-white'
+  }
+}
+
+function iconName(level: 'error' | 'warning' | 'info' | 'success'): string {
+  switch (level) {
+    case 'error':
+      return 'error'
+    case 'info':
+      return 'info'
+    case 'success':
+      return 'check'
+    case 'warning':
+      return 'warning'
+  }
+}
+
+
+</script>
+
+<style scoped>
+.noti-box {
+  position: fixed;
+  width: 500px;
+  right: 10px;
+  top: 55px;
+  z-index: 999;
+}
+
+.noti-box-opened {
+  position: fixed;
+  width: 75vw;
+  min-width: 500px;
+  right: 10px;
+  top: 55px;
+  z-index: 999;
+}
+
+.noti-card {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+pre {
+  white-space: break-spaces;
+}
+
+.semi-transparent {
+  opacity: 0.8;
+}
+</style>

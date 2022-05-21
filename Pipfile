@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+aiohttp = "*"
+click = "*"
+fuzzywuzzy = "*"
+
+[dev-packages]
+pytest = "*"
+pytest-asyncio = "*"
+
+[requires]
+python_version = "3.10"
+
+[scripts]
+"gen-bridge" = "python -c \"from tool.gen_bridge import gen_ts; gen_ts()\""
+"gen-dpage" = "python tool/gen_pages_list.py"

@@ -1,0 +1,65 @@
+import logging
+from random import choice
+from typing import Union
+from asyncio import Lock
+
+import aiohttp
+
+from ..http_typing import HTTPHeaders
+from .dns_resolve import resolve_host
+
+
+class ManualDNSClient:
+    """
+    手动进行 DNS 解析的 HTTP 客户端，包裹 `aiohttp.ClientSession`
+        （为什么要这么做呢？你懂我意思吧 [doge] ）
+    不可实例化\n
+    继承后需要添加：
+    - `:member host_name:` 进行 DNS 解析的主机名\n
+    在 `__init__` 方法中需要创建：
+    - `:attr timeout:` 全局超时 **必须在 `__init__` 中设定**
+    - `:attr base_headers:` 设置给 `session` 的请求头 **必须在 `__init__` 中设定**
+    - `:attr log_adapter:` 日志适配器，用于添加上下文信息 **必须在 `__init__` 中设定**
+    - `:attr host:` 解析得到的 ip
+    - `:attr session:` `aiohttp.ClientSession` 实例
+    """
+
+    host_name: str
+
+    def __init__(self, connection_limit: int = 100):
+        self.timeout: float = 5
+        self.connection_limit: int = connection_limit
+
+        self.host: str
+        self.session: aiohttp.ClientSession
+        self.base_headers: Union[HTTPHeaders, None]
+        self.log_adapter: Union[logging.LoggerAdapter, logging.Logger]
+
+        self.env_chk_lock = Lock()
+
+    async def create_session(self) -> None:
+        conn = aiohttp.TCPConnector(limit=self.connection_limit)
+        self.session = aiohttp.ClientSession(headers=self.base_headers,
+                                             connector=conn)
+        self.log_adapter.debug('create_session: 创建 aiohttp.ClientSession')
+
+    async def close_session(self) -> None:
+        if hasattr(self, 'session'):
+            await self.session.close()
+        self.log_adapter.debug('close_session: 关闭 aiohttp.ClientSession')
+
+    async def resolve_host(self) -> None:
+        self.host = choice(await resolve_host(self.host_name,
+                                              timeout=self.timeout))
+        self.log_adapter.info('resolve_host: 使用主机 %s' % self.host)
+
+    async def _check_env(self):
+        """确保完成了 DNS 解析，以及是否创建了 `ClientSession`"""
+        async with self.env_chk_lock:
+
+            if not hasattr(self, 'host'):
+                await self.resolve_host()
+
+            if not hasattr(self, 'session'):
+                await self.create_session()
+

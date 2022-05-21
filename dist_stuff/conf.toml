@@ -1,0 +1,94 @@
+[local]
+# 本地储存相关配置
+
+# 数据库存放目录
+database_dir = './user/databases'
+# 储存库索引文件位置
+repos_file = './user/repos.toml'
+# 保存插画的文件名形式
+# 可以使用的数据：
+# 0.title(标题) 0.iid(插画ID) 0.user.uid(用户ID) 0.user.name(用户名)
+# 1(多页插画的页码; 单页插画此值为0)
+# 更多详见文件 wahu_backend/aiopixivpy/datastructure_illust.py@IllustDetailRaw
+file_name_template = '{0.title:} - {0.iid:}_{1:}'
+# 临时下载目录
+temp_download_dir = './user/temp_dl'
+
+[pixiv]
+# Pixiv 服务相关配置
+
+# refresh_token 的储存位置
+refresh_token_path = './user/refresh_token.txt'
+# 暂存会话信息的文件的保存位置
+account_session_path = './user/account_session.toml'
+# 连接超时
+timeout = 5.0
+# PixivAPI 主机 IP 地址
+# -1 表示运行时通过 DNS over HTTPS 解析
+host_ip = -1
+# 插画标签翻译的语言
+# 还可用 'zh-cn' ，但是考虑到中文翻译较少，不建议
+# 这是通过设置请求头 'Accept-Language' 实现修改的
+tag_language = 'en-us'
+# 连接到 PixivAPI 服务器的最大连接数
+connection_limit = 10
+
+[image]
+# 图片相关配置
+
+# 从 Pximg 图片服务器下载图片的超时
+timeout = 5.0
+# Pximg 主机 IP 地址
+# -1 表示运行时通过 DNS over HTTPS 解析
+host_ip = -1
+# 在浏览插画数据库中的文件时，如果本地没有找到，使用的图片大小
+# 可选: 'original' 'large' 'medium' 'square_medium'
+fallback_size = 'medium'
+# 连接到 Pximg 的最大连接数
+connection_limit = 5
+
+[app]
+# 应用配置
+
+# 后端主机地址
+server_host = '127.0.0.1'
+# 后端端口
+server_port = 28686
+# 异步生成器池大小
+# 理想情况下用完的生成器会被销毁
+agenerator_pool_size = 200
+# 插画缓存池大小
+illust_detail_pool_size = 500
+# 图片缓存池大小
+image_pool_size = 100
+# 默认模糊搜索阈值，百分制
+default_fuzzy_size = 80
+
+[logging]
+# 应用的日志配置
+
+# RPC 返回的 JSON 字符串在日志中的最大记录大小
+# 这是因为有的 RPC 返回值实在太长了
+rpc_return_length = 1000
+
+[pylogging]
+# Python 全局日志配置
+# 当前的配置会将日志全部输出到终端
+# 详见 https://docs.python.org/zh-cn/3/library/logging.config.html#logging.config.dictConfig
+
+version = 1
+disable_existing_loggers = false
+
+[pylogging.formatters.standard]
+format = "[%(asctime)s][%(levelname)s][%(filename)s:%(lineno)s]%(message)s"
+datefmd = "%H:%M:%S"
+
+[pylogging.handlers.console]
+class = "logging.StreamHandler"
+formatter = "standard"
+stream = "ext://sys.stdout"
+
+[pylogging.root]
+level = "DEBUG"
+handlers = ["console"]
+
