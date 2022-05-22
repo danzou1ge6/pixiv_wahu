@@ -42,7 +42,7 @@ jobs:
         run: npm install
 
       - name: 打包前端
-        run: npm build
+        run: npm run build
 
       - name: 构建 wheel
         run: |
