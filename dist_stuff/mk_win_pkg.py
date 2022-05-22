@@ -40,7 +40,7 @@ def main():
         zf.write(dist_stuff / 'GetToken.ps1', 'GetToken.ps1')
 
         print('Write pre-built database')
-        zf.write(dist_stuff /' databases/danzou1ge6.db', 'user/databases/danzou1ge6.db')
+        zf.write(dist_stuff / 'danzou1ge6.db', 'user/databases/danzou1ge6.db')
 
         print('Write README')
         zf.writestr('README.html', create_readme_html())
