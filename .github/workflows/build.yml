@@ -34,7 +34,9 @@ jobs:
            node-version: 14
 
       - name: 建立 quasar 环境
-        run: npm i -g @quasar/cli
+        run: |
+          npm i -g npm
+          npm i -g @quasar/cli
 
       - name: 安装前端依赖
         run: npm install
