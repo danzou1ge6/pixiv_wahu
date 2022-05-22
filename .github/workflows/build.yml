@@ -35,14 +35,14 @@ jobs:
 
       - name: 建立 quasar 环境
         run: |
-          npm i -g npm
-          npm i -g @quasar/cli
+          npm i -g yarn
+          yarn global add @quasar/cli
 
       - name: 安装前端依赖
-        run: npm install
+        run: yarn install
 
       - name: 打包前端
-        run: npm run build
+        run: yarn quasar build
 
       - name: 构建 wheel
         run: |
