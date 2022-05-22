@@ -17,6 +17,7 @@
             <span>模糊查询: title|tag|username|caption[=&lt;fuzzy_cutoff&gt;] &lt;keyword&gt;</span><br>
             <span>按 IID 查询: iid &lt;iid&gt;,...</span><br>
             <span>按 UID 查询画师: uid &lt;uid&gt;</span><br>
+            <span>列出被删除的插画: restricted</span>
           </div>
           <div class="text-h5">说明</div>
           <div class="q-body-2 text-grey-8">
@@ -134,6 +135,23 @@ function executeQuery() {
           emits('updateProps', { ...props, initialQueryString: 'all' })
         })
       return
+    }else if (cmd == 'restricted') {
+      queryLoading.value = true
+      wm.ibd_filter_restricted(props.dbName)
+        .then(iids => {
+          pushNoti({
+            level: 'info',
+            msg: `数据库 ${props.dbName} 中有 ${iids.length} 张被删除的插画`
+          })
+          queryResultIids.value = iids
+          queryResultScores.value = undefined
+          queryLoading.value = false
+
+          emits('updateProps', {...props, initialQueryString: 'restricted'})
+          emits('updateTitle', props.dbName + ':restricted')
+        })
+      return
+
     } else {
       queryStringError.value = true
       return

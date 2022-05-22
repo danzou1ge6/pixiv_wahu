@@ -254,3 +254,10 @@ class IllustBookmarkDatabase(DependingDatabase):
 
         return self.bookmarks_te.select()
 
+    def filter_restricted(self) -> list[int]:
+        """过滤出已被作者删除的插画"""
+
+        cols = self.illusts_te.select_cols(cols=['iid', 'restrict'])
+
+        return [iid for iid, res in cols if res == 2]
+

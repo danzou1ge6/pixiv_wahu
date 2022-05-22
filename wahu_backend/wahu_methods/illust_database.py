@@ -133,6 +133,14 @@ class WahuIllustDatabaseMethods:
         with await ctx.ilst_bmdbs[name](readonly=True) as ibd:
             return ibd.query_uid(uid)
 
+    @wahu_methodize(middlewares=[_check_db_name])
+    @staticmethod
+    async def ibd_filter_restricted(ctx: WahuContext, name: str) -> list[int]:
+        """数据库中被作者删除的插画"""
+
+        with await ctx.ilst_bmdbs[name](readonly=True) as ibd:
+            return ibd.filter_restricted()
+
     @wahu_methodize()
     @staticmethod
     async def ibd_new(

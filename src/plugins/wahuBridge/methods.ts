@@ -133,6 +133,9 @@ export async function ibd_copy (name: string, target: string, iids: Array<number
 export async function ibd_export_json (name: string) : Promise<string> {
     return await wahuRPCCall('ibd_export_json', {name: name})as string}
 
+export async function ibd_filter_restricted (name: string) : Promise<Array<number>> {
+    return await wahuRPCCall('ibd_filter_restricted', {name: name})as Array<number>}
+
 export async function ibd_fuzzy_query (name: string, target: 'title' | 'caption' | 'tag' | 'username', keyword: string, cutoff: null | number) : Promise<Array<[number, number]>> {
     return await wahuRPCCall('ibd_fuzzy_query', {name: name, target: target, keyword: keyword, cutoff: cutoff})as Array<[number, number]>}
 
