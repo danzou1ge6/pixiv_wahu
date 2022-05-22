@@ -40,10 +40,5 @@ def create_app(ctx: WahuContext) -> web.Application:
         else:
             app.logger.warn('create_app: 资源文件夹 static 不存在，假设作为调试服务器运行')
 
-    async def ctx_cleanup(app: web.Application):
-        await ctx.cleanup()
-
-    app.on_shutdown.append(ctx_cleanup)
-
     return app
 

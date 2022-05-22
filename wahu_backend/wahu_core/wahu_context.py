@@ -1,4 +1,6 @@
+import asyncio
 from pathlib import Path
+import atexit
 from typing import Iterable
 
 from ..aiopixivpy import MaintainedSessionPixivAPI
@@ -86,6 +88,12 @@ class WahuContext:
         # 异步生成器池
         self.agenerator_pool = WahuAsyncGeneratorPool(self.config.agenerator_pool_size)
 
+        atexit.register(self.sync_cleanup)
+
     async def cleanup(self):
         await self.papi.close_session()
         await self.image_pool.close_session()
+
+    def sync_cleanup(self):
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(self.cleanup())
