@@ -62,7 +62,7 @@ jobs:
 
       - name: 修改 python310._pth
         run: |
-          with open('dist/package_base/python310._pth', 'wa') as wf:
+          with open('dist/package_base/python310._pth', 'a', encoding='utf-8') as wf:
             wf.write('\n./Lib/site-packages\n')
         shell: python
 
