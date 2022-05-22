@@ -15,12 +15,15 @@ jobs:
       
       - name: 安装 Pipenv
         run: pip install pipenv
+      
+      - name: Pipenv lock
+        run: pipenv lock
         
       - name: 建立 Python 环境
         uses: actions/setup-python@v3
         with:
-          python-version: 3.10
-          cache: 'pipenv'
+          python-version: "3.10"
+          cache: "pipenv"
       
       - name: 安装后端依赖
         run: pipenv install
