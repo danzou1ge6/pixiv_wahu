@@ -34,7 +34,9 @@ jobs:
            node-version: 14
 
       - name: 建立 quasar 环境
-        run: npm i -g @quasar/cli
+        run: |
+          npm i -g npm
+          npm i -g @quasar/cli
 
       - name: 安装前端依赖
         run: npm install
@@ -68,12 +70,17 @@ jobs:
 
       - name: 复制入口文件、配置、README并压缩
         run: python dist_stuff/mk_win_pkg.py
+      
+      - name: 获得最新的 Tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
+        id: get-latest-tag
 
       - name: 创建 Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
+          automatic_releases_tag: ${{ steps.get-latest-tag.outputs.tag }}
           files: |
             dist/PixivWahu-win64.zip
             dist/*.whl
