@@ -16,7 +16,7 @@ setup(
         'fuzzywuzzy[accelerate_fuzzywuzzy]',
         'toml'
     ],
-    extra_require={
+    extras_require={
         'accelerate_fuzzywuzzy': ['python-levenshtein']
     },
     package_data={
