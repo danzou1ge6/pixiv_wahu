@@ -1,0 +1,70 @@
+name: tagged-release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: 安装 Pipenv
+        run: pip install pipenv
+        
+      - name: 建立 Python 环境
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.10
+          cache: 'pipenv'
+      
+      - name: 安装后端依赖
+        run: pipenv install
+        
+      - name: 建立 node 环境
+        uses: actions/setup-node@v3
+        with:
+           node-version: 14
+      
+      - name: 建立 quasar 环境
+        run: npm i -g @quasar/cli
+      
+      - name: 安装前端依赖
+        run: npm install
+      
+      - name: 打包前端
+        run: npm build
+      
+      - name: 构建 wheel
+        run: python setup.py bdist_wheel
+      
+      - name: 下载 Python Embed
+        uses: wei/wget@v1
+        with:
+          args: -O dist/python.zip https://www.python.org/ftp/python/3.10.4/python-3.10.4-embed-amd64.zip
+      
+      - name: 解压 Python Embed
+        run: unzip dist/python.zip -d dist/package_base
+      
+      - name: 安装库
+        run: |
+          pip install *.whl --prefix dist/package_base
+          pip install python-levenshtein --prefix dist/package_base
+          
+      - name: 打压缩包
+        run: zip -r -9 dist/PixivWahu-win64.zip dist/package_base
+      
+      - name: 创建 Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            dist/PixivWahu-win64.zip
+            dist/*.whl
+      
+
