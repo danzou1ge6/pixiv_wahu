@@ -4,16 +4,19 @@ import datetime
 import hashlib
 from base64 import urlsafe_b64encode
 from hashlib import sha256
+from os import path
 import json
+import os
 from pathlib import Path
 from secrets import token_urlsafe
 from urllib.parse import urlencode
 import webbrowser
 
-import aiohttp
+
 from aiohttp import web
-from wahu_backend.manual_dns import ManualDNSClient
 import logging
+
+import aiohttp
 
 logger = logging.getLogger()
 
@@ -52,7 +55,7 @@ CLIENT_ID = "MOBrBDS8blbauoSck0ZfDbtuzpyT"
 CLIENT_SECRET = "lsACyCD94FhDUtGTXi3QzcFE2uU1hqtDaKeqrdwj"
 HASH_SECRET = "28c1fdd170a5204386cb1313c7077b34f83e4aaf4aa829ce78c231e05b0bae2c"
 
-class TokenGetter(ManualDNSClient):
+class TokenGetter:
     host = "oauth.secure.pixiv.net"
     timeout = 10
     log_adapter = logger
@@ -71,7 +74,6 @@ class TokenGetter(ManualDNSClient):
             "code_challenge_method": "S256",
             "client": "pixiv-android",
         }
-        super().__init__()
 
 
     def s256(self, data):
@@ -97,26 +99,27 @@ class TokenGetter(ManualDNSClient):
         尝试通过 Code 获取 Refresh Token。
         :return: str: refresh token | None
         """
-        await self._check_env()
 
         self.log_adapter.info('login: attempting acquiring refresh_token')
 
-        async with self.session.post(
-            "https://%s/auth/token" % self.host,
-            data={
-                "client_id": CLIENT_ID,
-                "client_secret": CLIENT_SECRET,
-                "code": code,
-                "code_verifier": self.code_verifier,
-                "grant_type": "authorization_code",
-                "include_policy": "true",
-                "redirect_uri": REDIRECT_URI,
-            },
-            ssl=False,
-            timeout=10,
-            headers=self.get_header()
-        ) as resp:
-            rst = await resp.json()
+        async with aiohttp.ClientSession(headers=self.base_headers) as session:
+
+            async with session.post(
+                "https://%s/auth/token" % self.host,
+                data={
+                    "client_id": CLIENT_ID,
+                    "client_secret": CLIENT_SECRET,
+                    "code": code,
+                    "code_verifier": self.code_verifier,
+                    "grant_type": "authorization_code",
+                    "include_policy": "true",
+                    "redirect_uri": REDIRECT_URI,
+                },
+                ssl=False,
+                timeout=10,
+                headers=self.get_header()
+            ) as resp:
+                rst = await resp.json()
 
         if "refresh_token" in rst:
             return rst["refresh_token"]
@@ -169,6 +172,10 @@ def create_app():
 
         app.logger.info('refresh_token='+rt)
         app.logger.info('写入./user/refresh_token.txt')
+
+        if not path.exists('./user'):
+            os.mkdir('user')
+
         with open('./user/refresh_token.txt', 'wb') as wf:
             wf.write(rt.encode('utf-8'))
 
@@ -193,4 +200,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
