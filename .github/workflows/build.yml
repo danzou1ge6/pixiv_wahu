@@ -35,14 +35,14 @@ jobs:
 
       - name: 建立 quasar 环境
         run: |
-          npm i -g npm
-          npm i -g @quasar/cli
+          npm i -g yarn
+          yarn global add @quasar/cli
 
       - name: 安装前端依赖
-        run: npm install
+        run: yarn install
 
       - name: 打包前端
-        run: npm build
+        run: yarn quasar build
 
       - name: 构建 wheel
         run: |
@@ -57,11 +57,14 @@ jobs:
 
       - name: 安装库
         run: |
-          pip install *.whl[accelerate_fuzzywuzzy] --prefix dist/package_base -I
+          from os import listdir, system
+          whl = [f for f in listdir('dist') if f.endswith('.whl')][0]
+          system(f'pip install dist/{whl}[accelerate_fuzzywuzzy] --prefix dist/package_base -I')
+        shell: python
 
       - name: 修改 python310._pth
         run: |
-          with open('dist/package_base/python310._pth', 'wa') as wf:
+          with open('dist/package_base/python310._pth', 'a', encoding='utf-8') as wf:
             wf.write('\n./Lib/site-packages\n')
         shell: python
 
