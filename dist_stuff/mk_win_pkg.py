@@ -6,7 +6,7 @@ backend_src = Path('wahu_backend')
 frontend_emit = Path('dist/wahu_frontend')
 dist_base = Path('dist/package_base')
 dist_stuff = Path('dist_stuff')
-dist_bundle = Path('dist/PixivWahu.zip')
+dist_bundle = Path('dist/PixivWahu-win64.zip')
 
 COMPRESSION_METHOD = ZIP_DEFLATED
 COMPRESSION_LEVEL = 9
@@ -30,22 +30,21 @@ def create_readme_html():
 def main():
     with ZipFile(dist_bundle, 'w', compression=COMPRESSION_METHOD,
         compresslevel=COMPRESSION_LEVEL) as zf:
+
+        print('写入 Python 可执行档')
         zf.write_dir(dist_base, Path(''))
 
-        zf.write_dir(backend_src, Path('wahu_backend'))
-
+        print('写入入口脚本及配置')
         zf.write(dist_stuff / 'PixivWahu.ps1', 'PixivWahu.ps1')
-
         zf.write(dist_stuff / 'conf.toml', 'conf.toml')
-
-        zf.write('dev_stuff/databases/danzou1ge6.db', 'user/databases/danzou1ge6.db')
-
-        zf.write_dir(dist_stuff / 'token_getter', Path('token_getter'))
         zf.write(dist_stuff / 'GetToken.ps1', 'GetToken.ps1')
 
+        print('写入预置数据库')
+        zf.write(dist_stuff /' databases/danzou1ge6.db', 'user/databases/danzou1ge6.db')
+
+        print('写入 README')
         zf.writestr('README.html', create_readme_html())
 
-        zf.write_dir(frontend_emit, Path('static'))
 
 if __name__ == '__main__':
     main()
