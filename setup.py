@@ -13,10 +13,12 @@ setup(
     install_requires=[
         'click',
         'aiohttp',
-        'fuzzywuzzy',
-        'python-levenshtein',
+        'fuzzywuzzy[accelerate_fuzzywuzzy]',
         'toml'
     ],
+    extra_require={
+        'accelerate_fuzzywuzzy': ['python-levenshtein']
+    },
     package_data={
         'wahu_frontend': ['*', 'assets/*'],
         'token_getter': ['*.html']
