@@ -31,18 +31,18 @@ def main():
     with ZipFile(dist_bundle, 'w', compression=COMPRESSION_METHOD,
         compresslevel=COMPRESSION_LEVEL) as zf:
 
-        print('写入 Python 可执行档')
+        print('Write Python executables')
         zf.write_dir(dist_base, Path(''))
 
-        print('写入入口脚本及配置')
+        print('Write entrance script and configuration')
         zf.write(dist_stuff / 'PixivWahu.ps1', 'PixivWahu.ps1')
         zf.write(dist_stuff / 'conf.toml', 'conf.toml')
         zf.write(dist_stuff / 'GetToken.ps1', 'GetToken.ps1')
 
-        print('写入预置数据库')
+        print('Write pre-built database')
         zf.write(dist_stuff /' databases/danzou1ge6.db', 'user/databases/danzou1ge6.db')
 
-        print('写入 README')
+        print('Write README')
         zf.writestr('README.html', create_readme_html())
 
 
