@@ -56,7 +56,7 @@ jobs:
       - name: 安装库
         run: |
           from os import listdir, system
-          whl = [f for f in lsdir('dist') if f.endswith('.whl')][0]
+          whl = [f for f in listdir('dist') if f.endswith('.whl')][0]
           system(f'pip install dist/{whl}[accelerate_fuzzywuzzy] --prefix dist/package_base -I')
         shell: python
 
