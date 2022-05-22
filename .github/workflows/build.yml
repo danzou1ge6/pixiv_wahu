@@ -55,7 +55,8 @@ jobs:
 
       - name: 安装库
         run: |
-          pip install *.whl[accelerate_fuzzywuzzy] --prefix dist/package_base -I
+          mv dist/*.whl pixiv_wahu.whl
+          pip install dist/pixiv_wahu.whl[accelerate_fuzzywuzzy] --prefix dist/package_base -I
 
       - name: 修改 python310._pth
         run: |
