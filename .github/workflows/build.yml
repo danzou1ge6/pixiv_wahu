@@ -49,7 +49,7 @@ jobs:
 
       - name: 构建 wheel
         run: |
-          pip install wheel
+          pip install wheel setuptools
           python setup.py bdist_wheel
 
       - name: 下载 Python Embed
