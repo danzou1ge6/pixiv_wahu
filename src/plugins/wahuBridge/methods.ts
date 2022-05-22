@@ -142,8 +142,8 @@ export async function ibd_get_config (name: string) : Promise<IllustBookmarkingC
 export async function ibd_ilst_detail (name: string, iid: number) : Promise<null | IllustDetail> {
     return await wahuRPCCall('ibd_ilst_detail', {name: name, iid: iid})as null | IllustDetail}
 
-export async function ibd_import_json (name: string, toml_str: string) : Promise<null> {
-    return await wahuRPCCall('ibd_import_json', {name: name, toml_str: toml_str})as null}
+export async function ibd_import_json (name: string, json_str: string) : Promise<null> {
+    return await wahuRPCCall('ibd_import_json', {name: name, json_str: json_str})as null}
 
 export async function ibd_list () : Promise<Array<string>> {
     return await wahuRPCCall('ibd_list', {})as Array<string>}

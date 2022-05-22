@@ -3,7 +3,9 @@ import json
 from pathlib import Path
 from typing import Literal, Optional, TypeVar
 
-from ..aiopixivpy.datastructure_illust import IllustDetail
+from wahu_backend.aiopixivpy.datastructure_illust import IllustTag
+
+from ..aiopixivpy import IllustDetail, PixivUserSummery
 from ..illust_bookmarking import IllustBookmark, IllustBookmarkDatabase
 from ..illust_bookmarking.ib_datastructure import IllustBookmarkingConfig
 from ..sqlite_tools.database_ctx_man import DatabaseContextManager
@@ -258,20 +260,31 @@ class WahuIllustDatabaseMethods:
     @wahu_methodize(middlewares=[_check_db_name])
     @staticmethod
     async def ibd_import_json(
-        ctx: WahuContext, name: str, toml_str: str
+        ctx: WahuContext, name: str, json_str: str
     ) -> None:
+        """将 JSON 文件导入数据库"""
 
-        d = json.loads(toml_str)
+        d = json.loads(json_str)
 
         try:
-            illusts = [IllustDetail(**d_ilst) for d_ilst in d['illusts']]
+            illusts: list[IllustDetail] = []
+
+            for d_ilst in d['illusts']:
+                d_ilst['user'] = PixivUserSummery(**d_ilst['user'])
+                d_ilst['tags'] = [
+                    IllustTag(n, t)
+                    for n, t in d_ilst['tags']
+                ]
+                illusts.append(IllustDetail(**d_ilst))
+
             bookmarks = [IllustBookmark(**d_bm) for d_bm in d['bookmarks']]
+
         except TypeError or KeyError as e:
             raise WahuRuntimeError('不合法的 Export 文件') from e
 
         with await ctx.ilst_bmdbs[name](readonly=False) as ibd:
-          ibd.illusts_te.insert(illusts)
-          ibd.bookmarks_te.insert(bookmarks)
+            ibd.illusts_te.insert(illusts)
+            ibd.bookmarks_te.insert(bookmarks)
 
 
 

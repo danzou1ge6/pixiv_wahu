@@ -1,20 +1,32 @@
 <template>
   <div class="float-right">
 
-    <q-btn flat @click="showConfig = !showConfig" class="q-ma-sm" color="primary">配置</q-btn>
+    <q-btn-dropdown color="primary" label="操作" class="q-ma-md">
+      <q-list dense>
+        <q-item clickable v-close-popup flat @click="showConfig = !showConfig">
+          配置
+        </q-item>
+        <q-item clickable v-close-popup @click="showUpdateSubs = !showUpdateSubs" :loading="updateSubsLoading">
+          更新订阅
+        </q-item>
+        <q-item clickable @click="exportJson">
+          导出 JSON
+          <q-menu auto-close anchor="top right">
+            <q-btn :href="objURLForExport" target="_blank" :loading="objURLForExport === undefined"
+              @click="objURLForExport = undefined">下载</q-btn>
+          </q-menu>
+        </q-item>
+        <q-item clickable>
+          导入 JSON
+          <q-menu anchor="top right">
+            <q-file :model-value="jsonUpload" @update:model-value="handleJsonUpload" label="上传 JSON 文件"></q-file>
+          </q-menu>
+        </q-item>
+
+      </q-list>
+    </q-btn-dropdown>
+
     <DatabaseConfig v-model="showConfig" :db-name="dbName"></DatabaseConfig>
-
-    <q-btn flat @click="showUpdateSubs = !showUpdateSubs" class="q-ma-sm" color="primary" :loading="updateSubsLoading">
-      更新订阅
-    </q-btn>
-
-    <q-btn flat @click="exportJson" class="q-ma-sm" color="primary">
-      导出 JSON
-      <q-menu auto-close>
-        <q-btn :href="objURLForExport" target="_blank" :loading="objURLForExport === undefined"
-          @click="objURLForExport = undefined">下载</q-btn>
-      </q-menu>
-    </q-btn>
 
     <q-dialog v-model="showUpdateSubs">
       <q-card>
@@ -24,14 +36,16 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import * as wm from '../plugins/wahuBridge/methods'
 import { pushNoti } from '../plugins/notifications';
 import DatabaseConfig from 'src/components/DatabaseConfig.vue';
+import { json } from 'body-parser';
 
 const props = defineProps<{
   dbName: string,
@@ -43,6 +57,8 @@ const emits = defineEmits<{
 const showConfig = ref<boolean>(false)
 const showUpdateSubs = ref<boolean>(false)
 const updateSubsPageCount = ref<number>(-1)
+
+const jsonUpload = ref<File>()
 
 const updateSubsLoading = ref<boolean>(false)
 
@@ -74,6 +90,28 @@ function exportJson() {
         new Blob([json], { type: 'application/json' })
       )
     })
+}
+
+function handleJsonUpload(f: File) {
+  jsonUpload.value = f
+  const reader = new FileReader()
+  reader.readAsText(f, 'utf-8')
+  reader.onload = () => {
+    if(typeof reader.result == 'string'){
+      wm.ibd_import_json(props.dbName, reader.result)
+        .then(() => {
+          pushNoti({
+            level: 'success',
+            msg: '导入 JSON 到 ' + props.dbName + ' 成功'
+          })
+        })
+    }else {
+      pushNoti({
+        level: 'error',
+        msg: '读取文件失败'
+      })
+    }
+  }
 }
 
 </script>
