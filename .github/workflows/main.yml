@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_frontend:
+  build-frontend:
     runs-on: ubuntu-latest
     
     steps:
@@ -32,19 +32,19 @@ jobs:
       
       - uses: actions/upload-artifact@v3
         with:
-          name: frontend_emits
+          name: frontend-emits
           path: dist/wahu_frontend.zip
       
-  bdist_wheel-windows:
+  bdist-windows:
     runs-on: windows-latest
-    needs: build_frontend
+    needs: build-frontend
     
     steps:
       - uses: actions/checkout@v3
       
       - uses: actions/download-artifact@v3
         with:
-          name: frontend_emits
+          name: frontend-emits
       
       - name: 解压前端包
         run: |
@@ -52,7 +52,7 @@ jobs:
           unzip wahu_frontend.zip -d dist/wahu_frontend
       
       - name: 前端包添加 __init__.py
-      - run: |
+        run: |
           with open('dist/wahu_frontend/__init__.py', 'w', encoding='utf-8') as wf:
             wf.write('# dummy\n')
         shell: python
