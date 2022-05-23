@@ -92,7 +92,9 @@ jobs:
           name: wheel
           
       - name: 下载 Python Embed
-        run: curl -o dist/python.zip https://www.python.org/ftp/python/3.10.4/python-3.10.4-embed-amd64.zip
+        run: |
+          mkdir dist
+          curl -o dist/python.zip https://www.python.org/ftp/python/3.10.4/python-3.10.4-embed-amd64.zip
 
       - name: 解压 Python Embed
         run: unzip dist/python.zip -d dist/package_base
