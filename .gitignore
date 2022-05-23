@@ -37,7 +37,7 @@ logs
 *.log
 
 # resources
-/public
+/public/home.png
 /static
 
 # python
