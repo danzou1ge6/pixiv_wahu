@@ -1,4 +1,4 @@
-name: tagged-release
+name: build
 
 on:
   push:
@@ -46,10 +46,9 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: frontend_emits
-          path: dist/wahu_frontend.zip
       
       - name: 解压前端包
-        run: unzip dist/wahu_frontend.zip dist/wahu_frontend
+        run: unzip wahu_frontend.zip dist/wahu_frontend
       
       - name: 安装 Pipenv
         run: pip install pipenv
