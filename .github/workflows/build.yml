@@ -52,24 +52,9 @@ jobs:
           mkdir dist
           unzip wahu_frontend.zip -d dist/wahu_frontend
       
-      - name: 安装 Pipenv
-        run: pip install pipenv
-
-      - name: Pipenv lock
-        run: pipenv lock
-
-      - name: 建立 Python 环境
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.10"
-          cache: "pipenv"
-      
       - name: 升级 pip, setuptools, wheel
         run: |
           python -m pip install --upgrade pip setuptools wheel
-
-      - name: 安装后端依赖
-        run: pipenv install
 
       - name: 构建 wheel
         run: python setup.py bdist_wheel
@@ -113,6 +98,7 @@ jobs:
 
       - name: 复制入口文件、配置、README并压缩
         run: python dist_stuff/mk_win_pkg.py
+        
       
       - uses: actions/upload-artifact@v3
         with:
