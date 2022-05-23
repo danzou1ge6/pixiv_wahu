@@ -83,7 +83,11 @@ jobs:
       - name: 解压 Python Embed
         run: unzip dist/python.zip -d dist/package_base
 
-      - name: 安装库
+      - name: 升级 pip, setuptools, wheel
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          
+      - name: 安装 wheel
         run: |
           from os import listdir, system
           whl = [f for f in listdir('.') if f.endswith('.whl')][0]
@@ -99,7 +103,6 @@ jobs:
       - name: 复制入口文件、配置、README并压缩
         run: python dist_stuff/mk_win_pkg.py
         
-      
       - uses: actions/upload-artifact@v3
         with:
           name: windows-package
