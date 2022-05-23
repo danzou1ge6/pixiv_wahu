@@ -88,11 +88,15 @@ jobs:
           python -m pip install pip==22.0.4 pipenv
           python -m pip install --upgrade setuptools wheel
       
-      - name: 安装依赖
-        run: |
-          pipenv install
-          pipenv shell
-          
+      - name: pipenv lock
+        run: pipenv lock
+      
+      - name: 建立 python 环境
+      - uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+          architecture: x64
+        
       - name: 安装 wheel
         run: |
           from os import listdir, system
