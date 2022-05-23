@@ -4,14 +4,52 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: windows-latest
-
+  build_frontend:
+    runs-on: ubuntu-latest
+    
     steps:
       - uses: actions/checkout@v3
+  
+      - name: 建立 node 环境
+        uses: actions/setup-node@v3
+        with:
+           node-version: 14
 
+      - name: 建立 quasar 环境
+        run: |
+          npm i -g yarn
+          yarn global add @quasar/cli
+
+      - name: 安装前端依赖
+        run: yarn install
+
+      - name: 打包前端
+        run: |
+          yarn quasar build
+          zip -r dist/wahu_frontend.zip dist/wahu_frontend
+      
+      - uses: actions/upload-artifact@v3
+        with:
+          name: frontend_emits
+          path: dist/wahu_frontend.zip
+      
+  bdist_wheel:
+    runs-on: windows-latest
+    needs: build_frontend
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: actions/download-artifact@v3
+        with:
+          name: frontend_emits
+      
+      - name: 解压前端包
+        run: unzip dist/wahu_frontend.zip dist/wahu_frontend
+      
       - name: 安装 Pipenv
         run: pip install pipenv
 
@@ -30,27 +68,27 @@ jobs:
       - name: 安装后端依赖
         run: pipenv install
 
-      - name: 建立 node 环境
-        uses: actions/setup-node@v3
-        with:
-           node-version: 14
-
-      - name: 建立 quasar 环境
-        run: |
-          npm i -g yarn
-          yarn global add @quasar/cli
-
-      - name: 安装前端依赖
-        run: yarn install
-
-      - name: 打包前端
-        run: yarn quasar build
-
       - name: 构建 wheel
         run: |
           pip install wheel setuptools
           python setup.py bdist_wheel
+      
+      - uses: actions/upload-artifact@v3
+        with:
+          name: wheel
+          path: dist/*.whl
+    
+  pack-windows:
+    runs-on: windows-latest
+    needs: bdist_wheel
 
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: actions/download-artifact@v3
+        with:
+          name: wheel
+          
       - name: 下载 Python Embed
         run: curl -o dist/python.zip https://www.python.org/ftp/python/3.10.4/python-3.10.4-embed-amd64.zip
 
@@ -72,8 +110,14 @@ jobs:
 
       - name: 复制入口文件、配置、README并压缩
         run: python dist_stuff/mk_win_pkg.py
+      
+      - uses: actions/upload-artifact@v3
+        with:
+          name: windows-package
+          path: dist/PixivWahu-win64.zip
 
       - name: 创建 Release
+        if: ${{ github.event_name == 'push' }}
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
