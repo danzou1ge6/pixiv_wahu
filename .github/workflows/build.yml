@@ -83,10 +83,13 @@ jobs:
       - name: 解压 Python Embed
         run: unzip dist/python.zip -d dist/package_base
 
-      - name: 安装 pip ，升级 setuptools, wheel
+      - name: 安装 pip, pipenv ，升级 setuptools, wheel
         run: |
-          python -m pip install pip==22.0.4
+          python -m pip install pip==22.0.4 pipenv
           python -m pip install --upgrade setuptools wheel
+      
+      - name: 安装
+        run: pipenv install
           
       - name: 安装 wheel
         run: |
