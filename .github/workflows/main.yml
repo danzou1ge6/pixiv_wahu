@@ -28,7 +28,7 @@ jobs:
       - name: 打包前端
         run: |
           yarn quasar build
-          zip -r dist/wahu_frontend.zip dist/wahu_frontend
+          compress-archive -path dist/wahu_frontend -destinationpath dist/wahu_frontend.zip
       
       - uses: actions/upload-artifact@v3
         with:
@@ -65,7 +65,7 @@ jobs:
         run: |
           curl -o dist/python.zip https://www.python.org/ftp/python/3.10.4/python-3.10.4-embed-amd64.zip
       - name: 解压 Python Embed
-        run: unzip dist/python.zip -d dist/package_base
+        run: expand-archive -path dist/python.zip -destinationpath dist/package_base
 
       - name: 安装 wheel
         run: |
