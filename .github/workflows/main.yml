@@ -63,7 +63,7 @@ jobs:
         run: pipenv lock
       
       - name: 建立 python 环境
-      - uses: actions/setup-python@v3
+        uses: actions/setup-python@v3
         with:
           python-version: '3.10'
           architecture: x64
