@@ -88,8 +88,10 @@ jobs:
           python -m pip install pip==22.0.4 pipenv
           python -m pip install --upgrade setuptools wheel
       
-      - name: 安装
-        run: pipenv install
+      - name: 安装依赖
+        run: |
+          pipenv install
+          pipenv shell
           
       - name: 安装 wheel
         run: |
