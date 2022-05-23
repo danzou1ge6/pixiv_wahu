@@ -11,10 +11,10 @@ setup(
         'token_getter': 'dist_stuff/token_getter'
     },
     install_requires=[
-        'click==8.1.3',
-        'aiohttp==3.8.1',
-        'fuzzywuzzy[accelerate_fuzzywuzzy]==0.18.0',
-        'toml==2.0.1'
+        'click>=8.1.3',
+        'aiohtt>=3.8.1',
+        'fuzzywuzzy[accelerate_fuzzywuzzy]>=0.18.0',
+        'toml>=0.10.2'
     ],
     extras_require={
         'accelerate_fuzzywuzzy': ['python-levenshtein']
