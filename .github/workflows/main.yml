@@ -50,6 +50,12 @@ jobs:
         run: |
           mkdir dist
           unzip wahu_frontend.zip -d dist/wahu_frontend
+      
+      - name: 前端包添加 __init__.py
+      - run: |
+          with open('dist/wahu_frontend/__init__.py', 'w', encoding='utf-8') as wf:
+            wf.write('# dummy\n')
+        shell: python
           
       - name: 安装 pip, pipenv
         run: |
