@@ -87,7 +87,7 @@ jobs:
         run: |
           from os import listdir, system
           whl = [f for f in listdir('.') if f.endswith('.whl')][0]
-          system(f'pip install {whl}[accelerate_fuzzywuzzy] --prefix dist/package_base -I')
+          system(f'python -m pip install {whl}[accelerate_fuzzywuzzy] --prefix dist/package_base -I')
         shell: python
 
       - name: 修改 python310._pth
