@@ -12,7 +12,7 @@ setup(
     },
     install_requires=[
         'click>=8.1.3',
-        'aiohtt>=3.8.1',
+        'aiohttp>=3.8.1',
         'fuzzywuzzy[accelerate_fuzzywuzzy]>=0.18.0',
         'toml>=0.10.2'
     ],
