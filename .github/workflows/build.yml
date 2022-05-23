@@ -48,7 +48,9 @@ jobs:
           name: frontend_emits
       
       - name: 解压前端包
-        run: unzip wahu_frontend.zip dist/wahu_frontend
+        run: |
+          mkdir dist
+          unzip wahu_frontend.zip -d dist/wahu_frontend
       
       - name: 安装 Pipenv
         run: pip install pipenv
