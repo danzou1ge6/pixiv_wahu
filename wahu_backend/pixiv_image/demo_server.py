@@ -26,18 +26,9 @@ def create_app() -> web.Application:
     async def on_app_shutdown(app: web.Application) -> None:
         await image_getter.close_session()
 
-    async def on_app_startup(app: web.Application) -> None:
-        async def p():
-            while True:
-                for st in image_getter.dl_stats.inprogress:
-                    print(f'DL {st.gid} {st.descript} {st.readable_perct} '
-                                f'{st.downloaded_kb}/{st.total_kb} KB')
-                await asyncio.sleep(0.1)
-        asyncio.create_task(p())
 
     app.add_routes([web.get('/{file_path:.+}', get_image)])
     app.on_shutdown.append(on_app_shutdown)
-    app.on_startup.append(on_app_startup)
 
     return app
 
