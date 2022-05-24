@@ -73,7 +73,12 @@ jobs:
           whl = [f for f in listdir('dist') if f.endswith('.whl')][0]
           system(f'pipenv run pip install dist/{whl}[accelerate_fuzzywuzzy] --prefix dist/package_base -I')
         shell: python
-
+      
+      - name: 删除 setuptools
+        run: |
+          rm dist/package_base/Lib/site-packages/setuptools* -r
+          rm dist/package_base/Lib/site-packages/pkg_resources -r
+          
       - name: 修改 python310._pth
         run: |
           with open('dist/package_base/python310._pth', 'a', encoding='utf-8') as wf:
