@@ -129,6 +129,14 @@ function handleSoecketMessage(ev: MessageEvent) {
             }
 
             resolve(g())
+
+        } else if (ret.type == 'exception') {
+            pushNoti({
+                level: 'error',
+                msg: '异常：' + ret.return
+            })
+            reject(ret.return)
+
         } else {
             reject()
             throw TypeError('不合法的返回类型 ' + ret.type)
@@ -136,13 +144,7 @@ function handleSoecketMessage(ev: MessageEvent) {
 
     } else {
 
-        if (ret.type == 'exception') {
-            pushNoti({
-                level: 'error',
-                msg: '异常：' + ret.return
-            })
-
-        } else if (ret.type == 'warning') {
+        if (ret.type == 'warning') {
             pushNoti({
                 level: 'warning',
                 msg: ret.return

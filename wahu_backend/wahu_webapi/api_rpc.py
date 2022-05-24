@@ -71,7 +71,8 @@ def register(app: web.Application, ctx: WahuContext) -> None:
 
                     ret = {
                         'type': 'exception',
-                        'return': traceback.format_exc(limit=None)
+                        'return': traceback.format_exc(limit=None),
+                        'mcid': mcid
                     }
 
                     await ws.send_str(json.dumps(ret))
