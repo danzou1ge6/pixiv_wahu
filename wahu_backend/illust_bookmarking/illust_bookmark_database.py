@@ -3,6 +3,7 @@ import itertools
 import sqlite3
 from pathlib import Path
 from random import getrandbits
+from time import time
 from typing import (AsyncGenerator, Callable, Coroutine, Iterable, Optional,
                     Tuple, Union)
 
@@ -132,7 +133,7 @@ class IllustBookmarkDatabase(DependingDatabase):
             self.bookmarks_te.update(iid, pages=pages)
             flag2 = False
         else:
-            self.bookmarks_te.insert([IllustBookmark(iid, pages)])
+            self.bookmarks_te.insert([IllustBookmark(iid, pages, int(time()))])
             flag2 = True
 
         self.log_adapter.info('set_bookmark: iid=%s ，收藏 %s 页'
@@ -218,7 +219,7 @@ class IllustBookmarkDatabase(DependingDatabase):
         self.illusts_te.insert(illusts)
 
         self.bookmarks_te.insert(
-            [IllustBookmark(ilst.iid, list(range(ilst.page_count)))
+            [IllustBookmark(ilst.iid, list(range(ilst.page_count)), int(time()))
              for ilst in illusts]
         )
 
@@ -250,9 +251,11 @@ class IllustBookmarkDatabase(DependingDatabase):
         return self.illusts_te.select()
 
     def all_bookmarks(self) -> list[IllustBookmark]:
-        """读出所有收藏"""
+        """读出所有收藏，按添加时间排序"""
 
-        return self.bookmarks_te.select()
+        bms = self.bookmarks_te.select()
+        bms.sort(key=lambda ilst: ilst.add_timestamp, reverse=True)
+        return bms
 
     def filter_restricted(self) -> list[int]:
         """过滤出已被作者删除的插画"""

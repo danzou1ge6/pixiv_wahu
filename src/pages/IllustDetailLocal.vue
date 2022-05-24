@@ -6,6 +6,9 @@
         / iid = {{ detail.iid }} / dbName = {{ dbName }}
       </span>
     </div>
+    <div class="q-mx-lg q-my-none text-subtitle-2 text-grey-8" v-if="addTimestamp !== undefined">
+      添加于 {{ new Date(addTimestamp*1000)}}  <!--Python 时间戳单位为秒，js 为毫秒-->
+    </div>
 
     <div class="row justify-center">
       <div class="col-md-8 col-lg-7 col-sm-12 col-xs-12">
@@ -100,6 +103,7 @@ const emits = defineEmits<{
 
 const detail = ref<wm.IllustDetail>()
 const selectedPage = ref<Array<number>>([])
+const addTimestamp = ref<number>()
 
 const manualBmPages = ref<string>('')
 const manualBmPagesError = ref<boolean>(false)
@@ -128,6 +132,7 @@ onMounted(() => {
         selectedPage.value = []
       } else {
         selectedPage.value = bm.pages
+        addTimestamp.value = bm.add_timestamp
       }
     })
     .then(() => {

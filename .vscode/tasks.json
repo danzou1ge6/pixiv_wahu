@@ -6,7 +6,8 @@
         {
             "label": "生成 WahuMethods 的 TS 定义",
             "type": "shell",
-            "command": "pipenv run gen-bridge"
+            "command": "pipenv run gen-bridge",
+            "problemMatcher": []
         },
         {
             "label": "生成 动态组件 的 import 和 Interface",

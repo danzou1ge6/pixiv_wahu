@@ -75,6 +75,7 @@ interface PixivUserPreview {
 interface IllustBookmark {
     iid: number;
     pages: Array<number>;
+    add_timestamp: number;
 }
 
 interface IllustBookmarkingConfig {

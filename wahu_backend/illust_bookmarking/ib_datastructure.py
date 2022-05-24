@@ -8,12 +8,14 @@ from ..sqlite_tools.adapters import IntAdapter, JsonAdapter, StrAdapter
 class IllustBookmarkRaw:
     iid: int
     pages: list[int]
+    add_timestamp: int  # 单位为秒
 
 
 class IllustBookmark(IllustBookmarkRaw, DatabaseRow):
     adapters = {
         'iid': IntAdapter,
-        'pages': JsonAdapter
+        'pages': JsonAdapter,
+        'add_timestamp': IntAdapter
     }
 
     keys = list(adapters.keys())
