@@ -81,31 +81,30 @@ class PixivImageGetter(ManualDNSClient):
 
         await self._check_env()
 
-        async with self.sem:
+        url = f'https://{self.host}/{file_path}'
 
-            logger.info('PixivImageGetter: get_image: 尝试获取 %s' % file_path)
+        with self.dl_stats.new(
+            url,
+            descript=url.split('/')[-1] if descript is None else descript
+        ) as st:
 
-            try:
-                url = f'https://{self.host}/{file_path}'
-                async with self.session.get(url, ssl=True) as resp:
+            async with self.sem:
 
-                    total_size = resp.headers.get('Content-Length', None)
+                logger.info('PixivImageGetter: get_image: 尝试获取 %s' % file_path)
 
-                    image = bytes()
+                try:
+                    async with self.session.get(url, ssl=True) as resp:
 
-                    # Add a new DownloadStatus object into `self.dl_stats` and return it as `st`
-                    with self.dl_stats.new(
-                        url, total_size,
-                        descript=url.split('/')[-1] if descript is None else descript
-                    ) as st:
+                        total_size = resp.headers.get('Content-Length', None)
+                        st.start(total_size)
+
+                        image = bytes()
 
                         async for chk in resp.content.iter_chunked(self.chunk_size):
                             image += chk
                             st.update(self.chunk_size)
 
-                return image
+                        return image
 
-            except aiohttp.ClientError as client_error:
-                raise PixivImageGetError(file_path, self.host) from client_error
-
-
+                except aiohttp.ClientError as client_error:
+                    raise PixivImageGetError(file_path, self.host) from client_error

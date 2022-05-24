@@ -9,68 +9,40 @@ from collections import OrderedDict
 @dataclass
 class DownloadProgressRaw:
     gid: str
-    total_size: int
+    total_size: Optional[int]
     downloaded_size: int
     descript: Optional[str]
-    status: Literal['inprogress', 'finished', 'error']
+    status: Literal['inprogress', 'finished', 'error', 'pending']
 
 
 class DownloadProgress(DownloadProgressRaw):
 
     def __init__(
-        self, gid: str, url: str,
-        total_size: Optional[int]=None, descript: Optional[str]=None
+        self,
+        gid: str,
+        url: str,
+        descript: Optional[str]=None
     ):
-        self.gid: str = gid
-        self.url: str = url
-        self.descript: Optional[str] = descript
+        self.gid = gid
+        self.url = url
+        self.descript = descript
+        self.total_size = None
+        self.downloaded_size = 0
 
-        self.total_size: Optional[int] = total_size
-        self.downloaded_size: int = 0
+    def start(self, total_size: Optional[int | str]) -> None:
 
+        if total_size is not None:
+            total_size = int(total_size)
 
+        self.total_size = total_size
+        self.status = 'inprogress'
 
     def update(self, delta: int) -> None:
         self.downloaded_size += delta
 
-    @property
-    def downloaded(self) -> int:
-        return self.downloaded_size
-
-    @property
-    def downloaded_kb(self) -> str:
-        return f'{self.downloaded_size / 1024:.0f}'
-
-    @property
-    def downloaded_mb(self) -> str:
-        return f'{self.downloaded_size / 1024**2:.2f}'
-
-    @property
-    def total(self) -> Optional[int]:
-        return self.total_size
-
-    @property
-    def total_kb(self) -> str:
-        return f'{self.total_size / 1024:.0f}' if self.total_size is not None else 'Unknown'
-
-    @property
-    def total_mb(self) -> str:
-        return f'{self.total_size / 1024**2:.2f}' if self.total_size is not None else 'Unknown'
-
-
-    @property
-    def percentage(self) -> Optional[float]:
-
-        return self.downloaded_size / self.total_size \
-               if self.total_size is not None else None
-
-    @property
-    def readable_perct(self) -> str:
-        perc = self.percentage
-        return f'{perc * 100:.1f}%' if perc is not None else 'Unknown'
 
     def __enter__(self) -> 'DownloadProgress':
-        self.status = 'inprogress'
+        self.status = 'pending'
 
         return self
 
@@ -80,6 +52,7 @@ class DownloadProgress(DownloadProgressRaw):
                  excpt_tcbk: Optional[Traceback] = None):
         if excpt_value is not None:
             self.status = 'error'
+            raise excpt_value
         else:
             self.status = 'finished'
 
@@ -106,16 +79,12 @@ class DownloadProgressTracker:
 
     def new(
         self, url: str,
-        total_size: Optional[str | int],
         descript: Optional[str]=None
     ) -> DownloadProgress:
 
         gid = _generate_gid(self.download_status_record.keys())
 
-        if total_size is not None:
-            total_size = int(total_size)
-
-        nds =  DownloadProgress(gid, url, total_size, descript=descript)
+        nds =  DownloadProgress(gid, url, descript=descript)
 
         if len(self.download_status_record) > self.record_size:
             self.download_status_record.popitem(last=False)

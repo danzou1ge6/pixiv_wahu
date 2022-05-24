@@ -116,10 +116,10 @@ interface FileEntryWithURL {
 
 interface DownloadProgress {
     gid: string;
-    total_size: number;
+    total_size: number | null;
     downloaded_size: number;
     descript: string | null;
-    status: 'inprogress' | 'finished' | 'error';
+    status: 'inprogress' | 'finished' | 'error' | 'pending';
 }
 
 export type {PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserDetail, PixivUserPreview, IllustBookmark, IllustBookmarkingConfig, FileEntry, FileTracingConfig, RepoSyncAddReport, AccountSession, FileEntryWithURL, DownloadProgress}

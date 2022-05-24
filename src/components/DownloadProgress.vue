@@ -14,10 +14,15 @@
           <tr v-for="dl in dlProgList" :key="dl.gid" v-show="dl.status == 'inprogress' || showFinished">
             <td>{{ dl.descript }}</td>
             <td>
-              <q-linear-progress :value="dl.downloaded_size / dl.total_size" :color="getColor(dl.status)">
+              <q-linear-progress
+                :value="dl.total_size === null ? (dl.status == 'inprogress'?undefined:1):dl.downloaded_size / dl.total_size"
+                :color="getColor(dl.status)"
+                :indeterminate="dl.total_size === null && dl.status == 'inprogress'"
+              >
               </q-linear-progress>
               <div class="text-body-2">
-                {{ `${(dl.downloaded_size / 1024).toFixed(0)} / ${(dl.total_size / 1024).toFixed(0)} kb`
+                {{
+                `${(dl.downloaded_size / 1024).toFixed(0)} / ${dl.total_size === null ? '':(dl.total_size / 1024).toFixed(0)} kb`
                 }}
               </div>
             </td>
@@ -60,6 +65,8 @@ function statusStringFor(val: string) {
       return '完成'
     case 'error':
       return '失败'
+    case 'pending':
+      return '等待中'
   }
 }
 
@@ -68,9 +75,11 @@ function getColor(status: string) {
     case 'inprogress':
       return 'primary'
     case 'error':
-      return 'negative'
+      return 'red'
     case 'finished':
-      return 'success'
+      return 'green'
+    case 'pending':
+      return 'primary'
   }
 }
 

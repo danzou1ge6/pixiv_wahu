@@ -1,5 +1,7 @@
 from aiohttp import web
 
+from wahu_backend.pixiv_image.image_getter import PixivImageGetError
+
 from ..wahu_core import WahuContext
 
 
@@ -14,7 +16,13 @@ def register(app: web.Application, ctx: WahuContext) -> None:
 
         file_path = req.match_info['file_path']
 
-        image = await ctx.image_pool.get_image(file_path)
+        try:
+            image = await ctx.image_pool.get_image(file_path)
+        except PixivImageGetError as pige:
+            app.logger.exception(pige, exc_info=True)
+            return web.Response(
+                status=503, reason='PixivImageGetError'
+            )
 
         return web.Response(
             body=image, content_type='image/jpeg', headers={'Local': '0'}
