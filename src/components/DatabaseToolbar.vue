@@ -140,6 +140,9 @@ function addPBookmark() {
         msg: `添加了 ${props.modelValue.length} 条收藏`
       })
     })
+    .catch(() => {
+      addPBmLoading.value = false
+    })
 }
 
 function delPBookmark() {
@@ -151,6 +154,9 @@ function delPBookmark() {
         level: 'success',
         msg: `删除了 ${props.modelValue.length} 条收藏`
       })
+    })
+    .catch(() => {
+      delPBmLoading.value = false
     })
 }
 
