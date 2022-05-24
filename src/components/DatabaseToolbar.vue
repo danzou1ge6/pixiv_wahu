@@ -47,6 +47,13 @@
             </q-card-actions>
           </q-card>
         </q-dialog>
+
+        <q-btn color="white" label="收藏" flat @click="addPBookmark" :loading="addPBmLoading">
+        </q-btn>
+
+        <q-btn color="white" label="删除收藏" flat @click="delPBookmark" :loading="delPBmLoading">
+        </q-btn>
+
       </template>
 
     </q-banner>
@@ -118,6 +125,33 @@ function reverseSelect() {
     }
   }
   emits('update:modelValue', newValue)
+}
+
+const addPBmLoading = ref<boolean>(false)
+const delPBmLoading = ref<boolean>(false)
+
+function addPBookmark() {
+  addPBmLoading.value = true
+  wm.p_ilstbm_add(props.modelValue)
+    .then(() => {
+      addPBmLoading.value = false
+      pushNoti({
+        level: 'success',
+        msg: `添加了 ${props.modelValue.length} 条收藏`
+      })
+    })
+}
+
+function delPBookmark() {
+  delPBmLoading.value = true
+  wm.p_ilstbm_rm(props.modelValue)
+    .then(() => {
+      delPBmLoading.value = false
+      pushNoti({
+        level: 'success',
+        msg: `删除了 ${props.modelValue.length} 条收藏`
+      })
+    })
 }
 
 

@@ -30,10 +30,10 @@
         <q-btn color="white" flat @click="addBookmark">
           收藏
         </q-btn>
-        <q-btn color="white" flat @click="delBookmark">
+        <q-btn color="white" flat @click="delBookmark" :loading="addBmLoading">
           取消收藏
         </q-btn>
-        <q-btn color="white" flat @click="download">
+        <q-btn color="white" flat @click="download" :loading="delBmLoading">
           下载
         </q-btn>
 
@@ -126,7 +126,11 @@ function download() {
     })
 }
 
+const addBmLoading = ref<boolean>(false)
+const delBmLoading = ref<boolean>(false)
+
 function addBookmark() {
+  addBmLoading.value = true
   let toAdd = []
   for (let iid of props.modelValue) {
     if (iid2ilst[iid] !== undefined) {
@@ -143,6 +147,7 @@ function addBookmark() {
   }
   wm.p_ilstbm_add(toAdd)
     .then(() => {
+      addBmLoading.value = false
       pushNoti({
         level: 'success',
         msg: `收藏了 ${toAdd.length} 张插画`
@@ -151,6 +156,7 @@ function addBookmark() {
 }
 
 function delBookmark() {
+  delBmLoading.value = true
   let toDel = []
   for (let iid of props.modelValue) {
     if (iid2ilst[iid] !== undefined) {
@@ -167,6 +173,7 @@ function delBookmark() {
   }
   wm.p_ilstbm_rm(toDel)
     .then(() => {
+      delBmLoading.value = false
       pushNoti({
         level: 'success',
         msg: `取消收藏了 ${toDel.length} 张插画`
