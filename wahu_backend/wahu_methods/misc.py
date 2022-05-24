@@ -19,18 +19,18 @@ class WahuMiscMethods:
     for dtl in dtls:
 
       async def coro():
-        for url in dtl.image_origin:
-          ext = url.split('.')[-1]
-          fname = ctx.config.file_name_template.format(
-            **dataclasses.asdict(dtl)) + f'.{ext}'
+        for i, url in enumerate(dtl.image_origin):
+            ext = url.split('.')[-1]
+            fname = ctx.config.file_name_template.format(
+                dtl, i) + f'.{ext}'
 
-          image = await ctx.image_pool.get_image(
-            url,
-            fname
-          )
+            image = await ctx.image_pool.get_image(
+                url,
+                fname
+            )
 
-          with open(ctx.config.temp_download_dir / fname, 'wb') as wf:
-            wf.write(image)
+            with open(ctx.config.temp_download_dir / fname, 'wb') as wf:
+                wf.write(image)
 
       coro_list.append(coro())
 
