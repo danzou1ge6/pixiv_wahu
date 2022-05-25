@@ -9,18 +9,21 @@ async def start_reporting_dl(ctx: WahuContext, app: web.Application):
 
     async def report_dl_status():
         while True:
-            if 'ws' in app.keys():
-                ws: web.WebSocketResponse = app['ws']
-                if not ws.closed:
+            try:
+                if 'ws' in app.keys():
+                    ws: web.WebSocketResponse = app['ws']
+                    if not ws.closed:
 
-                    status = list(ctx.image_pool.dl_stats)
+                        status = list(ctx.image_pool.dl_stats)
 
-                    if status != []:
-                        await ws.send_json({
-                            'type': 'dl_progress',
-                            'return': [dataclasses.asdict(s)
-                                        for s in status]
-                        })
+                        if status != []:
+                            await ws.send_json({
+                                'type': 'dl_progress',
+                                'return': [dataclasses.asdict(s)
+                                            for s in status]
+                            })
+            except Exception as e:
+                app.logger.exception(e, exc_info=True)
 
             await asyncio.sleep(0.5)
 
