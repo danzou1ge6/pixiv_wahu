@@ -76,7 +76,11 @@ function clickTitle() {
 }
 
 function clickUsername() {
-
+  pushWindow({
+    component: 'PixivUserDetail',
+    title: 'User:' + props.detail.user.name,
+    props: {uid: props.detail.user.uid}
+  })
 }
 
 
