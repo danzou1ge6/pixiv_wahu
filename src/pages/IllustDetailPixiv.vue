@@ -5,6 +5,10 @@
       <span class="text-h6 text-medium-emphasis">
         / iid = {{ detail.iid }}
       </span>
+      <div class="col-2 q-ma-md absolute-right">
+        <q-btn @click="handleBookmarkClick" :loading="bookmarkLoading" color="primary">
+        {{ detail.is_bookmarked ? '取消收藏' :'收藏'}}</q-btn>
+      </div>
     </div>
 
     <div class="row justify-center">
@@ -50,7 +54,7 @@
     <IllustListPixiv :illusts="relatedIllusts"></IllustListPixiv>
 
     <div class="row q-ma-lg" v-show="relatedGenerator !== undefined">
-      <div class="col-12">
+      <div class="col-12 q-mb-md">
         <q-btn @click="invokeRelatedGenerator" color="primary float-right" stretch :loading="relatedLoading">下一页</q-btn>
       </div>
     </div>
@@ -183,6 +187,41 @@ function invokeRelatedGenerator() {
       })
   }
 }
+
+const bookmarkLoading = ref<boolean>(false)
+
+function handleBookmarkClick() {
+  if (detail.value !== undefined) {
+    if (detail.value.is_bookmarked) {
+      bookmarkLoading.value = true
+      wm.p_ilstbm_rm([props.iid])
+        .then(() => {
+          pushNoti({
+            level: 'success',
+            msg: `从 Pixiv 收藏删除 ${props.iid}`
+          })
+          bookmarkLoading.value = false
+          if(detail.value !== undefined){detail.value.is_bookmarked = false}
+        })
+        .catch(() => { bookmarkLoading.value = false })
+
+    } else {
+      bookmarkLoading.value = true
+      wm.p_ilstbm_add([props.iid])
+        .then(() => {
+          pushNoti({
+            level: 'success',
+            msg: `添加 ${props.iid} 到 Pixiv 收藏`
+          })
+          bookmarkLoading.value = false
+          if(detail.value !== undefined){detail.value.is_bookmarked = true}
+        })
+        .catch(() => { bookmarkLoading.value = false })
+    }
+
+  }
+}
+
 </script>
 
 <style scoped>
