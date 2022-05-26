@@ -1,5 +1,3 @@
-import { InjectionKey } from "vue"
-
 export const lazyimageURL = '/lazyimage.jpg'
 export const notfoundimageURL = '/notfound.jpg'
 export const homeImageURL = '/home.png'

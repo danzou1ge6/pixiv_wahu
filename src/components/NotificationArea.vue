@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import { AppNotification, appAllNoti } from '../plugins/notifications'
-import { inject, Ref, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { notificationTime } from '../constants'
 
 

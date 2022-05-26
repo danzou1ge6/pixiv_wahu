@@ -7,7 +7,7 @@ const routes: RouteRecordRaw[] = [
   },
 
   {
-    path: '/new-window/:page',
+    path: '/:n',
     component: () => import('layouts/MainLayout.vue')
   },
 

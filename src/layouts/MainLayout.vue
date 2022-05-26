@@ -59,7 +59,7 @@ import NotificationArea from '../components/NotificationArea.vue';
 import TaskBar from 'src/components/TaskBar.vue';
 import DynamicComponent from '../pages/DynamicComponent.vue';
 
-import { pushWindow, refreshCurrentWindow, AppWindow } from 'src/plugins/windowManager';
+import { pushWindow, refreshCurrentWindow, AppWindow, gotoWindow, initWindowRouter } from 'src/plugins/windowManager';
 import LoginControl from 'src/components/LoginControl.vue';
 import NavDrawerContent from 'src/components/NavDrawerContent.vue';
 import DownloadProgress from 'src/components/DownloadProgress.vue';
@@ -88,22 +88,25 @@ export default defineComponent({
     const router = useRouter()
 
     function pushWindowFromRouter() {
-      if (route.params.page !== undefined) {
+      if(route.params.n != undefined) {
 
-        pushWindow({
-          component: route.params.page,
-          title: route.params.page,
-          props: route.query
-        } as AppWindow, true)
-      } else {
-        pushWindow({
-          component: 'Home',
-          title: 'Home'
-        }, true)
+        if(!isNaN(Number(route.params.n))){
+          gotoWindow(Number(route.params.n))
+        }
+        return
+
       }
+
+      pushWindow({
+        component: 'Home',
+        title: 'Home'
+      }, false)
+
     }
 
     onMounted(() => {
+      initWindowRouter(router)
+
       window.addEventListener('hashchange', () => {
         const currentPath = window.location.hash.slice(1)
         router.push(currentPath)

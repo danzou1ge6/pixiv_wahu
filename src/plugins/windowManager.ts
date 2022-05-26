@@ -1,4 +1,5 @@
-import { App, Component, InjectionKey, ref } from 'vue'
+import { watch, ref } from 'vue'
+import { Router, useRouter } from 'vue-router'
 
 /** 自动生成 Interface Begin */
 interface AppWindow {
@@ -31,6 +32,16 @@ function pushWindow(win: AppWindow, goto?: boolean): void {
   if (goto || goto === undefined) { gotoWindow(openedWindows.value.length - 1) }
 }
 
+let router: Router
+
+function initWindowRouter(r: Router) {
+  router = r
+}
+
+watch(displayedWindowN, () => {
+  router.push(String(displayedWindowN.value))
+})
+
 function refreshCurrentWindow() {
   openedWindows.value[displayedWindowN.value].key = randomId()
 }
@@ -58,5 +69,9 @@ function replaceCurrentWindow(win: AppWindow): void {
   openedWindows.value[displayedWindowN.value] = keyedWin
 }
 
-export { gotoWindow, pushWindow, openedWindows, displayedWindowN, refreshCurrentWindow, removeWindow, replaceCurrentWindow }
+export {
+  gotoWindow, pushWindow, openedWindows, displayedWindowN,
+  refreshCurrentWindow, removeWindow, replaceCurrentWindow,
+  initWindowRouter
+}
 export type { AppWindow }
