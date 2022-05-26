@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch, ref } from 'vue'
+import { watch } from 'vue'
 import { openedWindows, displayedWindowN } from '../plugins/windowManager'
 
 

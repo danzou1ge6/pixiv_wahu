@@ -1,6 +1,9 @@
 <template>
   <q-drawer v-model="modelValue" elevated overlay>
     <q-list>
+      <q-item clickable @click="pushWindow({component: 'Home', title: 'Home'}); $emit('update:modelValue', false)"
+      >Home</q-item>
+
       <q-item-label header>插画数据库</q-item-label>
 
       <q-item clickable v-for="dbn in dbNameList" :key="dbn" @click="clickDb(dbn)" v-ripple>

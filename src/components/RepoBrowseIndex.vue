@@ -137,6 +137,7 @@ function submitDelFile() {
         level: 'success',
         msg: `从储存库 ${props.repoName} 删除了 ${selectedDelFile.value.length} 个无效文件`
       })
+      selectedDelFile.value = []
       validate()
     })
 }
@@ -149,6 +150,7 @@ function submitDelIndex() {
         level: 'success',
         msg: `从储存库 ${props.repoName} 删除了 ${selectedDelFile.value.length} 条无效索引`
       })
+      selectedDelIndex.value = []
       loadIndex()
       validate()
     })

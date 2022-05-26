@@ -146,6 +146,8 @@ function calcSync() {
   wm.ir_calc_sync(props.repoName)
     .then((ret => {
       let [del, add] = ret
+      selectedAdd.value = []
+      selectedDel.value = []
       delList.value = del
       addList.value = add
       calcingSync.value = false
@@ -177,6 +179,7 @@ function submitDel() {
       pushNoti({
         level: 'success', msg: `从 ${props.repoName} 的索引删除了 ${fids.length} 项`
       })
+      selectedDel.value = []
       emits('refreshIndex')
     })
 }

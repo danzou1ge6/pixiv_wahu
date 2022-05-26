@@ -11,7 +11,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="dl in dlProgList" :key="dl.gid" v-show="dl.status == 'inprogress' || showFinished">
+          <tr v-for="dl in dlProgList" :key="dl.gid" v-show="dl.status != 'finished' || showFinished">
             <td>{{ dl.descript }}</td>
             <td>
               <q-linear-progress

@@ -59,7 +59,7 @@ import NotificationArea from '../components/NotificationArea.vue';
 import TaskBar from 'src/components/TaskBar.vue';
 import DynamicComponent from '../pages/DynamicComponent.vue';
 
-import { pushWindow, refreshCurrentWindow, AppWindow, gotoWindow, initWindowRouter } from 'src/plugins/windowManager';
+import { pushWindow, refreshCurrentWindow, gotoWindow, initWindowRouter } from 'src/plugins/windowManager';
 import LoginControl from 'src/components/LoginControl.vue';
 import NavDrawerContent from 'src/components/NavDrawerContent.vue';
 import DownloadProgress from 'src/components/DownloadProgress.vue';
