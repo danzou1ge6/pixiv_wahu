@@ -43,8 +43,14 @@ class PixivImageGetter(ManualDNSClient):
     host_name = 'i.pximg.net'
 
     def __init__(
-        self, host: Optional[str] = None, timeout: float = 5, chunk: int = 2048,
-        connection_limit: int = 7, num_parallel: int = 3) -> None:
+        self,
+        host: Optional[str] = None,
+        timeout: float = 5,
+        chunk: int = 2048,
+        connection_limit: int = 7,
+        num_parallel: int = 3,
+        record_size: int = 100
+    ) -> None:
         """
         - `:param timeout:` 全局的超时
         - `:param host:` IP 地址；如果提供了，就不会再通过 DNS 查询
@@ -63,7 +69,8 @@ class PixivImageGetter(ManualDNSClient):
 
         self.session: aiohttp.ClientSession
 
-        self.dl_stats: DownloadProgressTracker = DownloadProgressTracker()
+        self.dl_stats: DownloadProgressTracker = DownloadProgressTracker(
+            record_size=record_size)
         self.chunk_size: int = chunk
         self.connection_limit = connection_limit
 

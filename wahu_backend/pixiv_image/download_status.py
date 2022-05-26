@@ -86,7 +86,7 @@ class DownloadProgressTracker:
 
         nds =  DownloadProgress(gid, url, descript=descript)
 
-        if len(self.download_status_record) > self.record_size:
+        if len(self.download_status_record) >= self.record_size:
             self.download_status_record.popitem(last=False)
 
         self.download_status_record[gid] = nds

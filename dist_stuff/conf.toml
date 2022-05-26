@@ -34,6 +34,8 @@ tag_language = 'en-us'
 connection_limit = 6
 # 并行下载数
 num_parallel = 2
+# 下载记录数
+download_record_size = 300
 
 [image]
 # 图片相关配置

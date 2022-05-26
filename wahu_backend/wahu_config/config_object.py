@@ -24,6 +24,7 @@ class WahuConfig:
     fallback_image_size: Literal['original', 'medium', 'large', 'square_medium']
     image_connection_limit: int
     image_num_parallel: int
+    image_download_record_size: int
     # app
     server_host: str
     server_port: int

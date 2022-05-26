@@ -12,7 +12,8 @@ class PixivImagePool(PixivImageGetter):
         timeout: float = 5.0,
         chunk: int = 2048,
         connection_limit: int = 7,
-        num_parallel: int = 2
+        num_parallel: int = 2,
+        record_size: int = 100
     ) -> None:
 
         self.size = size
@@ -20,7 +21,8 @@ class PixivImagePool(PixivImageGetter):
         super().__init__(
             host, timeout, chunk,
             connection_limit=connection_limit,
-            num_parallel=num_parallel
+            num_parallel=num_parallel,
+            record_size=record_size
         )
 
     async def get_image(self, file_path: str

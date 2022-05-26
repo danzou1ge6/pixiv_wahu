@@ -51,6 +51,7 @@ def load_config(config_file: Path) -> WahuConfig:
 
         image_connection_limit = d['image'].get('connection_limit', 7)
         image_num_parallel = d['image'].get('num_parallel', 2)
+        image_download_record_size = d['image'].get('download_record_size', 100)
 
         # app
         server_host = d['app']['server_host']
@@ -89,6 +90,7 @@ def load_config(config_file: Path) -> WahuConfig:
         fallback_image_size=fallback_image_size,
         image_connection_limit=image_connection_limit,
         image_num_parallel=image_num_parallel,
+        image_download_record_size=image_download_record_size,
         server_host=server_host,
         server_port=server_port,
         agenerator_pool_size=agenerator_pool_size,

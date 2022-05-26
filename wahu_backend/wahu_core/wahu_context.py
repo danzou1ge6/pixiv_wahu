@@ -82,7 +82,8 @@ class WahuContext:
             size=self.config.image_pool_size,
             timeout=self.config.image_timeout,
             connection_limit=self.config.image_connection_limit,
-            num_parallel=self.config.image_num_parallel
+            num_parallel=self.config.image_num_parallel,
+            record_size=self.config.image_download_record_size
         )
 
         # 异步生成器池
