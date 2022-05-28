@@ -1,17 +1,20 @@
-from typing import Optional
+from functools import partial
+from typing import Callable, Optional, Any
 
-from ..wahu_core.wahu_method import WahuMethod
+from ..wahu_core import WahuContext, WahuArguments
+
 from .cli import WahuMetdodsWithCli
 
 
 class WahuMethods(WahuMetdodsWithCli):
 
     @classmethod
-    def get(cls, name: str) -> Optional[WahuMethod]:
+    def get(cls, name: str) -> Optional[Callable[[WahuArguments, WahuContext], Any]]:
 
         try:
             m = getattr(cls, name)
-        except AttributeError as ae:
+
+        except AttributeError:
             return None
 
         return m

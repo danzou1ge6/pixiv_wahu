@@ -1,4 +1,3 @@
-import inspect
 from ..http_typing import HTTPData, JSONItem
 from ..wahu_core import WahuArguments, WahuContext
 from ..wahu_methods import WahuMethods
@@ -35,28 +34,28 @@ async def handle_rpc_call(rpc_dict: HTTPData, ctx: WahuContext) -> dict[str, JSO
 
     except KeyError as e:
         raise WahuWebAPIRPCCallError('参数 method 或 dict 缺失') from e
-    
+
     if not isinstance(method_name, str):
         raise WahuWebAPIRPCCallError('参数 method 不为 str')
-    
+
     if not isinstance(args_dict, dict):
         raise WahuWebAPIRPCCallError('参数 args 不为 dict')
-    
+
     method = WahuMethods.get(method_name)
 
     if method is None:
         raise WahuWebAPIRPCCallError(f'不存在方法 {method_name}')
-    
+
     args = WahuArguments(args_dict)
 
     method_ret = await method(args, ctx)
 
     # 处理生成器
-    if inspect.isasyncgen(method_ret):
+    if hasattr(method_ret, '__anext__'):
         gen_key = ctx.agenerator_pool.new(method_ret)
 
         return {'type': 'generator', 'return': gen_key}
-    
+
     json_ret = jsonizeablize(method_ret)
-    
+
     return {'type': 'normal', 'return': json_ret}

@@ -112,13 +112,23 @@ function handleSoecketMessage(ev: MessageEvent) {
 
             const gkey = ret.return as string
 
-            async function* g(): AsyncIterator<any> {
+            async function* g(): AsyncGenerator<any, any, any> {
+                let sendVal = null
+
                 while (true) {
-                    const ret = await wahuRPCCall<any>('wahu_anext', { key: gkey })
+                    const ret: any = await wahuRPCCall<any>(
+                        'wahu_anext',
+                        { key: gkey, send_val: sendVal }
+                    )
                     if (ret === null) { break }
 
                     try {
-                        yield ret as any
+                        sendVal = yield ret as any
+
+                        if(sendVal === undefined) {
+                            sendVal = null
+                        }
+
                     } catch (e) {
                         if (e instanceof WahuStopIteration) {
                             wahuRPCCall('wahu_dispose_generator', { key: gkey })

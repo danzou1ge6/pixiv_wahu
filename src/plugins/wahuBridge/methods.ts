@@ -230,23 +230,23 @@ export async function p_attempt_login () : Promise<AccountSession> {
 export async function p_ilst_detail (iid: number) : Promise<IllustDetail> {
     return await wahuRPCCall('p_ilst_detail', {iid: iid})as IllustDetail}
 
-export async function p_ilst_folow () : Promise<AsyncIterator<Array<IllustDetail>>> {
-    return await wahuRPCCall('p_ilst_folow', {})as AsyncIterator<Array<IllustDetail>>}
+export async function p_ilst_folow () : Promise<AsyncGenerator<null, undefined, Array<IllustDetail>>> {
+    return await wahuRPCCall('p_ilst_folow', {})as AsyncGenerator<null, undefined, Array<IllustDetail>>}
 
-export async function p_ilst_new () : Promise<AsyncIterator<Array<IllustDetail>>> {
-    return await wahuRPCCall('p_ilst_new', {})as AsyncIterator<Array<IllustDetail>>}
+export async function p_ilst_new () : Promise<AsyncGenerator<null, undefined, Array<IllustDetail>>> {
+    return await wahuRPCCall('p_ilst_new', {})as AsyncGenerator<null, undefined, Array<IllustDetail>>}
 
-export async function p_ilst_ranking (mode: PixivRecomMode) : Promise<AsyncIterator<Array<IllustDetail>>> {
-    return await wahuRPCCall('p_ilst_ranking', {mode: mode})as AsyncIterator<Array<IllustDetail>>}
+export async function p_ilst_ranking (mode: PixivRecomMode) : Promise<AsyncGenerator<null, undefined, Array<IllustDetail>>> {
+    return await wahuRPCCall('p_ilst_ranking', {mode: mode})as AsyncGenerator<null, undefined, Array<IllustDetail>>}
 
-export async function p_ilst_recom () : Promise<AsyncIterator<Array<IllustDetail>>> {
-    return await wahuRPCCall('p_ilst_recom', {})as AsyncIterator<Array<IllustDetail>>}
+export async function p_ilst_recom () : Promise<AsyncGenerator<null, undefined, Array<IllustDetail>>> {
+    return await wahuRPCCall('p_ilst_recom', {})as AsyncGenerator<null, undefined, Array<IllustDetail>>}
 
-export async function p_ilst_related (iid: number) : Promise<AsyncIterator<Array<IllustDetail>>> {
-    return await wahuRPCCall('p_ilst_related', {iid: iid})as AsyncIterator<Array<IllustDetail>>}
+export async function p_ilst_related (iid: number) : Promise<AsyncGenerator<null, undefined, Array<IllustDetail>>> {
+    return await wahuRPCCall('p_ilst_related', {iid: iid})as AsyncGenerator<null, undefined, Array<IllustDetail>>}
 
-export async function p_ilst_search (keyword: string, target: null | PixivSearchTarget, sort: null | PixivSort) : Promise<AsyncIterator<Array<IllustDetail>>> {
-    return await wahuRPCCall('p_ilst_search', {keyword: keyword, target: target, sort: sort})as AsyncIterator<Array<IllustDetail>>}
+export async function p_ilst_search (keyword: string, target: null | PixivSearchTarget, sort: null | PixivSort) : Promise<AsyncGenerator<null, undefined, Array<IllustDetail>>> {
+    return await wahuRPCCall('p_ilst_search', {keyword: keyword, target: target, sort: sort})as AsyncGenerator<null, undefined, Array<IllustDetail>>}
 
 export async function p_ilstbm_add (iids: Array<number>) : Promise<null> {
     return await wahuRPCCall('p_ilstbm_add', {iids: iids})as null}
@@ -254,8 +254,8 @@ export async function p_ilstbm_add (iids: Array<number>) : Promise<null> {
 export async function p_ilstbm_rm (iids: Array<number>) : Promise<null> {
     return await wahuRPCCall('p_ilstbm_rm', {iids: iids})as null}
 
-export async function p_user_bmilsts (uid: number) : Promise<AsyncIterator<Array<IllustDetail>>> {
-    return await wahuRPCCall('p_user_bmilsts', {uid: uid})as AsyncIterator<Array<IllustDetail>>}
+export async function p_user_bmilsts (uid: number) : Promise<AsyncGenerator<null, undefined, Array<IllustDetail>>> {
+    return await wahuRPCCall('p_user_bmilsts', {uid: uid})as AsyncGenerator<null, undefined, Array<IllustDetail>>}
 
 export async function p_user_detail (uid: number) : Promise<PixivUserDetail> {
     return await wahuRPCCall('p_user_detail', {uid: uid})as PixivUserDetail}
@@ -266,27 +266,30 @@ export async function p_user_follow_add (uid: number) : Promise<null> {
 export async function p_user_follow_rm (uid: number) : Promise<null> {
     return await wahuRPCCall('p_user_follow_rm', {uid: uid})as null}
 
-export async function p_user_follower (uid: number) : Promise<AsyncIterator<Array<PixivUserPreview>>> {
-    return await wahuRPCCall('p_user_follower', {uid: uid})as AsyncIterator<Array<PixivUserPreview>>}
+export async function p_user_follower (uid: number) : Promise<AsyncGenerator<null, undefined, Array<PixivUserPreview>>> {
+    return await wahuRPCCall('p_user_follower', {uid: uid})as AsyncGenerator<null, undefined, Array<PixivUserPreview>>}
 
-export async function p_user_following (uid: number) : Promise<AsyncIterator<Array<PixivUserPreview>>> {
-    return await wahuRPCCall('p_user_following', {uid: uid})as AsyncIterator<Array<PixivUserPreview>>}
+export async function p_user_following (uid: number) : Promise<AsyncGenerator<null, undefined, Array<PixivUserPreview>>> {
+    return await wahuRPCCall('p_user_following', {uid: uid})as AsyncGenerator<null, undefined, Array<PixivUserPreview>>}
 
-export async function p_user_ilsts (uid: number) : Promise<AsyncIterator<Array<IllustDetail>>> {
-    return await wahuRPCCall('p_user_ilsts', {uid: uid})as AsyncIterator<Array<IllustDetail>>}
+export async function p_user_ilsts (uid: number) : Promise<AsyncGenerator<null, undefined, Array<IllustDetail>>> {
+    return await wahuRPCCall('p_user_ilsts', {uid: uid})as AsyncGenerator<null, undefined, Array<IllustDetail>>}
 
-export async function p_user_related (uid: number) : Promise<AsyncIterator<Array<PixivUserPreview>>> {
-    return await wahuRPCCall('p_user_related', {uid: uid})as AsyncIterator<Array<PixivUserPreview>>}
+export async function p_user_related (uid: number) : Promise<AsyncGenerator<null, undefined, Array<PixivUserPreview>>> {
+    return await wahuRPCCall('p_user_related', {uid: uid})as AsyncGenerator<null, undefined, Array<PixivUserPreview>>}
 
-export async function p_user_search (keyword: string) : Promise<AsyncIterator<Array<PixivUserPreview>>> {
-    return await wahuRPCCall('p_user_search', {keyword: keyword})as AsyncIterator<Array<PixivUserPreview>>}
+export async function p_user_search (keyword: string) : Promise<AsyncGenerator<null, undefined, Array<PixivUserPreview>>> {
+    return await wahuRPCCall('p_user_search', {keyword: keyword})as AsyncGenerator<null, undefined, Array<PixivUserPreview>>}
 
-export async function wahu_anext (key: string) : Promise<null | any> {
-    return await wahuRPCCall('wahu_anext', {key: key})as null | any}
+export async function wahu_anext (key: string, send_val: any) : Promise<null | any> {
+    return await wahuRPCCall('wahu_anext', {key: key, send_val: send_val})as null | any}
 
 export async function wahu_dispose_generator (key: string) : Promise<boolean> {
     return await wahuRPCCall('wahu_dispose_generator', {key: key})as boolean}
 
 export async function wahu_download (iids: Array<number>) : Promise<null> {
     return await wahuRPCCall('wahu_download', {iids: iids})as null}
+
+export async function wahu_exec (cmd: string) : Promise<AsyncGenerator<string, undefined, string>> {
+    return await wahuRPCCall('wahu_exec', {cmd: cmd})as AsyncGenerator<string, undefined, string>}
 

@@ -41,12 +41,12 @@ def gen_methods():
 
     for name in dir(WahuMethods):
 
-        m = WahuMethods.get(name)
-        if not isinstance(m, WahuMethod):
+        if name.startswith('__') or name in {'anext', 'get'}:
             continue
 
-        if m.name == 'anext':
-            continue
+        m = WahuMethods.get(name)
+
+        assert m is not None
 
         args_vars, ret_tp = _parse_func(m.f)
         args_vars = args_vars[1:]  # 扔掉参数 ctx

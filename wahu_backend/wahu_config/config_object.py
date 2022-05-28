@@ -10,6 +10,7 @@ class WahuConfig:
     repos_file: Path
     file_name_template: str
     temp_download_dir: Path
+    cli_script_dir: Path
     # pixiv
     refresh_token_path: Optional[Path]
     account_session_path: Path

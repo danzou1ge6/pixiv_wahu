@@ -4,7 +4,7 @@ from typing import Callable
 
 from .structure import PyAnndVar, PyAnnoType, Py2TsConvertionError
 
-def _parse_ast_arg_anno(arg_anno: ast.Name | ast.Subscript) -> PyAnnoType:
+def _parse_ast_arg_anno(arg_anno: ast.Name | ast.Subscript | ast.Constant) -> PyAnnoType:
     if isinstance(arg_anno, ast.Name):
         return PyAnnoType(arg_anno.id)
 
@@ -28,11 +28,12 @@ def _parse_ast_arg_anno(arg_anno: ast.Name | ast.Subscript) -> PyAnnoType:
 
         elif arg_anno.value.id == 'AsyncGenerator':
             assert isinstance(arg_anno.slice, ast.Tuple)
-            assert arg_anno.slice.elts[1].value == None  # type: ignore
-            assert isinstance(arg_anno.slice.elts[0], ast.Subscript)
             return PyAnnoType(
-                'AsyncIterator',
-                args=[_parse_ast_arg_anno(arg_anno.slice.elts[0])]
+                'AsyncGenerator',
+                args=[
+                    _parse_ast_arg_anno(arg_anno.slice.elts[0]),  # type: ignore
+                    _parse_ast_arg_anno(arg_anno.slice.elts[1])  # type: ignore
+                ]
             )
 
         elif arg_anno.value.id == 'Optional':
@@ -52,13 +53,12 @@ def _parse_ast_arg_anno(arg_anno: ast.Name | ast.Subscript) -> PyAnnoType:
                 ]
             )
 
+    elif isinstance(arg_anno, ast.Constant):
 
-        else:
-            raise Py2TsConvertionError(f'无法解析 {arg_anno}')
+        if arg_anno.value == None:
+            return PyAnnoType('NoneType')
 
-
-    else:
-        raise Py2TsConvertionError(f'无法解析 {arg_anno}')
+    raise Py2TsConvertionError(f'无法解析 {arg_anno}')
 
 
 
@@ -69,6 +69,9 @@ def _parse_func(f: Callable) -> tuple[list[PyAnndVar], PyAnnoType]:
 
     args_anno_vars = []
     for arg in tree.body[0].args.args:
+
+        if arg.arg == 'cls':
+            continue
 
         assert isinstance(arg.annotation, (ast.Name, ast.Subscript))
         args_anno_vars.append(PyAnndVar(

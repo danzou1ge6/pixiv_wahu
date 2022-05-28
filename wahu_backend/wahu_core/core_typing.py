@@ -1,4 +1,4 @@
-from typing import Any, Callable, Coroutine, Optional, TypeAlias, TypeVar
+from typing import Any, Callable, Coroutine, Optional, Type, TypeAlias, TypeVar
 from enum import Enum
 
 from .wahu_context import WahuContext
@@ -13,6 +13,7 @@ AsyncFuncWithRet: TypeAlias = Callable[..., Coroutine[Any, Any, RT]]
 WahuMiddleWare: TypeAlias = Callable[
     [
         AsyncFuncWithRet[RT],
+        Type['WahuMethodsCollection'],
         'WahuArguments',
         WahuContext
     ],
@@ -20,9 +21,12 @@ WahuMiddleWare: TypeAlias = Callable[
 ]
 
 GenericWahuMethod: TypeAlias = Callable[
-    ['WahuArguments', WahuContext],
+    [Type[object], 'WahuArguments', WahuContext],
     Coroutine[Any, Any, RT]
 ]
+
+class WahuMethodsCollection:
+    """`WahuMethod` 合集的基类"""
 
 
 class WahuArguments(dict[str, Any]):

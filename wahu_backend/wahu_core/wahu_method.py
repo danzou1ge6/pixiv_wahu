@@ -5,7 +5,7 @@ from itertools import chain
 from typing import Any, Callable, Coroutine, Generic, Type, TypeVar
 
 from .core_exceptions import WahuMethodArgsKeyError, WahuMethodParseError
-from .core_typing import WahuArguments, WahuMiddleWare
+from .core_typing import WahuArguments, WahuMethodsCollection, WahuMiddleWare
 from .wahu_context import WahuContext
 
 
@@ -42,15 +42,12 @@ class WahuMethod(Generic[RT]):
         self.middlewares = middlewares
 
         arg_names = parse_func_args(f)
-        if arg_names[0] == 'cls':
-            self.arg_names = arg_names[2:]  # classmethod
-        else:
-            self.arg_names = arg_names[1:]  # staticmethod
+        self.arg_names = arg_names[2:]
 
-    async def rpc_f(self, args: WahuArguments, context: WahuContext) -> RT:
+    async def rpc_f(self, cls: Type[WahuMethodsCollection], args: WahuArguments, context: WahuContext) -> RT:
         try:
             args_tuple = tuple(chain(
-                (context,),
+                (cls, context,),
                 (args[name] for name in self.arg_names)
             ))
 
@@ -59,7 +56,7 @@ class WahuMethod(Generic[RT]):
 
         return await self.f(*args_tuple)
 
-    async def __call__(self, args: WahuArguments, context: WahuContext) -> RT:
+    async def __call__(self, cls: Type[WahuMethodsCollection], args: WahuArguments, context: WahuContext) -> RT:
         """
         - `:param args:` rpc 调用的字典
         - `:param context:` `WahuContext` 实例
@@ -69,7 +66,7 @@ class WahuMethod(Generic[RT]):
         for mw in self.middlewares:
             hdlr = partial(mw, hdlr)
 
-        return await hdlr(args, context)
+        return await hdlr(cls, args, context)
 
 
 def wahu_methodize(

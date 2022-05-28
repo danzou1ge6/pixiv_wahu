@@ -1,16 +1,14 @@
 import dataclasses
 import json
 from pathlib import Path
-from typing import Literal, Optional, TypeVar
+from typing import Literal, Optional, Type, TypeVar
 
-from wahu_backend.aiopixivpy.datastructure_illust import IllustTag
-
-from ..aiopixivpy import IllustDetail, PixivUserSummery
+from ..aiopixivpy import IllustDetail, PixivUserSummery, IllustTag
 from ..illust_bookmarking import IllustBookmark, IllustBookmarkDatabase
 from ..illust_bookmarking.ib_datastructure import IllustBookmarkingConfig
 from ..sqlite_tools.database_ctx_man import DatabaseContextManager
 from ..wahu_core import (GenericWahuMethod, WahuArguments, WahuContext,
-                         wahu_methodize)
+                         wahu_methodize, WahuMethodsCollection)
 from ..wahu_core.core_exceptions import WahuRuntimeError
 from .logger import logger
 
@@ -18,7 +16,10 @@ RT = TypeVar('RT')  # Return Type
 
 
 async def _check_db_name(
-    m: GenericWahuMethod[RT], args: WahuArguments, ctx: WahuContext
+    m: GenericWahuMethod[RT],
+    cls: Type[WahuMethodsCollection],
+    args: WahuArguments,
+    ctx: WahuContext
 ) -> RT:
     """检查数据库名的中间件"""
 
@@ -28,30 +29,30 @@ async def _check_db_name(
     if args.name not in ctx.ilst_bmdbs.keys():
         raise WahuRuntimeError(f'_check_db_name: 数据库名 {args.name} 不在上下文中')
 
-    return await m(args, ctx)
+    return await m(cls, args, ctx)
 
 
-class WahuIllustDatabaseMethods:
+class WahuIllustDatabaseMethods(WahuMethodsCollection):
 
+    @classmethod
     @wahu_methodize()
-    @staticmethod
-    async def ibd_list(ctx: WahuContext) -> list[str]:
+    async def ibd_list(cls, ctx: WahuContext) -> list[str]:
         """列出所有数据库"""
 
         return list(ctx.ilst_bmdbs.keys())
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_db_name])
-    @staticmethod
-    async def ibd_list_bm(ctx: WahuContext, name: str) -> list[IllustBookmark]:
+    async def ibd_list_bm(cls, ctx: WahuContext, name: str) -> list[IllustBookmark]:
         """列出所有收藏"""
 
         with await ctx.ilst_bmdbs[name](readonly=True) as ibd:
             return ibd.all_bookmarks()
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_db_name])
-    @staticmethod
     async def ibd_set_bm(
-        ctx: WahuContext, name: str, iid: int, pages: list[int]
+        cls, ctx: WahuContext, name: str, iid: int, pages: list[int]
     ) -> tuple[bool, bool]:
         """设置收藏页"""
 
@@ -67,29 +68,30 @@ class WahuIllustDatabaseMethods:
                 get_detail=sink)
         return ret
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_db_name])
-    @staticmethod
     async def ibd_ilst_detail(
-        ctx: WahuContext, name: str, iid: int
+        cls, ctx: WahuContext, name: str, iid: int
     ) -> Optional[IllustDetail]:
         """在数据库中查询插画详情"""
 
         with await ctx.ilst_bmdbs[name](readonly=True) as ibd:
             return ibd.query_detail(iid)
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_db_name])
-    @staticmethod
     async def ibd_query_bm(
-        ctx: WahuContext, name: str, iid: int
+        cls, ctx: WahuContext, name: str, iid: int
     ) -> Optional[IllustBookmark]:
         """在数据库中查询收藏情况"""
 
         with await ctx.ilst_bmdbs[name](readonly=True) as ibd:
             return ibd.query_bookmark(iid)
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_db_name])
-    @staticmethod
     async def ibd_fuzzy_query(
+        cls,
         ctx: WahuContext,
         name: str,
         target: Literal['title', 'caption', 'tag', 'username'],
@@ -123,28 +125,28 @@ class WahuIllustDatabaseMethods:
 
         return [(iid, score) for iid, score in ret]
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_db_name])
-    @staticmethod
     async def ibd_query_uid(
-        ctx: WahuContext, name: str, uid: int
+        cls, ctx: WahuContext, name: str, uid: int
     ) -> list[int]:
         """数据库中查询 `uid`"""
 
         with await ctx.ilst_bmdbs[name](readonly=True) as ibd:
             return ibd.query_uid(uid)
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_db_name])
-    @staticmethod
-    async def ibd_filter_restricted(ctx: WahuContext, name: str) -> list[int]:
+    async def ibd_filter_restricted(cls, ctx: WahuContext, name: str) -> list[int]:
         """数据库中被作者删除的插画"""
 
         with await ctx.ilst_bmdbs[name](readonly=True) as ibd:
             return ibd.filter_restricted()
 
+    @classmethod
     @wahu_methodize()
-    @staticmethod
     async def ibd_new(
-        ctx: WahuContext, name: str
+        cls, ctx: WahuContext, name: str
     ) -> bool:
         """新增数据库"""
 
@@ -159,10 +161,10 @@ class WahuIllustDatabaseMethods:
 
         return True
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_db_name])
-    @staticmethod
     async def ibd_remove(
-        ctx: WahuContext, name: str
+        cls, ctx: WahuContext, name: str
     ) -> None:
         """删除数据库"""
 
@@ -176,10 +178,10 @@ class WahuIllustDatabaseMethods:
             ibd_path = Path(ibd_path)
         ibd_path.unlink()
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_db_name])
-    @staticmethod
     async def ibd_copy(
-        ctx: WahuContext, name: str, target: str, iids: list[int]
+        cls, ctx: WahuContext, name: str, target: str, iids: list[int]
     ) -> None:
         """复制数据库"""
 
@@ -204,20 +206,20 @@ class WahuIllustDatabaseMethods:
             [target_ibd.illusts_te.insert(details)]
             [target_ibd.bookmarks_te.insert(bms)]
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_db_name])
-    @staticmethod
     async def ibd_get_config(
-        ctx: WahuContext, name: str
+        cls, ctx: WahuContext, name: str
     ) -> IllustBookmarkingConfig:
         """获取数据库配置"""
 
         with await ctx.ilst_bmdbs[name](readonly=True) as ibd:
             return ibd.config_table_editor.all()
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_db_name])
-    @staticmethod
     async def ibd_set_config(
-        ctx: WahuContext, name: str, config: IllustBookmarkingConfig
+        cls, ctx: WahuContext, name: str, config: IllustBookmarkingConfig
     ) -> None:
         """设置数据库配置"""
 
@@ -235,10 +237,10 @@ class WahuIllustDatabaseMethods:
             ibd.config_table_editor.setall(cfg)
 
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_db_name])
-    @staticmethod
     async def ibd_update_subs(
-        ctx: WahuContext, name: str, page_num: Optional[int]
+        cls, ctx: WahuContext, name: str, page_num: Optional[int]
     ) -> int:
         """更新数据库订阅"""
 
@@ -249,10 +251,10 @@ class WahuIllustDatabaseMethods:
                 page_num=page_num
             ))
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_db_name])
-    @staticmethod
     async def ibd_export_json(
-        ctx: WahuContext, name: str
+        cls, ctx: WahuContext, name: str
     ) -> str:
         """将数据库导出为 json"""
 
@@ -265,10 +267,10 @@ class WahuIllustDatabaseMethods:
 
         return json.dumps(d, ensure_ascii=False)
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_db_name])
-    @staticmethod
     async def ibd_import_json(
-        ctx: WahuContext, name: str, json_str: str
+        cls, ctx: WahuContext, name: str, json_str: str
     ) -> None:
         """将 JSON 文件导入数据库"""
 

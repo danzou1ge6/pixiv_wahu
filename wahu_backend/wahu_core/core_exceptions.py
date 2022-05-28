@@ -38,3 +38,6 @@ class WahuAsyncGeneratorPoolKeyError(WahuCoreException):
 
     def __str__(self) -> str:
         return f'找不到 key {self.k}'
+
+class WahuCliScriptError(MsgErrorTemplate, WahuCoreException):
+    """命令行脚本错误"""

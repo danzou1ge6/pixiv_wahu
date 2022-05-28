@@ -1,17 +1,16 @@
 import asyncio
-import dataclasses
 import itertools
 from dataclasses import dataclass
 from functools import reduce
 from pathlib import Path
-from typing import TypeVar
+from typing import TypeVar, Type
 
 from ..aiopixivpy import IllustDetail
 from ..file_tracing import FileEntry, FileTracer
 from ..illust_bookmarking import IllustBookmark
 from ..sqlite_tools.database_ctx_man import DatabaseContextManager
 from ..wahu_core import (GenericWahuMethod, WahuArguments, WahuContext,
-                         wahu_methodize)
+                         wahu_methodize, WahuMethodsCollection)
 from ..wahu_core.core_exceptions import WahuRuntimeError
 from ..wahu_core.repo_db_link import RepoEntry
 from .logger import logger
@@ -20,7 +19,7 @@ from .logger import logger
 RT = TypeVar('RT')
 
 async def _check_repo_name(
-    m: GenericWahuMethod[RT], args: WahuArguments, ctx: WahuContext
+    m: GenericWahuMethod[RT], cls: Type[WahuMethodsCollection], args: WahuArguments, ctx: WahuContext
 ) -> RT:
     """检查储存库名的中间件"""
 
@@ -30,10 +29,13 @@ async def _check_repo_name(
     if args.name not in ctx.ilst_repos.keys():
         raise WahuRuntimeError(f'_check_repo_name: 储存库名 {args.name} 不在上下文中')
 
-    return await m(args, ctx)
+    return await m(cls, args, ctx)
 
 async def _cvt_dict2fileentry(
-    m: GenericWahuMethod[RT], args: WahuArguments, ctx: WahuContext
+    m: GenericWahuMethod[RT],
+    cls: Type[WahuMethodsCollection],
+    args: WahuArguments,
+    ctx: WahuContext
 ) -> RT:
     """将字典转为 FileEntry"""
 
@@ -43,10 +45,13 @@ async def _cvt_dict2fileentry(
     ]
     args['file_entries'] = file_entries
 
-    return await m(args, ctx)
+    return await m(cls, args, ctx)
 
 async def _cvt_dict2fileentrywithurl(
-    m: GenericWahuMethod[RT], args: WahuArguments, ctx: WahuContext
+    m: GenericWahuMethod[RT],
+    cls: Type[WahuMethodsCollection],
+    args: WahuArguments,
+    ctx: WahuContext
 ) -> RT:
     """将字典转为 FileEntryWithURL"""
 
@@ -56,15 +61,18 @@ async def _cvt_dict2fileentrywithurl(
     ]
     args['file_entries_withurl'] = file_entries
 
-    return await m(args, ctx)
+    return await m(cls, args, ctx)
 
 async def _cvt_str2path(
-    m: GenericWahuMethod[RT], args: WahuArguments, ctx: WahuContext
+    m: GenericWahuMethod[RT],
+    cls: Type[WahuMethodsCollection],
+    args: WahuArguments,
+    ctx: WahuContext
 ) -> RT:
     """将字符串转为 Path"""
 
     args['files'] = [Path(f) for f in args['files']]
-    return await m(args, ctx)
+    return await m(cls, args, ctx)
 
 # ------------------------------------------------------------------- 数据模型
 @dataclass
@@ -95,12 +103,12 @@ def _cvt_invalid_path_char(s: str):
 
 
 # ------------------------------------------------------------------- 方法
-class IllustRepoMethods:
+class IllustRepoMethods(WahuMethodsCollection):
 
+    @classmethod
     @wahu_methodize()
-    @staticmethod
     async def ir_new(
-        ctx: WahuContext, name: str, prefix: str
+        cls, ctx: WahuContext, name: str, prefix: str
     ) -> None:
         """新增储存库"""
         if name in ctx.ilst_repos.keys():
@@ -117,26 +125,26 @@ class IllustRepoMethods:
         )
         ctx.repo_db_link.write()
 
+    @classmethod
     @wahu_methodize()
-    @staticmethod
-    async def ir_list(ctx: WahuContext) -> list[str]:
+    async def ir_list(cls, ctx: WahuContext) -> list[str]:
         """列出储存库"""
 
         return list(ctx.ilst_repos.keys())
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_repo_name])
-    @staticmethod
     async def ir_linked_db(
-        ctx: WahuContext, name: str
+        cls, ctx: WahuContext, name: str
     ) -> list[str]:
         """列出连接的数据库"""
 
         return ctx.repo_db_link.repos[name].linked_databases
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_repo_name])
-    @staticmethod
     async def ir_set_linked_db(
-        ctx: WahuContext, name: str, db_names: list[str]
+        cls, ctx: WahuContext, name: str, db_names: list[str]
     ) -> None:
         """
         设置连接的数据库，数据库可以不存在
@@ -147,10 +155,10 @@ class IllustRepoMethods:
 
         ctx.repo_db_link.set_repo_linked_db(name, db_names)
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_repo_name])
-    @staticmethod
     async def ir_calc_sync(
-        ctx: WahuContext, name: str
+        cls, ctx: WahuContext, name: str
     ) -> tuple[list[FileEntry], list[RepoSyncAddReport]]:
         """
         计算更新储存库要删除的条目和要添加的条目
@@ -228,10 +236,10 @@ class IllustRepoMethods:
 
         return (to_del_file_entries, to_add_db_file_entries)
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_repo_name, _cvt_dict2fileentry])
-    @staticmethod
     async def ir_add_cache(
-        ctx: WahuContext, name: str, file_entries: list[FileEntry]
+        cls, ctx: WahuContext, name: str, file_entries: list[FileEntry]
     ) -> None:
         """将条目添加到 cached"""
 
@@ -241,10 +249,10 @@ class IllustRepoMethods:
         with await ctx.ilst_repos[name](readonly=False) as ft:
             ft.add_cache(file_entries)
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_repo_name, _cvt_dict2fileentrywithurl])
-    @staticmethod
     async def ir_download(
-        ctx: WahuContext, name: str, file_entries_withurl: list[FileEntryWithURL]
+        cls, ctx: WahuContext, name: str, file_entries_withurl: list[FileEntryWithURL]
     ) -> None:
         """下载到储存库. 路径为相对路径"""
 
@@ -263,20 +271,20 @@ class IllustRepoMethods:
         loop = asyncio.get_running_loop()
         [loop.create_task(dl_coro(fewu)) for fewu in file_entries_withurl]
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_repo_name])
-    @staticmethod
     async def ir_update_index(
-        ctx: WahuContext, name: str
+        cls, ctx: WahuContext, name: str
     ) -> list[FileEntry]:
         """检查本地文件，将 cached 中下载完成的移入 indexed"""
 
         with await ctx.ilst_repos[name](readonly=False) as ft:
             return ft.update_index()
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_repo_name])
-    @staticmethod
     async def ir_rm_index(
-        ctx: WahuContext, name: str, index_fids: list[str]
+        cls, ctx: WahuContext, name: str, index_fids: list[str]
     ) -> None:
         """从 indexed 删除"""
 
@@ -284,10 +292,10 @@ class IllustRepoMethods:
             ft.remove_index(index_fids)
 
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_repo_name])
-    @staticmethod
     async def ir_validate(
-        ctx: WahuContext, name: str
+        cls, ctx: WahuContext, name: str
     ) -> tuple[list[FileEntry], list[Path]]:
         """校验文件和索引是否有效. 路径为绝对路径"""
 
@@ -297,10 +305,10 @@ class IllustRepoMethods:
                 ft.validate_files()
             )
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_repo_name, _cvt_str2path])
-    @staticmethod
     async def ir_remove_file(
-        ctx: WahuContext, name: str, files: list[Path]
+        cls, ctx: WahuContext, name: str, files: list[Path]
     ) -> None:
         """删除储存库内的文件"""
 
@@ -311,39 +319,39 @@ class IllustRepoMethods:
                 raise WahuRuntimeError(f'请求删除的文件 {str(p)} 不在储存库目录下')
             p.unlink()
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_repo_name])
-    @staticmethod
     async def ir_get_cache(
-        ctx: WahuContext, name: str
+        cls, ctx: WahuContext, name: str
     ) -> list[FileEntry]:
         """获取 cached 表"""
 
         with await ctx.ilst_repos[name](readonly=True) as ft:
             return ft.all_cache()
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_repo_name])
-    @staticmethod
     async def ir_get_index(
-        ctx: WahuContext, name: str
+        cls, ctx: WahuContext, name: str
     ) -> list[FileEntry]:
         """获取 indexed 表"""
 
         with await ctx.ilst_repos[name](readonly=True) as ft:
             return ft.all_index()
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_repo_name])
-    @staticmethod
     async def ir_empty_cache(
-        ctx: WahuContext, name: str
+        cls, ctx: WahuContext, name: str
     ) -> None:
         """清除 cached 表"""
 
         with await ctx.ilst_repos[name](readonly=False) as ft:
             ft.empty_cache()
 
+    @classmethod
     @wahu_methodize(middlewares=[_check_repo_name])
-    @staticmethod
-    async def ir_remove(ctx: WahuContext, name: str) -> None:
+    async def ir_remove(cls, ctx: WahuContext, name: str) -> None:
         """移除储存库"""
 
         ctx.ilst_repos.pop(name)

@@ -45,9 +45,9 @@ class PyAnnoType:
             assert self.args is not None
             return f'Iterator<{self.args[0].ts}>'
 
-        if self.tp == 'AsyncIterator':
+        if self.tp == 'AsyncGenerator':
             assert self.args is not None
-            return f'AsyncIterator<{self.args[0].ts}>'
+            return f'AsyncGenerator<{self.args[1].ts}, undefined, {self.args[0].ts}>'
 
         if self.tp == 'Optional':
             assert self.args is not None

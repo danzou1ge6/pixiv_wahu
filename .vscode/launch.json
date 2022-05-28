@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: 生成 ts 接口",
+            "type": "python",
+            "request": "launch",
+            "module": "tool.gen_bridge.__init__",
+            "justMyCode": true
+        },
+        {
             "name": "Python: 调试服务器",
             "type": "python",
             "request": "launch",

@@ -39,7 +39,7 @@ class WahuAsyncGeneratorPool:
             return True
         return False
 
-    async def call(self, key: str) -> Optional[Any]:
+    async def call(self, key: str, send_val: Any = None) -> Optional[Any]:
         """
         根据 `new` 方法返回的标识符 `key` 调用池中的异步生成器 \n
         如果池中没有，抛出 `WahuAsyncGeneratorPoolKeyError` \n
@@ -52,7 +52,7 @@ class WahuAsyncGeneratorPool:
             raise WahuAsyncGeneratorPoolKeyError(key)
 
         try:
-            r = await anext(g)
+            r = await g.asend(send_val)
             return r
 
         except StopAsyncIteration:
