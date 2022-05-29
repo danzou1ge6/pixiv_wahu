@@ -161,7 +161,7 @@ export default defineComponent({
   left: 0px;
   top: 50px;
   width: 75%;
-  height: 90vh;
+  height: calc(100vh - 50px);
   background-color: white;
 }
 </style>

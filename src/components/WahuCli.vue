@@ -4,7 +4,8 @@
       <pre>{{ text }}</pre>
     </div>
     <q-input v-model="cmdInp" @keyup.enter="enter" dense :prefix="generator === undefined ? '$' : '>'" autofocus
-      :dark="dark" class="q-mr-sm q-mb-sm" @keyup.up="previousHistory" @keyup.down="nextHistory">
+      :dark="dark" class="q-mr-sm q-mb-sm" @keyup.up="previousHistory" @keyup.down="nextHistory" :loading="loading"
+      :disabled="loading">
     </q-input>
     <div ref="inputBoxAnchor" style="q-my-md">
     </div>
@@ -22,6 +23,7 @@ const props = defineProps<{
 
 const text = ref<string>('WahuCli\n输入 man 来获得帮助\n')
 const cmdInp = ref<string>('')
+const loading = ref<boolean>(false)
 
 const history = ref<Array<string>>([])
 const historyPointer = ref<number>(0)
@@ -43,8 +45,11 @@ function enter() {
         return
       }
 
+      loading.value = true
+
       wahu_exec(cmdInp.value)
         .then(gen => {
+          loading.value = false
           cmdInp.value = ''
           generator.value = gen
           listenGenerator()
