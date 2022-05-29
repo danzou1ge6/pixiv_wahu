@@ -8,8 +8,7 @@
         </q-scroll-area>
       </Transition>
 
-      <div class="text-h3 absolute-top-right animated zoomIn" v-show="showWahu">Wahu！</div>
-      <div class="text-body-2 absolute-bottom-right animated fadeInUp" v-show="showWahu">クドリャフカ - 73072668 by クー </div>
+      <div class="text-body-2 absolute-top-right animated fadeInUp" v-show="showWahu">クドリャフカ - 73072668 by クー </div>
     </q-img>
 
 </template>

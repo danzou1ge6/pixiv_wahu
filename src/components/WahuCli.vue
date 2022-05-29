@@ -65,6 +65,14 @@ watch(text, () => {
   }
 })
 
+onMounted(() => {
+  wahu_exec('wahu')
+    .then(gen => {
+      generator.value = gen
+      listenGenerator()
+    })
+})
+
 
 async function listenGenerator(initalSendVal?: string) {
   while (generator.value !== undefined) {
