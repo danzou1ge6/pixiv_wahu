@@ -17,7 +17,7 @@
             "request": "launch",
             "program": "dev_stuff/dev_server.py",
             "console": "integratedTerminal",
-            "justMyCode": true
+            "justMyCode": false
         },
         {
             "name": "Python: 当前文件",

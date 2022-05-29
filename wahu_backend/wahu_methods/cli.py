@@ -3,10 +3,7 @@ from pathlib import Path
 import traceback
 from typing import AsyncGenerator, Type
 
-import click
-
 from ..wahu_core import CliIOPipe, WahuContext, wahu_methodize
-from ..wahu_core.wahu_cli import print_help
 from .illust_database import WahuIllustDatabaseMethods
 from .illust_repo import IllustRepoMethods
 from .misc import WahuMiscMethods
