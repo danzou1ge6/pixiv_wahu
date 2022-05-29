@@ -5,12 +5,15 @@ import click
 if TYPE_CHECKING:
     from wahu_backend.wahu_methods.cli import CliClickCtxObj
 
+from wahu_backend.wahu_core.wahu_cli_helper import wahu_cli_wrap
+
+
 NAME = '重新加载命令行脚本'
 DESCRIPTION = '从 `config.cli_script_dir` 重新加载命令行脚本'
 
 
 
-def mount(wexe: click.Group, wahu_cli_wrap):
+def mount(wexe: click.Group):
 
     @wexe.command()
     @wahu_cli_wrap

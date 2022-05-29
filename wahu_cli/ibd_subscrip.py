@@ -11,8 +11,10 @@ from wahu_backend.illust_bookmarking import IllustBookmark
 if TYPE_CHECKING:
     from wahu_backend.wahu_methods.cli import CliClickCtxObj
 
-NAME = '插画数据库订阅'
-DESCRIPTION = '根据订阅配置文件中记录的用户 ID 更新数据库中插画'
+from wahu_backend.wahu_core.wahu_cli_helper import wahu_cli_wrap
+
+
+IGNORE = True  # 不被自动加载
 
 
 T = TypeVar('T')
@@ -47,9 +49,9 @@ async def alist(g: AsyncIterable[T], count: Optional[int] = None) -> list[T]:
         finally:
             return ret
 
-def mount(wexe: click.Group, wahu_cli_wrap):
+def mount(parent_group: click.Group):
 
-    @wexe.command()
+    @parent_group.command()
     @click.option('--page', '-p', type=int, default=-1, help='每条订阅更新的目录数')
     @click.option(
         '--overwrite/--no-overwrite', '-o/', is_flag=True, help='是否覆盖原有内容')
@@ -61,7 +63,7 @@ def mount(wexe: click.Group, wahu_cli_wrap):
         metavar='<bookmark_uid>')
     @click.argument('name', type=str)
     @wahu_cli_wrap
-    async def ibd_subscrip(
+    async def subscrip(
         cctx: click.Context,
         page: int,
         overwrite: bool,
@@ -74,10 +76,12 @@ def mount(wexe: click.Group, wahu_cli_wrap):
         如果手动指定了 <user_uid> 或 <bookmark_uid> 中的至少一个，则使用它
         否则从文件 `config.local.ibd_subscrip` 中加载
 
+        \b
         配置文件格式 (toml):
             [<name>]
             subscribed_user_uid = [123, 234, 345]
             subscribed_bookmark_uid = [123, 234, 345]
+
         """
 
         obj: 'CliClickCtxObj' = cctx.obj

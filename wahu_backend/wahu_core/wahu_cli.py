@@ -1,19 +1,17 @@
-import asyncio
-import functools
+
 import importlib
-from importlib import resources
 import sys
-import traceback
 from asyncio import Event
+from importlib import resources
 from inspect import Traceback
 from pathlib import Path
 from queue import Queue
-from typing import (Any, AsyncGenerator, Callable, Concatenate, Coroutine,
-                    Optional, ParamSpec, TypeVar)
+from typing import Any, AsyncGenerator, Callable, Optional
 
 import click
 
 from .core_exceptions import WahuCliScriptError
+from .wahu_cli_helper import print_help
 
 TP = str
 
@@ -100,39 +98,6 @@ class CliIOPipe(AsyncGenerator[TP, TP]):
 
 
 
-def print_help(cctx: click.Context, param: click.Parameter, value: Any):
-    """助手函数 用以覆盖 click 打印到终端"""
-
-    if not value or cctx.resilient_parsing:
-        return
-    cctx.obj.pipe.put(cctx.get_help())
-    cctx.obj.pipe.close()
-    cctx.exit()
-
-T = TypeVar('T')
-P = ParamSpec('P')
-
-
-def wahu_cli_wrap(f: Callable[Concatenate[click.Context, P], Coroutine[None, None, None]]):
-
-    @click.option('--help', is_flag=True, callback=print_help,
-                  expose_value=False, is_eager=True)
-    @click.pass_context
-    @functools.wraps(f)
-    def g(cctx: click.Context, *args: P.args, **kwargs: P.kwargs) -> None:
-
-        async def h() -> None:
-            try:
-                await f(cctx, *args, **kwargs)
-            except Exception:
-                cctx.obj.pipe.put(traceback.format_exc())
-            finally:
-                cctx.obj.pipe.close()
-
-        asyncio.create_task(h())
-
-    return g
-
 
 class WahuCliScript:
     """储存命令行脚本信息"""
@@ -160,7 +125,7 @@ def _load_cli_scripts_from_dir(
 
     cli_scripts = []
 
-    sys.path.append(str(script_dir))
+    sys.path.insert(0, str(script_dir))
 
     for item in script_dir.iterdir():
         if item.suffix == '.py':
@@ -168,6 +133,12 @@ def _load_cli_scripts_from_dir(
             m = importlib.import_module(item.stem)
             if reload:
                 importlib.reload(m)
+
+            try:
+                if m.IGNORE:
+                    continue
+            except AttributeError:
+                pass
 
             try:
                 name = m.NAME
@@ -190,7 +161,7 @@ def _load_cli_scripts_from_dir(
             except AttributeError:
                 raise WahuCliScriptError('缺少 mount')
 
-            mount(wexe, wahu_cli_wrap)
+            mount(wexe)
 
             with open(item, 'r', encoding='utf-8') as rf:
                 code = rf.read()

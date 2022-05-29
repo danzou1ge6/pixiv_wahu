@@ -2,14 +2,14 @@ import ast
 import inspect
 from functools import partial
 from itertools import chain
-from typing import Any, Callable, Coroutine, Generic, Type, TypeVar
+from typing import Any, Callable, Coroutine, Generic, ParamSpec, Type, TypeVar
 
 from .core_exceptions import WahuMethodArgsKeyError, WahuMethodParseError
 from .core_typing import WahuArguments, WahuMethodsCollection, WahuMiddleWare
 from .wahu_context import WahuContext
 
 
-def parse_func_args(f: Callable[[Any], Any]) -> list[str]:
+def parse_func_args(f: Callable[..., Any]) -> list[str]:
     tree = ast.parse(inspect.cleandoc(inspect.getsource(f)))
 
     if not isinstance(tree.body[0], ast.AsyncFunctionDef):
@@ -19,8 +19,9 @@ def parse_func_args(f: Callable[[Any], Any]) -> list[str]:
 
 
 RT = TypeVar('RT')  # Return Type
+P = ParamSpec('P')
 
-class WahuMethod(Generic[RT]):
+class WahuMethod(Generic[RT, P]):
     """
     可以挂载到 `WahuMethodsCollection` 的一个 `Wahu` 方法 \n
     调用时，按照从左到右的顺序依次调用 `self.middle_wares`
@@ -29,7 +30,7 @@ class WahuMethod(Generic[RT]):
     def __init__(
         self,
         name: str,
-        f: Callable[..., Coroutine[None, None, RT]], *,
+        f: Callable[P, Coroutine[None, None, RT]], *,
         middlewares: list[WahuMiddleWare[RT]]
     ):
         """
@@ -54,7 +55,7 @@ class WahuMethod(Generic[RT]):
         except KeyError as ke:
             raise WahuMethodArgsKeyError(f'{ke.args}') from ke
 
-        return await self.f(*args_tuple)
+        return await self.f(*args_tuple)  # type: ignore
 
     async def __call__(self, cls: Type[WahuMethodsCollection], args: WahuArguments, context: WahuContext) -> RT:
         """
@@ -71,12 +72,12 @@ class WahuMethod(Generic[RT]):
 
 def wahu_methodize(
     middlewares: list[WahuMiddleWare] = [],
-) -> Callable[[Callable[..., Coroutine[None, None, RT]]], WahuMethod[RT]]:
+) -> Callable[[Callable[P, Coroutine[None, None, RT]]], WahuMethod[RT, P]]:
     """
     `WahuMethod` 的工厂函数，将一个异步函数转换为带有中间件的 `WahuMethod`
     """
 
-    def f(g: Callable[..., Coroutine[None, None, RT]]) -> WahuMethod[RT]:
+    def f(g: Callable[P, Coroutine[None, None, RT]]) -> WahuMethod[RT, P]:
 
         h = WahuMethod(
             g.__name__,

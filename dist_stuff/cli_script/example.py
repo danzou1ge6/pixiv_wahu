@@ -5,6 +5,9 @@ if TYPE_CHECKING:
     from wahu_backend.wahu_core import WahuContext
     from wahu_backend.wahu_methods.cli import CliClickCtxObj
 
+from wahu_backend.wahu_core.wahu_cli_helper import wahu_cli_wrap
+
+
 """
 一个示例命令行脚本，使用 click 创建
 click 文档详见 https://click.palletsprojects.com/en/8.1.x/
@@ -24,7 +27,7 @@ def cleanup_hook(ctx: 'WahuContext'):
     """当应用退出时执行；可选"""
     pass
 
-def mount(wexe: click.Group, wahu_cli_wrap):
+def mount(wexe: click.Group):
     """
     将自定义的命令挂载到 `wexe` ，即命令行处理的根命令
     装饰器 `wahu_cli_wrap` 用于完成以下工作
