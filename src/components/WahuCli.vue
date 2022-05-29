@@ -52,7 +52,7 @@ function enter() {
     }
   } else {
     listenGenerator(cmdInp.value)
-    text.value += cmdInp.value + '\n'
+    text.value += '> ' + cmdInp.value + '\n'
     cmdInp.value = ''
   }
 

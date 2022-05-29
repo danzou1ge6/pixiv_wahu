@@ -8,7 +8,8 @@ setup(
     package_dir={
         'wahu_backend': 'wahu_backend',
         'wahu_frontend': 'dist/wahu_frontend',
-        'token_getter': 'dist_stuff/token_getter'
+        'wahu_cli': 'wahu_cli',
+        'token_getter': 'token_getter'
     },
     install_requires=[
         'click',

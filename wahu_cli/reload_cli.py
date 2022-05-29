@@ -18,7 +18,7 @@ def mount(wexe: click.Group, wahu_cli_wrap):
         """重新加载命令行脚本
         """
 
-        obj: CliClickCtxObj = cctx.obj
+        obj: 'CliClickCtxObj' = cctx.obj
         wctx, pipe, wmethods = obj.unpkg()
 
         await wmethods.cli_reload.f(wmethods, wctx)

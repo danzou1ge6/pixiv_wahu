@@ -1,6 +1,5 @@
 from logging import config as log_cfg
 from pathlib import Path
-from typing import Any
 
 import toml
 
@@ -70,7 +69,7 @@ def load_config(config_file: Path) -> WahuConfig:
     except KeyError as ke:
         raise ConfigLoadKeyError(ke.args[0]) from ke
 
-    for p in (database_dir,):
+    for p in (database_dir, cli_script_dir):
         if not p.exists():
             raise ConfigLoadBadPath(p)
 

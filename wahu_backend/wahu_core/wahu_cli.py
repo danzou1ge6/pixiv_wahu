@@ -1,6 +1,7 @@
 import asyncio
 import functools
 import importlib
+from importlib import resources
 import sys
 import traceback
 from asyncio import Event
@@ -153,25 +154,11 @@ class WahuCliScript:
         self.cleanup_hook = cleanup_hook
 
 
-def load_cli_scripts(script_dir: Path, reload: bool=False
-) -> tuple[list[WahuCliScript], click.Group]:
-    """
-    加载所有命令行脚本
-    - :param script_dir: 脚本所在的目录
-    - :param reload: 是否重新加载命令行脚本的模块
-    - :return: `wexe`: `click.Group`, `cli_scripts`
-    """
+def _load_cli_scripts_from_dir(
+    script_dir: Path, wexe: click.Group, reload: bool=False
+) ->list[WahuCliScript]:
 
     cli_scripts = []
-
-    @click.group()
-    @click.option('--help', is_flag=True, callback=print_help,
-                  expose_value=False, is_eager=True)
-    @click.pass_context
-    @staticmethod
-    def wexe(cctx: click.Context):
-        pass
-
 
     sys.path.append(str(script_dir))
 
@@ -219,6 +206,37 @@ def load_cli_scripts(script_dir: Path, reload: bool=False
 
     sys.path.remove(str(script_dir))
 
+    return cli_scripts
+
+def load_cli_scripts(script_dir: Path, reload: bool=False
+) -> tuple[list[WahuCliScript], click.Group]:
+    """
+    加载所有命令行脚本
+    - :param script_dir: 脚本所在的目录
+    - :param reload: 是否重新加载命令行脚本的模块
+    - :return: `wexe`: `click.Group`, `cli_scripts`
+    """
+
+    cli_scripts = []
+
+    @click.group()
+    @click.option('--help', is_flag=True, callback=print_help,
+                  expose_value=False, is_eager=True)
+    @click.pass_context
+    @staticmethod
+    def wexe(cctx: click.Context):
+        pass
+
+    # 从 wahu_cli 包中加载
+    try:
+        cli_pkg_path = resources.path('wahu_cli', 'reload_cli.py').__enter__().parent
+        cli_scripts += _load_cli_scripts_from_dir(cli_pkg_path, wexe, reload=reload)
+    except ModuleNotFoundError:
+        pass
+
+    cli_scripts += _load_cli_scripts_from_dir(script_dir, wexe, reload=reload)
+
     return cli_scripts, wexe
+
 
 

@@ -1,7 +1,7 @@
 import asyncio
 import itertools
 import time
-from typing import TYPE_CHECKING, AsyncIterable, Optional, Type, TypeVar
+from typing import TYPE_CHECKING, AsyncIterable, Optional, TypeVar
 
 import click
 import toml
@@ -80,7 +80,7 @@ def mount(wexe: click.Group, wahu_cli_wrap):
             subscribed_bookmark_uid = [123, 234, 345]
         """
 
-        obj: CliClickCtxObj = cctx.obj
+        obj: 'CliClickCtxObj' = cctx.obj
         wctx, pipe, wmethods = obj.unpkg()
 
         if len(user_uid) == 0 and len(bookmark_uid) == 0:
