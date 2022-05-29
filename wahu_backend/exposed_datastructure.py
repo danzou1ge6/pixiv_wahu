@@ -10,6 +10,7 @@ from .illust_bookmarking import IllustBookmark, IllustBookmarkingConfig
 from .file_tracing import FileEntry, FileTracingConfig
 
 from .wahu_methods.illust_repo import RepoSyncAddReport, FileEntryWithURL
+from .wahu_methods.cli import CliScriptInfo
 
 from .pixiv_image import DownloadProgress
 
@@ -20,7 +21,7 @@ from .pixiv_image import DownloadProgress
 exports = [PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserDetail,
            PixivUserPreview, IllustBookmark, IllustBookmarkingConfig, FileEntry,
            FileTracingConfig, RepoSyncAddReport, AccountSession,
-           FileEntryWithURL, DownloadProgress]
+           FileEntryWithURL, DownloadProgress, CliScriptInfo]
 
 exports_type = {
     'PixivRecomMode': PixivRecomMode,

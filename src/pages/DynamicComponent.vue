@@ -18,6 +18,7 @@ import { openedWindows, displayedWindowN } from '../plugins/windowManager'
 
 
 /** 自动生成 Import Begin */
+import CliScriptView from './CliScriptView.vue'
 import ErrorNotFound from './ErrorNotFound.vue'
 import Home from './Home.vue'
 import IllustDetailLocal from './IllustDetailLocal.vue'
@@ -29,6 +30,7 @@ import PixivUserDetail from './PixivUserDetail.vue'
 import RepoView from './RepoView.vue'
 interface componentIndex {[index: string] : any}
 const components: componentIndex = {
+  CliScriptView: CliScriptView,
   ErrorNotFound: ErrorNotFound,
   Home: Home,
   IllustDetailLocal: IllustDetailLocal,

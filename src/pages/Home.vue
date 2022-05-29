@@ -1,22 +1,38 @@
 <template>
-  <Transition appear enter-active-class="animated fadeInDown">
-    <q-img :src="homeImageURL" v-show="showKud">
-      <Transition appear enter-active-class="animated zoomIn">
-        <div class="text-h1 absolute-top-right" v-show="showWahu">Wahu！</div>
+    <q-img :src="homeImageURL" v-show="showKud" autofocus ref="image"
+      class="animated fadeInDown">
+
+      <Transition appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
+        <q-scroll-area class="wahu-cli" v-show="showCli">
+          <WahuCli :dark="true"></WahuCli>
+        </q-scroll-area>
       </Transition>
-      <Transition appear enter-active-class="animated fadeInUp">
-        <div class="text-subtitle-2 absolute-bottom-right" v-show="showWahu">クドリャフカ - 73072668 by クー </div>
-      </Transition>
+
+      <div class="text-h3 absolute-top-right animated zoomIn" v-show="showWahu">Wahu！</div>
+      <div class="text-body-2 absolute-bottom-right animated fadeInUp" v-show="showWahu">クドリャフカ - 73072668 by クー </div>
     </q-img>
-  </Transition>
+
 </template>
 
 <script setup lang="ts">
 import { homeImageURL } from 'src/constants';
+import WahuCli from 'src/components/WahuCli.vue';
 import { onMounted, ref } from 'vue';
+
+const emits = defineEmits<{
+  (e: 'updateProps', val: object): void,
+  (e: 'updateTitle', val: string): void,
+}>()
+onMounted(() => {
+  emits('updateTitle', 'Home')
+})
 
 const showWahu = ref<boolean>(false)
 const showKud = ref<boolean>(false)
+
+const showCli = ref<boolean>(false)
+
+const image = ref<HTMLTemplateElement | null>(null)
 
 onMounted(() => {
   setTimeout(() => {
@@ -24,7 +40,9 @@ onMounted(() => {
   }, 500)
   setTimeout(() => {
     showKud.value = true
+    showCli.value = true
   }, 250)
+
 })
 </script>
 
@@ -32,5 +50,9 @@ onMounted(() => {
 img {
   max-width: 100%;
   max-height: 95vh;
+}
+.wahu-cli {
+  width: 75%;
+  height: 100%;
 }
 </style>

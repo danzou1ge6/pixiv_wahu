@@ -1,8 +1,9 @@
 import asyncio
 import atexit
 from pathlib import Path
-from inspect import iscoroutinefunction
-from typing import Callable, Coroutine, Iterable
+from typing import Iterable
+
+import click
 
 from ..aiopixivpy import MaintainedSessionPixivAPI
 from ..file_tracing import FileTracer
@@ -10,8 +11,8 @@ from ..illust_bookmarking import IllustBookmarkDatabase
 from ..pixiv_image import PixivImagePool
 from ..sqlite_tools.database_ctx_man import DatabaseContextManager
 from ..wahu_config.config_object import WahuConfig
-from .core_exceptions import WahuCliScriptError
 from .repo_db_link import RepoDatabaseLink, RepoEntry
+from .wahu_cli import WahuCliScript, load_cli_scripts
 from .wahu_generator_pool import WahuAsyncGeneratorPool
 
 
@@ -47,59 +48,12 @@ def create_file_tracers(
         for r in repos
     }
 
-class WahuCliScript:
-
-    def __init__(
-        self,
-        path: Path,
-        name: str,
-        descrip: str,
-        init_hook: Callable[['WahuContext'], None],
-        cleanup_hook: Callable[['WahuContext'], None]
-    ):
-        self.path = path
-        self.name = name
-        self.descrip = descrip
-        self.init_hook = init_hook
-        self.cleanup_hook = cleanup_hook
-
-
-def load_cli_scripts(script_dir: Path) -> list[WahuCliScript]:
-
-    cli_scripts = []
-
-    for item in script_dir.iterdir():
-        if item.suffix == '.py':
-
-            global_dict = {}
-
-            with open(item, 'r', encoding='utf-8') as wf:
-                code = wf.read()
-            exec(code, global_dict)
-
-            try:
-                name = global_dict['NAME']
-                description = global_dict['DESCRIPTION']
-            except KeyError:
-                raise WahuCliScriptError('缺少元信息 name, description')
-
-            init_hook = global_dict.get('init_hook', None)
-            cleanup_hook = global_dict.get('cleanup_hook', None)
-
-            cli_scripts.append(WahuCliScript(
-                item,
-                name,
-                description,
-                init_hook,
-                cleanup_hook
-            ))
-
-    return cli_scripts
 
 
 class WahuContext:
 
     cli_scripts: list[WahuCliScript]
+    wexe: click.Group
 
     def __init__(self, config: WahuConfig):
 
@@ -142,13 +96,19 @@ class WahuContext:
         # 异步生成器池
         self.agenerator_pool = WahuAsyncGeneratorPool(self.config.agenerator_pool_size)
 
-        # 命令行脚本 init_hook
-        self.cli_scripts = load_cli_scripts(self.config.cli_script_dir)
-
-        for cs in self.cli_scripts:
-            cs.init_hook(self)
+        # 命令行脚本
+        self.load_cli_scripts()
 
         atexit.register(self.sync_cleanup)
+
+    def load_cli_scripts(self, reload: bool=False):
+
+        self.cli_scripts, self.wexe = load_cli_scripts(
+            self.config.cli_script_dir, reload=reload)
+
+        for cs in self.cli_scripts:
+            if cs.init_hook is not None:
+                cs.init_hook(self)
 
     async def cleanup(self):
         await self.papi.close_session()
@@ -157,7 +117,8 @@ class WahuContext:
     def sync_cleanup(self):
 
         for cs in self.cli_scripts:
-            cs.cleanup_hook(self)
+            if cs.cleanup_hook is not None:
+                cs.cleanup_hook(self)
 
         loop = asyncio.get_event_loop()
         loop.run_until_complete(self.cleanup())

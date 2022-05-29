@@ -46,6 +46,13 @@
       <NotificationArea v-model="showNotification" :max-disp="5"></NotificationArea>
       <LoginControl v-model="showLoginCtl"></LoginControl>
       <DownloadProgress v-model="showDlProgress"></DownloadProgress>
+
+      <Transition appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
+        <q-scroll-area class="wahu-cli shadow-24" v-show="showCli">
+          <WahuCli :dark="false"></WahuCli>
+        </q-scroll-area>
+      </Transition>
+
       <DynamicComponent></DynamicComponent>
     </q-page-container>
   </q-layout>
@@ -64,6 +71,7 @@ import LoginControl from 'src/components/LoginControl.vue';
 import NavDrawerContent from 'src/components/NavDrawerContent.vue';
 import DownloadProgress from 'src/components/DownloadProgress.vue';
 import { soecketStatusReact } from 'src/plugins/wahuBridge/client';
+import WahuCli from 'src/components/WahuCli.vue';
 
 export default defineComponent({
   name: 'MainLayout',
@@ -74,8 +82,9 @@ export default defineComponent({
     DynamicComponent,
     LoginControl,
     NavDrawerContent,
-    DownloadProgress
-  },
+    DownloadProgress,
+    WahuCli
+},
 
   setup() {
     const leftDrawerOpen = ref(false)
@@ -83,6 +92,7 @@ export default defineComponent({
     const showNotification = ref(false)
     const showLoginCtl = ref(false)
     const showDlProgress = ref(false)
+    const showCli = ref(false)
 
     const route = useRoute()
     const router = useRouter()
@@ -112,12 +122,16 @@ export default defineComponent({
         router.push(currentPath)
         pushWindowFromRouter()
       }, false)
-    })
 
+      document.addEventListener('keyup', (ev: KeyboardEvent) => {
+        if(ev.ctrlKey && ev.key == '`') {
+          showCli.value = ! showCli.value
+        }
+      })
 
-    onMounted(() => {
       pushWindowFromRouter()
     })
+
 
     function windowRefresh() {
       refreshCurrentWindow()
@@ -133,8 +147,21 @@ export default defineComponent({
       showLoginCtl,
       showDlProgress,
       windowRefresh,
-      showNotConnectedBar
+      showNotConnectedBar,
+      showCli
     }
   }
 });
 </script>
+
+<style scoped>
+.wahu-cli {
+  z-index: 99;
+  position: fixed;
+  left: 0px;
+  top: 50px;
+  width: 75%;
+  height: 90vh;
+  background-color: white;
+}
+</style>

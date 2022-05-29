@@ -41,7 +41,7 @@ def gen_methods():
 
     for name in dir(WahuMethods):
 
-        if name.startswith('__') or name in {'anext', 'get'}:
+        if name.startswith('__') or name in {'anext', 'get', 'wexe'}:
             continue
 
         m = WahuMethods.get(name)

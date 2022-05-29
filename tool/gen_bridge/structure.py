@@ -47,7 +47,7 @@ class PyAnnoType:
 
         if self.tp == 'AsyncGenerator':
             assert self.args is not None
-            return f'AsyncGenerator<{self.args[1].ts}, undefined, {self.args[0].ts}>'
+            return f'AsyncGenerator<{self.args[0].ts}, undefined, {self.args[1].ts}>'
 
         if self.tp == 'Optional':
             assert self.args is not None

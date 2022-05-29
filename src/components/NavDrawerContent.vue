@@ -4,6 +4,10 @@
       <q-item clickable @click="pushWindow({component: 'Home', title: 'Home'}); $emit('update:modelValue', false)"
       >Home</q-item>
 
+      <q-item clickable @click="pushWindow({ component: 'CliScriptView'}); $emit('update:modelValue', false)">
+        命令行脚本
+      </q-item>
+
       <q-item-label header>插画数据库</q-item-label>
 
       <q-item clickable v-for="dbn in dbNameList" :key="dbn" @click="clickDb(dbn)" v-ripple>
@@ -130,6 +134,7 @@
           </q-list>
         </q-card>
       </q-expansion-item>
+
 
     </q-list>
   </q-drawer>

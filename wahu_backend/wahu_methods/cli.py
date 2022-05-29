@@ -1,10 +1,12 @@
-import asyncio
-import functools
-from typing import Any, AsyncGenerator, Callable, Coroutine, ParamSpec, Type, TypeVar
+from dataclasses import dataclass
+from pathlib import Path
+import traceback
+from typing import AsyncGenerator, Type
 
 import click
 
 from ..wahu_core import CliIOPipe, WahuContext, wahu_methodize
+from ..wahu_core.wahu_cli import print_help
 from .illust_database import WahuIllustDatabaseMethods
 from .illust_repo import IllustRepoMethods
 from .misc import WahuMiscMethods
@@ -13,6 +15,7 @@ from .wahu_generator import WahuGeneratorMethods
 
 
 class CliClickCtxObj:
+    """挂载到 `click.Context.obj` ，来传入必要的上下文信息"""
 
     def __init__(
         self,
@@ -24,20 +27,15 @@ class CliClickCtxObj:
         self.pipe = pipe
         self.wmethods = wmethods
 
+    def unpkg(self):
+        return self.wctx, self.pipe, self.wmethods
 
-@click.group()
-@click.pass_context
-def wexe(cctx: click.Context):
-    pass
-
-T = TypeVar('T')
-P = ParamSpec('P')
-
-def coro_as_task(f: Callable[P, Coroutine[None, None, None]]):
-    @functools.wraps(f)
-    def g(*args: P.args, **kwargs: P.kwargs) -> None:
-        asyncio.create_task(f(*args, **kwargs))
-    return g
+@dataclass
+class CliScriptInfo:
+    path: Path
+    name: str
+    descrip: str
+    code: str
 
 
 class WahuMetdodsWithCli(
@@ -59,9 +57,30 @@ class WahuMetdodsWithCli(
                 grouped_cmd.append(block)
         grouped_cmd = [g for g in grouped_cmd if g != '']
 
-        pipe = CliIOPipe[str]()
+        pipe = CliIOPipe()
         cctx_obj = CliClickCtxObj(ctx, pipe, cls)
 
-        wexe(grouped_cmd, obj=cctx_obj, standalone_mode=False)
+        try:
+            ctx.wexe(grouped_cmd, obj=cctx_obj, standalone_mode=False)
+        except Exception:
+            pipe.put(traceback.format_exc())
+            pipe.close()
 
         return pipe
+
+    @classmethod
+    @wahu_methodize()
+    async def cli_reload(cls, ctx: WahuContext) -> None:
+        """重新从 `config.cli_script_dir` 加载命令行脚本"""
+
+        ctx.load_cli_scripts(reload=True)
+
+    @classmethod
+    @wahu_methodize()
+    async def cli_list(cls, ctx: WahuContext) -> list[CliScriptInfo]:
+        """返回命令行脚本的信息"""
+
+        return [CliScriptInfo(
+            cs.path, cs.name, cs.descrip, cs.code
+        ) for cs in ctx.cli_scripts]
+

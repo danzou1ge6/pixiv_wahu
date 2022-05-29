@@ -12,7 +12,8 @@
         {
             "label": "生成 动态组件 的 import 和 Interface",
             "type": "shell",
-            "command": "pipenv run gen-dpage"
+            "command": "pipenv run gen-dpage",
+            "problemMatcher": []
         },
         {
             "label": "Windows 打包",

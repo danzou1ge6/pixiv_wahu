@@ -154,7 +154,7 @@ watch(selectedPage, () => {
 
 const relatedIllusts = ref<Array<wm.IllustDetail>>([])
 
-const relatedGenerator = ref<AsyncIterator<Array<wm.IllustDetail>>>()
+const relatedGenerator = ref<AsyncGenerator<Array<wm.IllustDetail>>>()
 
 onMounted(() => {
   wm.p_ilst_related(props.iid)
