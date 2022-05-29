@@ -25,25 +25,3 @@ class IllustBookmark(IllustBookmarkRaw, DatabaseRow):
     def as_fids(self):
         return [f'{self.iid}-{p}' for p in self.pages]
 
-
-@dataclasses.dataclass
-class IllustBookmarkingConfigRaw:
-    did: int  # Database ID
-    name: str
-    description: str
-    subscribed_user_uid: list[int]
-    subscribed_bookmark_uid: list[int]
-
-
-class IllustBookmarkingConfig(IllustBookmarkingConfigRaw, DatabaseRow):
-    adapters = {
-        'did': IntAdapter,
-        'name': StrAdapter,
-        'description': StrAdapter,
-        'subscribed_user_uid': JsonAdapter,
-        'subscribed_bookmark_uid': JsonAdapter
-    }
-
-    keys = list(adapters.keys())
-
-    index = 'did'

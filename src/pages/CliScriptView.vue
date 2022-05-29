@@ -54,11 +54,13 @@ const displayedCode = ref<string>('')
 
 const reloading = ref<boolean>(false)
 
-onMounted(() => {
+function refresh() {
   cli_list().then(ls => {
     cliScriptInfo.value = ls
   })
-})
+}
+
+onMounted(refresh)
 
 function openCodeDisplay(code: string) {
   displayedCode.value = code
@@ -67,7 +69,10 @@ function openCodeDisplay(code: string) {
 
 function reload() {
   reloading.value = true
-  cli_reload().then(() => { reloading.value = false })
+  cli_reload().then(() => {
+    reloading.value = false
+    refresh()
+  })
 }
 
 </script>

@@ -2,7 +2,7 @@
   <q-card class="q-ma-md">
     <div class="text-h5 q-ma-md" style="display: inline-block">{{ dbName }}</div>
 
-    <DatabaseActions :db-name="dbName" @update-subscrip="executeQuery"></DatabaseActions>
+    <DatabaseActions :db-name="dbName"></DatabaseActions>
 
     <div class="float-right q-ma-md">
       <q-btn icon="help" size="sm" flat @click="showHelp = !showHelp">

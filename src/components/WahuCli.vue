@@ -20,7 +20,7 @@ const props = defineProps<{
   dark: boolean
 }>()
 
-const text = ref<string>('WahuCli\n输入 --help 来获得命令列表')
+const text = ref<string>('WahuCli\n输入 --help 来获得命令列表\n')
 const cmdInp = ref<string>('')
 
 const inputBoxAnchor = ref<HTMLTemplateElement | null>(null)

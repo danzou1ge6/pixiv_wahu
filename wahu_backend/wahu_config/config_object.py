@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 
 
 @dataclass
@@ -34,3 +34,5 @@ class WahuConfig:
     default_fuzzy_cutoff: int
     # log
     log_rpc_ret_length: int
+
+    original_dict: dict[str, Any]

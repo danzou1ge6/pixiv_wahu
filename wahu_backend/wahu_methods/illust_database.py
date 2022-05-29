@@ -5,7 +5,6 @@ from typing import Literal, Optional, Type, TypeVar
 
 from ..aiopixivpy import IllustDetail, PixivUserSummery, IllustTag
 from ..illust_bookmarking import IllustBookmark, IllustBookmarkDatabase
-from ..illust_bookmarking.ib_datastructure import IllustBookmarkingConfig
 from ..sqlite_tools.database_ctx_man import DatabaseContextManager
 from ..wahu_core import (GenericWahuMethod, WahuArguments, WahuContext,
                          wahu_methodize, WahuMethodsCollection)
@@ -205,51 +204,6 @@ class WahuIllustDatabaseMethods(WahuMethodsCollection):
 
             [target_ibd.illusts_te.insert(details)]
             [target_ibd.bookmarks_te.insert(bms)]
-
-    @classmethod
-    @wahu_methodize(middlewares=[_check_db_name])
-    async def ibd_get_config(
-        cls, ctx: WahuContext, name: str
-    ) -> IllustBookmarkingConfig:
-        """获取数据库配置"""
-
-        with await ctx.ilst_bmdbs[name](readonly=True) as ibd:
-            return ibd.config_table_editor.all()
-
-    @classmethod
-    @wahu_methodize(middlewares=[_check_db_name])
-    async def ibd_set_config(
-        cls, ctx: WahuContext, name: str, config: IllustBookmarkingConfig
-    ) -> None:
-        """设置数据库配置"""
-
-        if isinstance(config, IllustBookmarkingConfig):
-          cfg = config
-        else:
-          try:
-              cfg = IllustBookmarkingConfig(
-                  *(config[k] for k in IllustBookmarkingConfig.keys)
-              )
-          except KeyError as ke:
-              raise WahuRuntimeError(f'缺少配置项 {ke.args}')
-
-        with await ctx.ilst_bmdbs[name](readonly=False) as ibd:
-            ibd.config_table_editor.setall(cfg)
-
-
-    @classmethod
-    @wahu_methodize(middlewares=[_check_db_name])
-    async def ibd_update_subs(
-        cls, ctx: WahuContext, name: str, page_num: Optional[int]
-    ) -> int:
-        """更新数据库订阅"""
-
-        with await ctx.ilst_bmdbs[name](readonly=False) as ibd:
-            return len(await ibd.update_subscrip(
-                get_user_bookmarks=ctx.papi.user_bookmarks_illusts,
-                get_user_illusts=ctx.papi.user_illusts,
-                page_num=page_num
-            ))
 
     @classmethod
     @wahu_methodize(middlewares=[_check_db_name])

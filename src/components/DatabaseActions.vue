@@ -3,12 +3,6 @@
 
     <q-btn-dropdown color="primary" label="操作" class="q-ma-md">
       <q-list dense>
-        <q-item clickable v-close-popup flat @click="showConfig = !showConfig">
-          配置
-        </q-item>
-        <q-item clickable v-close-popup @click="showUpdateSubs = !showUpdateSubs" :loading="updateSubsLoading">
-          更新订阅
-        </q-item>
         <q-item clickable @click="exportJson">
           导出 JSON
           <q-menu auto-close anchor="top right">
@@ -26,61 +20,20 @@
       </q-list>
     </q-btn-dropdown>
 
-    <DatabaseConfig v-model="showConfig" :db-name="dbName"></DatabaseConfig>
-
-    <q-dialog v-model="showUpdateSubs">
-      <q-card>
-        <q-card-section>
-          <q-input v-model="updateSubsPageCount" @keyup.enter="updateSubscribe" underlined autofocus label="每个订阅更新的页数"
-            :rules="[n => !isNaN(Number(n))]" type="number" hint="输入-1来更新全部"></q-input>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
-
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import * as wm from '../plugins/wahuBridge/methods'
 import { pushNoti } from '../plugins/notifications';
-import DatabaseConfig from 'src/components/DatabaseConfig.vue';
-import { json } from 'body-parser';
 
 const props = defineProps<{
   dbName: string,
 }>()
-const emits = defineEmits<{
-  (e: 'updateSubscrip'): void
-}>()
 
-const showConfig = ref<boolean>(false)
-const showUpdateSubs = ref<boolean>(false)
-const updateSubsPageCount = ref<number>(-1)
 
 const jsonUpload = ref<File>()
-
-const updateSubsLoading = ref<boolean>(false)
-
-function updateSubscribe() {
-  showUpdateSubs.value = false
-
-  let pc: number
-  if (updateSubsPageCount.value == -1) { pc = -1 }
-  else { pc = updateSubsPageCount.value }
-
-  updateSubsLoading.value = true
-
-  wm.ibd_update_subs(props.dbName, pc)
-    .then(num => {
-      pushNoti({
-        level: 'success',
-        msg: `${props.dbName} 更新了 ${num} 幅插画`
-      })
-      updateSubsLoading.value = false
-      emits('updateSubscrip')
-    })
-}
 
 const objURLForExport = ref<string>()
 function exportJson() {

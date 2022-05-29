@@ -8,11 +8,11 @@ from typing import (AsyncGenerator, Callable, Coroutine, Iterable, Optional,
                     Tuple, Union)
 
 from ..aiopixivpy import IllustDetail
-from ..sqlite_tools import ConfigStoredinSqlite, SqliteTableEditor
+from ..sqlite_tools import SqliteTableEditor
 from ..sqlite_tools.abc import DependingDatabase
 
 from .aitertools import alist
-from .ib_datastructure import IllustBookmark, IllustBookmarkingConfig
+from .ib_datastructure import IllustBookmark
 from .log_adapter import IllustBookmarkDatabaseLogAdapter
 from .logger import logger
 
@@ -20,32 +20,13 @@ from .logger import logger
 class IllustBookmarkDatabase(DependingDatabase):
     """使用数据库储存收藏的插画及其详细信息，粒度为每张图片"""
 
-    def get_default_config(self) -> IllustBookmarkingConfig:
-        cfg = IllustBookmarkingConfig(
-            getrandbits(16),
-            self.name,
-            '',
-            [],
-            []
-        )
-        return cfg
-
     illusts_te: SqliteTableEditor[IllustDetail] = SqliteTableEditor('illusts', IllustDetail)
     bookmarks_te: SqliteTableEditor[IllustBookmark] = SqliteTableEditor('bookmarks', IllustBookmark)
-
-
-    config_table_editor: ConfigStoredinSqlite[IllustBookmarkingConfig] = \
-        ConfigStoredinSqlite(
-            IllustBookmarkingConfig,
-            name='config'
-    )
 
     def __init__(self, name: str, db_path: Union[str, Path]):
 
         self.name: str = name
         self.db_path: Union[Path, str] = db_path
-
-        self.config = self.config_table_editor.v
 
         self.db_con: sqlite3.Connection
 
@@ -64,12 +45,6 @@ class IllustBookmarkDatabase(DependingDatabase):
 
         self.bookmarks_te.bind(cur)
         self.bookmarks_te.create_if_not()
-
-        self.config_table_editor.bind(cur)
-        self.config_table_editor.create_if_not()
-
-        if self.config_table_editor.empty:
-            self.config_table_editor.insert([self.get_default_config()])
 
     def close(self, commit: bool=True) -> None:
 
@@ -171,59 +146,6 @@ class IllustBookmarkDatabase(DependingDatabase):
         detail_list = await asyncio.gather(*coro_list)
 
         self.illusts_te.insert(detail_list)
-
-    async def update_subscrip(
-        self,
-        get_user_illusts: Callable[[int], AsyncGenerator[list[IllustDetail], None]],
-        get_user_bookmarks: Callable[[int], AsyncGenerator[list[IllustDetail], None]],
-        delete: bool = True,
-        page_num: Optional[int] = None
-    ) -> list[IllustDetail]:
-        """
-        更新订阅的用户作品和用户收藏
-        - `:param get_user_illusts:` 获取用户作品的方法，如 `PixivAPI.user_illusts`
-        - `:param get_user_bookmarks:` 获取用户收藏的方法
-        - `:delete:` 是否清空以前的记录
-        - `:page_num:` 对于每一条订阅，更新的页数. 若提供了，则 `delete` 无效
-        每个插画的所有的页都将被收藏
-        """
-
-        cfg = self.config_table_editor.select()[0]
-
-        coro_list = [
-            *(
-                alist(get_user_illusts(uid), page_num)
-                for uid in cfg.subscribed_user_uid
-            ),
-            *(
-                alist(get_user_bookmarks(uid), page_num)
-                for uid in cfg.subscribed_bookmark_uid
-            )
-        ]
-
-        illusts_lllist = await asyncio.gather(*coro_list)
-        # illusts_lllist' s type is tuple[list[list[IllustsDetail]]]
-
-        illusts = list(itertools.chain(*itertools.chain(*illusts_lllist)))
-
-        self.log_adapter.info('update_subscrip: 加入收藏 ID %s'
-                              % [ilst.iid for ilst in illusts])
-
-        if delete and page_num == None:
-
-            self.log_adapter.info('update_subscrip: 清空数据')
-
-            self.illusts_te.delete()
-            self.bookmarks_te.delete()
-
-        self.illusts_te.insert(illusts)
-
-        self.bookmarks_te.insert(
-            [IllustBookmark(ilst.iid, list(range(ilst.page_count)), int(time()))
-             for ilst in illusts]
-        )
-
-        return illusts
 
     def query_detail(self, iid: int) -> Optional[IllustDetail]:
         """在数据库中查询 `iid` 的详情，若无则返回 `None`"""

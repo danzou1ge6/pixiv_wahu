@@ -78,14 +78,6 @@ interface IllustBookmark {
     add_timestamp: number;
 }
 
-interface IllustBookmarkingConfig {
-    did: number;
-    name: string;
-    description: string;
-    subscribed_user_uid: Array<number>;
-    subscribed_bookmark_uid: Array<number>;
-}
-
 interface FileEntry {
     path: Path;
     fid: string;
@@ -130,7 +122,7 @@ interface CliScriptInfo {
     code: string;
 }
 
-export type {PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserDetail, PixivUserPreview, IllustBookmark, IllustBookmarkingConfig, FileEntry, FileTracingConfig, RepoSyncAddReport, AccountSession, FileEntryWithURL, DownloadProgress, CliScriptInfo}
+export type {PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserDetail, PixivUserPreview, IllustBookmark, FileEntry, FileTracingConfig, RepoSyncAddReport, AccountSession, FileEntryWithURL, DownloadProgress, CliScriptInfo}
 
 export async function cli_list () : Promise<Array<CliScriptInfo>> {
     return await wahuRPCCall('cli_list', {})as Array<CliScriptInfo>}
@@ -152,9 +144,6 @@ export async function ibd_filter_restricted (name: string) : Promise<Array<numbe
 
 export async function ibd_fuzzy_query (name: string, target: 'title' | 'caption' | 'tag' | 'username', keyword: string, cutoff: null | number) : Promise<Array<[number, number]>> {
     return await wahuRPCCall('ibd_fuzzy_query', {name: name, target: target, keyword: keyword, cutoff: cutoff})as Array<[number, number]>}
-
-export async function ibd_get_config (name: string) : Promise<IllustBookmarkingConfig> {
-    return await wahuRPCCall('ibd_get_config', {name: name})as IllustBookmarkingConfig}
 
 export async function ibd_ilst_detail (name: string, iid: number) : Promise<null | IllustDetail> {
     return await wahuRPCCall('ibd_ilst_detail', {name: name, iid: iid})as null | IllustDetail}
@@ -182,12 +171,6 @@ export async function ibd_remove (name: string) : Promise<null> {
 
 export async function ibd_set_bm (name: string, iid: number, pages: Array<number>) : Promise<[boolean, boolean]> {
     return await wahuRPCCall('ibd_set_bm', {name: name, iid: iid, pages: pages})as [boolean, boolean]}
-
-export async function ibd_set_config (name: string, config: IllustBookmarkingConfig) : Promise<null> {
-    return await wahuRPCCall('ibd_set_config', {name: name, config: config})as null}
-
-export async function ibd_update_subs (name: string, page_num: null | number) : Promise<number> {
-    return await wahuRPCCall('ibd_update_subs', {name: name, page_num: page_num})as number}
 
 export async function ir_add_cache (name: string, file_entries: Array<FileEntry>) : Promise<null> {
     return await wahuRPCCall('ir_add_cache', {name: name, file_entries: file_entries})as null}

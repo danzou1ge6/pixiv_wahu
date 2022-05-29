@@ -6,7 +6,7 @@ from .aiopixivpy.api_base import AccountSession
 from .aiopixivpy.pixivpy_typing import PixivRecomMode, PixivSearchTarget, PixivSort
 
 
-from .illust_bookmarking import IllustBookmark, IllustBookmarkingConfig
+from .illust_bookmarking import IllustBookmark
 from .file_tracing import FileEntry, FileTracingConfig
 
 from .wahu_methods.illust_repo import RepoSyncAddReport, FileEntryWithURL
@@ -19,7 +19,7 @@ from .pixiv_image import DownloadProgress
 """
 
 exports = [PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserDetail,
-           PixivUserPreview, IllustBookmark, IllustBookmarkingConfig, FileEntry,
+           PixivUserPreview, IllustBookmark, FileEntry,
            FileTracingConfig, RepoSyncAddReport, AccountSession,
            FileEntryWithURL, DownloadProgress, CliScriptInfo]
 

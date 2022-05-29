@@ -98,5 +98,6 @@ def load_config(config_file: Path) -> WahuConfig:
         agenerator_pool_size=agenerator_pool_size,
         image_pool_size=image_pool_size,
         default_fuzzy_cutoff=default_fuzzy_cutoff,
-        log_rpc_ret_length=log_rpc_ret_length
+        log_rpc_ret_length=log_rpc_ret_length,
+        original_dict=d
     )

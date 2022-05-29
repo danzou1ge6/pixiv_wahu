@@ -173,35 +173,6 @@ def get_user_bookmarks(uid):
     return g()
 
 
-@pytest.mark.asyncio
-class TestSubscribe:
-
-    @staticmethod
-    @pytest.fixture(autouse=True, scope='class')
-    def init(ibd):
-        ibd.config.subscribed_user_uid = [123]
-        ibd.config.subscribed_bookmark_uid = [123]
-
-    @staticmethod
-    async def test_subscribe(ibd):
-        await ibd.update_subscrip(get_user_illusts, get_user_bookmarks)
-
-        assert ibd.illusts_te.has(illust_detail1.iid)
-        assert ibd.illusts_te.has(illust_detail2.iid)
-
-        assert ibd.bookmarks_te.has(illust_detail1.iid)
-        assert ibd.bookmarks_te.has(illust_detail2.iid)
-
-    @staticmethod
-    async def test_subscribe_pages(ibd):
-        ibd.illusts_te.delete()
-
-        await ibd.update_subscrip(get_user_illusts, get_user_bookmarks, page_num=1)
-
-        assert ibd.illusts_te.has(illust_detail1.iid)
-        assert not ibd.illusts_te.has(illust_detail2.iid)
-
-
 @pytest.mark.usefixtures('init_with_detail')
 class TestFuzzyQuery:
 
