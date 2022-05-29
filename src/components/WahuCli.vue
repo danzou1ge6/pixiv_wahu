@@ -135,6 +135,8 @@ function handleSpecialCmd(cmd: string) : boolean {
     text.value = ''
   }else if(cmd == 'man') {
     text.value += manText
+  }else if(cmd == 'history') {
+    text.value += history.value.slice(undefined, history.value.length - 1).join('\n')
   }else{
     return false
   }

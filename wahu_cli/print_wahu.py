@@ -17,5 +17,6 @@ def mount(wexe: click.Group):
     @wexe.command()
     @wahu_cli_wrap
     async def wahu(wctx):
-        """Wahu!"""
+        """Wahu!
+        """
         wctx.obj.pipe.putline(_WAHU)
