@@ -4,8 +4,8 @@
       <pre>{{ text }}</pre>
     </div>
     <q-input v-model="cmdInp" @keyup.enter="enter" dense :prefix="generator === undefined ? '$' : '>'" autofocus
-      :dark="dark" class="q-mr-sm q-mb-sm" @keyup.up="previousHistory" @keyup.down="nextHistory" :loading="loading"
-      :disabled="loading">
+      :dark="dark" class="q-mr-sm q-mb-sm cli-input" @keyup.up="previousHistory" @keyup.down="nextHistory"
+      :loading="loading" :disabled="loading">
     </q-input>
     <div ref="inputBoxAnchor" style="q-my-md">
     </div>
@@ -34,13 +34,13 @@ let generator = ref<AsyncGenerator<string, undefined, string | undefined>>()
 
 function enter() {
   if (generator.value === undefined) {
-    if(cmdInp.value != '') {
+    if (cmdInp.value != '') {
 
       text.value += '\n$ ' + cmdInp.value + '\n'
       history.value.push(cmdInp.value)
       historyPointer.value = history.value.length
 
-      if(handleSpecialCmd(cmdInp.value)) {
+      if (handleSpecialCmd(cmdInp.value)) {
         cmdInp.value = ''
         return
       }
@@ -65,7 +65,7 @@ function enter() {
 }
 
 watch(text, () => {
-  if(inputBoxAnchor.value !== null) {
+  if (inputBoxAnchor.value !== null) {
     inputBoxAnchor.value.scrollIntoView()
   }
 })
@@ -103,19 +103,19 @@ function processRetVal(ret: string | undefined) {
 }
 
 function nextHistory() {
-  if(historyPointer.value < history.value.length) {
+  if (historyPointer.value < history.value.length) {
     historyPointer.value += 1
 
-    if(historyPointer.value == history.value.length) {
+    if (historyPointer.value == history.value.length) {
       cmdInp.value = ''
-    }else{
+    } else {
       cmdInp.value = history.value[historyPointer.value]
     }
   }
 }
 
 function previousHistory() {
-  if(historyPointer.value > 0) {
+  if (historyPointer.value > 0) {
     historyPointer.value -= 1
 
     cmdInp.value = history.value[historyPointer.value]
@@ -135,14 +135,14 @@ const manText = `
 在任何一个页面，可以使用快捷加 Ctrl+\` 呼出快捷命令行终端
 `.trim()
 
-function handleSpecialCmd(cmd: string) : boolean {
-  if(cmd == 'clear') {
+function handleSpecialCmd(cmd: string): boolean {
+  if (cmd == 'clear') {
     text.value = ''
-  }else if(cmd == 'man') {
+  } else if (cmd == 'man') {
     text.value += manText
-  }else if(cmd == 'history') {
+  } else if (cmd == 'history') {
     text.value += history.value.slice(undefined, history.value.length - 1).join('\n')
-  }else{
+  } else {
     return false
   }
   return true
@@ -153,5 +153,8 @@ function handleSpecialCmd(cmd: string) : boolean {
 <style scoped>
 pre {
   white-space: break-spaces;
+}
+.cli-input {
+  font-family: monospace;
 }
 </style>

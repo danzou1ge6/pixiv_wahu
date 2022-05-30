@@ -14,7 +14,12 @@ interface KeyedAppWindow extends AppWindow {
   scrollY: number
 }
 
-const openedWindows = ref<Array<KeyedAppWindow>>([])
+const openedWindows = ref<Array<KeyedAppWindow>>([{
+  component: 'Home',
+  title: 'Home',
+  key: randomId(),
+  scrollY: 0
+}])
 let displayedWindowN = ref<number>(0)
 
 function randomId() {
@@ -22,7 +27,9 @@ function randomId() {
 }
 
 function gotoWindow(n: number): void {
-  displayedWindowN.value = n
+  if(n < openedWindows.value.length) {
+    displayedWindowN.value = n
+  }
 }
 
 function pushWindow(win: AppWindow, goto?: boolean): void {

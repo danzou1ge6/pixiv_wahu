@@ -1,6 +1,6 @@
 <template>
     <q-img :src="homeImageURL" v-show="showKud" autofocus ref="image" fit="cover"
-      class="animated fadeInDown bg-img" width="100%" height="100vh">
+      class="animated fadeInDown bg-img">
 
       <Transition appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
         <q-scroll-area class="wahu-cli" v-show="showCli">
@@ -50,6 +50,8 @@ onMounted(() => {
   position: fixed;
   left: 0px;
   top: 50px;
+  widows: 100%;
+  height: calc(100vh - 50px);
 }
 .wahu-cli {
   width: 75%;

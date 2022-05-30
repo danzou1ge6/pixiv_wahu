@@ -107,10 +107,6 @@ export default defineComponent({
 
       }
 
-      pushWindow({
-        component: 'Home',
-        title: 'Home'
-      }, false)
 
     }
 
@@ -163,5 +159,6 @@ export default defineComponent({
   width: 75%;
   height: calc(100vh - 50px);
   background-color: white;
+  opacity: 0.9;
 }
 </style>
