@@ -3,7 +3,7 @@
       class="animated fadeInDown bg-img">
 
       <Transition appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
-          <WahuCli :dark="true" class="wahu-cli" v-show="showCli"></WahuCli>
+          <WahuCli :dark="true" width="75vw" height="100%" v-show="showCli"></WahuCli>
       </Transition>
 
       <div class="text-body-2 absolute-top-right animated fadeInUp" v-show="showWahu">クドリャフカ - 73072668 by クー </div>
@@ -50,9 +50,5 @@ onMounted(() => {
   top: 50px;
   widows: 100%;
   height: calc(100vh - 50px);
-}
-.wahu-cli {
-  width: 75%;
-  height: 100%;
 }
 </style>

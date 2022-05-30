@@ -1,17 +1,17 @@
 <template>
   <div v-if="text !== undefined && src === undefined">
-    <pre>{{ text }}</pre>
+    <pre class="normal-pre">{{ text }}</pre>
   </div>
   <div v-if="text === undefined && src !== undefined">
-    <q-img :src="src" max-width="100%" height="300px" fit="contain"></q-img>
+    <q-img :src="src" width="100%" height="300px" fit="contain"></q-img>
   </div>
   <div v-if="text !== undefined && src !== undefined">
-    <div class="row justify-center no-wrap q-gutter-md items-center">
-      <div class="col">
-        <q-img :src="src" max-width="60%" height="300px" fit="contain"></q-img>
+    <div class="row justify-right no-wrap q-gutter-md items-center">
+      <div class="col-6">
+        <q-img :src="src" width="100%" height="300px" fit="contain"></q-img>
       </div>
-      <div class="col">
-        <pre>{{ text }}</pre>
+      <div class="col-6">
+        <pre class="inline-pre">{{ text }}</pre>
       </div>
     </div>
   </div>
@@ -25,8 +25,11 @@ const props = defineProps<{
 
 </script>
 
-<style>
-pre {
-  white-space: break-spaces;
+<style scoped>
+.inline-pre {
+  white-space: pre;
+}
+.normal-pre {
+  white-space: pre-wrap;
 }
 </style>

@@ -1,13 +1,13 @@
 <template>
-  <q-scroll-area ref="scrollArea">
-    <div class="q-pa-sm">
+  <q-scroll-area ref="scrollArea" :style="`width: ${width}; height: ${height}; padding-left: 0px; padding-right: 0px;`">
+    <div :style="`width: ${width}; height: ${height};`" class="q-mx-sm">
       <div>
         <div v-for="(item, i) in content" :key="i">
           <WahuCliItem v-bind="item"></WahuCliItem>
         </div>
       </div>
       <q-input v-model="cmdInp" @keyup.enter="enter" dense :prefix="generator === undefined ? '$' : '>'" autofocus
-        :dark="dark" class="q-mr-sm q-mb-sm cli-input" @keyup.up="previousHistory" @keyup.down="nextHistory"
+        :dark="dark" class="cli-input" @keyup.up="previousHistory" @keyup.down="nextHistory"
         :loading="loading" :disabled="loading" ref="inputBox">
       </q-input>
       <div ref="inputBoxAnchor"></div>
@@ -22,7 +22,9 @@ import { wahu_exec } from 'src/plugins/wahuBridge/methods';
 import WahuCliItem from './WahuCliItem.vue';
 
 const props = defineProps<{
-  dark: boolean
+  dark: boolean,
+  width: string,
+  height: string
 }>()
 
 
