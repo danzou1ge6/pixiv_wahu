@@ -8,6 +8,7 @@ aiohttp = "*"
 click = "*"
 fuzzywuzzy = "*"
 toml = "*"
+prettytable = "*"
 
 [dev-packages]
 pytest = "*"

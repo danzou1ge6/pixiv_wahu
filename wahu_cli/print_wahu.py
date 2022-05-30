@@ -1,9 +1,10 @@
 import click
 
 from wahu_backend.wahu_core.wahu_cli_helper import wahu_cli_wrap
+from wahu_backend.constants import homeImageURL
 
-NAME = '插画数据库操作'
-DESCRIPTION = '一些对插画数据库的操作'
+NAME = '打印 Wahu'
+DESCRIPTION = 'Wahu!'
 
 _WAHU = '''/\\ \\  __/\\ \\          /\\ \\             /\\ \\
 \\ \\ \\/\\ \\ \\ \\     __  \\ \\ \\___   __  __\\ \\ \\
@@ -15,8 +16,12 @@ _WAHU = '''/\\ \\  __/\\ \\          /\\ \\             /\\ \\
 def mount(wexe: click.Group):
 
     @wexe.command()
+    @click.option('--image', '-i', is_flag=True)
     @wahu_cli_wrap
-    async def wahu(wctx):
+    async def wahu(wctx, image: bool):
         """Wahu!
         """
-        wctx.obj.pipe.putline(_WAHU)
+        if image:
+            wctx.obj.pipe.putline(f'[:img={homeImageURL}]')
+        else:
+            wctx.obj.pipe.put(_WAHU)

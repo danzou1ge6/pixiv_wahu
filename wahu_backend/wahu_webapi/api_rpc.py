@@ -1,9 +1,11 @@
-from aiohttp import web
-import aiohttp
-import traceback
 import json
-from ..wahu_core import WahuContext
+import traceback
 
+import aiohttp
+from aiohttp import web
+
+from .. import constants
+from ..wahu_core import WahuContext
 from .rpc_methods_handler import handle_rpc_call
 
 """
@@ -21,7 +23,7 @@ def register(app: web.Application, ctx: WahuContext) -> None:
 
     routes = web.RouteTableDef()
 
-    @routes.post('/postrpc')
+    @routes.post(constants.postRPCURL)
     async def postrpc(req: web.Request) -> web.Response:
         """POST 方法 RPC 接口 详见 `rpc_handler.py`"""
 
@@ -39,7 +41,7 @@ def register(app: web.Application, ctx: WahuContext) -> None:
 
         return resp
 
-    @routes.get('/wsrpc')
+    @routes.get(constants.wsRPCURL)
     async def wsrpc(req: web.Request) -> web.WebSocketResponse:
         """WebSocket RPC 接口 详见 `rpc_handler.py`"""
 

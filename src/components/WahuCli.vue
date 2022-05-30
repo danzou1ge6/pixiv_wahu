@@ -1,72 +1,85 @@
 <template>
-  <div class="q-pa-sm">
-    <div>
-      <pre>{{ text }}</pre>
+  <q-scroll-area ref="scrollArea">
+    <div class="q-pa-sm">
+      <div>
+        <div v-for="(item, i) in content" :key="i">
+          <WahuCliItem v-bind="item"></WahuCliItem>
+        </div>
+      </div>
+      <q-input v-model="cmdInp" @keyup.enter="enter" dense :prefix="generator === undefined ? '$' : '>'" autofocus
+        :dark="dark" class="q-mr-sm q-mb-sm cli-input" @keyup.up="previousHistory" @keyup.down="nextHistory"
+        :loading="loading" :disabled="loading" ref="inputBox">
+      </q-input>
+      <div ref="inputBoxAnchor"></div>
     </div>
-    <q-input v-model="cmdInp" @keyup.enter="enter" dense :prefix="generator === undefined ? '$' : '>'" autofocus
-      :dark="dark" class="q-mr-sm q-mb-sm cli-input" @keyup.up="previousHistory" @keyup.down="nextHistory"
-      :loading="loading" :disabled="loading">
-    </q-input>
-    <div ref="inputBoxAnchor" style="q-my-md">
-    </div>
-  </div>
+  </q-scroll-area>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
 
 import { wahu_exec } from 'src/plugins/wahuBridge/methods';
+import WahuCliItem from './WahuCliItem.vue';
 
 const props = defineProps<{
   dark: boolean
 }>()
 
-const text = ref<string>('WahuCli\n输入 man 来获得帮助\n')
+
+const content = ref<Array<{
+  text?: string,
+  src?: string
+}>>([{ text: 'WahuCli\n输入 man 来获得帮助\n' }])
 const cmdInp = ref<string>('')
 const loading = ref<boolean>(false)
 
 const history = ref<Array<string>>([])
 const historyPointer = ref<number>(0)
 
+const scrollArea = ref<HTMLTemplateElement | null>(null)
+const inputBox = ref<HTMLTemplateElement | null>(null)
 const inputBoxAnchor = ref<HTMLTemplateElement | null>(null)
 
 let generator = ref<AsyncGenerator<string, undefined, string | undefined>>()
 
 function enter() {
+  const cmd = cmdInp.value
+  cmdInp.value = ''
+
   if (generator.value === undefined) {
-    if (cmdInp.value != '') {
+    if (cmd != '') {
 
-      text.value += '\n$ ' + cmdInp.value + '\n'
-      history.value.push(cmdInp.value)
+      history.value.push(cmd)
       historyPointer.value = history.value.length
+      content.value.push({ text: '\n$ ' + cmd + '\n' })
 
-      if (handleSpecialCmd(cmdInp.value)) {
-        cmdInp.value = ''
+      if (handleSpecialCmd(cmd)) {
         return
       }
 
       loading.value = true
 
-      wahu_exec(cmdInp.value)
+      wahu_exec(cmd)
         .then(gen => {
           loading.value = false
-          cmdInp.value = ''
           generator.value = gen
           listenGenerator()
         })
     }
   } else {
-    listenGenerator(cmdInp.value)
-    text.value += '> ' + cmdInp.value + '\n'
-    cmdInp.value = ''
+    listenGenerator(cmd)
+    processRetVal('> ' + cmd + '\n')
   }
 
 
 }
 
-watch(text, () => {
-  if (inputBoxAnchor.value !== null) {
-    inputBoxAnchor.value.scrollIntoView()
+watch(() => content.value.length, () => {
+  if(scrollArea.value !== null && inputBoxAnchor.value !== null) {
+    setTimeout(() => {
+      // @ts-ignore
+      scrollArea.value.setScrollPosition('vertical', inputBoxAnchor.value.offsetTop, 300)
+    }, 50)
   }
 })
 
@@ -86,7 +99,6 @@ async function listenGenerator(initalSendVal?: string) {
 
     if (ret.done) {
       generator.value = undefined
-      text.value += '\n'
       return
     }
     if (ret.value == '[:input]') {
@@ -98,7 +110,25 @@ async function listenGenerator(initalSendVal?: string) {
 
 function processRetVal(ret: string | undefined) {
   if (ret !== undefined) {
-    text.value += ret
+    const imgMatch = ret.match(/\[:img=.+\]/)
+    if (imgMatch !== null) {
+      if(ret.match(/\[:img=.+\].+/) !== null) {
+        content.value.push({
+          src: imgMatch[0].slice(6, -1),
+          text: ret.slice(imgMatch[0].length)
+        })
+      }else {
+        content.value.push({
+          src: imgMatch[0].slice(6, -1)
+        })
+      }
+    } else {
+      if(content.value[content.value.length - 1].src === undefined) {
+        content.value[content.value.length - 1].text += ret
+      }else{
+        content.value.push({text: ret})
+      }
+    }
   }
 }
 
@@ -137,23 +167,23 @@ const manText = `
 
 function handleSpecialCmd(cmd: string): boolean {
   if (cmd == 'clear') {
-    text.value = ''
+    content.value = []
   } else if (cmd == 'man') {
-    text.value += manText
+    content.value.push({ text: manText })
   } else if (cmd == 'history') {
-    text.value += history.value.slice(undefined, history.value.length - 1).join('\n')
+    content.value.push({
+      text: history.value.slice(undefined, history.value.length - 1).join('\n')
+    })
   } else {
     return false
   }
   return true
 }
 
+
 </script>
 
 <style scoped>
-pre {
-  white-space: break-spaces;
-}
 .cli-input {
   font-family: monospace;
 }

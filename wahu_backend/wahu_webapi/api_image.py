@@ -3,14 +3,14 @@ from aiohttp import web
 from wahu_backend.pixiv_image.image_getter import PixivImageGetError
 
 from ..wahu_core import WahuContext
-
+from .. import constants
 
 def register(app: web.Application, ctx: WahuContext) -> None:
     """注册图片相关的 API"""
 
     routes = web.RouteTableDef()
 
-    @routes.get('/image/{file_path:.+}')
+    @routes.get(f'{constants.serverImageURL}''/{file_path:.+}')
     async def image(req: web.Request) -> web.Response:
         """从 Pixiv 服务器获取图片"""
 
@@ -29,7 +29,7 @@ def register(app: web.Application, ctx: WahuContext) -> None:
         )
 
 
-    @routes.get('/repoimage/{repo_name:.+}/{fid:.+}')
+    @routes.get(f'{constants.repoImageURL}''/{repo_name:.+}/{fid:.+}')
     async def repoimage(req: web.Request) -> web.Response:
         """根据 FID 从本地获取文件"""
 
@@ -52,7 +52,7 @@ def register(app: web.Application, ctx: WahuContext) -> None:
 
         return web.Response(status=404, reason='找不到文件')
 
-    @routes.get('/ilstdbimage/{db_name:.+}/{iid:\\d+}/{p:\\d+}')
+    @routes.get(f'{constants.illustDbImageURL}''/{db_name:.+}/{iid:\\d+}/{p:\\d+}')
     async def ilstdbimage(req: web.Request) -> web.Response:
         """根据数据库名和 IID 从本地或者服务器获取文件"""
 

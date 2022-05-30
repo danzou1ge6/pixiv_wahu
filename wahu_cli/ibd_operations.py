@@ -1,14 +1,16 @@
 from typing import TYPE_CHECKING
-
 import click
 
 if TYPE_CHECKING:
     from wahu_backend.wahu_methods.cli import CliClickCtxObj
 
-from ibd_subscrip import mount as mount_ibd_subscrip
-
 from wahu_backend.wahu_core.wahu_cli_helper import (dumps_dataclass,
                                                     print_help, wahu_cli_wrap)
+from wahu_backend.constants import illustDbImageURL
+
+from ibd_subscrip import mount as mount_ibd_subscrip
+from helpers import format_bookmarked_illust_detail
+
 
 NAME = '插画数据库操作'
 DESCRIPTION = '一些对插画数据库的操作'
@@ -28,11 +30,26 @@ def mount(wexe: click.Group):
     @ibd.command()
     @click.argument('name', type=str, required=True)
     @click.argument('iids', type=int, nargs=-1, required=True)
+    @click.option(
+        '--verbose', '-v', is_flag=True,
+        help='是否打印详情中所有信息'
+    )
+    @click.option(
+        '--image', '-i', count=True,
+        help='输入一次则打印图片，输入两次则不打印详情'
+    )
+    @click.option(
+        '--page', '-p', type=int, default=0,
+        help='打印图片的页码'
+    )
     @wahu_cli_wrap
     async def iid(
         cctx: click.Context,
         name: str,
-        iids: list[int]
+        iids: list[int],
+        verbose: bool,
+        image: int,
+        page: int
     ):
         """根据 IID 在数据库 NAME 中查询插画
         """
@@ -41,16 +58,48 @@ def mount(wexe: click.Group):
         wctx, pipe, wmethods = obj.unpkg()
 
         if name not in wctx.ilst_bmdbs.keys():
-            raise KeyError(f'数据库 {name} 不存在')
+            raise KeyError(f'fatal: 数据库 {name} 不存在')
 
         with await wctx.ilst_bmdbs[name](readonly=True) as ibd:
             for iid in iids:
                 dtl = ibd.query_detail(iid)
+                bm = ibd.query_bookmark(iid)
+
+                if bm is None:
+                    pipe.putline(f'{iid} 未找到收藏')
+                    return
 
                 if dtl is None:
-                    pipe.putline(f'{iid} 未找到')
+                    pipe.putline(f'警告: {iid} 未找到详情')
+                    text = ''
+                    image = 2
+
                 else:
-                    pipe.putline(dumps_dataclass(dtl))
+
+                    if verbose:
+                        text = dumps_dataclass(dtl)
+                    else:
+                        text = format_bookmarked_illust_detail(dtl, bm)
+
+                    if page >= dtl.page_count:
+                        pipe.putline(f'警告: 插画 {iid} 只有 {dtl.page_count} 页')
+                        image = 0
+
+                src = f'{illustDbImageURL}/{name}/{iid}/{page}'
+
+                if image == 1:
+                    if verbose:
+                        pipe.put(f'[:img={src}]')
+                        pipe.putline(text)
+                    else:
+                        pipe.put(f'[:img={src}]{text}')
+                elif image == 0:
+                    pipe.putline(text)
+                elif image == 2:
+                    pipe.putline(f'[:img={src}]')
+                else:
+                    raise RuntimeError('fatal: -i 选项错误')
+
 
     @ibd.command()
     @click.argument('name', type=str, required=True)

@@ -48,9 +48,7 @@
       <DownloadProgress v-model="showDlProgress"></DownloadProgress>
 
       <Transition appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
-        <q-scroll-area class="wahu-cli shadow-24" v-show="showCli">
-          <WahuCli :dark="false"></WahuCli>
-        </q-scroll-area>
+        <WahuCli :dark="false" class="wahu-cli shadow-24" v-show="showCli"></WahuCli>
       </Transition>
 
       <DynamicComponent></DynamicComponent>
@@ -59,7 +57,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from 'vue';
+import { computed, defineComponent, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import NotificationArea from '../components/NotificationArea.vue';
@@ -136,6 +134,7 @@ export default defineComponent({
     const showNotConnectedBar = computed(() => {
       return soecketStatusReact.value == WebSocket.OPEN ? false : true
     })
+
 
     return {
       leftDrawerOpen,
