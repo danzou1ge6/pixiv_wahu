@@ -39,7 +39,7 @@ def mount(wexe: click.Group):
         pipe.putline(dumps_dataclass(dtl))
 
     @pixiv.command()
-    @click.argument('iid', type=int, nargs=-1, required=True)
+    @click.argument('iids', type=int, nargs=-1, required=True)
     @wahu_cli_wrap
     async def add_bm(
         cctx: click.Context, iids: list[int]
@@ -52,7 +52,7 @@ def mount(wexe: click.Group):
         await wmethods.p_ilstbm_add.f(wmethods, wctx, iids)
 
     @pixiv.command()
-    @click.argument('iid', type=int, nargs=-1, required=True)
+    @click.argument('iids', type=int, nargs=-1, required=True)
     @wahu_cli_wrap
     async def del_bm(
         cctx: click.Context, iids: list[int]

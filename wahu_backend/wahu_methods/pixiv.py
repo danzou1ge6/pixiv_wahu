@@ -43,8 +43,7 @@ class WahuPixivMethods(WahuMethodsCollection):
     ) -> AsyncGenerator[list[IllustDetail], None]:
         """`PixivAPI.user_illusts`"""
 
-        async with ctx.papi.ready:
-            return ctx.papi.user_illusts(uid)
+        return ctx.papi.user_illusts(uid)
 
     @classmethod
     @wahu_methodize()
@@ -53,8 +52,7 @@ class WahuPixivMethods(WahuMethodsCollection):
     ) -> AsyncGenerator[list[IllustDetail], None]:
         """`PixivAPI.user_bookmark_illusts`"""
 
-        async with ctx.papi.ready:
-            return ctx.papi.user_bookmarks_illusts(uid)
+        return ctx.papi.user_bookmarks_illusts(uid)
 
     @classmethod
     @wahu_methodize()
@@ -63,8 +61,7 @@ class WahuPixivMethods(WahuMethodsCollection):
     ) -> PixivUserDetail:
         """`PixivAPI.user_detail`"""
 
-        async with ctx.papi.ready:
-            return await ctx.papi.user_detail(uid)
+        return await ctx.papi.user_detail(uid)
 
     @classmethod
     @wahu_methodize()
@@ -73,8 +70,7 @@ class WahuPixivMethods(WahuMethodsCollection):
     ) -> IllustDetail:
         """`PixivAPI.pool_illust_detail`"""
 
-        async with ctx.papi.ready:
-            return await ctx.papi.pool_illust_detail(iid)
+        return await ctx.papi.pool_illust_detail(iid)
 
     @classmethod
     @wahu_methodize()
@@ -82,8 +78,7 @@ class WahuPixivMethods(WahuMethodsCollection):
     ) -> AsyncGenerator[list[IllustDetail], None]:
         """`PixivAPI.illust_recommended"""
 
-        async with ctx.papi.ready:
-            return ctx.papi.illust_recommended()
+        return ctx.papi.illust_recommended()
 
     @classmethod
     @wahu_methodize()
@@ -92,8 +87,7 @@ class WahuPixivMethods(WahuMethodsCollection):
     ) -> AsyncGenerator[list[IllustDetail], None]:
         """`PixivAPI.illust_related`"""
 
-        async with ctx.papi.ready:
-            return ctx.papi.illust_related(iid)
+        return ctx.papi.illust_related(iid)
 
     @classmethod
     @wahu_methodize()
@@ -101,24 +95,21 @@ class WahuPixivMethods(WahuMethodsCollection):
         cls, ctx: WahuContext, mode: PixivRecomMode
     ) -> AsyncGenerator[list[IllustDetail], None]:
 
-        async with ctx.papi.ready:
-            return ctx.papi.illust_ranking(mode)
+        return ctx.papi.illust_ranking(mode)
 
     @classmethod
     @wahu_methodize()
     async def p_ilst_folow(cls, ctx: WahuContext
     ) -> AsyncGenerator[list[IllustDetail], None]:
 
-        async with ctx.papi.ready:
-            return ctx.papi.illust_follow()
+        return ctx.papi.illust_follow()
 
     @classmethod
     @wahu_methodize()
     async def p_ilst_new(cls, ctx: WahuContext
     ) -> AsyncGenerator[list[IllustDetail], None]:
 
-        async with ctx.papi.ready:
-            return ctx.papi.illust_new()
+        return ctx.papi.illust_new()
 
     @classmethod
     @wahu_methodize()
@@ -132,12 +123,11 @@ class WahuPixivMethods(WahuMethodsCollection):
         if sort is None:
             sort = 'date_desc'
 
-        async with ctx.papi.ready:
-            return ctx.papi.search_illust(
-                keyword,
-                search_target=target,
-                sort=sort
-            )
+        return ctx.papi.search_illust(
+            keyword,
+            search_target=target,
+            sort=sort
+        )
 
     @classmethod
     @wahu_methodize()
@@ -145,8 +135,7 @@ class WahuPixivMethods(WahuMethodsCollection):
         cls, ctx: WahuContext, iids: list[int]
     ) -> None:
 
-        async with ctx.papi.ready:
-            [await ctx.papi.illust_bookmark_add(iid) for iid in iids]
+        [await ctx.papi.illust_bookmark_add(iid) for iid in iids]
 
     @classmethod
     @wahu_methodize()
@@ -154,8 +143,7 @@ class WahuPixivMethods(WahuMethodsCollection):
         cls, ctx: WahuContext, iids: list[int]
     ) -> None:
 
-        async with ctx.papi.ready:
-            [await ctx.papi.illust_bookmark_delete(iid) for iid in iids]
+        [await ctx.papi.illust_bookmark_delete(iid) for iid in iids]
 
     @classmethod
     @wahu_methodize()
@@ -163,8 +151,7 @@ class WahuPixivMethods(WahuMethodsCollection):
         cls, ctx: WahuContext, keyword: str
     ) -> AsyncGenerator[list[PixivUserPreview], None]:
 
-        async with ctx.papi.ready:
-            return ctx.papi.search_user(keyword)
+        return ctx.papi.search_user(keyword)
 
     @classmethod
     @wahu_methodize()
@@ -172,8 +159,7 @@ class WahuPixivMethods(WahuMethodsCollection):
         cls, ctx: WahuContext, uid: int
     ) -> AsyncGenerator[list[PixivUserPreview], None]:
 
-        async with ctx.papi.ready:
-            return ctx.papi.user_follower(uid)
+        return ctx.papi.user_follower(uid)
 
     @classmethod
     @wahu_methodize()
@@ -181,8 +167,7 @@ class WahuPixivMethods(WahuMethodsCollection):
         cls, ctx: WahuContext, uid: int
     ) -> AsyncGenerator[list[PixivUserPreview], None]:
 
-        async with ctx.papi.ready:
-            return ctx.papi.user_following(uid)
+        return ctx.papi.user_following(uid)
 
     @classmethod
     @wahu_methodize()
@@ -190,8 +175,7 @@ class WahuPixivMethods(WahuMethodsCollection):
         cls, ctx: WahuContext, uid: int
     ) -> AsyncGenerator[list[PixivUserPreview], None]:
 
-        async with ctx.papi.ready:
-            return ctx.papi.user_related(uid)
+        return ctx.papi.user_related(uid)
 
     @classmethod
     @wahu_methodize()
@@ -199,8 +183,7 @@ class WahuPixivMethods(WahuMethodsCollection):
         cls, ctx: WahuContext, uid: int
     ) -> None:
 
-        async with ctx.papi.ready:
-            await ctx.papi.user_follow_add(uid)
+        await ctx.papi.user_follow_add(uid)
 
     @classmethod
     @wahu_methodize()
@@ -208,5 +191,4 @@ class WahuPixivMethods(WahuMethodsCollection):
         cls, ctx: WahuContext, uid: int
     ) -> None:
 
-        async with ctx.papi.ready:
-            await ctx.papi.user_follow_delete(uid)
+        await ctx.papi.user_follow_delete(uid)

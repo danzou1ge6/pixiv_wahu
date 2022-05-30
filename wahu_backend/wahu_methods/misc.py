@@ -12,8 +12,7 @@ class WahuMiscMethods:
     ) -> None:
         """下载 `iids` 到本地"""
 
-        async with ctx.papi.ready:
-            dtls = [await ctx.papi.pool_illust_detail(iid) for iid in iids]
+        dtls = [await ctx.papi.pool_illust_detail(iid) for iid in iids]
 
         coro_list = []
         for dtl in dtls:

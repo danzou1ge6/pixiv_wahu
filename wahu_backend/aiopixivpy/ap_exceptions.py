@@ -48,4 +48,4 @@ class AioPixivPyNotLoggedIn(AioPixivPyError):
         pass
 
     def __str__(self) -> str:
-        return '未登录'
+        return '没有 Access Token ，无法使用 Pixiv 服务'

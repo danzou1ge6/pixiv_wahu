@@ -180,8 +180,7 @@ class IllustRepoMethods(WahuMethodsCollection):
                     if dtl is not None:
                         return dtl
 
-                    async with ctx.papi.ready:
-                        dtl = await ctx.papi.pool_illust_detail(iid)
+                    dtl = await ctx.papi.pool_illust_detail(iid)
 
                     # 顺便加入数据库
                     ibd.illusts_te.insert([dtl])

@@ -58,7 +58,12 @@ class WahuMetdodsWithCli(
         cctx_obj = CliClickCtxObj(ctx, pipe, cls)
 
         try:
-            ret_code = ctx.wexe(grouped_cmd, obj=cctx_obj, standalone_mode=False)
+            ret_code = ctx.wexe(
+                grouped_cmd,
+                obj=cctx_obj,
+                standalone_mode=False,
+                prog_name=''
+            )
 
             if ret_code != None:
                 pipe.put('命令解析出错. 使用 --help 查看命令语法')
