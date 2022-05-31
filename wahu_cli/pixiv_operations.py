@@ -61,7 +61,7 @@ def mount(wexe: click.Group):
         obj: 'CliClickCtxObj' = cctx.obj
         wctx, pipe = obj.wctx, obj.pipe
 
-        dtl = await WahuMethods.p_ilst_detail.f(WahuMethods, wctx, iid)
+        dtl = await WahuMethods.p_ilst_detail(wctx, iid)
 
         if verbose:
             text = dumps_dataclass(dtl)
@@ -104,7 +104,7 @@ def mount(wexe: click.Group):
 
         obj: 'CliClickCtxObj' = cctx.obj
 
-        await WahuMethods.p_ilstbm_add.f(WahuMethods, obj.wctx, iids)
+        await WahuMethods.p_ilstbm_add(obj.wctx, iids)
 
     @pixiv.command()
     @click.argument('iids', type=int, nargs=-1, required=True)
@@ -116,6 +116,6 @@ def mount(wexe: click.Group):
 
         obj: 'CliClickCtxObj' = cctx.obj
 
-        await WahuMethods.p_ilstbm_rm.f(WahuMethods, obj.wctx, iids)
+        await WahuMethods.p_ilstbm_rm(obj.wctx, iids)
 
 

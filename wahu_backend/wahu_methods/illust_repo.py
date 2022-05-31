@@ -3,23 +3,29 @@ import itertools
 from dataclasses import dataclass
 from functools import reduce
 from pathlib import Path
-from typing import TypeVar, Type
+from typing import TYPE_CHECKING, TypeVar, Type
 
 from ..aiopixivpy import IllustDetail
 from ..file_tracing import FileEntry, FileTracer
 from ..illust_bookmarking import IllustBookmark
 from ..sqlite_tools.database_ctx_man import DatabaseContextManager
 from ..wahu_core import (GenericWahuMethod, WahuArguments, WahuContext,
-                         wahu_methodize, WahuMethodsCollection)
+                         wahu_methodize)
 from ..wahu_core.core_exceptions import WahuRuntimeError
 from ..wahu_core.repo_db_link import RepoEntry
 from .logger import logger
+
+if TYPE_CHECKING:
+    from . import WahuMethods
 
 # ------------------------------------------------------------------- 中间件
 RT = TypeVar('RT')
 
 async def _check_repo_name(
-    m: GenericWahuMethod[RT], cls: Type[WahuMethodsCollection], args: WahuArguments, ctx: WahuContext
+    m: GenericWahuMethod[RT],
+    cls: Type['WahuMethods'],
+    args: WahuArguments,
+    ctx: WahuContext
 ) -> RT:
     """检查储存库名的中间件"""
 
@@ -33,7 +39,7 @@ async def _check_repo_name(
 
 async def _cvt_dict2fileentry(
     m: GenericWahuMethod[RT],
-    cls: Type[WahuMethodsCollection],
+    cls: Type['WahuMethods'],
     args: WahuArguments,
     ctx: WahuContext
 ) -> RT:
@@ -49,7 +55,7 @@ async def _cvt_dict2fileentry(
 
 async def _cvt_dict2fileentrywithurl(
     m: GenericWahuMethod[RT],
-    cls: Type[WahuMethodsCollection],
+    cls: Type['WahuMethods'],
     args: WahuArguments,
     ctx: WahuContext
 ) -> RT:
@@ -65,7 +71,7 @@ async def _cvt_dict2fileentrywithurl(
 
 async def _cvt_str2path(
     m: GenericWahuMethod[RT],
-    cls: Type[WahuMethodsCollection],
+    cls: Type['WahuMethods'],
     args: WahuArguments,
     ctx: WahuContext
 ) -> RT:
@@ -103,7 +109,7 @@ def _cvt_invalid_path_char(s: str):
 
 
 # ------------------------------------------------------------------- 方法
-class IllustRepoMethods(WahuMethodsCollection):
+class IllustRepoMethods:
 
     @classmethod
     @wahu_methodize()

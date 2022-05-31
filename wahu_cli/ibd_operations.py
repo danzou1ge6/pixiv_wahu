@@ -91,13 +91,13 @@ def mount(wexe: click.Group):
                 src = f'{illustDbImageURL}/{name}/{iid}/{page}'
 
                 if image == 0:
+                    pipe.putline(text)
+                elif image == 1:
                     if verbose:
                         pipe.put(f'[:img={src}]')
                         pipe.putline(text)
                     else:
                         pipe.put(f'[:img={src}]{text}')
-                elif image == 1:
-                    pipe.putline(text)
                 else:
                     pipe.putline(f'[:img={src}]')
 
@@ -116,7 +116,7 @@ def mount(wexe: click.Group):
 
         obj: 'CliClickCtxObj' = cctx.obj
 
-        bm = await WahuMethods.ibd_query_bm.f(WahuMethods, obj.wctx, name, iid)
+        bm = await WahuMethods.ibd_query_bm(obj.wctx, name, iid)
 
         if bm is None:
             obj.pipe.putline(f'未找到 {iid}')
@@ -140,4 +140,4 @@ def mount(wexe: click.Group):
 
         obj: 'CliClickCtxObj' = cctx.obj
 
-        await WahuMethods.ibd_set_bm.f(WahuMethods, obj.wctx, name, iid, pages)
+        await WahuMethods.ibd_set_bm(obj.wctx, name, iid, pages)

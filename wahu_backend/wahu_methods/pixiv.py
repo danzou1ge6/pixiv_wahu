@@ -4,12 +4,12 @@ from ..aiopixivpy import (AccountSession, IllustDetail, PixivUserDetail,
                           PixivUserPreview, TrendingTagIllusts)
 from ..aiopixivpy.pixivpy_typing import (PixivRecomMode, PixivSearchTarget,
                                          PixivSort)
-from ..wahu_core import WahuContext, WahuMethodsCollection, wahu_methodize
+from ..wahu_core import WahuContext, wahu_methodize
 from ..wahu_core.core_exceptions import WahuRuntimeError
 
 RT = TypeVar('RT')
 
-class WahuPixivMethods(WahuMethodsCollection):
+class WahuPixivMethods:
     """
     与 PixivAPI 相关的方法
     """

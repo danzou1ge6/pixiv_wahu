@@ -1,8 +1,10 @@
-from typing import Any, Callable, Coroutine, Optional, Type, TypeAlias, TypeVar
-from enum import Enum
+from typing import (TYPE_CHECKING, Any, Callable, Coroutine, Type, TypeAlias,
+                    TypeVar)
 
 from .wahu_context import WahuContext
 
+if TYPE_CHECKING:
+    from ..wahu_methods import WahuMethods
 
 
 RT = TypeVar('RT')  # Return Type
@@ -13,20 +15,18 @@ AsyncFuncWithRet: TypeAlias = Callable[..., Coroutine[Any, Any, RT]]
 WahuMiddleWare: TypeAlias = Callable[
     [
         AsyncFuncWithRet[RT],
-        Type['WahuMethodsCollection'],
+        Type['WahuMethods'],
         'WahuArguments',
         WahuContext
     ],
     Coroutine[Any, Any, RT]
 ]
 
+# WahuMethod.rpc_f 的签名
 GenericWahuMethod: TypeAlias = Callable[
-    [Type[object], 'WahuArguments', WahuContext],
+    [Type['WahuMethods'], 'WahuArguments', WahuContext],
     Coroutine[Any, Any, RT]
 ]
-
-class WahuMethodsCollection:
-    """`WahuMethod` 合集的基类"""
 
 
 class WahuArguments(dict[str, Any]):

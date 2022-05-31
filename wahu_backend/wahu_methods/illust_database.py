@@ -1,22 +1,25 @@
 import dataclasses
 import json
 from pathlib import Path
-from typing import Literal, Optional, Type, TypeVar
+from typing import TYPE_CHECKING, Literal, Optional, Type, TypeVar
 
 from ..aiopixivpy import IllustDetail, PixivUserSummery, IllustTag
 from ..illust_bookmarking import IllustBookmark, IllustBookmarkDatabase
 from ..sqlite_tools.database_ctx_man import DatabaseContextManager
 from ..wahu_core import (GenericWahuMethod, WahuArguments, WahuContext,
-                         wahu_methodize, WahuMethodsCollection)
+                         wahu_methodize)
 from ..wahu_core.core_exceptions import WahuRuntimeError
 from .logger import logger
+
+if TYPE_CHECKING:
+    from . import WahuMethods
 
 RT = TypeVar('RT')  # Return Type
 
 
 async def _check_db_name(
     m: GenericWahuMethod[RT],
-    cls: Type[WahuMethodsCollection],
+    cls: Type['WahuMethods'],
     args: WahuArguments,
     ctx: WahuContext
 ) -> RT:
@@ -31,7 +34,7 @@ async def _check_db_name(
     return await m(cls, args, ctx)
 
 
-class WahuIllustDatabaseMethods(WahuMethodsCollection):
+class WahuIllustDatabaseMethods:
 
     @classmethod
     @wahu_methodize()

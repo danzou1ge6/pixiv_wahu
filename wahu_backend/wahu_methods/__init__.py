@@ -17,5 +17,5 @@ class WahuMethods(WahuMetdodsWithCli):
         except AttributeError:
             return None
 
-        return m
+        return partial(m.call, cls)
 

@@ -25,4 +25,4 @@ def mount(wexe: click.Group):
 
         obj: 'CliClickCtxObj' = cctx.obj
 
-        await WahuMethods.cli_reload.f(WahuMethods, obj.wctx)
+        await WahuMethods.cli_reload(obj.wctx)
