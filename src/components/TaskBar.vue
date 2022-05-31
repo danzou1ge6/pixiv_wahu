@@ -50,7 +50,11 @@ watch(displayedWindowN, () => {
 const $q = useQuasar()
 
 const maxTabbedN = computed(() => {
-  return Math.floor($q.screen.width * 0.9 / 180)
+  if($q.platform.is.mobile) {
+    return 0
+  }else{
+    return Math.floor($q.screen.width * 0.9 / 180)
+  }
 })
 
 const tabbedWindows = computed(() => {

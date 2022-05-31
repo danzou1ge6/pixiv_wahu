@@ -3,7 +3,7 @@
       class="animated fadeInDown bg-img">
 
       <Transition appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
-          <WahuCli :dark="true" width="75vw" height="100%" v-show="showCli"></WahuCli>
+          <WahuCli :dark="true" :width="terminalWidth" height="100%" v-show="showCli"></WahuCli>
       </Transition>
 
       <div class="text-body-2 absolute-top-right animated fadeInUp" v-show="showWahu">クドリャフカ - 73072668 by クー </div>
@@ -14,7 +14,8 @@
 <script setup lang="ts">
 import { homeImageURL } from 'src/constants';
 import WahuCli from 'src/components/WahuCli.vue';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import { useQuasar } from 'quasar';
 
 const emits = defineEmits<{
   (e: 'updateProps', val: object): void,
@@ -30,6 +31,16 @@ const showKud = ref<boolean>(false)
 const showCli = ref<boolean>(false)
 
 const image = ref<HTMLTemplateElement | null>(null)
+
+const $q = useQuasar()
+
+const terminalWidth = computed(() => {
+  if($q.platform.is.mobile) {
+    return '95vw'
+  }else {
+    return '75vw'
+  }
+})
 
 onMounted(() => {
   setTimeout(() => {

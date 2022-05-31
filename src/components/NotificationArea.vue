@@ -99,6 +99,7 @@ function iconName(level: 'error' | 'warning' | 'info' | 'success'): string {
 .noti-box {
   position: fixed;
   width: 500px;
+  max-width: 100vw;
   right: 10px;
   top: 55px;
   z-index: 999;
@@ -107,7 +108,7 @@ function iconName(level: 'error' | 'warning' | 'info' | 'success'): string {
 .noti-box-opened {
   position: fixed;
   width: 75vw;
-  min-width: 500px;
+  min-width: 300px;
   right: 10px;
   top: 55px;
   z-index: 999;

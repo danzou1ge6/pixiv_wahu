@@ -89,7 +89,7 @@ function getColor(status: string) {
 .dl-card {
   position: fixed;
   width: 60vw;
-  min-width: 400px;
+  min-width: 300px;
   right: 10px;
   top: 55px;
   z-index: 999;
