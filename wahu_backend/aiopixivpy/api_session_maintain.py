@@ -45,6 +45,8 @@ class MaintainedSessionPixivAPI(PixivAPI):
         if self.refresh_token_path is None:
             self.log_adapter.warn('refresh_token_path 未设定，将无法获取 access_token')
 
+        self.attemp_load_account_session()
+
     def _write_account_session(self, a_s: AccountSession) -> None:
         """将会话信息写入文件"""
         d = dataclasses.asdict(a_s)
@@ -129,6 +131,24 @@ class MaintainedSessionPixivAPI(PixivAPI):
         with open(self.refresh_token_path, 'r', encoding='utf-8') as rf:
             return rf.read().lstrip().rstrip()
 
+    def attemp_load_account_session(self) -> bool:
+
+        account_session = self._load_account_session()
+
+        # 如果成功从文件读取了会话信息
+        if account_session is not None:
+            self.account_session = account_session
+
+            self.log_adapter.set_user_name(account_session.user_name)
+
+            self.log_adapter.info(
+                '从文件读取了 access_token ，将在 %s 过期'
+                % account_session.expire_at
+            )
+
+            return True
+        return False
+
     async def ensure_loggedin(self) -> None:
         """获取一个确保已经登录的 `PixivAPI`"""
 
@@ -142,19 +162,7 @@ class MaintainedSessionPixivAPI(PixivAPI):
             else:
                 self.log_adapter.info('未登录')
 
-            account_session = self._load_account_session()
-
-            # 如果成功从文件读取了会话信息
-            if account_session is not None:
-                self.account_session = account_session
-
-                self.log_adapter.set_user_name(account_session.user_name)
-
-                self.log_adapter.info(
-                    '从文件读取了 access_token ，将在 %s 过期'
-                    % account_session.expire_at
-                )
-
+            if self.attemp_load_account_session():
                 return
 
             # 使用 refresh_token 重新认证
