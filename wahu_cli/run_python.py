@@ -2,12 +2,12 @@ import asyncio
 from functools import partial
 import inspect
 import traceback
-from typing import TYPE_CHECKING, Any, Coroutine
+from typing import TYPE_CHECKING, Any, Coroutine, Type
 import click
 
 
 if TYPE_CHECKING:
-    from wahu_backend.wahu_core import CliClickCtxObj
+    from wahu_backend.wahu_core import CliClickCtxObj, WahuContext
 
 from wahu_backend.wahu_core.wahu_cli_helper import wahu_cli_wrap
 from wahu_backend.wahu_methods import WahuMethods
@@ -18,15 +18,13 @@ DESCRIPTION = '创建一个 Python 名称空间，并在其中执行脚本'
 
 
 _HELP = '''使用名称 wctx 可以访问当前的 WahuContext 实例
-使用名称 WahuMethods 可以访问所有 Wahu 方法
+使用名称 wm 可以使用所有 WahuMethod ， WahuContext 已被绑定
 
 print(__o: object) 取代了内置的 print() 方法，该方法不换行
 println(__o: object) 将再打印一个换行符
 
-如果输入以 ! 开头，将使用 eval() 执行并打印返回值，支持 eval Corotine;
-否则使用 exec() 执行
-
 使用 coro_asign(coro: Corotine, name: str) 可将 coro 的返回值赋给名称为 name 的变量
+也可直接输入一个 Corotine ，将打印其返回值
 
 输入 exit 退出. 如果未使用 --preserve-namespace, -p 选项，名称空间不会被保存
 如果使用了 -p 选项，退出后再次使用 -p 可以重新访问此名称空间
@@ -40,6 +38,14 @@ def _cleanup_namespace(cctx: click.Context, param: click.Parameter, value: Any):
     global _NAMESPACE
     if value:
         _NAMESPACE = {}
+
+
+class WahuMethodsWithContextBound:
+    def __init__(self, wctx: 'WahuContext'):
+        self.wctx = wctx
+    def __getattr__(self, name: str):
+        return partial(getattr(WahuMethods, name), self.wctx)
+
 
 def mount(wexe: click.Group):
 
@@ -75,7 +81,7 @@ def mount(wexe: click.Group):
 
         namespace = {
             'wctx': wctx,
-            'WahuMethods': WahuMethods,
+            'wm': WahuMethodsWithContextBound(wctx),
             'println': _println,
             'print': _print
         }
@@ -110,22 +116,24 @@ def mount(wexe: click.Group):
 
                     cmd += '\n' + ln
 
-            if cmd.startswith('!'):
-                try:
-                    ret = eval(cmd[1:], namespace)
+            try:
+                # 首先尝试 eval 模式
+                ret = eval(cmd, namespace)
 
-                    if inspect.iscoroutine(ret):
-                        pipe.putline(str(await ret))
-                    else:
-                        pipe.putline(str(ret))
+                if inspect.iscoroutine(ret):
+                    pipe.putline(str(await ret))
+                else:
+                    pipe.putline(str(ret))
 
-                except Exception:
-                    pipe.put(traceback.format_exc())
-
-            else:
+            except SyntaxError:
+                # 然后尝试 exec 模式
                 try:
                     exec(cmd, namespace)
                 except Exception:
                     pipe.put(traceback.format_exc())
+
+            except Exception:
+                pipe.put(traceback.format_exc())
+
 
 
