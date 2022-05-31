@@ -1,17 +1,14 @@
-import asyncio
 import itertools
-import time
-from typing import TYPE_CHECKING, AsyncIterable, Iterable, Literal, Optional, TypeVar
+from typing import TYPE_CHECKING, Iterable, Literal, Optional
 
 import click
-import toml
 from collections import Counter
 from wahu_backend.aiopixivpy.datastructure_illust import PixivUserSummery
 
 
 if TYPE_CHECKING:
     from wahu_backend.aiopixivpy.datastructure_illust import IllustTag
-    from wahu_backend.wahu_methods.cli import CliClickCtxObj
+    from wahu_backend.wahu_core import CliClickCtxObj
 
 from wahu_backend.wahu_core.wahu_cli_helper import wahu_cli_wrap
 

@@ -7,7 +7,7 @@ import click
 from wahu_backend.wahu_methods import WahuMethods
 
 if TYPE_CHECKING:
-    from wahu_backend.wahu_methods.cli import CliClickCtxObj
+    from wahu_backend.wahu_core import CliClickCtxObj
 
 from wahu_backend.wahu_core.wahu_cli_helper import (dumps_dataclass,
                                                     print_help, wahu_cli_wrap)

@@ -6,7 +6,7 @@
           <WahuCliItem v-bind="item"></WahuCliItem>
         </div>
       </div>
-      <q-input v-model="cmdInp" @keyup.enter="enter" dense :prefix="generator === undefined ? '$' : '>'" autofocus
+      <q-input v-model="cmdInp" @keyup.enter="enter" dense :prefix="inpPrefix" autofocus
         :dark="dark" class="cli-input" @keyup.up="previousHistory" @keyup.down="nextHistory"
         :loading="loading" :disabled="loading" ref="inputBox">
       </q-input>
@@ -33,6 +33,7 @@ const content = ref<Array<{
   src?: string
 }>>([{ text: 'WahuCli\n输入 man 来获得帮助\n' }])
 const cmdInp = ref<string>('')
+const inpPrefix = ref<string>('$')
 const loading = ref<boolean>(false)
 
 const history = ref<Array<string>>([])
@@ -48,12 +49,14 @@ function enter() {
   const cmd = cmdInp.value
   cmdInp.value = ''
 
+  history.value.push(cmd)
+  historyPointer.value = history.value.length
+
   if (generator.value === undefined) {
     if (cmd != '') {
 
-      history.value.push(cmd)
-      historyPointer.value = history.value.length
-      content.value.push({ text: '\n$ ' + cmd + '\n' })
+      content.value.push({ text: '$ ' + cmd + '\n' })
+      autoScroll()
 
       if (handleSpecialCmd(cmd)) {
         return
@@ -70,20 +73,21 @@ function enter() {
     }
   } else {
     listenGenerator(cmd)
-    processRetVal('> ' + cmd + '\n')
+    processRetVal(inpPrefix.value + ' ' + cmd + '\n')
   }
 
 
 }
 
-watch(() => content.value.length, () => {
+function autoScroll() {
   if(scrollArea.value !== null && inputBoxAnchor.value !== null) {
     setTimeout(() => {
       // @ts-ignore
       scrollArea.value.setScrollPosition('vertical', inputBoxAnchor.value.offsetTop, 300)
     }, 50)
   }
-})
+}
+
 
 onMounted(() => {
   wahu_exec('wahu')
@@ -99,11 +103,16 @@ async function listenGenerator(initalSendVal?: string) {
     const ret = await generator.value.next(initalSendVal)
     initalSendVal = undefined
 
+    inpPrefix.value = '>'
+
     if (ret.done) {
       generator.value = undefined
+      inpPrefix.value = '$'
       return
     }
-    if (ret.value == '[:input]') {
+    const inputMatch = ret.value.match(/\[:input=.+\]/)
+    if (inputMatch !== null) {
+      inpPrefix.value = inputMatch[0].slice(8, -1)
       return
     }
     processRetVal(ret.value)
@@ -131,6 +140,7 @@ function processRetVal(ret: string | undefined) {
         content.value.push({text: ret})
       }
     }
+    autoScroll()
   }
 }
 
@@ -179,6 +189,7 @@ function handleSpecialCmd(cmd: string): boolean {
   } else {
     return false
   }
+  autoScroll()
   return true
 }
 

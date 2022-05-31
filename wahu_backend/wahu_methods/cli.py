@@ -3,26 +3,12 @@ from pathlib import Path
 import traceback
 from typing import Any, AsyncGenerator, Type
 
-from ..wahu_core import CliIOPipe, WahuContext, wahu_methodize
+from ..wahu_core import CliIOPipe, WahuContext, wahu_methodize, CliClickCtxObj
 from .illust_database import WahuIllustDatabaseMethods
 from .illust_repo import IllustRepoMethods
 from .misc import WahuMiscMethods
 from .pixiv import WahuPixivMethods
 from .wahu_generator import WahuGeneratorMethods
-
-
-class CliClickCtxObj:
-    """挂载到 `click.Context.obj` ，来传入必要的上下文信息"""
-
-    def __init__(
-        self,
-        wctx: WahuContext,
-        pipe: CliIOPipe
-    ):
-        self.wctx = wctx
-        self.pipe = pipe
-
-        self.d: dict[str, Any]
 
 
 @dataclass

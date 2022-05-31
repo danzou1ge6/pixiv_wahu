@@ -6,12 +6,15 @@ from importlib import resources
 from inspect import Traceback
 from pathlib import Path
 from queue import Queue
-from typing import Any, AsyncGenerator, Callable, Optional
+from typing import TYPE_CHECKING, Any, AsyncGenerator, Callable, Optional
 
 import click
 
 from .core_exceptions import WahuCliScriptError
 from .wahu_cli_helper import print_help
+
+if TYPE_CHECKING:
+    from .wahu_context import WahuContext
 
 TP = str
 
@@ -66,10 +69,13 @@ class CliIOPipe(AsyncGenerator[TP, TP]):
 
         return await self.__anext__()
 
-    async def get(self) -> TP:
+    async def get(self, prefix: Optional[TP]=None) -> TP:
         """等待前端输入"""
 
-        self.put('[:input]')
+        if prefix is None:
+            self.put('[:input=>]')
+        else:
+            self.put(f'[:input={prefix}]')
 
         await self.input_event.wait()
 
@@ -96,6 +102,20 @@ class CliIOPipe(AsyncGenerator[TP, TP]):
     def close(self):
         self.put('[:close]')
 
+
+
+class CliClickCtxObj:
+    """挂载到 `click.Context.obj` ，来传入必要的上下文信息"""
+
+    def __init__(
+        self,
+        wctx: 'WahuContext',
+        pipe: CliIOPipe
+    ):
+        self.wctx = wctx
+        self.pipe = pipe
+
+        self.d: dict[str, Any]
 
 
 
