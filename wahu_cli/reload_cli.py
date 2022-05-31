@@ -1,6 +1,8 @@
 from typing import TYPE_CHECKING
 import click
 
+from wahu_backend.wahu_methods import WahuMethods
+
 
 if TYPE_CHECKING:
     from wahu_backend.wahu_methods.cli import CliClickCtxObj
@@ -22,6 +24,5 @@ def mount(wexe: click.Group):
         """
 
         obj: 'CliClickCtxObj' = cctx.obj
-        wctx, pipe, wmethods = obj.unpkg()
 
-        await wmethods.cli_reload.f(wmethods, wctx)
+        await WahuMethods.cli_reload.f(WahuMethods, obj.wctx)

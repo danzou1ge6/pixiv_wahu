@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 import traceback
-from typing import AsyncGenerator, Type
+from typing import Any, AsyncGenerator, Type
 
 from ..wahu_core import CliIOPipe, WahuContext, wahu_methodize
 from .illust_database import WahuIllustDatabaseMethods
@@ -17,15 +17,13 @@ class CliClickCtxObj:
     def __init__(
         self,
         wctx: WahuContext,
-        pipe: CliIOPipe,
-        wmethods: Type['WahuMetdodsWithCli']
+        pipe: CliIOPipe
     ):
         self.wctx = wctx
         self.pipe = pipe
-        self.wmethods = wmethods
 
-    def unpkg(self):
-        return self.wctx, self.pipe, self.wmethods
+        self.d: dict[str, Any]
+
 
 @dataclass
 class CliScriptInfo:
@@ -55,7 +53,7 @@ class WahuMetdodsWithCli(
         grouped_cmd = [g for g in grouped_cmd if g != '']
 
         pipe = CliIOPipe()
-        cctx_obj = CliClickCtxObj(ctx, pipe, cls)
+        cctx_obj = CliClickCtxObj(ctx, pipe)
 
         try:
             ret_code = ctx.wexe(
@@ -90,4 +88,3 @@ class WahuMetdodsWithCli(
         return [CliScriptInfo(
             cs.path, cs.name, cs.descrip, cs.code
         ) for cs in ctx.cli_scripts]
-

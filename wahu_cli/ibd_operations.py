@@ -7,8 +7,10 @@ if TYPE_CHECKING:
 from wahu_backend.wahu_core.wahu_cli_helper import (dumps_dataclass,
                                                     print_help, wahu_cli_wrap)
 from wahu_backend.constants import illustDbImageURL
+from wahu_backend.wahu_methods import WahuMethods
 
 from ibd_subscrip import mount as mount_ibd_subscrip
+from ibd_count import mount as mount_ibd_count
 from helpers import format_bookmarked_illust_detail
 
 
@@ -26,6 +28,7 @@ def mount(wexe: click.Group):
         pass
 
     mount_ibd_subscrip(ibd)
+    mount_ibd_count(ibd)
 
     @ibd.command()
     @click.argument('name', type=str, required=True)
@@ -55,7 +58,7 @@ def mount(wexe: click.Group):
         """
 
         obj: 'CliClickCtxObj' = cctx.obj
-        wctx, pipe, wmethods = obj.unpkg()
+        wctx, pipe = obj.wctx, obj.pipe
 
         if name not in wctx.ilst_bmdbs.keys():
             raise KeyError(f'fatal: 数据库 {name} 不存在')
@@ -87,18 +90,16 @@ def mount(wexe: click.Group):
 
                 src = f'{illustDbImageURL}/{name}/{iid}/{page}'
 
-                if image == 1:
+                if image == 0:
                     if verbose:
                         pipe.put(f'[:img={src}]')
                         pipe.putline(text)
                     else:
                         pipe.put(f'[:img={src}]{text}')
-                elif image == 0:
+                elif image == 1:
                     pipe.putline(text)
-                elif image == 2:
-                    pipe.putline(f'[:img={src}]')
                 else:
-                    raise RuntimeError('fatal: -i 选项错误')
+                    pipe.putline(f'[:img={src}]')
 
 
     @ibd.command()
@@ -114,14 +115,13 @@ def mount(wexe: click.Group):
         """
 
         obj: 'CliClickCtxObj' = cctx.obj
-        wctx, pipe, wmethods = obj.unpkg()
 
-        bm = await wmethods.ibd_query_bm.f(wmethods, wctx, name, iid)
+        bm = await WahuMethods.ibd_query_bm.f(WahuMethods, obj.wctx, name, iid)
 
         if bm is None:
-            pipe.putline(f'未找到 {iid}')
+            obj.pipe.putline(f'未找到 {iid}')
         else:
-            pipe.putline(str(bm.pages))
+            obj.pipe.putline(str(bm.pages))
 
 
     @ibd.command()
@@ -139,6 +139,5 @@ def mount(wexe: click.Group):
         """
 
         obj: 'CliClickCtxObj' = cctx.obj
-        wctx, pipe, wmethods = obj.unpkg()
 
-        await wmethods.ibd_set_bm.f(wmethods, wctx, name, iid, pages)
+        await WahuMethods.ibd_set_bm.f(WahuMethods, obj.wctx, name, iid, pages)

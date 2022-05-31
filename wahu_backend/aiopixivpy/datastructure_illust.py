@@ -26,6 +26,13 @@ class PixivUserSummery:
     name: str
     profile_image: str  # url
 
+    def __hash__(self) -> int:
+        return self.uid
+
+    def __eq__(self, __o: object) -> bool:
+        if isinstance(__o, PixivUserSummery):
+            return self.uid == __o.uid
+        return False
 
 
 class PixivUserSummeryAdapter(SqliteAdapter):
@@ -47,6 +54,13 @@ class IllustTag:
     name: str
     translated: str
 
+    def __hash__(self) -> int:
+        return hash(self.name)
+
+    def __eq__(self, __o: object) -> bool:
+        if isinstance(__o, IllustTag):
+            return self.name == __o.name
+        return False
 
 
 class IllustTagListAdapter(SqliteAdapter):

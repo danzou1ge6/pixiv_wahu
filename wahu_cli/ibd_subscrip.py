@@ -85,7 +85,7 @@ def mount(parent_group: click.Group):
         """
 
         obj: 'CliClickCtxObj' = cctx.obj
-        wctx, pipe, wmethods = obj.unpkg()
+        wctx, pipe = obj.wctx, obj.pipe
 
         if len(user_uid) == 0 and len(bookmark_uid) == 0:
 

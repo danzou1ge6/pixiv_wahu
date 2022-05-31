@@ -44,7 +44,7 @@ def register(app: web.Application, ctx: WahuContext) -> None:
 
         if pth is not None:
             if not pth.exists():
-                app.logger.warn('repoimage: 索引中的文件 %s 不存在' % str(pth))
+                app.logger.warn('Server: repoimage: 索引中的文件 %s 不存在' % str(pth))
                 return web.Response(status=404, reason="索引中的文件不存在")
 
             with open(pth, 'rb') as rf:
@@ -71,7 +71,7 @@ def register(app: web.Application, ctx: WahuContext) -> None:
                     if pth is not None:
 
                         if not pth.exists():
-                            app.logger.warn('ilstdbimage: 索引中的文件 %s 不存在' % str(pth))
+                            app.logger.warn('Server: ilstdbimage: 索引中的文件 %s 不存在' % str(pth))
                         else:
                             with open(pth, 'rb') as rf:
                                 return web.Response(

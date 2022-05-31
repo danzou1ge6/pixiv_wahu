@@ -18,7 +18,7 @@ class FileEntryRaw:
 
     def __hash__(self) -> int:
         return hash(self.fid)
-    
+
     def __eq__(self, __o: object) -> bool:
         return self.fid == __o.__dict__.get('fid')
 
@@ -34,7 +34,7 @@ class FileTracingConfigRaw:
     """
     某一目录下的 FileTracer 的配置
     """
-    
+
     ftid: int
     name: str
     ignore: list[str]

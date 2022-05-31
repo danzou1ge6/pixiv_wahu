@@ -8,6 +8,7 @@ if TYPE_CHECKING:
 
 from wahu_backend.wahu_core.wahu_cli_helper import wahu_cli_wrap
 from wahu_backend.constants import illustDbImageURL
+from wahu_backend.wahu_methods import WahuMethods
 
 from wahu_cli.helpers import format_bookmarked_illust_detail
 
@@ -52,7 +53,7 @@ def mount(wexe: click.Group):
         """
 
         obj: 'CliClickCtxObj' = cctx.obj
-        wctx, pipe, wmethods = obj.unpkg()
+        wctx, pipe = obj.wctx, obj.pipe
         # wctx: WahuContext 实例，详见 `wahu_backend/wahu_core/wahu_context.py`
         # pipe: 命令行 IO 管道 CliIOPipe 实例，详见 `wahu_backend/wahu_core/wahu_cli.py`
         # wmethods: WahuMethodsCollection 子类，内含所有 WahuMethods ，
@@ -82,7 +83,7 @@ def mount(wexe: click.Group):
         """
 
         obj: 'CliClickCtxObj' = cctx.obj
-        wctx, pipe, wmethods = obj.unpkg()
+        wctx, pipe = obj.wctx, obj.pipe
 
         if name is None:
             name = choice(list(wctx.ilst_bmdbs.keys()))

@@ -48,7 +48,8 @@
       <DownloadProgress v-model="showDlProgress"></DownloadProgress>
 
       <Transition appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
-        <WahuCli :dark="false" class="wahu-cli shadow-24" v-show="showCli"></WahuCli>
+        <WahuCli :dark="false" class="wahu-cli shadow-24" v-show="showCli" width="75vw" height="calc(100vh - 50px)"
+        ></WahuCli>
       </Transition>
 
       <DynamicComponent></DynamicComponent>
@@ -64,7 +65,7 @@ import NotificationArea from '../components/NotificationArea.vue';
 import TaskBar from 'src/components/TaskBar.vue';
 import DynamicComponent from '../pages/DynamicComponent.vue';
 
-import { pushWindow, refreshCurrentWindow, gotoWindow, initWindowRouter } from 'src/plugins/windowManager';
+import { refreshCurrentWindow, gotoWindow, initWindowRouter } from 'src/plugins/windowManager';
 import LoginControl from 'src/components/LoginControl.vue';
 import NavDrawerContent from 'src/components/NavDrawerContent.vue';
 import DownloadProgress from 'src/components/DownloadProgress.vue';
@@ -155,8 +156,6 @@ export default defineComponent({
   position: fixed;
   left: 0px;
   top: 50px;
-  width: 75%;
-  height: calc(100vh - 50px);
   background-color: white;
   opacity: 0.9;
 }
