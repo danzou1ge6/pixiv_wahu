@@ -3,7 +3,10 @@
     <q-header elevated>
       <q-bar v-if="showNotConnectedBar" class="bg-negative">
         <q-icon name="error"></q-icon>
-        <div class="text-subtitle-2">未连接后端</div>
+        <div class="text-subtitle-2">
+          未连接后端
+          <span class="cursor-pointer" @click="initWahuWsBridge">重试</span>
+        </div>
       </q-bar>
 
       <q-toolbar>
@@ -69,7 +72,7 @@ import { refreshCurrentWindow, gotoWindow, initWindowRouter } from 'src/plugins/
 import LoginControl from 'src/components/LoginControl.vue';
 import NavDrawerContent from 'src/components/NavDrawerContent.vue';
 import DownloadProgress from 'src/components/DownloadProgress.vue';
-import { soecketStatusReact } from 'src/plugins/wahuBridge/client';
+import { soecketStatusReact, initWahuWsBridge } from 'src/plugins/wahuBridge/client';
 import WahuCli from 'src/components/WahuCli.vue';
 
 export default defineComponent({
@@ -144,7 +147,8 @@ export default defineComponent({
       showDlProgress,
       windowRefresh,
       showNotConnectedBar,
-      showCli
+      showCli,
+      initWahuWsBridge
     }
   }
 });

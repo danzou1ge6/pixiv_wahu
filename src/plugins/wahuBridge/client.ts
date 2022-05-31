@@ -220,11 +220,6 @@ function initWahuWsBridge(): void {
         })
     })
 
-    setTimeout(() => {
-        if (socket.readyState != socket.OPEN) {
-            initWahuWsBridge()
-        }
-    }, 5000)
 }
 
 function regDlProgressReportCbk(f: Function) {
