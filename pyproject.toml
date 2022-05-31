@@ -4,4 +4,4 @@ console_output_style = "count"
 log_cli = true
 
 [tool.pyright]
-exclude = ["dist/**/*"]
+exclude = ["dist/**/*", "build/**/*"]

@@ -3,18 +3,23 @@ import dataclasses
 import functools
 import json
 import traceback
-from typing import Any, Callable, Concatenate, Coroutine, ParamSpec, TypeVar
+from typing import TYPE_CHECKING, Any, Callable, Concatenate, Coroutine, ParamSpec, TypeVar
 
 import click
+
+if TYPE_CHECKING:
+    from .wahu_cli import CliClickCtxObj
 
 
 def print_help(cctx: click.Context, param: click.Parameter, value: Any):
     """助手函数 用以覆盖 click 打印到终端"""
 
+    obj: CliClickCtxObj = cctx.obj
+
     if not value or cctx.resilient_parsing:
         return
-    cctx.obj.pipe.put(cctx.get_help())
-    cctx.obj.pipe.close()
+    obj.pipe.put(cctx.get_help())
+    obj.pipe.close()
 
 T = TypeVar('T')
 P = ParamSpec('P')
@@ -28,13 +33,15 @@ def wahu_cli_wrap(f: Callable[Concatenate[click.Context, P], Coroutine[None, Non
     @functools.wraps(f)
     def g(cctx: click.Context, *args: P.args, **kwargs: P.kwargs) -> None:
 
+        obj: CliClickCtxObj = cctx.obj
+
         async def h() -> None:
             try:
                 await f(cctx, *args, **kwargs)
             except Exception:
-                cctx.obj.pipe.put(traceback.format_exc())
+                obj.pipe.put(traceback.format_exc())
             finally:
-                cctx.obj.pipe.close()
+                obj.pipe.close()
 
         asyncio.create_task(h())
 

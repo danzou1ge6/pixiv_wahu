@@ -34,5 +34,7 @@ class WahuConfig:
     default_fuzzy_cutoff: int
     # log
     log_rpc_ret_length: int
+    # pylogging
+    pylogging_cfg_dict: dict[str, Any]
 
     original_dict: dict[str, Any]

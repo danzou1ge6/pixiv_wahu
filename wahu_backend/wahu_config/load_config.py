@@ -1,4 +1,3 @@
-from logging import config as log_cfg
 from pathlib import Path
 
 import toml
@@ -64,7 +63,7 @@ def load_config(config_file: Path) -> WahuConfig:
         log_rpc_ret_length = d['logging'].get('rpc_return_length', 1000)
 
         # pylogging
-        log_cfg.dictConfig(d['pylogging'])
+        pylogging_cfg_dict = d['pylogging']
 
     except KeyError as ke:
         raise ConfigLoadKeyError(ke.args[0]) from ke
@@ -98,5 +97,6 @@ def load_config(config_file: Path) -> WahuConfig:
         image_pool_size=image_pool_size,
         default_fuzzy_cutoff=default_fuzzy_cutoff,
         log_rpc_ret_length=log_rpc_ret_length,
+        pylogging_cfg_dict=pylogging_cfg_dict,
         original_dict=d
     )

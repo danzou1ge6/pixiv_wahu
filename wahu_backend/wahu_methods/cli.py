@@ -44,7 +44,7 @@ class WahuMetdodsWithCli(
         cctx_obj = CliClickCtxObj(ctx, pipe)
 
         try:
-            ret_code = ctx.wexe(
+            ret_code = ctx.wexe.main(
                 grouped_cmd,
                 obj=cctx_obj,
                 standalone_mode=False,

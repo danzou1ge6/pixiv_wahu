@@ -27,13 +27,13 @@ class CliIOPipe(AsyncGenerator[TP, TP]):
         self.output_event = Event()
         self.input_event = Event()
 
-    def put(self, val: TP):
+    def put(self, val: TP) -> None:
         """输出"""
 
         self.output_queue.put(val)
         self.output_event.set()
 
-    def putline(self, val: TP):
+    def putline(self, val: TP) -> None:
         self.put(val + '\n')
 
     async def __anext__(self) -> TP:
@@ -91,17 +91,40 @@ class CliIOPipe(AsyncGenerator[TP, TP]):
         excpt_vale: Exception,
         excpt_type: Optional[type] = None,
         excpt_tcbk: Optional[Traceback] = None
-    ):
+    ) -> None:
         """在生成器中引起一条异常"""
         raise excpt_vale
 
-    async def aclose(self):
+    async def aclose(self) -> None:
         """设置管道关闭"""
         self.put('[:close]')
 
-    def close(self):
+    def close(self) -> None:
         self.put('[:close]')
 
+
+class CliIOPipeTerm:
+    """输出到终端的命令行 IO 管道"""
+
+    def __init__(self):
+        self.close_event = Event()
+
+    def put(self, val: TP) -> None:
+        click.echo(val, nl=False)
+
+    def putline(self, val: TP) -> None:
+        click.echo(val)
+
+    async def get(self, prefix: Optional[TP]=None) -> TP:
+        if prefix is None:
+            prefix = '>'
+
+        click.echo(prefix + ' ', nl=False)
+        val = input()
+        return val
+
+    def close(self) -> None:
+        self.close_event.set()
 
 
 class CliClickCtxObj:
@@ -110,7 +133,7 @@ class CliClickCtxObj:
     def __init__(
         self,
         wctx: 'WahuContext',
-        pipe: CliIOPipe
+        pipe: CliIOPipe | CliIOPipeTerm
     ):
         self.wctx = wctx
         self.pipe = pipe

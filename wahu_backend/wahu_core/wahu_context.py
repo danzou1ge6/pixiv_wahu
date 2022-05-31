@@ -1,5 +1,6 @@
 import asyncio
 import atexit
+from logging import config as log_cfg
 from pathlib import Path
 from typing import Iterable
 
@@ -58,6 +59,9 @@ class WahuContext:
     def __init__(self, config: WahuConfig):
 
         self.config = config
+
+        # pylogging
+        log_cfg.dictConfig(self.config.pylogging_cfg_dict)
 
         # PixivAPI
         self.papi: MaintainedSessionPixivAPI = MaintainedSessionPixivAPI(

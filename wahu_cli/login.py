@@ -24,6 +24,9 @@ def mount(wexe: click.Group):
 
         obj: CliClickCtxObj = cctx.obj
 
+        if not obj.wctx.papi.logged_in:
+            obj.pipe.putline('未登录. 尝试登陆')
+
         await obj.wctx.papi.ensure_loggedin()
 
         ac = obj.wctx.papi.account_session
