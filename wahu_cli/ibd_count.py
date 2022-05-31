@@ -64,7 +64,7 @@ def mount(parent_group: click.Group):
 
                 tbl.field_names = ['名', '译', '次数']
                 tbl.add_rows([
-                    (it.name, it.translated, n)
+                    (it.name, it.translated if it.translated is not None else '', n)
                     for it, n in result
                 ])
 
