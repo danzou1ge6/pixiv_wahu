@@ -132,6 +132,9 @@ export type {PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserD
 export async function cli_list () : Promise<Array<CliScriptInfo>> {
     return await wahuRPCCall('cli_list', {})as Array<CliScriptInfo>}
 
+export async function cli_open_editor (name: string) : Promise<null> {
+    return await wahuRPCCall('cli_open_editor', {name: name})as null}
+
 export async function cli_reload () : Promise<null> {
     return await wahuRPCCall('cli_reload', {})as null}
 

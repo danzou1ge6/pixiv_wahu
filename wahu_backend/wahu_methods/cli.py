@@ -1,8 +1,10 @@
 from dataclasses import dataclass
 from pathlib import Path
 import traceback
-from typing import Any, AsyncGenerator, Type
+from typing import AsyncGenerator
+import webbrowser
 
+from ..wahu_core.core_exceptions import WahuRuntimeError
 from ..wahu_core import CliIOPipe, WahuContext, wahu_methodize, CliClickCtxObj
 from .illust_database import WahuIllustDatabaseMethods
 from .illust_repo import IllustRepoMethods
@@ -74,3 +76,15 @@ class WahuMetdodsWithCli(
         return [CliScriptInfo(
             cs.path, cs.name, cs.descrip, cs.code
         ) for cs in ctx.cli_scripts]
+
+    @classmethod
+    @wahu_methodize()
+    async def cli_open_editor(cls, ctx: WahuContext, name: str) -> None:
+        """在编辑器中打开"""
+
+        for cs in ctx.cli_scripts:
+            if cs.name == name:
+                webbrowser.open(str(cs.path))
+                break
+        else:
+            raise WahuRuntimeError(f'找不到 CliScript {name}')
