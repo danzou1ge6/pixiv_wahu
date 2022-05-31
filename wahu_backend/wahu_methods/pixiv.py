@@ -1,10 +1,10 @@
 from typing import AsyncGenerator, Optional, TypeVar
 
-from ..aiopixivpy import AccountSession, IllustDetail, PixivUserDetail
-from ..aiopixivpy.datastructure_user import PixivUserPreview
+from ..aiopixivpy import (AccountSession, IllustDetail, PixivUserDetail,
+                          PixivUserPreview, TrendingTagIllusts)
 from ..aiopixivpy.pixivpy_typing import (PixivRecomMode, PixivSearchTarget,
                                          PixivSort)
-from ..wahu_core import WahuContext, wahu_methodize, WahuMethodsCollection
+from ..wahu_core import WahuContext, WahuMethodsCollection, wahu_methodize
 from ..wahu_core.core_exceptions import WahuRuntimeError
 
 RT = TypeVar('RT')
@@ -192,3 +192,11 @@ class WahuPixivMethods(WahuMethodsCollection):
     ) -> None:
 
         await ctx.papi.user_follow_delete(uid)
+
+    @classmethod
+    @wahu_methodize()
+    async def p_trending_tags(
+        cls, ctx: WahuContext
+    ) -> list[TrendingTagIllusts]:
+
+        return await ctx.papi.trending_tags_illust()

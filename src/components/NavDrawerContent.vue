@@ -116,6 +116,10 @@
               v-ripple>
               更多搜索
             </q-item>
+            <q-item clickable @click="pushWindow({ component: 'TrendingTags' }); $emit('update:modelValue', false)"
+              v-ripple>
+              趋势标签
+            </q-item>
           </q-list>
         </q-card>
       </q-expansion-item>

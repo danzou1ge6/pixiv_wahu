@@ -1,4 +1,5 @@
-from typing import AsyncGenerator, NamedTuple
+from dataclasses import dataclass
+from typing import AsyncGenerator
 
 from .datastructure_illust import IllustDetail, IllustTag
 from .datastructure_comment import PixivComment
@@ -9,11 +10,7 @@ from .datastructure_processing import (process_pixiv_comment_dict,
 
 from .api_base import BasePixivAPI, check_login
 from .ap_exceptions import AioPixivPyInvalidReturn
-
-
-class TrendingTagIllusts(NamedTuple):
-    tag: IllustTag
-    illust: IllustDetail
+from .datastructure_illust import TrendingTagIllusts
 
 
 class MiscPixivAPI(BasePixivAPI):

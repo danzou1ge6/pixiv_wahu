@@ -141,3 +141,9 @@ class IllustDetail(IllustDetailRaw, DatabaseRow):
 
     keys = list(adapters.keys())
     index = 'iid'
+
+
+@dataclass
+class TrendingTagIllusts:
+    tag: IllustTag
+    illust: IllustDetail

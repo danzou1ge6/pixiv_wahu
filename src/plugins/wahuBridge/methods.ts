@@ -83,6 +83,11 @@ interface FileEntry {
     fid: string;
 }
 
+interface TrendingTagIllusts {
+    tag: IllustTag;
+    illust: IllustDetail;
+}
+
 interface FileTracingConfig {
     ftid: number;
     name: string;
@@ -122,7 +127,7 @@ interface CliScriptInfo {
     code: string;
 }
 
-export type {PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserDetail, PixivUserPreview, IllustBookmark, FileEntry, FileTracingConfig, RepoSyncAddReport, AccountSession, FileEntryWithURL, DownloadProgress, CliScriptInfo}
+export type {PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserDetail, PixivUserPreview, IllustBookmark, FileEntry, TrendingTagIllusts, FileTracingConfig, RepoSyncAddReport, AccountSession, FileEntryWithURL, DownloadProgress, CliScriptInfo}
 
 export async function cli_list () : Promise<Array<CliScriptInfo>> {
     return await wahuRPCCall('cli_list', {})as Array<CliScriptInfo>}
@@ -249,6 +254,9 @@ export async function p_ilstbm_add (iids: Array<number>) : Promise<null> {
 
 export async function p_ilstbm_rm (iids: Array<number>) : Promise<null> {
     return await wahuRPCCall('p_ilstbm_rm', {iids: iids})as null}
+
+export async function p_trending_tags () : Promise<Array<TrendingTagIllusts>> {
+    return await wahuRPCCall('p_trending_tags', {})as Array<TrendingTagIllusts>}
 
 export async function p_user_bmilsts (uid: number) : Promise<AsyncGenerator<Array<IllustDetail>, undefined, null>> {
     return await wahuRPCCall('p_user_bmilsts', {uid: uid})as AsyncGenerator<Array<IllustDetail>, undefined, null>}

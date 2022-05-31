@@ -1,25 +1,23 @@
-from .aiopixivpy.datastructure_comment import PixivComment
-from .aiopixivpy.datastructure_illust import PixivUserSummery, IllustDetail, IllustTag
-from .aiopixivpy.datastructure_user import PixivUserDetail, PixivUserPreview
 from .aiopixivpy.api_base import AccountSession
-
-from .aiopixivpy.pixivpy_typing import PixivRecomMode, PixivSearchTarget, PixivSort
-
-
-from .illust_bookmarking import IllustBookmark
+from .aiopixivpy.datastructure_comment import PixivComment
+from .aiopixivpy.datastructure_illust import (IllustDetail, IllustTag,
+                                              PixivUserSummery,
+                                              TrendingTagIllusts)
+from .aiopixivpy.datastructure_user import PixivUserDetail, PixivUserPreview
+from .aiopixivpy.pixivpy_typing import (PixivRecomMode, PixivSearchTarget,
+                                        PixivSort)
 from .file_tracing import FileEntry, FileTracingConfig
-
-from .wahu_methods.illust_repo import RepoSyncAddReport, FileEntryWithURL
-from .wahu_methods.cli import CliScriptInfo
-
+from .illust_bookmarking import IllustBookmark
 from .pixiv_image import DownloadProgress
+from .wahu_methods.cli import CliScriptInfo
+from .wahu_methods.illust_repo import FileEntryWithURL, RepoSyncAddReport
 
 """
 暴露给前端的 dataclass
 """
 
 exports = [PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserDetail,
-           PixivUserPreview, IllustBookmark, FileEntry,
+           PixivUserPreview, IllustBookmark, FileEntry, TrendingTagIllusts,
            FileTracingConfig, RepoSyncAddReport, AccountSession,
            FileEntryWithURL, DownloadProgress, CliScriptInfo]
 

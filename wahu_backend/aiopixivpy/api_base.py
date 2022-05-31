@@ -230,6 +230,8 @@ class BasePixivAPI(ManualDNSClient):
 
     @property
     def logged_in(self):
+        """是否登录. 同时检查 `access_token` 是否过期"""
+
         if self.account_session is not None:
             if self.account_session.expire_at < datetime.now():
                 self.account_session = None

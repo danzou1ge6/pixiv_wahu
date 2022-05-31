@@ -28,6 +28,7 @@ import PixivSearchIllust from './PixivSearchIllust.vue'
 import PixivSearchUser from './PixivSearchUser.vue'
 import PixivUserDetail from './PixivUserDetail.vue'
 import RepoView from './RepoView.vue'
+import TrendingTags from './TrendingTags.vue'
 interface componentIndex {[index: string] : any}
 const components: componentIndex = {
   CliScriptView: CliScriptView,
@@ -40,6 +41,7 @@ const components: componentIndex = {
   PixivSearchUser: PixivSearchUser,
   PixivUserDetail: PixivUserDetail,
   RepoView: RepoView,
+  TrendingTags: TrendingTags,
 }
 /** 自动生成 Import End */
 

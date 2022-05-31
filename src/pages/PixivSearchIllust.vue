@@ -85,7 +85,7 @@ const queryLoading = ref<boolean>(false)
 const loading = ref<boolean>(false)
 const illusts = ref<Array<wm.IllustDetail>>([])
 
-let generator = ref<AsyncIterator<Array<wm.IllustDetail>>>()
+let generator = ref<AsyncGenerator<Array<wm.IllustDetail>>>()
 
 function asignGenerator(gen: typeof generator.value) {
   if (generator.value !== undefined && generator.value.throw !== undefined) {
