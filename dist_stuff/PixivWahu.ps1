@@ -1,1 +1,8 @@
-.\python -m wahu_backend.__init__
+$argsArray = ""
+foreach ($arg in $args) {
+    $argsArray += "'$($arg)', "
+}
+
+$argsArray = "[" + $argsArray + "]"
+
+python -c "from wahu_backend import run; run($($argsArray));"

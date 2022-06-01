@@ -50,7 +50,7 @@ silent_deco = click.option(
 @logging_deco
 @silent_deco
 @click.pass_context
-def pixiv_wahu_run(
+def run(
     cctx: click.Context,
     port: int,
     host: str,
@@ -90,7 +90,7 @@ def print_exe_help(cctx: click.Context, param: click.Parameter, value: Any):
         click.echo(cctx.obj.wexe.get_help(cctx))
         cctx.exit()
 
-@pixiv_wahu_run.command(
+@run.command(
     context_settings=dict(ignore_unknown_options=True)
 )
 @click.argument('args', nargs=-1, type=click.UNPROCESSED)
@@ -117,7 +117,7 @@ def exe(cctx, args: list[str]):
     asyncio.set_event_loop(loop)
     loop.run_until_complete(main())
 
-@pixiv_wahu_run.command()
+@run.command()
 @browser_deco
 @click.pass_context
 def ui(cctx, browser):
@@ -135,4 +135,4 @@ def ui(cctx, browser):
 
 
 if __name__ == '__main__':
-    pixiv_wahu_run()
+    run()

@@ -2,12 +2,12 @@ from typing import TYPE_CHECKING
 
 import click
 
-from wahu_cli.helpers import table_factory
-
 if TYPE_CHECKING:
     from wahu_backend.wahu_core import CliClickCtxObj
 
 from wahu_backend.wahu_core.wahu_cli_helper import wahu_cli_wrap
+
+from helpers import table_factory
 
 NAME = '登录'
 DESCRIPTION = '登录 Pixiv'

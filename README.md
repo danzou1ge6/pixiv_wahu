@@ -60,7 +60,10 @@ python -m wahu_backend.__init__
 ## 配置
 PixivWahu 使用 TOML 格式配置
 
-配置文件路径默认为 `conf.toml` ，可以使用命令行选项 `--config/-c` 覆盖
+配置文件路径默认为 `conf.toml` ，可以使用命令行选项 `--config/-c` 覆盖，
+也可以使用环境变量 `PIXIVWAHU_CONFPATH` 覆盖
+
+> 优先级顺序：命令行选项 > 环境变量 > 默认值
 
 配置文件内容详见配置文件中的注释
 
@@ -115,13 +118,20 @@ PixivWahu 使用 TOML 格式配置
 - 扫描「储存库目录」，将下载完成的文件的索引从「缓存区」移到「索引区」
 - 扫描「储存库目录」，发现无效的索引和无效的文件，将其删除
 
-### 命令行脚本
+### 命令行
+PixivWahu 也具有命令行界面
+
+执行 `.\PixivWahu.ps1 --help` 或者 `.\python -m wahu_backend.__init__ --help` 查看命令行帮助
+
+> 对于每个子命令，在命令行加上 `--help` 可以查看子命令帮助
+
+### WahuCli
 使用 [`click`](https://click.palletsprojects.com/en/8.1.x/) 创建命令行脚本，
-在 「Home」 的命令行终端上执行
+在「Home」页码的命令行终端上执行，或者使用上述的命令行界面中 `exe` 子命令执行
 
 PixivWahu 预置了几个命令行脚本；也可以自行创建
 
-用户命令行脚本默认存放在 `user/scripts` 下
+用户命令行脚本默认存放在 `user/scripts` 下，更多说明详见 `user/scripts/example.py`
 
 ### 缓存池
 PixivWahu 为了优化体验使用了两个缓存池

@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='pixiv_wahu',
-    version='0.2.1',
+    version='0.2.2',
     python_requires='>=3.10',
     package_dir={
         'wahu_backend': 'wahu_backend',
@@ -15,7 +15,8 @@ setup(
         'click',
         'aiohttp',
         'fuzzywuzzy[accelerate_fuzzywuzzy]',
-        'toml'
+        'toml',
+        'prettytable'
     ],
     extras_require={
         'accelerate_fuzzywuzzy': ['python-levenshtein']
@@ -26,7 +27,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'pixiv-wahu=wahu_backend:pixiv_wahu_run',
+            'pixiv-wahu=wahu_backend:run',
             'get-px-refreshtoken=token_getter:main'
         ]
     }
