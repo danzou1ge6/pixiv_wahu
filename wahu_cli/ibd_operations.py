@@ -1,5 +1,8 @@
+from re import L
 from typing import TYPE_CHECKING
 import click
+
+from wahu_cli.helpers import table_factory
 
 if TYPE_CHECKING:
     from wahu_backend.wahu_core import CliClickCtxObj
@@ -29,6 +32,59 @@ def mount(wexe: click.Group):
 
     mount_ibd_subscrip(ibd)
     mount_ibd_count(ibd)
+
+    @ibd.command()
+    @click.option('--verbose', '-v', is_flag=True, help='打印连接的数据库')
+    @wahu_cli_wrap
+    async def ls(cctx: click.Context, verbose: bool):
+        """打印插画数据库列表
+        """
+
+        obj: CliClickCtxObj = cctx.obj
+
+        if verbose:
+            obj.wctx.repo_db_link.update_rfd()
+
+            tbl = table_factory()
+
+            for dbn in obj.wctx.ilst_bmdbs.keys():
+                if dbn in obj.wctx.repo_db_link.rname_for_db.keys():
+                    repos = obj.wctx.repo_db_link.rname_for_db[dbn]
+                else:
+                    repos = []
+
+                tbl.add_row((dbn, ', '.join(repos)))
+
+            text = tbl.get_string()
+
+        else:
+            text = ' '.join(obj.wctx.ilst_bmdbs.keys())
+
+        obj.pipe.putline(text)
+
+    @ibd.command()
+    @click.argument('name', type=str, required=True)
+    @wahu_cli_wrap
+    async def new(cctx: click.Context, name: str):
+        """创建一个新的插画数据库 NAME
+        """
+
+        await WahuMethods.ibd_new(cctx.obj.wctx, name)
+
+
+    @ibd.command()
+    @click.argument('name', type=str, required=True)
+    @wahu_cli_wrap
+    async def rm(cctx: click.Context, name: str):
+        """删除插画数据库 NAME
+        """
+
+        obj: CliClickCtxObj = cctx.obj
+
+        if name not in obj.wctx.ilst_bmdbs.keys():
+            raise KeyError(f'fatal: 数据库 {name} 不存在')
+
+        await WahuMethods.ibd_remove(obj.wctx, name)
 
     @ibd.command()
     @click.argument('name', type=str, required=True)

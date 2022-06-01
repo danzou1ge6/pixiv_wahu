@@ -52,11 +52,11 @@ class WahuMetdodsWithCli(
             )
 
             if ret_code != None:
-                pipe.put('命令解析出错. 使用 --help 查看命令语法')
+                pipe.putline('命令解析出错. 使用 --help 查看命令语法')
                 pipe.close()
 
         except Exception:
-            pipe.put(traceback.format_exc())
+            pipe.putline(traceback.format_exc())
             pipe.close()
 
         return pipe

@@ -103,6 +103,8 @@ class PixivImageGetter(ManualDNSClient):
                     async with self.session.get(url, ssl=True) as resp:
 
                         total_size = resp.headers.get('Content-Length', None)
+                        if total_size is None:
+                            total_size = resp.headers.get('content-length')
                         st.start(total_size)
 
                         image = bytes()

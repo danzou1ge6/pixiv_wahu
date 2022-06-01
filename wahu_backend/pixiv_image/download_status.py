@@ -40,6 +40,17 @@ class DownloadProgress(DownloadProgressRaw):
     def update(self, delta: int) -> None:
         self.downloaded_size += delta
 
+    @property
+    def total_kb(self):
+        if self.total_size is None:
+            return '/'
+        else:
+            return f'{self.total_size / 1024:.0f}kb'
+
+    @property
+    def downloaded_kb(self):
+        return f'{self.downloaded_size / 1024:.0f}kb'
+
 
     def __enter__(self) -> 'DownloadProgress':
         self.status = 'pending'
@@ -106,6 +117,11 @@ class DownloadProgressTracker:
     def finished(self) -> Iterator[DownloadProgress]:
         return (v for v in self.download_status_record.values()
                 if v.status == 'finished')
+
+    @property
+    def pending(self) -> Iterator[DownloadProgress]:
+        return (v for v in self.download_status_record.values()
+                if v.status == 'pending')
 
     @property
     def inprogress(self) -> Iterator[DownloadProgress]:

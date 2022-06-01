@@ -32,4 +32,8 @@ const props = defineProps<{
 .normal-pre {
   white-space: pre-wrap;
 }
+pre {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
 </style>

@@ -273,8 +273,7 @@ class IllustRepoMethods:
             else:
                 logger.warn(f'ir_download: 文件 {file_path} 已存在，不再下载')
 
-        loop = asyncio.get_running_loop()
-        [loop.create_task(dl_coro(fewu)) for fewu in file_entries_withurl]
+        [asyncio.create_task(dl_coro(fewu)) for fewu in file_entries_withurl]
 
     @classmethod
     @wahu_methodize(middlewares=[_check_repo_name])

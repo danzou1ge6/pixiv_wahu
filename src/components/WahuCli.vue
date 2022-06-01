@@ -55,7 +55,7 @@ function enter() {
   if (generator.value === undefined) {
     if (cmd != '') {
 
-      content.value.push({ text: '$ ' + cmd + '\n' })
+      print('\n\n$ ' + cmd)
       autoScroll()
 
       if (handleSpecialCmd(cmd)) {
@@ -73,7 +73,7 @@ function enter() {
     }
   } else {
     listenGenerator(cmd)
-    processRetVal(inpPrefix.value + ' ' + cmd + '\n')
+    print('\n' + inpPrefix.value + ' ' + cmd)
   }
 
 
@@ -115,29 +115,45 @@ async function listenGenerator(initalSendVal?: string) {
       inpPrefix.value = inputMatch[0].slice(8, -1)
       return
     }
-    processRetVal(ret.value)
+    print(ret.value)
   }
 }
 
-function processRetVal(ret: string | undefined) {
-  if (ret !== undefined) {
-    const imgMatch = ret.match(/\[:img=.+\]/)
+function lastOf<T>(arr: Array<T>) : T{
+  return arr[arr.length - 1]
+}
+
+function print(val: string | undefined) {
+  if (val !== undefined) {
+    const imgMatch = val.match(/\[:img=.+\]/)
+    const rewriteMatch = val.match(/\[:rewrite\]/)
     if (imgMatch !== null) {
-      if(ret.match(/\[:img=.+\].+/) !== null) {
+      if(val.match(/\[:img=.+\].+/) !== null) {
         content.value.push({
           src: imgMatch[0].slice(6, -1),
-          text: ret.slice(imgMatch[0].length)
+          text: val.slice(imgMatch[0].length)
         })
       }else {
         content.value.push({
           src: imgMatch[0].slice(6, -1)
         })
       }
-    } else {
-      if(content.value[content.value.length - 1].src === undefined) {
-        content.value[content.value.length - 1].text += ret
+    } else if(rewriteMatch !== null) {
+      const txt = val.slice(rewriteMatch[0].length)
+      if(lastOf(content.value).text !== null){
+        lastOf(content.value).text = txt
       }else{
-        content.value.push({text: ret})
+        content.value.push({text: txt})
+      }
+    } else {
+      if(val.startsWith('\n')) {
+        content.value.push({text: val.slice(1)})
+      }else{
+        if(lastOf(content.value).text !== undefined) {
+          lastOf(content.value).text += val
+        }else{
+          content.value.push({text: val})
+        }
       }
     }
     autoScroll()

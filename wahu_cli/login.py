@@ -35,7 +35,6 @@ def mount(wexe: click.Group):
 
         if not silent:
             tbl = table_factory()
-            tbl.header = False
             tbl.add_rows([
                 ('UID', ac.user_id),
                 ('用户名', ac.user_name),

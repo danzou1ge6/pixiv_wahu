@@ -149,19 +149,17 @@ class WahuIllustDatabaseMethods:
     @wahu_methodize()
     async def ibd_new(
         cls, ctx: WahuContext, name: str
-    ) -> bool:
+    ) -> None:
         """新增数据库"""
 
         if name in ctx.ilst_bmdbs.keys():
-            return False
+            raise WahuRuntimeError(f'插画数据库 {name} 已存在')
 
         new_ibd_ctx_wrapped: DatabaseContextManager[IllustBookmarkDatabase] = \
             DatabaseContextManager(IllustBookmarkDatabase(
                 name, ctx.config.database_dir / f'{name}.db'
             ))
         ctx.ilst_bmdbs[name] = new_ibd_ctx_wrapped
-
-        return True
 
     @classmethod
     @wahu_methodize(middlewares=[_check_db_name])

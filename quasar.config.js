@@ -12,7 +12,7 @@
 const { configure } = require('quasar/wrappers');
 
 
-const apiHost = 'http://localhost:8080'
+const apiHost = 'http://localhost:18080'
 
 module.exports = configure(function (/* ctx */) {
   return {

@@ -59,10 +59,11 @@ def mount(wexe: click.Group):
         # wmethods: WahuMethodsCollection 子类，内含所有 WahuMethods ，
         # 详见 `wahu_backend/wahu_methods/*`
 
-        # 打印一行字符
+        # 打印一行字符，以换行符开头
         pipe.putline(f'message from script echo: {wctx._msg_from_script_echo}')  # type: ignore
-        pipe.put('start echoing: ')
-        pipe.putline(echo)
+        pipe.putline('start echoing: ')
+        # 打印但是不以换行符开头
+        pipe.put(echo)
 
         for i in range(3):
             pipe.putline('输入一些东西')

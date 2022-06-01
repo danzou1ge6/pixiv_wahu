@@ -34,7 +34,7 @@ class CliIOPipe(AsyncGenerator[TP, TP]):
         self.output_event.set()
 
     def putline(self, val: TP) -> None:
-        self.put(val + '\n')
+        self.put('\n' + val)
 
     async def __anext__(self) -> TP:
         """

@@ -1,9 +1,47 @@
 import asyncio
+import itertools
+from pathlib import Path
+from typing import Optional
+
+from wahu_backend.aiopixivpy.datastructure_illust import IllustDetail
 
 from ..wahu_core import wahu_methodize, WahuContext
 from ..wahu_core.core_exceptions import WahuRuntimeError
 
+from .logger import logger
+
 class WahuMiscMethods:
+
+    @classmethod
+    @wahu_methodize()
+    async def filename_for_illust(
+        cls, ctx: WahuContext, dtl: IllustDetail, pages: list[int]=[]
+    ) -> list[str]:
+        """获得插画 `dtl` 的下载文件名"""
+
+        if len(pages) == 0:
+            pages = list(range(dtl.page_count))
+
+        return [
+            ctx.config.file_name_template.format(dtl, p) + \
+                f'.{dtl.image_origin[p].split(".")[-1]}'
+            for p in pages
+        ]
+
+    @classmethod
+    @wahu_methodize()
+    async def download_image(
+        cls, ctx: WahuContext, url: str, path: Path
+    ) -> None:
+        """下载 `url` 到 `Path`"""
+
+        if path.exists():
+            logger.warn(f'文件 {path} 已存在')
+
+        image = await ctx.image_pool.get_image(url, descript=str(path))
+
+        with open(path, 'wb') as wf:
+            wf.write(image)
 
     @classmethod
     @wahu_methodize()
@@ -14,26 +52,22 @@ class WahuMiscMethods:
 
         dtls = [await ctx.papi.pool_illust_detail(iid) for iid in iids]
 
-        coro_list = []
-        for dtl in dtls:
+        path_gen = itertools.chain(
+            *(
+                (ctx.config.temp_download_dir / fname
+                 for fname in await cls.filename_for_illust(ctx, dtl))
+                for dtl in dtls
+            )
+        )
 
-            async def coro():
-                for i, url in enumerate(dtl.image_origin):
-                    ext = url.split('.')[-1]
-                    fname = ctx.config.file_name_template.format(
-                        dtl, i) + f'.{ext}'
+        url_gen = itertools.chain(*(dtl.image_origin for dtl in dtls))
 
-                    image = await ctx.image_pool.get_image(
-                        url,
-                        fname
-                    )
+        coro_gen = (
+            cls.download_image(ctx, url, pth)
+            for url, pth in zip(url_gen, path_gen)
+        )
 
-                    with open(ctx.config.temp_download_dir / fname, 'wb') as wf:
-                        wf.write(image)
-
-            coro_list.append(coro())
-
-        [asyncio.create_task(coro) for coro in coro_list]
+        [asyncio.create_task(coro) for coro in coro_gen]
 
     @classmethod
     @wahu_methodize(middlewares=[])

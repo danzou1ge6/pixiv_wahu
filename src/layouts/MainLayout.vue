@@ -1,13 +1,18 @@
 <template>
   <q-layout view="hHh Lpr lFf">
     <q-header elevated>
-      <q-bar v-if="showNotConnectedBar" class="bg-negative">
-        <q-icon name="error"></q-icon>
-        <div class="text-subtitle-2">
-          未连接后端
-          <span class="cursor-pointer" @click="initWahuWsBridge">重试</span>
-        </div>
-      </q-bar>
+      <Transition appear enter-active-class="animated fadeInDown" leave-active-class="animated fadeInUp">
+        <q-bar v-if="showNotConnectedBar" class="bg-negative">
+          <q-icon name="error"></q-icon>
+          <div class="text-subtitle-2">
+            未连接后端
+            <span class="cursor-pointer" @click="initWahuWsBridge">
+              重试
+              <q-icon name="refresh"></q-icon>
+            </span>
+          </div>
+        </q-bar>
+      </Transition>
 
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="leftDrawerOpen = !leftDrawerOpen" />
