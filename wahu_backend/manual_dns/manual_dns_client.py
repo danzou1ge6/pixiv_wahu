@@ -6,7 +6,15 @@ from asyncio import Lock
 import aiohttp
 
 from ..http_typing import HTTPHeaders
-from .dns_resolve import resolve_host
+from .dns_resolve import resolve_host, DNSResolveError
+
+
+class ManualDNSClientError(DNSResolveError):
+    def __init__(self, msg: str):
+        self.msg = msg
+
+    def __str__(self) -> str:
+        return self.msg
 
 
 class ManualDNSClient:
@@ -44,22 +52,36 @@ class ManualDNSClient:
         self.log_adapter.debug('create_session: 创建 aiohttp.ClientSession')
 
     async def close_session(self) -> None:
-        if hasattr(self, 'session'):
+        if hasattr(self, '_session'):
             await self.session.close()
         self.log_adapter.debug('close_session: 关闭 aiohttp.ClientSession')
 
     async def resolve_host(self) -> None:
-        self.host = choice(await resolve_host(self.host_name,
-                                              timeout=self.timeout))
-        self.log_adapter.info('resolve_host: 使用主机 %s' % self.host)
+
+        host_list = await resolve_host(self.host_name,
+                                              timeout=self.timeout)
+
+        for host in host_list:
+            try:
+                async with self.session.get(f'https://{host}', verify_ssl=False) as resp:
+                    self.host = host
+                    self.log_adapter.info('resolve_host: 使用主机 %s' % self.host)
+                    return
+
+            except aiohttp.ClientError as ce:
+                self.log_adapter.warn('resolve_host: 主机 %s 无法访问' % host)
+
+        raise ManualDNSClientError('解析得到的所有主机均不可用')
+
 
     async def _check_env(self):
         """确保完成了 DNS 解析，以及是否创建了 `ClientSession`"""
         async with self.env_chk_lock:
 
+            if not hasattr(self, 'session'):
+                await self.create_session()
+
             if not hasattr(self, 'host'):
                 await self.resolve_host()
 
-            if not hasattr(self, 'session'):
-                await self.create_session()
 

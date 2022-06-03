@@ -11,7 +11,7 @@ from .logger import logger
 #     'https://doh.pub/dns-query'
 # ]
 
-DNS_URLS = []  # 目前来看最稳定的
+DNS_URLS = ['https://45.11.45.11/dns-query']  # 目前来看最稳定的
 
 def set_doh_url(urls: list[str]) -> None:
     """全局修改 DNS over HTTPS 的 URL"""
@@ -99,10 +99,6 @@ async def resolve_host(host_name: str, timeout: float=5) -> list[str]:
             try:
                 result.extend(await task)
             except DNSResolveError as dre:
-                logger.warning(
-                    'resolve_host: 使用 %s 解析 %s 失败.'
-                    % (dre.dns_url, dre.host_name)
-                )
                 logger.warning(dre, exc_info=True)
 
     if result == []:
