@@ -6,6 +6,7 @@ from .config_exceptions import (ConfigLoadBadPath, ConfigLoadError,
                                 ConfigLoadKeyError)
 from .config_object import WahuConfig
 
+from ..manual_dns.dns_resolve import set_doh_url
 
 
 def load_config(config_file: Path) -> WahuConfig:
@@ -58,12 +59,17 @@ def load_config(config_file: Path) -> WahuConfig:
         agenerator_pool_size = d['app'].get('agenerator_pool_size', 200)
         image_pool_size = d['app'].get('image_pool_size', 100)
         default_fuzzy_cutoff = d['app'].get('default_fuzzy_cutoff', 80)
+        doh_urls = d['app'].get('dns_over_https_urls', None)
 
         # logging
         log_rpc_ret_length = d['logging'].get('rpc_return_length', 1000)
 
         # pylogging
         pylogging_cfg_dict = d['pylogging']
+
+        # 全局设定
+        if doh_urls is not None:
+            set_doh_url(doh_urls)
 
     except KeyError as ke:
         raise ConfigLoadKeyError(ke.args[0]) from ke

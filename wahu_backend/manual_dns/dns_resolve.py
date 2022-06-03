@@ -11,7 +11,13 @@ from .logger import logger
 #     'https://doh.pub/dns-query'
 # ]
 
-DNS_URLS = ['https://45.11.45.11/dns-query']  # 目前来看最稳定的
+DNS_URLS = []  # 目前来看最稳定的
+
+def set_doh_url(urls: list[str]) -> None:
+    """全局修改 DNS over HTTPS 的 URL"""
+
+    global DNS_URLS
+    DNS_URLS = urls
 
 
 class DNSResolveError(Exception):

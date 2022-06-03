@@ -69,6 +69,8 @@ illust_detail_pool_size = 500
 image_pool_size = 100
 # 默认模糊搜索阈值，百分制
 default_fuzzy_size = 80
+# Dns over HTTPS 服务器地址
+dns_over_https_urls = ['https://45.11.45.11/dns-query']
 
 [logging]
 # 应用的日志配置
