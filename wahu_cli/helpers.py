@@ -92,7 +92,7 @@ async def report_dl_coro(
             (p.status,
              os.path.split(p.descript)[-1] if p.descript is not None else 'Unknown',
              p.downloaded_kb, p.total_kb,
-             f'{p.downloaded_size * 100 / p.total_size:.0f}' if p.total_size is not None else '/')
+             f'{p.downloaded_size * 100 / p.total_size:.0f}%' if p.total_size is not None else '/')
             for p in progs
         ])
 

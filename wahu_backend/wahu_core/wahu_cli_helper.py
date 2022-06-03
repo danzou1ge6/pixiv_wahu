@@ -95,9 +95,11 @@ async def less(
     """
 
     if in_terminal:
+        term_width, term_height = shutil.get_terminal_size()
         lines: list[str] = list(itertools.chain(
-            *(_group_str(ln, shutil.get_terminal_size()[0]) for ln in s.split('\n'))
+            *(_group_str(ln, term_width) for ln in s.split('\n'))
         ))
+        lines_per_page = term_height - 2
     else:
         lines = s.split('\n')
 
