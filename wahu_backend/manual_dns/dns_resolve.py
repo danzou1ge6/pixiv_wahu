@@ -9,7 +9,7 @@ from .logger import logger
 #     'https://dns.alidns.com/resolve',
 #     'https://cloudflare-dns.com/dns-query',
 #     'https://doh.pub/dns-query'
-# ]
+# ]  # 这些都寄了
 
 DNS_URLS = ['https://45.11.45.11/dns-query']  # 目前来看最稳定的
 

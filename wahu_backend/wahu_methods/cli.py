@@ -3,6 +3,8 @@ from pathlib import Path
 import traceback
 from typing import AsyncGenerator
 import webbrowser
+from click.parser import split_arg_string
+from click.shell_completion import ShellComplete
 
 from ..wahu_core.core_exceptions import WahuRuntimeError
 from ..wahu_core import CliIOPipe, WahuContext, wahu_methodize, CliClickCtxObj
@@ -30,22 +32,12 @@ class WahuMetdodsWithCli(
     async def wahu_exec(cls, ctx: WahuContext, cmd: str) -> AsyncGenerator[str, str]:
         """启动一个命令行的执行"""
 
-        # 分组命令行
-        splitted_with_quote = cmd.split('"')
-        grouped_cmd = []
-        for i, block in enumerate(splitted_with_quote):
-            if i % 2 == 0:
-                grouped_cmd += block.split(' ')
-            else:
-                grouped_cmd.append(block)
-        grouped_cmd = [g for g in grouped_cmd if g != '']
-
         pipe = CliIOPipe()
         cctx_obj = CliClickCtxObj(ctx, pipe)
 
         try:
             ret_code = ctx.wexe.main(
-                grouped_cmd,
+                split_arg_string(cmd),
                 obj=cctx_obj,
                 standalone_mode=False,
                 prog_name=''
@@ -60,6 +52,18 @@ class WahuMetdodsWithCli(
             pipe.close()
 
         return pipe
+
+    @classmethod
+    @wahu_methodize()
+    async def wahu_cli_complete(cls, ctx: WahuContext, cmd: str
+    ) -> list[str]:
+        """补全命令"""
+
+        completions = ctx.cli_complete.get_completions(
+            split_arg_string(cmd),
+            ''
+        )
+        return [str(c.value) for c in completions if c.type == 'plain']
 
     @classmethod
     @wahu_methodize()

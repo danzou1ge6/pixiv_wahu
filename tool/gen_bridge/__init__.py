@@ -44,7 +44,7 @@ def gen_methods():
         if name.startswith('__') or name in {'anext', 'get', 'wexe'}:
             continue
 
-        m = WahuMethods.get(name)
+        m = getattr(WahuMethods, name)
 
         assert m is not None
 

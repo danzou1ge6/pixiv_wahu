@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Iterable
 
 import click
+from click.shell_completion import ShellComplete
 
 from ..aiopixivpy import MaintainedSessionPixivAPI
 from ..file_tracing import FileTracer
@@ -53,10 +54,12 @@ def create_file_tracers(
 
 class WahuContext:
 
-    cli_scripts: list[WahuCliScript]
-    wexe: click.Group
 
     def __init__(self, config: WahuConfig, in_terminal: bool=False):
+
+        self.cli_scripts: list[WahuCliScript]
+        self.cli_complete: ShellComplete
+        self.wexe: click.Group
 
         self.config = config
         self.in_terminal = in_terminal
@@ -104,6 +107,7 @@ class WahuContext:
         # 命令行脚本
         self.load_cli_scripts()
 
+
         atexit.register(self.sync_cleanup)
 
     def load_cli_scripts(self, reload: bool=False):
@@ -114,6 +118,8 @@ class WahuContext:
         for cs in self.cli_scripts:
             if cs.init_hook is not None:
                 cs.init_hook(self)
+
+        self.cli_complete = ShellComplete(self.wexe, {}, '', '')
 
     async def cleanup(self):
         await self.papi.close_session()

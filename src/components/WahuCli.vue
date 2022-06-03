@@ -6,10 +6,14 @@
           <WahuCliItem v-bind="item"></WahuCliItem>
         </div>
       </div>
-      <q-input v-model="cmdInp" @keyup.enter="enter" dense :prefix="inpPrefix" autofocus
+      <q-input :model-value="cmdInp" @keyup.enter="enter" dense :prefix="inpPrefix" autofocus
         :dark="dark" class="cli-input" @keyup.up="previousHistory" @keyup.down="nextHistory"
-        :loading="loading" :disabled="loading" ref="inputBox">
+        :loading="loading" :disabled="loading" ref="inputBox" @update:model-value="handleInput">
       </q-input>
+      <pre v-show="cmdInp != ''" class="text-grey-5">{{ ' ' + completions.join(' ') }}</pre>
+      <div v-for="(his, i) in matchedHistory" :key="i" v-show="cmdInp != ''">
+        <pre class="text-grey-5">{{ i == historyPointer ? '-> ' + his : '   ' + his }}</pre>
+      </div>
       <div ref="inputBoxAnchor"></div>
     </div>
   </q-scroll-area>
@@ -18,7 +22,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
 
-import { wahu_exec } from 'src/plugins/wahuBridge/methods';
+import { wahu_exec, wahu_cli_complete } from 'src/plugins/wahuBridge/methods';
 import WahuCliItem from './WahuCliItem.vue';
 
 const props = defineProps<{
@@ -36,8 +40,10 @@ const cmdInp = ref<string>('')
 const inpPrefix = ref<string>('$')
 const loading = ref<boolean>(false)
 
+const matchedHistory = ref<Array<string>>([])
 const history = ref<Array<string>>([])
 const historyPointer = ref<number>(0)
+const completions = ref<Array<string>>([])
 
 const scrollArea = ref<HTMLTemplateElement | null>(null)
 const inputBox = ref<HTMLTemplateElement | null>(null)
@@ -47,10 +53,11 @@ let generator = ref<AsyncGenerator<string, undefined, string | undefined>>()
 
 function enter() {
   const cmd = cmdInp.value
-  cmdInp.value = ''
 
   history.value.push(cmd)
-  historyPointer.value = history.value.length
+  historyPointer.value = -1
+  cmdInp.value = ''
+  matchedHistory.value = history.value
 
   if (generator.value === undefined) {
     if (cmd != '') {
@@ -164,22 +171,41 @@ function print(val: string | undefined) {
 }
 
 function nextHistory() {
-  if (historyPointer.value < history.value.length) {
+  if (historyPointer.value < matchedHistory.value.length) {
     historyPointer.value += 1
 
-    if (historyPointer.value == history.value.length) {
+    if (historyPointer.value == matchedHistory.value.length) {
+      historyPointer.value = -1
       cmdInp.value = ''
+      matchedHistory.value = history.value
     } else {
-      cmdInp.value = history.value[historyPointer.value]
+      cmdInp.value = matchedHistory.value[historyPointer.value]
     }
+    autoScroll()
   }
 }
 
 function previousHistory() {
   if (historyPointer.value > 0) {
     historyPointer.value -= 1
+  }else if(historyPointer.value = -1) {
+    historyPointer.value = matchedHistory.value.length - 1
+  }
+  cmdInp.value = matchedHistory.value[historyPointer.value]
+  autoScroll()
+}
 
-    cmdInp.value = history.value[historyPointer.value]
+function handleInput(val: string | number | null) {
+  cmdInp.value = val as string
+  matchedHistory.value = history.value.filter(val => val.startsWith(cmdInp.value))
+  if(historyPointer.value == -1) {
+    wahu_cli_complete(cmdInp.value)
+      .then(ret => {
+        completions.value = ret
+      })
+    autoScroll()
+  }else{
+    historyPointer.value = -1
   }
 }
 
@@ -203,7 +229,7 @@ function handleSpecialCmd(cmd: string): boolean {
     content.value.push({ text: manText })
   } else if (cmd == 'history') {
     content.value.push({
-      text: history.value.slice(undefined, history.value.length - 1).join('\n')
+      text: matchedHistory.value.slice(undefined, matchedHistory.value.length - 1).join('\n')
     })
   } else {
     return false
@@ -218,5 +244,9 @@ function handleSpecialCmd(cmd: string): boolean {
 <style scoped>
 .cli-input {
   font-family: monospace;
+}
+pre {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 </style>

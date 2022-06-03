@@ -138,6 +138,12 @@ export async function cli_open_editor (name: string) : Promise<null> {
 export async function cli_reload () : Promise<null> {
     return await wahuRPCCall('cli_reload', {})as null}
 
+export async function download_image (url: string, path: Path) : Promise<null> {
+    return await wahuRPCCall('download_image', {url: url, path: path})as null}
+
+export async function filename_for_illust (dtl: IllustDetail, pages: Array<number>) : Promise<Array<string>> {
+    return await wahuRPCCall('filename_for_illust', {dtl: dtl, pages: pages})as Array<string>}
+
 export async function get_config (name: string) : Promise<string> {
     return await wahuRPCCall('get_config', {name: name})as string}
 
@@ -165,8 +171,8 @@ export async function ibd_list () : Promise<Array<string>> {
 export async function ibd_list_bm (name: string) : Promise<Array<IllustBookmark>> {
     return await wahuRPCCall('ibd_list_bm', {name: name})as Array<IllustBookmark>}
 
-export async function ibd_new (name: string) : Promise<boolean> {
-    return await wahuRPCCall('ibd_new', {name: name})as boolean}
+export async function ibd_new (name: string) : Promise<null> {
+    return await wahuRPCCall('ibd_new', {name: name})as null}
 
 export async function ibd_query_bm (name: string, iid: number) : Promise<null | IllustBookmark> {
     return await wahuRPCCall('ibd_query_bm', {name: name, iid: iid})as null | IllustBookmark}
@@ -290,6 +296,9 @@ export async function p_user_search (keyword: string) : Promise<AsyncGenerator<A
 
 export async function wahu_anext (key: string, send_val: any) : Promise<null | any> {
     return await wahuRPCCall('wahu_anext', {key: key, send_val: send_val})as null | any}
+
+export async function wahu_cli_complete (cmd: string) : Promise<Array<string>> {
+    return await wahuRPCCall('wahu_cli_complete', {cmd: cmd})as Array<string>}
 
 export async function wahu_dispose_generator (key: string) : Promise<boolean> {
     return await wahuRPCCall('wahu_dispose_generator', {key: key})as boolean}

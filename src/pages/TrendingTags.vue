@@ -1,5 +1,6 @@
 <template>
   <div class="text-h6 q-ma-md">趋势标签</div>
+  <q-linear-progress :indeterminate="loading"></q-linear-progress>
   <CheckboxGroup v-model="selected">
     <template v-slot:default="{ toggle, getState }">
 
@@ -35,6 +36,7 @@ import CheckboxGroup from 'src/components/CheckboxGroup.vue';
 import GotoTop from 'src/components/GotoTop.vue';
 import PixivIllustToolbar from 'src/components/PixivIllustToolbar.vue';
 
+const loading = ref<boolean>(true)
 const selected = ref<Array<number>>([])
 
 const illusts = computed(() => {
@@ -56,6 +58,7 @@ onMounted(() => {
   p_trending_tags()
     .then(ret => {
       ttis.value = ret
+      loading.value = false
     })
 
   emits('updateTitle', '趋势标签')
