@@ -71,7 +71,7 @@ def mount(wexe: click.Group):
             pipe.putline(str(s))
 
         def _print(s: object):
-            pipe.put(str(s))
+            pipe.put(text=str(s))
 
         def _coro_asign(ns: dict[str, Any], coro: Coroutine, name: str):
             tsk = asyncio.create_task(coro)
@@ -130,10 +130,10 @@ def mount(wexe: click.Group):
                 try:
                     exec(cmd, namespace)
                 except Exception:
-                    pipe.put(traceback.format_exc())
+                    pipe.putline(traceback.format_exc())
 
             except Exception:
-                pipe.put(traceback.format_exc())
+                pipe.putline(traceback.format_exc())
 
 
 

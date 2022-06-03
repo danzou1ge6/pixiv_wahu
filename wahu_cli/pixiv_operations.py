@@ -86,12 +86,12 @@ def mount(wexe: click.Group):
             pipe.putline(text)
         elif image == 1:
             if verbose:
-                pipe.put(f'[:img={serverImageURL}/{image_url}]')  # type: ignore
+                pipe.put(src=f'{serverImageURL}/{image_url}')  # type: ignore
                 pipe.putline(text)
             else:
-                pipe.put(f'[:img={serverImageURL}/{image_url}]{text}')  # type: ignore
+                pipe.put(src=f'{serverImageURL}/{image_url}', text=text)  # type: ignore
         else:
-            pipe.put(f'[:img={serverImageURL}/{image_url}]')  # type: ignore
+            pipe.put(src=f'{serverImageURL}/{image_url}')  # type: ignore
 
 
     @pixiv.command()

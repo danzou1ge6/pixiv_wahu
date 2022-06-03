@@ -95,16 +95,17 @@ def mount(wexe: click.Group):
     @click.argument('name', type=str, required=True)
     @click.argument('ibd_names', type=str, nargs=-1, required=True)
     @wahu_cli_wrap
-    async def set_ibd(cctx: click.Context, name: str, ibd_names: list[str]):
+    async def set_ibd(cctx: click.Context, name: str, ibd_names: tuple[str]):
         """设置储存库 NAME 连接的数据库为 IBD_NAMES
         """
 
-        await WahuMethods.ir_set_linked_db(cctx.obj.wctx, name, ibd_names)
+        await WahuMethods.ir_set_linked_db(cctx.obj.wctx, name, list(ibd_names))
 
     @ir.command()
     @click.argument('name', type=str, required=True)
+    @click.option('--no-less', '-n', is_flag=True, help='不使用 less')
     @wahu_cli_wrap
-    async def sync(cctx: click.Context, name: str):
+    async def sync(cctx: click.Context, name: str, no_less: bool):
         """同步储存库 NAME
         """
 
@@ -127,7 +128,10 @@ def mount(wexe: click.Group):
         sync_report_text = '删除:\n' + del_tbl.get_string() + '\n'
         sync_report_text += '新增:\n' + add_tbl.get_string()
 
-        await less(sync_report_text, pipe)
+        if no_less:
+            pipe.putline(sync_report_text)
+        else:
+            await less(sync_report_text, pipe)
 
         if await pipe.get(prefix='继续[y/*]?') != 'y':
             return
@@ -165,4 +169,47 @@ def mount(wexe: click.Group):
         if len(new_entries) < len(path_list):
             pipe.putline('警告: 新增索引数小于下载数，部分文件可能下载失败')
 
+    @ir.command()
+    @click.argument('name', type=str, required=True)
+    @wahu_cli_wrap
+    async def update(cctx: click.Context, name: str):
+        """更新储存库 NAME 的索引
+        """
+
+        await WahuMethods.ir_update_index(cctx.obj.wctx, name)
+
+
+    @ir.command()
+    @click.argument('name', type=str, required=True)
+    @click.option('--no-less', '-n', is_flag=True, help='不使用 less')
+    @wahu_cli_wrap
+    async def clean(cctx: click.Context, name: str, no_less: bool):
+        """清理储存库 NAME 的索引和文件
+        """
+
+        obj: CliClickCtxObj = cctx.obj
+        pipe, wctx = obj.pipe, obj.wctx
+
+        invalid_entries, invalid_paths = await WahuMethods.ir_validate(wctx, name)
+
+        invalid_etr_tbl = table_factory()
+        invalid_etr_tbl.field_names = ['FID', '路径']
+        invalid_etr_tbl.header = True
+        invalid_etr_tbl.add_rows([
+            (fe.fid, str(fe.path)) for fe in invalid_entries
+        ])
+
+        text = '无效索引:\n' + invalid_etr_tbl.get_string()
+        text += '无效文件\n' + '\n'.join((str(p) for p in invalid_paths))
+
+        if no_less:
+            pipe.putline(text)
+        else:
+            await less(text, pipe)
+
+        if await pipe.get('继续[y/*]?') != 'y':
+            return
+
+        await WahuMethods.ir_rm_index(wctx, name, [fe.fid for fe in invalid_entries])
+        await WahuMethods.ir_remove_file(wctx, name, invalid_paths)
 

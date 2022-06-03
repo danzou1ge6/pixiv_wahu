@@ -5,6 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: 命令行接口",
+            "type": "python",
+            "request": "launch",
+            "module": "wahu_backend.__init__",
+            "justMyCode": true,
+            "args": ["-c", "dev_stuff/dev_conf.toml", "-q", "exe", "example", "rewrite-last"]
+        },
+        {
             "name": "Python: 生成 ts 接口",
             "type": "python",
             "request": "launch",
@@ -17,7 +25,7 @@
             "request": "launch",
             "program": "dev_stuff/dev_server.py",
             "console": "integratedTerminal",
-            "justMyCode": false
+            "justMyCode": true
         },
         {
             "name": "Python: 当前文件",

@@ -1,6 +1,7 @@
 import asyncio
 import os
 from pathlib import Path
+import traceback
 from typing import Any, Literal
 import webbrowser
 
@@ -85,33 +86,50 @@ def run(
         cctx.forward(ui)
 
 
-def print_exe_help(cctx: click.Context, param: click.Parameter, value: Any):
-    if value:
-        click.echo(cctx.obj.wexe.get_help(cctx))
-        cctx.exit()
-
 @run.command(
     context_settings=dict(ignore_unknown_options=True)
 )
 @click.argument('args', nargs=-1, type=click.UNPROCESSED)
 @click.option(
-    '--help', is_flag=True, is_eager=True, expose_value=False, callback=print_exe_help)
+    '--help', is_flag=True)
 @click.pass_context
-def exe(cctx, args: list[str]):
+def exe(cctx: click.Context, args: tuple[str], help: bool):
     """执行 WahuCli 命令
     """
 
     wctx: WahuContext = cctx.obj
+    wctx.in_terminal = True
+
     pipe = CliIOPipeTerm()
 
+    args_list = list(args)
+
+    if help and len(args) == 0:
+        click.echo(cctx.obj.wexe.get_help(cctx))
+        cctx.exit()
+
+    if help:
+        args_list.append('--help')
+
     async def main():
-        wctx.wexe.main(
-            args,
-            prog_name='',
-            obj=CliClickCtxObj(wctx, pipe),
-            standalone_mode=False
-        )
-        await pipe.close_event.wait()
+        try:
+            ret_code = wctx.wexe.main(
+                args_list,
+                prog_name='',
+                obj=CliClickCtxObj(wctx, pipe),
+                standalone_mode=False
+            )
+
+            if ret_code not in {None, -1}:
+                pipe.putline('命令解析出错. 使用 --help 查看帮助')
+                pipe.close()
+
+        except Exception:
+            pipe.putline(traceback.format_exc())
+            pipe.close()
+
+        finally:
+            await pipe.close_event.wait()
 
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
@@ -135,4 +153,4 @@ def ui(cctx, browser):
 
 
 if __name__ == '__main__':
-    run()
+    run(standalone_mode=False)

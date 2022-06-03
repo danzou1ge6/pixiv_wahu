@@ -126,7 +126,8 @@ function lastOf<T>(arr: Array<T>) : T{
 function print(val: string | undefined) {
   if (val !== undefined) {
     const imgMatch = val.match(/\[:img=.+\]/)
-    const rewriteMatch = val.match(/\[:rewrite\]/)
+    const rewriteMatch = val.match(/\[:rewrite\].+/)
+    const eraseMatch = val.match(/\[:erase\]/)
     if (imgMatch !== null) {
       if(val.match(/\[:img=.+\].+/) !== null) {
         content.value.push({
@@ -139,12 +140,14 @@ function print(val: string | undefined) {
         })
       }
     } else if(rewriteMatch !== null) {
-      const txt = val.slice(rewriteMatch[0].length)
+      const txt = val.slice(10)
       if(lastOf(content.value).text !== null){
         lastOf(content.value).text = txt
       }else{
         content.value.push({text: txt})
       }
+    } else if(eraseMatch !== null) {
+      content.value.splice(content.value.length - 1, 1)
     } else {
       if(val.startsWith('\n')) {
         content.value.push({text: val.slice(1)})

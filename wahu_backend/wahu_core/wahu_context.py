@@ -56,9 +56,10 @@ class WahuContext:
     cli_scripts: list[WahuCliScript]
     wexe: click.Group
 
-    def __init__(self, config: WahuConfig):
+    def __init__(self, config: WahuConfig, in_terminal: bool=False):
 
         self.config = config
+        self.in_terminal = in_terminal
 
         # pylogging
         log_cfg.dictConfig(self.config.pylogging_cfg_dict)

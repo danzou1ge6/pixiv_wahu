@@ -2,6 +2,7 @@ import asyncio
 from datetime import datetime
 from pathlib import Path
 from typing import TYPE_CHECKING, Union
+import os
 
 from wahu_backend.aiopixivpy import IllustDetail
 from wahu_backend.illust_bookmarking import IllustBookmark
@@ -9,7 +10,8 @@ from wahu_backend.illust_bookmarking import IllustBookmark
 from prettytable import PrettyTable, PLAIN_COLUMNS
 
 if TYPE_CHECKING:
-    from wahu_backend.wahu_core import WahuContext, CliIOPipe, CliIOPipeTerm
+    from wahu_backend.wahu_core import WahuContext, CliIOPipeTerm
+    from wahu_backend.wahu_core.wahu_cli import CliIoPipeABC
 
 IGNORE = True
 
@@ -66,27 +68,36 @@ def format_illust_detail(dtl: IllustDetail) -> str:
 async def report_dl_coro(
     path_list: list[Path],
     wctx: 'WahuContext',
-    pipe: Union['CliIOPipe', 'CliIOPipeTerm'],
+    pipe: 'CliIoPipeABC',
     interval: float=0.3
 ):
     """将下载进度输出到 pipe"""
 
     path_str_list = [str(p) for p in path_list]
 
+    pipe.putline('')
+
     while True:
-        progs = filter(
+        progs = list(filter(
             lambda x: x.descript in path_str_list,
             wctx.image_pool.dl_stats
-        )
+        ))
+
+        if len(progs) == 0:
+            continue
 
         tbl = table_factory()
-        tbl.field_names = ['已下载', '共', '状态', '路径']
+        tbl.field_names = ['状态', '文件名', '已下载', '共', '%']
         tbl.add_rows([
-            (p.downloaded_kb, p.total_kb, p.status, p.descript)
+            (p.status,
+             os.path.split(p.descript)[-1] if p.descript is not None else 'Unknown',
+             p.downloaded_kb, p.total_kb,
+             f'{p.downloaded_size * 100 / p.total_size:.0f}' if p.total_size is not None else '/')
             for p in progs
         ])
 
         text = tbl.get_string()
-        pipe.put(f'[:rewrite]{text}')
+
+        pipe.put(text=text, rewrite=True)
 
         await asyncio.sleep(interval)

@@ -22,6 +22,6 @@ def mount(wexe: click.Group):
         """Wahu!
         """
         if image:
-            wctx.obj.pipe.putline(f'[:img={homeImageURL}]')
+            wctx.obj.pipe.put(src=homeImageURL)
         else:
-            wctx.obj.pipe.put(_WAHU)
+            wctx.obj.pipe.putline(_WAHU)

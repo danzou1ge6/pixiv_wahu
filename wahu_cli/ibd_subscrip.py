@@ -1,7 +1,7 @@
 import asyncio
 import itertools
 import time
-from typing import TYPE_CHECKING, AsyncIterable, Optional, TypeVar
+from typing import TYPE_CHECKING, Any, AsyncIterable, Optional, TypeVar
 
 import click
 import toml
@@ -67,8 +67,8 @@ def mount(parent_group: click.Group):
         cctx: click.Context,
         page: int,
         overwrite: bool,
-        user_uid: list[str],
-        bookmark_uid: list[str],
+        user_uid: list[int],
+        bookmark_uid: list[int],
         name: str
     ):
         """更新数据库 NAME 的订阅

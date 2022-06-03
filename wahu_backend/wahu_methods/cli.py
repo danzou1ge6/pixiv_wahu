@@ -51,7 +51,7 @@ class WahuMetdodsWithCli(
                 prog_name=''
             )
 
-            if ret_code != None:
+            if ret_code not in {None, -1}:
                 pipe.putline('命令解析出错. 使用 --help 查看命令语法')
                 pipe.close()
 

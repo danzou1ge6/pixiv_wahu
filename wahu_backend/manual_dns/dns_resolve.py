@@ -4,8 +4,14 @@ import logging
 
 from .logger import logger
 
-# DNS_URLS = ['https://doh.dns.sb/dns-query', 'https://dns.alidns.com/resolve']
-DNS_URLS = ['https://doh.dns.sb/dns-query']  # 目前来看最稳定的
+# DNS_URLS = [
+#     'https://doh.dns.sb/dns-query',
+#     'https://dns.alidns.com/resolve',
+#     'https://cloudflare-dns.com/dns-query',
+#     'https://doh.pub/dns-query'
+# ]
+
+DNS_URLS = ['https://45.11.45.11/dns-query']  # 目前来看最稳定的
 
 
 class DNSResolveError(Exception):

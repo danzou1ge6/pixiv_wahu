@@ -92,6 +92,7 @@ class DownloadProgressTracker:
         self, url: str,
         descript: Optional[str]=None
     ) -> DownloadProgress:
+        """descrip 一般使用下载路径"""
 
         gid = _generate_gid(self.download_status_record.keys())
 

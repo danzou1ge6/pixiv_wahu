@@ -1,5 +1,6 @@
-
 import importlib
+import platform
+import shutil
 import sys
 from asyncio import Event
 from importlib import resources
@@ -7,6 +8,7 @@ from inspect import Traceback
 from pathlib import Path
 from queue import Queue
 from typing import TYPE_CHECKING, Any, AsyncGenerator, Callable, Optional
+from wcwidth import wcswidth
 
 import click
 
@@ -16,46 +18,107 @@ from .wahu_cli_helper import print_help
 if TYPE_CHECKING:
     from .wahu_context import WahuContext
 
-TP = str
 
-class CliIOPipe(AsyncGenerator[TP, TP]):
+class CliIoPipeABC:
+
+    def put(
+        self,
+        text: Optional[str]=None,
+        src: Optional[str]=None,
+        rewrite: bool=False,
+        erase: bool=False
+    ) -> None:
+        raise NotImplemented
+
+    def putline(self, val: str) -> None:
+        raise NotImplemented
+
+    async def get(self, prefix: Optional[str]=None, echo: bool=True) -> str:
+        raise NotImplemented
+
+
+class CliIOPipe(CliIoPipeABC, AsyncGenerator[str, str]):
     """使用异步生成器接口的命令行 IO 管道"""
 
     def __init__(self, max_size: int = -1):
-        self.output_queue: Queue[TP] = Queue(maxsize=max_size)
-        self.input_queue: Queue[TP] = Queue(maxsize=max_size)
-        self.output_event = Event()
+        self.oustrut_queue: Queue[str] = Queue(maxsize=max_size)
+        self.input_queue: Queue[str] = Queue(maxsize=max_size)
+        self.oustrut_event = Event()
         self.input_event = Event()
 
-    def put(self, val: TP) -> None:
+    def _oustrut(self, val: str) -> None:
         """输出"""
 
-        self.output_queue.put(val)
-        self.output_event.set()
+        self.oustrut_queue.put(val)
+        self.oustrut_event.set()
 
-    def putline(self, val: TP) -> None:
-        self.put('\n' + val)
+    def put(
+        self,
+        text: Optional[str]=None,
+        src: Optional[str]=None,
+        rewrite: bool=False,
+        erase: bool=False
+    ):
+        """
+        在终端打印
 
-    async def __anext__(self) -> TP:
+        - 如果 erase 为真，则清除上一块打印
+        - 如果 rewrite 为真，则使用 text 覆盖上一块 <pre>
+        - 如果提供了 src 和 text ，并排打印
+        - 如果提供了 src ，打印图片
+        - 如果提供了 text ，直接打印文本；若 text 以 '\n' 开头，则新建一块 <pre>
+        """
+
+        if erase:
+            self._oustrut('[:erase]')
+            return
+
+        if rewrite:
+            if text is None:
+                raise RuntimeError('rewrite 需要提供 text')
+            else:
+                self._oustrut('[:rewrite]' + text)
+                return
+
+        if src is not None:
+            if text is None:
+                self._oustrut(f'[:img={src}]')
+            else:
+                self._oustrut(f'[:img={src}]{text}')
+            return
+
+        if text is not None:
+            self._oustrut(text)
+            return
+
+        raise RuntimeError('至少传入 text')
+
+
+    def putline(self, val: str) -> None:
+        """新建一块 <pre> 打印文本"""
+
+        self.put(text='\n' + val)
+
+    async def __anext__(self) -> str:
         """
         前端读取一条输出，如果队列中没有则等待；
         如果管道关闭，抛出 `StopAsyncIteration`
         """
 
 
-        await self.output_event.wait()
+        await self.oustrut_event.wait()
 
-        val = self.output_queue.get()
+        val = self.oustrut_queue.get()
 
         if val == '[:close]':
             raise StopAsyncIteration
 
-        if self.output_queue.empty():
-            self.output_event.clear()
+        if self.oustrut_queue.empty():
+            self.oustrut_event.clear()
 
         return val
 
-    async def asend(self, val: TP | None) -> TP:
+    async def asend(self, val: str | None) -> str:
         """
         前端输入，然后读取一条输出；
         如果输入 `None` ，则不进行输入；
@@ -69,17 +132,17 @@ class CliIOPipe(AsyncGenerator[TP, TP]):
 
         return await self.__anext__()
 
-    async def get(self, prefix: Optional[TP]=None) -> TP:
+    async def get(self, prefix: str='>', echo=True) -> str:
         """等待前端输入"""
 
-        if prefix is None:
-            self.put('[:input=>]')
-        else:
-            self.put(f'[:input={prefix}]')
+        self.put(f'[:input={prefix}]')
 
         await self.input_event.wait()
 
         val = self.input_queue.get()
+
+        if not echo:
+            self.put('[:erase]')
 
         if self.input_queue.empty():
             self.input_event.clear()
@@ -103,24 +166,90 @@ class CliIOPipe(AsyncGenerator[TP, TP]):
         self.put('[:close]')
 
 
-class CliIOPipeTerm:
+class CliIOPipeTerm(CliIoPipeABC):
     """输出到终端的命令行 IO 管道"""
 
     def __init__(self):
         self.close_event = Event()
 
-    def put(self, val: TP) -> None:
-        click.echo(val, nl=False)
+        self.last_block_count: int = 0
 
-    def putline(self, val: TP) -> None:
-        click.echo(val)
+        if platform.system() == 'Windows':
+            from ctypes import windll
+            k = windll.kernel32
+            k.SetConsoleMode(k.GetStdHandle(-11), 7)
 
-    async def get(self, prefix: Optional[TP]=None) -> TP:
-        if prefix is None:
-            prefix = '>'
+    def _back_rows(self, n: int) -> None:
+        print('\r', end='')
+        print(f'\x1b[{n}A', end='')
 
-        click.echo(prefix + ' ', nl=False)
+    @property
+    def term_width(self) -> int:
+        return shutil.get_terminal_size()[0]
+
+    def _calc_displayed_line_count(self, s: str) -> int:
+        return sum(
+            (int(wcswidth(line) / self.term_width) + 1 for line in s.split('\n'))
+        )
+
+    def _output(self, text: str) -> None:
+
+        if text.startswith('\n'):
+            text = text[1:]
+        displayed_line_count = self._calc_displayed_line_count(text)
+
+        if text.startswith('\n'):
+            self.last_block_count = displayed_line_count
+            print('')
+        else:
+            self.last_block_count += displayed_line_count
+
+        print(text, end='')
+
+    def _clean_lines(self, n: int) -> None:
+        self._back_rows(n - 1)
+        term_width = self.term_width
+        for _ in range(n):
+            print(''.join((' ' for _ in range(term_width))))
+        self._back_rows(n)
+
+    def put(
+        self,
+        text: Optional[str]=None,
+        src: Optional[str]=None,
+        rewrite: bool=False,
+        erase: bool=False
+    ) -> None:
+
+        if erase or rewrite:
+            self._clean_lines(self.last_block_count)
+            self.last_block_count = 0
+            if erase:
+                return
+
+        if src is not None:
+            if text is None:
+                self._output(f'[:img={src}]')
+            else:
+                self._output(f'[:img={src}]\n{text}')
+            return
+
+        if text is not None:
+            self._output(text)
+
+    def putline(self, val: str) -> None:
+
+        self.put(text='\n' + val)
+
+    async def get(self, prefix: str='>', echo=True) -> str:
+
+        click.echo('\n' + prefix + ' ', nl=False)
         val = input()
+
+        if not echo:
+            self._clean_lines(self._calc_displayed_line_count(val))
+            self._back_rows(1)
+
         return val
 
     def close(self) -> None:
@@ -177,11 +306,8 @@ def _load_cli_scripts_from_dir(
             if reload:
                 importlib.reload(m)
 
-            try:
-                if m.IGNORE:
-                    continue
-            except AttributeError:
-                pass
+            if hasattr(m, 'IGNORE') and m.IGNORE:
+                continue
 
             try:
                 name = m.NAME

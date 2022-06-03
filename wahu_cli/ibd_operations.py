@@ -150,12 +150,12 @@ def mount(wexe: click.Group):
                     pipe.putline(text)
                 elif image == 1:
                     if verbose:
-                        pipe.put(f'[:img={src}]')
+                        pipe.put(src=src)
                         pipe.putline(text)
                     else:
-                        pipe.put(f'[:img={src}]{text}')
+                        pipe.put(src=src, text=text)
                 else:
-                    pipe.putline(f'[:img={src}]')
+                    pipe.put(src=src)
 
 
     @ibd.command()
