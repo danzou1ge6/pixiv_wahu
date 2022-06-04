@@ -4,7 +4,7 @@
 
     <DatabaseActions :db-name="dbName"></DatabaseActions>
 
-    <div class="float-right q-ma-md">
+    <div class="absolute-bottom-right">
       <q-btn icon="help" size="sm" flat @click="showHelp = !showHelp">
         <q-tooltip>帮助</q-tooltip>
       </q-btn>
@@ -35,7 +35,7 @@
       </q-card>
     </q-dialog>
 
-    <q-input class="q-ma-md" underlined autofocus v-model="queryString" label="查询" :error="queryStringError"
+    <q-input class="q-ma-md" autofocus v-model="queryString" label="查询" :error="queryStringError"
       @keyup.enter="executeQuery" @input="queryStringError = false" hide-hint hint="回车发起查询">
     </q-input>
 

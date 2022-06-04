@@ -70,7 +70,7 @@ function scrollHandler(e: any) {
 watch(() => openedWindows.value[displayedWindowN.value].key, () => {
   // 等待页面渲染
   if(openedWindows.value[displayedWindowN.value] !== undefined) {
-    setTimeout(() => { window.scrollTo(0, openedWindows.value[displayedWindowN.value].scrollY) }, 50)
+    setTimeout(() => { window.scrollTo(0, openedWindows.value[displayedWindowN.value].scrollY) }, 100)
   }
 })
 

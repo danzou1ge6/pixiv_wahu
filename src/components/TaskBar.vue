@@ -1,6 +1,6 @@
 <template>
   <div style="max-width: 80vw">
-    <q-tabs v-model="selected" outside-arrowsalign="right">
+    <q-tabs v-model="selected" align="right">
       <transition-group appear enter-active-class="animated fadeInDown" leave-active-class="animated fadeInUp">
         <div v-for="(win, i) in tabbedWindows" :key="win.key">
           <q-tab no-caps :name="i" @click="displayedWindowN = i">
@@ -21,12 +21,19 @@
       <q-btn-dropdown auto-close stretch flat v-show="openedWindows.length > maxTabbedN">
         <q-list>
           <q-item v-for="(win, j) in groupedWindows" :key="j + maxTabbedN" clickable
-            @click="displayedWindowN = j + maxTabbedN">
-            <div>{{ win.title }}</div>
+            @click="displayedWindowN = j + maxTabbedN" class="menu-item">
             <q-item-section side>
-              <q-btn size="10px" padding="none" @click="removeWindow(j + maxTabbedN)" flat class="float-right">
-                <q-icon name="clear"></q-icon>
-              </q-btn>
+              <div class="row">
+                <div class="col-1">
+                  <q-btn size="10px" padding="none" @click="removeWindow(j + maxTabbedN)" flat
+                    class="float-right vertical-middle q-mx-sm">
+                    <q-icon name="clear"></q-icon>
+                  </q-btn>
+                </div>
+                <div class="col">
+                  <span>{{ win.title }}</span>
+                </div>
+              </div>
             </q-item-section>
           </q-item>
         </q-list>
@@ -73,4 +80,10 @@ const groupedWindows = computed(() => {
   }
 })
 </script>
+
+<style scoped>
+.menu-item {
+  width: 250px;
+}
+</style>
 

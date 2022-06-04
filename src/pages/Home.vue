@@ -1,5 +1,5 @@
 <template>
-    <q-img :src="homeImageURL" v-show="showKud" autofocus ref="image" fit="cover"
+    <q-img :src="homeImageURL" v-show="showKud" ref="image" fit="cover"
       class="animated fadeInDown bg-img">
 
       <Transition appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">

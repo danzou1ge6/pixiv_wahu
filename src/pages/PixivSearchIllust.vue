@@ -43,7 +43,7 @@
       </q-card>
     </q-dialog>
 
-    <q-input class="q-ma-md" underlined autofocus v-model="queryString" label="查询" :error="queryStringError"
+    <q-input class="q-ma-md" autofocus v-model="queryString" label="查询" :error="queryStringError"
       @keyup.enter="executeQuery" @input="queryStringError = false" hide-hint hint="回车发起查询">
     </q-input>
 
