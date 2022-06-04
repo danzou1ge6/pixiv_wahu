@@ -29,7 +29,7 @@ conf_deco = click.option(
     help='指定配置文件，覆盖环境变量 PIXIVWAHU_CONFPATH ，默认值 conf.toml'
 )
 browser_deco = click.option(
-    '--browser/--no-browser', '-b/', is_flag=True, default=True,
+    '--browser/--no-browser', '-b/-n', is_flag=True, default=True,
     help='是否自动打开浏览器，默认是'
 )
 logging_deco = click.option(
@@ -83,7 +83,7 @@ def run(
     cctx.obj = wctx
 
     if cctx.invoked_subcommand is None:
-        cctx.forward(ui)
+        cctx.invoke(ui, browser=browser)
 
 
 @run.command(
@@ -142,7 +142,7 @@ def ui(cctx, browser):
     """启动 WebUI
     """
 
-    wctx: WahuContext = cctx
+    wctx: WahuContext = cctx.obj
     app = create_app(wctx)
 
     if browser:
@@ -153,4 +153,4 @@ def ui(cctx, browser):
 
 
 if __name__ == '__main__':
-    run(standalone_mode=False)
+    run()
