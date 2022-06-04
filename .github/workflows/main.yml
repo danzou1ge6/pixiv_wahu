@@ -74,10 +74,11 @@ jobs:
           system(f'pipenv run pip install dist/{whl}[accelerate_fuzzywuzzy] --prefix dist/package_base -I')
         shell: python
       
-      - name: 删除 setuptools
+      - name: 删除 setuptools, scripts
         run: |
           rm dist/package_base/Lib/site-packages/setuptools* -r
           rm dist/package_base/Lib/site-packages/pkg_resources -r
+          rm dist/package_base/Scripts -r
           
       - name: 修改 python310._pth
         run: |
