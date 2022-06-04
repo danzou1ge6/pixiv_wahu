@@ -11,8 +11,8 @@
         :loading="loading" ref="inputBox" @update:model-value="handleInput">
       </q-input>
       <pre v-show="cmdInp != ''" class="text-grey-5">{{ ' ' + completions.join(' ') }}</pre>
-      <div v-for="(his, i) in matchedHistory" :key="i" v-show="cmdInp != ''">
-        <pre class="text-grey-5">{{ i == historyPointer ? '-> ' + his : '   ' + his }}</pre>
+      <div v-for="(his, i) in displayedHistory[0]" :key="i" v-show="historyPointer != -1">
+        <pre class="text-grey-5">{{ i == displayedHistory[1] ? '-> ' + his : '   ' + his }}</pre>
       </div>
       <div ref="inputBoxAnchor"></div>
     </div>
@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 import { wahu_exec, wahu_cli_complete } from 'src/plugins/wahuBridge/methods';
 import WahuCliItem from './WahuCliItem.vue';
@@ -31,6 +31,7 @@ const props = defineProps<{
   height: string
 }>()
 
+const displayedHistoryNum = 5
 
 const content = ref<Array<{
   text?: string,
@@ -57,7 +58,7 @@ function enter() {
   history.value.push(cmd)
   historyPointer.value = -1
   cmdInp.value = ''
-  matchedHistory.value = history.value
+  matchedHistory.value = Array.from(new Set(history.value))
 
   if (generator.value === undefined) {
     if (cmd != '') {
@@ -178,7 +179,7 @@ function nextHistory() {
     if (historyPointer.value == matchedHistory.value.length) {
       historyPointer.value = -1
       cmdInp.value = ''
-      matchedHistory.value = history.value
+      matchedHistory.value = Array.from(new Set(history.value))
     } else {
       cmdInp.value = matchedHistory.value[historyPointer.value]
     }
@@ -198,7 +199,9 @@ function previousHistory() {
 
 function handleInput(val: string | number | null) {
   cmdInp.value = val as string
-  matchedHistory.value = history.value.filter(val => val.startsWith(cmdInp.value))
+  matchedHistory.value = Array.from(
+    new Set(history.value.filter(val => val.startsWith(cmdInp.value)))
+  )
   if(historyPointer.value == -1) {
     wahu_cli_complete(cmdInp.value)
       .then(ret => {
@@ -209,6 +212,23 @@ function handleInput(val: string | number | null) {
     historyPointer.value = -1
   }
 }
+
+const displayedHistory = computed(() => {
+  const half = (displayedHistoryNum - 1) / 2
+  if(historyPointer.value <= half) {
+    return [matchedHistory.value.slice(0, displayedHistoryNum), historyPointer.value]
+  }else if(historyPointer.value >= matchedHistory.value.length - half) {
+    return [matchedHistory.value.slice(
+      matchedHistory.value.length - displayedHistoryNum
+    ), historyPointer.value - matchedHistory.value.length + displayedHistoryNum
+    ]
+  }else {
+    return [matchedHistory.value.slice(
+      historyPointer.value - half,
+      historyPointer.value + half + 1
+    ), half]
+  }
+})
 
 const manText = `
 输入 --help 来获得命令列表
