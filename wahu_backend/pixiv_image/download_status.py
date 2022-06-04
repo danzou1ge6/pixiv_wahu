@@ -43,7 +43,7 @@ class DownloadProgress(DownloadProgressRaw):
     @property
     def total_kb(self):
         if self.total_size is None:
-            return '/'
+            return ''
         else:
             return f'{self.total_size / 1024:.0f}kb'
 

@@ -83,15 +83,27 @@ async def report_dl_coro(
             wctx.image_pool.dl_stats
         ))
 
+        if len(progs) !=0:
+            break
+
+        await asyncio.sleep(0.1)
+
+    while True:
+        progs = list(filter(
+            lambda x: x.descript in path_str_list,
+            wctx.image_pool.dl_stats
+        ))
+
         if len(progs) == 0:
-            continue
+            break
 
         tbl = table_factory()
-        tbl.field_names = ['状态', '文件名', '已下载', '共', '%']
+        tbl.field_names = ['状态', '文件名', '已下载/共', '%']
+        tbl.header = True
         tbl.add_rows([
             (p.status,
              os.path.split(p.descript)[-1] if p.descript is not None else 'Unknown',
-             p.downloaded_kb, p.total_kb,
+             f'{p.downloaded_kb} / {p.total_kb}',
              f'{p.downloaded_size * 100 / p.total_size:.0f}%' if p.total_size is not None else '/')
             for p in progs
         ])

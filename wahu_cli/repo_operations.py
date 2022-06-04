@@ -133,7 +133,7 @@ def mount(wexe: click.Group):
         else:
             await less(sync_report_text, pipe, in_terminal=wctx.in_terminal)
 
-        if await pipe.get(prefix='继续[y/*]?') != 'y':
+        if await pipe.get(prefix='继续[y/*]?', echo=False) != 'y':
             return
 
         await WahuMethods.ir_rm_index(wctx, name, [fe.fid for fe in to_del])
@@ -157,9 +157,11 @@ def mount(wexe: click.Group):
             for url, pth in zip(url_list, path_list)
         ]
 
+        dl_tsk = asyncio.gather(*coro_list)
+
         rpt_dl_tsk = asyncio.create_task(report_dl_coro(path_list, wctx, pipe))
 
-        await asyncio.gather(*coro_list)
+        await dl_tsk
 
         await asyncio.sleep(0.5)  # 等待下载完成结果刷新
         rpt_dl_tsk.cancel()
@@ -200,14 +202,14 @@ def mount(wexe: click.Group):
         ])
 
         text = '无效索引:\n' + invalid_etr_tbl.get_string()
-        text += '无效文件\n' + '\n'.join((str(p) for p in invalid_paths))
+        text += '\n无效文件\n' + '\n'.join((str(p) for p in invalid_paths))
 
         if no_less:
             pipe.putline(text)
         else:
             await less(text, pipe, in_terminal=wctx.in_terminal)
 
-        if await pipe.get('继续[y/*]?') != 'y':
+        if await pipe.get('继续[y/*]?', echo=False) != 'y':
             return
 
         await WahuMethods.ir_rm_index(wctx, name, [fe.fid for fe in invalid_entries])

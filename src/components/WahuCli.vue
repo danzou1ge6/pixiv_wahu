@@ -8,7 +8,7 @@
       </div>
       <q-input :model-value="cmdInp" @keyup.enter="enter" dense :prefix="inpPrefix" autofocus
         :dark="dark" class="cli-input" @keyup.up="previousHistory" @keyup.down="nextHistory"
-        :loading="loading" :disabled="loading" ref="inputBox" @update:model-value="handleInput">
+        :loading="loading" ref="inputBox" @update:model-value="handleInput">
       </q-input>
       <pre v-show="cmdInp != ''" class="text-grey-5">{{ ' ' + completions.join(' ') }}</pre>
       <div v-for="(his, i) in matchedHistory" :key="i" v-show="cmdInp != ''">
@@ -79,6 +79,7 @@ function enter() {
         })
     }
   } else {
+    inpPrefix.value = '>'
     listenGenerator(cmd)
     print('\n' + inpPrefix.value + ' ' + cmd)
   }

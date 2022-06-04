@@ -5,4 +5,4 @@ foreach ($arg in $args) {
 
 $argsArray = "[" + $argsArray + "]"
 
-python -c "from wahu_backend import run; run($($argsArray));"
+.\python -c "from wahu_backend import run; run($($argsArray));"
