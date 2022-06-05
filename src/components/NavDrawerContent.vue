@@ -10,12 +10,12 @@
 
       <q-item-label header>插画数据库</q-item-label>
 
-      <q-item clickable v-for="dbn in dbNameList" :key="dbn" @click="clickDb(dbn)" v-ripple>
-        <q-item-section>
+      <q-item clickable v-for="dbn in dbNameList" :key="dbn" v-ripple>
+        <q-item-section @click="clickDb(dbn)">
           {{ dbn }}
         </q-item-section>
         <q-item-section side>
-          <q-btn icon="backspace" @click="showDelDbDiag = !showDelDbDiag; dbNameToDel = dbn" flat size="xs"
+          <q-btn icon="backspace" @click="showDelDbDiag = true; dbNameToDel = dbn" flat size="xs"
             padding="5px">
             <q-tooltip>删除</q-tooltip>
           </q-btn>
@@ -51,12 +51,12 @@
 
       <q-item-label header>插画储存库</q-item-label>
 
-      <q-item clickable v-for="rpn in repoNameList" :key="rpn" @click="clickRepo(rpn)" v-ripple>
-        <q-item-section>
+      <q-item v-for="rpn in repoNameList" :key="rpn" v-ripple clickable>
+        <q-item-section @click="clickRepo(rpn)">
           {{ rpn }}
         </q-item-section>
         <q-item-section side>
-          <q-btn icon="backspace" @click="showDelRpDiag = !showDelRpDiag; repoNameToDel = rpn" flat size="xs"
+          <q-btn icon="backspace" @click="showDelRpDiag = true; repoNameToDel = rpn" flat size="xs"
             padding="5px">
             <q-tooltip>删除</q-tooltip>
           </q-btn>
@@ -66,7 +66,7 @@
       <q-dialog v-model="showDelRpDiag">
         <q-card>
           <q-card-section>
-            <div class="text-h5">是否删除插画储存库 {{ repoNameToDel }} ？</div>
+            <div class="text-h5 q-ma-none">是否删除插画储存库 {{ repoNameToDel }} ？</div>
           </q-card-section>
           <q-card-section>
             <div class="text-body-1">储存库目录不会被删除，仅是从 PixivWahu 的设置中移除</div>
