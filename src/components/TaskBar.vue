@@ -20,7 +20,7 @@
 
       <q-btn-dropdown auto-close stretch flat v-show="openedWindows.length > maxTabbedN">
         <q-list>
-          <q-item v-for="(win, j) in groupedWindows" :key="j + maxTabbedN" clickable
+          <q-item v-for="(win, j) in groupedWindows" :key="win.key" clickable
             @click="displayedWindowN = j + maxTabbedN" class="menu-item">
             <q-item-section side>
               <div class="row">

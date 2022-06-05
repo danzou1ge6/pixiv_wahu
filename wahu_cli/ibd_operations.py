@@ -5,7 +5,7 @@ import click
 from wahu_cli.helpers import table_factory
 
 if TYPE_CHECKING:
-    from wahu_backend.wahu_core import CliClickCtxObj
+    from wahu_backend.wahu_core import CliClickCtxObj, WahuContext
 
 from wahu_backend.wahu_core.wahu_cli_helper import (dumps_dataclass,
                                                     print_help, wahu_cli_wrap)
@@ -70,6 +70,11 @@ def mount(wexe: click.Group):
         """
 
         await WahuMethods.ibd_new(cctx.obj.wctx, name)
+
+        # 创建文件
+        wctx: 'WahuContext' = cctx.obj.wctx
+        with await wctx.ilst_bmdbs[name](readonly=False) as ibd:
+            pass
 
 
     @ibd.command()
