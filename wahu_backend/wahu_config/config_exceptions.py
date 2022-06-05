@@ -12,8 +12,8 @@ class ConfigLoadKeyError(ConfigLoadError, KeyError):
         return f'在配置中找不到键值 {self.k}'
 
 class ConfigLoadBadPath(ConfigLoadError):
-    def __init__(self, p: Path):
+    def __init__(self, p: Path | str):
         self.p = p
-    
+
     def __str__(self) -> str:
         return f'路径 {self.p} 错误'

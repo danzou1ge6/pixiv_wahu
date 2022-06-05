@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import toml
@@ -9,23 +10,48 @@ from .config_object import WahuConfig
 from ..manual_dns.dns_resolve import set_doh_url
 
 
+def add_prefix(p: Path, prefix: Path | None) -> Path:
+    if prefix is None:
+        return p
+    else:
+        return prefix / p
+
+
 def load_config(config_file: Path) -> WahuConfig:
     d = toml.load(config_file)
 
     try:
+        prefix = d.get('prefix', None)
+
+        if prefix is not None:
+            if prefix.startswith('$env:'):
+                prefix_in_envvar = os.getenv(prefix[4:])
+                if prefix_in_envvar is None:
+                    raise ConfigLoadBadPath(prefix)
+                prefix = Path(prefix_in_envvar)
+
+            elif prefix == '$this':
+                prefix = Path(config_file.parent)
+
+            else:
+                prefix = Path(prefix)
+                if not prefix.exists():
+                    raise ConfigLoadBadPath(prefix)
+
+
         # local
-        database_dir = Path(d['local']['database_dir'])
-        repos_file = Path(d['local']['repos_file'])
+        database_dir = add_prefix(Path(d['local']['database_dir']), prefix)
+        repos_file = add_prefix(Path(d['local']['repos_file']), prefix)
         file_name_template = d['local']['file_name_template']
-        temp_download_dir = Path(d['local']['temp_download_dir'])
-        cli_script_dir = Path(d['local']['cli_script_dir'])
+        temp_download_dir = add_prefix(Path(d['local']['temp_download_dir']), prefix)
+        cli_script_dir = add_prefix(Path(d['local']['cli_script_dir']), prefix)
 
         # pixiv
         refresh_token_path = d['pixiv'].get('refresh_token_path', None)
-        account_session_path = Path(d['pixiv']['account_session_path'])
+        account_session_path = add_prefix(Path(d['pixiv']['account_session_path']), prefix)
 
         if refresh_token_path is not None:
-            refresh_token_path = Path(refresh_token_path)
+            refresh_token_path = add_prefix(Path(refresh_token_path), prefix)
         else:
             refresh_token_path = None
 

@@ -1,10 +1,16 @@
+# 此配置文件中所有路径的前缀
+# 如果设置为 $env:VAR_NAME 则使用环境变量 VAR_NAME 中的值
+# 如果设置为 $this 则使用此配置文件的父目录
+# 否则作为路径解析
+prefix = 'user'
+
 [local]
 # 本地储存相关配置
 
 # 数据库存放目录
-database_dir = './user/databases'
+database_dir = 'databases'
 # 储存库索引文件位置
-repos_file = './user/repos.toml'
+repos_file = 'repos.toml'
 # 保存插画的文件名形式
 # 可以使用的数据：
 # 0.title(标题) 0.iid(插画ID) 0.user.uid(用户ID) 0.user.name(用户名)
@@ -12,17 +18,17 @@ repos_file = './user/repos.toml'
 # 更多详见文件 wahu_backend/aiopixivpy/datastructure_illust.py@IllustDetailRaw
 file_name_template = '{0.title:} - {0.iid:}_{1:}'
 # 临时下载目录
-temp_download_dir = './user/temp_dl'
+temp_download_dir = 'temp_dl'
 # 命令行脚本加载目录
-cli_script_dir = './user/scripts'
+cli_script_dir = 'scripts'
 
 [pixiv]
 # Pixiv 服务相关配置
 
 # refresh_token 的储存位置
-refresh_token_path = './user/refresh_token.txt'
+refresh_token_path = 'refresh_token.txt'
 # 暂存会话信息的文件的保存位置
-account_session_path = './user/account_session.toml'
+account_session_path = 'account_session.toml'
 # 连接超时
 timeout = 5.0
 # PixivAPI 主机 IP 地址
