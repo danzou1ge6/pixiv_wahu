@@ -23,7 +23,9 @@
 
         <q-space></q-space>
 
-        <TaskBar></TaskBar>
+        <div v-if="!$q.platform.is.mobile">
+            <TaskBar></TaskBar>
+        </div>
 
         <q-btn @click="windowRefresh" flat>
           <q-icon name="refresh"></q-icon>
@@ -46,6 +48,12 @@
         </q-btn>
 
       </q-toolbar>
+
+      <div v-if="$q.platform.is.mobile">
+        <q-footer>
+          <TaskBar></TaskBar>
+        </q-footer>
+      </div>
     </q-header>
 
     <NavDrawerContent v-model="leftDrawerOpen"></NavDrawerContent>

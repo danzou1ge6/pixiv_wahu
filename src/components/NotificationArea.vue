@@ -95,11 +95,12 @@ function iconName(level: 'error' | 'warning' | 'info' | 'success'): string {
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .noti-box {
   position: fixed;
   width: 500px;
-  max-width: 100vw;
+  max-width: 95vw;
+  max-height: 90vh;
   right: 10px;
   top: 55px;
   z-index: 999;
@@ -107,7 +108,12 @@ function iconName(level: 'error' | 'warning' | 'info' | 'success'): string {
 
 .noti-box-opened {
   position: fixed;
-  width: 75vw;
+  @media (min-width: $breakpoint-md-min) {
+    width: 75vw;
+  }
+  @media (max-width: $breakpoint-sm-max) {
+    width: 95vw;
+  }
   min-width: 300px;
   right: 10px;
   top: 55px;
