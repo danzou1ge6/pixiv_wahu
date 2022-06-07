@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='pixiv_wahu',
-    version='0.2.3',
+    version='0.2.4',
     python_requires='>=3.10',
     package_dir={
         'wahu_backend': 'wahu_backend',

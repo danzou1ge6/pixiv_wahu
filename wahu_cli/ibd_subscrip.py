@@ -141,8 +141,6 @@ def mount(parent_group: click.Group):
 
             ibd.illusts_te.insert(illusts)
 
-            ibd.bookmarks_te.insert(
-                [IllustBookmark(ilst.iid, list(range(ilst.page_count)), int(time.time()))
-                for ilst in illusts]
-            )
+            for ilst in illusts:
+                await ibd.set_bookmark(ilst.iid, list(range(ilst.page_count)))
 
