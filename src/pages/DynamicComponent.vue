@@ -1,6 +1,7 @@
 <template>
   <div>
-    <transition-group appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight">
+    <transition-group appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight"
+      @after-enter="scroll">
       <div v-for="(win, i) in openedWindows" :key="win.key" v-show="i == displayedWindowN"
         style="position: absolute; width: 100%">
         <q-scroll-observer @scroll="scrollHandler"></q-scroll-observer>
@@ -13,7 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
 import { openedWindows, displayedWindowN } from '../plugins/windowManager'
 
 
@@ -67,12 +67,9 @@ function scrollHandler(e: any) {
 }
 
 
-watch(() => openedWindows.value[displayedWindowN.value].key, () => {
-  // 等待页面渲染
-  if(openedWindows.value[displayedWindowN.value] !== undefined) {
-    setTimeout(() => { window.scrollTo(0, openedWindows.value[displayedWindowN.value].scrollY) }, 100)
-  }
-})
+function scroll() {
+  window.scrollTo(0, openedWindows.value[displayedWindowN.value].scrollY)
+}
 
 
 </script>
