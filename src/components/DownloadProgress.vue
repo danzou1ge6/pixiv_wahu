@@ -85,10 +85,15 @@ function getColor(status: string) {
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .dl-card {
   position: fixed;
-  width: 60vw;
+  @media (min-width: $breakpoint-md-min) {
+    width: 60vw;
+  }
+  @media (max-width: $breakpoint-sm-max) {
+    width: 95vw;
+  }
   min-width: 300px;
   right: 10px;
   top: 55px;

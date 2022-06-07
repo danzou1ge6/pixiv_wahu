@@ -10,7 +10,7 @@
         :dark="dark" class="cli-input" @keyup.up="previousHistory" @keyup.down="nextHistory"
         :loading="loading" ref="inputBox" @update:model-value="handleInput">
       </q-input>
-      <pre v-show="cmdInp != ''" class="text-grey-5">{{ ' ' + completions.join(' ') }}</pre>
+      <pre v-show="cmdInp != '' && generator === undefined" class="text-grey-5">{{ ' ' + completions.join(' ') }}</pre>
       <div v-for="(his, i) in displayedHistory[0]" :key="i" v-show="historyPointer != -1">
         <pre class="text-grey-5">{{ i == displayedHistory[1] ? '-> ' + his : '   ' + his }}</pre>
       </div>

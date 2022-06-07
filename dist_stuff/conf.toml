@@ -95,7 +95,7 @@ disable_existing_loggers = false
 
 [pylogging.formatters.standard]
 format = "[%(asctime)s][%(levelname)s][%(filename)s:%(lineno)s]%(message)s"
-datefmd = "%H:%M:%S"
+datefmt = "%H:%M:%S"
 
 [pylogging.handlers.console]
 class = "logging.StreamHandler"

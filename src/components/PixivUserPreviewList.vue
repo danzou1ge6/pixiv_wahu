@@ -23,8 +23,8 @@
             </q-item>
           </template>
 
-          <div class="row q-col-gutter-sm q-ma-sm" style="width: 100vw">
-            <div class="col-md-3 col-sm-6 col-xs-6 col-lg-2" v-for="ilst in up.illusts" :key="ilst.iid">
+          <div class="row q-col-gutter-sm q-ma-sm">
+            <div class="col-md-3 col-sm-6 col-xs-12 col-lg-2" v-for="ilst in up.illusts" :key="ilst.iid">
               <IllustCardPixiv :detail="ilst" :unselectable="true" :selected="false" height="300px">
               </IllustCardPixiv>
             </div>
