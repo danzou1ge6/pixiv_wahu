@@ -1,6 +1,6 @@
 import asyncio
 import itertools
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Coroutine
 
 import click
 
@@ -11,9 +11,17 @@ from helpers import table_factory, report_dl_coro
 
 from wahu_backend.wahu_core.wahu_cli_helper import print_help, wahu_cli_wrap, less
 from wahu_backend.wahu_methods import WahuMethods
+from wahu_backend.pixiv_image.image_getter import PixivImageGetError
 
 NAME = '插画储存库操作'
 DESCRIPTION = '一些对插画储存库的操作'
+
+
+async def ignore_dl_error(coro: Coroutine[None, None, None]) -> None:
+    try:
+        await coro
+    except PixivImageGetError as pige:
+        pass
 
 
 def mount(wexe: click.Group):
@@ -153,7 +161,7 @@ def mount(wexe: click.Group):
         url_list = [fe.url for fe in to_dl_fileentries]
 
         coro_list = [
-            WahuMethods.download_image(wctx, url, pth)
+            ignore_dl_error(WahuMethods.download_image(wctx, url, pth))
             for url, pth in zip(url_list, path_list)
         ]
 
