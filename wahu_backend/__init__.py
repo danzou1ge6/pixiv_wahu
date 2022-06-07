@@ -153,4 +153,4 @@ def ui(cctx, browser):
 
 
 if __name__ == '__main__':
-    run()
+    run(standalone=False)  # 确保 atext 钩子被触发
