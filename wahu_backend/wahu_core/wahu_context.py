@@ -131,5 +131,5 @@ class WahuContext:
             if cs.cleanup_hook is not None:
                 cs.cleanup_hook(self)
 
-        loop = asyncio.get_event_loop()
+        loop = asyncio.new_event_loop()
         loop.run_until_complete(self.cleanup())

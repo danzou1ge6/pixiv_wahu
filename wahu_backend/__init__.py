@@ -1,4 +1,5 @@
 import asyncio
+import functools
 import os
 from pathlib import Path
 import traceback
@@ -51,7 +52,7 @@ silent_deco = click.option(
 @logging_deco
 @silent_deco
 @click.pass_context
-def run(
+def _run(
     cctx: click.Context,
     port: int,
     host: str,
@@ -86,7 +87,7 @@ def run(
         cctx.invoke(ui, browser=browser)
 
 
-@run.command(
+@_run.command(
     context_settings=dict(ignore_unknown_options=True)
 )
 @click.argument('args', nargs=-1, type=click.UNPROCESSED)
@@ -135,7 +136,7 @@ def exe(cctx: click.Context, args: tuple[str], help: bool):
     asyncio.set_event_loop(loop)
     loop.run_until_complete(main())
 
-@run.command()
+@_run.command()
 @browser_deco
 @click.pass_context
 def ui(cctx, browser):
@@ -152,5 +153,7 @@ def ui(cctx, browser):
     web.run_app(app, host=wctx.config.server_host, port=wctx.config.server_port)
 
 
+run = functools.partial(_run, standalone=False)  # 确保 atexit hook 被触发
+
 if __name__ == '__main__':
-    run(standalone=False)  # 确保 atext 钩子被触发
+    run()
