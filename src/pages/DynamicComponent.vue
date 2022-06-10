@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition-group appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight"
-      @after-enter="scroll">
+      @enter="scroll">
       <div v-for="(win, i) in openedWindows" :key="win.key" v-show="i == displayedWindowN"
         style="position: absolute; width: 100%">
         <q-scroll-observer @scroll="scrollHandler"></q-scroll-observer>
@@ -14,6 +14,7 @@
 </template>
 
 <script setup lang="ts">
+import { watch } from 'vue'
 import { openedWindows, displayedWindowN } from '../plugins/windowManager'
 
 
@@ -65,6 +66,12 @@ function updateTitle(i: number, title: string) {
 function scrollHandler(e: any) {
   openedWindows.value[displayedWindowN.value].scrollY = e.position.top
 }
+
+watch(() => openedWindows.value[displayedWindowN.value], () => {
+  setTimeout(() => {
+    scroll()
+  }, 100);
+})
 
 
 function scroll() {

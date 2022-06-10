@@ -1,5 +1,6 @@
+import itertools
 from re import L
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 import click
 
 from wahu_cli.helpers import table_factory
@@ -202,3 +203,44 @@ def mount(wexe: click.Group):
         obj: 'CliClickCtxObj' = cctx.obj
 
         await WahuMethods.ibd_set_bm(obj.wctx, name, iid, pages)
+
+    @ibd.command()
+    @click.argument('name', type=str, required=True)
+    @click.option(
+        '--server-url', '-s', type=str, default='https://i.pximg.net',
+        help='设置图片服务器，默认为 https://i.pximg.net')
+    @click.option(
+        '--output', '-o', type=click.Path(dir_okay=False, writable=True),
+        required=False,
+        help='指定输出文件，若未指出则打印'
+    )
+    @wahu_cli_wrap
+    async def export_imgurl(
+        cctx: click.Context,
+        name: str,
+        server_url: str,
+        output: Optional[str]
+    ):
+        """导出数据库中所有插画的图片 URL
+
+        只能导出已下载详情的的
+        """
+
+        obj: 'CliClickCtxObj' = cctx.obj
+
+        if name not in obj.wctx.ilst_bmdbs.keys():
+            raise KeyError(f'fatal: 数据库 {name} 不存在')
+
+        with await obj.wctx.ilst_bmdbs[name](readonly=True) as ibd:
+            illusts = ibd.all_illusts()
+
+        urls = itertools.chain(
+            *([f'{server_url}{url}' for url in ilst.image_origin]
+              for ilst in illusts)
+        )
+
+        if output is None:
+            obj.pipe.putline('\n'.join(urls))
+        else:
+            with open(output, 'w', encoding='utf-8') as wf:
+                wf.write('\n'.join(urls))
