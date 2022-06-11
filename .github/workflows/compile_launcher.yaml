@@ -12,5 +12,5 @@ jobs:
       
       - name: 编译启动器
         run: |
-          gcc -o dist/package_base/PixivWahu.exe dist_stuff/launcher.c
+          gcc -o PixivWahu.exe dist_stuff/launcher.c
   
