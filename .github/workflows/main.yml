@@ -85,6 +85,10 @@ jobs:
           with open('dist/package_base/python310._pth', 'a', encoding='utf-8') as wf:
             wf.write('\n./Lib/site-packages\n')
         shell: python
+      
+      - name: 编译启动器
+        run: |
+          gcc -o dist/package_base/PixivWahu.exe dist_stuff/launcher.c
 
       - name: 复制入口文件、配置、README并压缩
         run: python dist_stuff/mk_win_pkg.py
