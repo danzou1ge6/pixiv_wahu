@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import sys
 from zipfile import ZIP_DEFLATED, ZipFile as ZipFileOriginal
 
 backend_src = Path('wahu_backend')
@@ -27,7 +28,18 @@ def create_readme_html():
     html = html.replace('[% markdown %]', mkd)
     return html
 
+def compile_launcher():
+    pypath = str(Path(sys.executable).parent).replace('\\', '/')
+
+    output_path = str(dist_base / "PixivWahu.exe").replace('\\', '/')
+
+    os.system(f'gcc -o "{output_path}" -I "{pypath}/include"'
+              f' dist_stuff/launcher.c "{pypath}/python310.dll"')
+
 def main():
+
+    compile_launcher()
+
     with ZipFile(dist_bundle, 'w', compression=COMPRESSION_METHOD,
         compresslevel=COMPRESSION_LEVEL) as zf:
 
@@ -35,7 +47,6 @@ def main():
         zf.write_dir(dist_base, Path(''))
 
         print('Write entrance script and configuration')
-        zf.write(dist_stuff / 'PixivWahu.ps1', 'PixivWahu.ps1')
         zf.write(dist_stuff / 'conf.toml', 'conf.toml')
         zf.write(dist_stuff / 'GetToken.ps1', 'GetToken.ps1')
 
