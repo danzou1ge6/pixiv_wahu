@@ -10,6 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
+      - run: echo $PYTHONPATH
+      
       - name: 编译启动器
         run: |
           gcc -o PixivWahu.exe dist_stuff/launcher.c
