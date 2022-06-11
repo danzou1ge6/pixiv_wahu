@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition-group appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight"
-      @enter="scroll">
+      @after-enter="scroll">
       <div v-for="(win, i) in openedWindows" :key="win.key" v-show="i == displayedWindowN"
         style="position: absolute; width: 100%">
         <q-scroll-observer @scroll="scrollHandler"></q-scroll-observer>
@@ -67,7 +67,7 @@ function scrollHandler(e: any) {
   openedWindows.value[displayedWindowN.value].scrollY = e.position.top
 }
 
-watch(() => openedWindows.value[displayedWindowN.value], () => {
+watch(() => openedWindows.value[displayedWindowN.value].key, () => {
   setTimeout(() => {
     scroll()
   }, 100);

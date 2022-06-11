@@ -153,7 +153,7 @@ def ui(cctx, browser):
     web.run_app(app, host=wctx.config.server_host, port=wctx.config.server_port)
 
 
-run = functools.partial(_run, standalone=False)  # 确保 atexit hook 被触发
+run = functools.partial(_run.main, standalone_mode=False)  # 确保 atexit hook 被触发
 
 if __name__ == '__main__':
     run()

@@ -25,6 +25,28 @@
             "type": "shell",
             "command": "yarn quasar build",
             "problemMatcher": []
+        },
+        {
+            "type": "cppbuild",
+            "label": "生成启动器",
+            "command": "C:\\Program Files\\mingw\\bin\\gcc.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-o",
+                "dist_stuff/PixivWahu.exe",
+                "-I",
+                "C:/Program Files/python310/include",
+                "dist_stuff/launcher.c",
+                "C:/Program Files/python310/python310.dll"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "detail": "编译器: \"C:\\Program Files\\mingw\\bin\\gcc.exe\""
         }
     ]
 }
