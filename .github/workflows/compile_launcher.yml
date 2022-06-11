@@ -1,0 +1,15 @@
+name: compile_launcher
+
+on:
+  workflow_dispatch:
+
+jobs:
+  cc:
+    runs-on: windows-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: 编译启动器
+        run: |
+          gcc -o PixivWahu.exe dist_stuff/launcher.c
