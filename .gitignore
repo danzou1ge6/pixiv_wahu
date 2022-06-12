@@ -31,6 +31,7 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+.github/
 
 # Logs
 logs

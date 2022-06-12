@@ -29,7 +29,8 @@ setup(
     entry_points={
         'console_scripts': [
             'pixiv-wahu=wahu_backend:run',
-            'get-px-refreshtoken=token_getter:main'
+            'get-px-refreshtoken=token_getter:main',
+            'wahu-gui=wahu_guilauncher:main'
         ]
     }
 )

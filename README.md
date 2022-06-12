@@ -22,40 +22,45 @@ PixivWahu 直接基于的开源库
 
 
 ## 安装
-### 使用系统级 Python 解释器
-
-下载源码
-
-构建依赖：
-- `pipenv`
-- `node.js`
-- `quasar-cli`
-
-安装依赖项
-```shell
-pipenv install
-```
-
-打包前端
-```shell
-quasar build
-```
-
-将打包好前端文件复制到 `static` 目录下
-
-启动 PixivWahu
-```shell
-python -m wahu_backend.__init__
-```
 
 ### 使用打包好的 Python Embeded 解释器
-下载发行版，解压
+下载发行版中的 `PixivWahu-win64.zip` 或 `PixivWahu-win64-guilauncher.zip`，解压
 
-找到 `PixivWahu.ps1` ，右键 - 使用 powershell 运行
-> 要执行本地 powershell 脚本，可能需要修改本地脚本执行策略，详见微软文档
+前者没有图形界面启动器，而后者有，但是由于打包入了 `tkinter` ，体积也更大
 
-浏览器会自动打开
+#### 命令行启动
+双击 `PixivWahu.exe` 即可以默认配置启动
 
+要查看所有选项，执行
+```powershell
+.\PixivWahu.exe --help
+```
+
+#### GUI 启动
+仅 `PixivWahu-win4-guilauncher.zip` 中包含
+
+执行 `WahuLauncher.ps1` 可以启动图形化启动器
+> 右键 `WahuLauncher.ps1` -> 在 Powershell 中运行
+> 根据 Windows 设置不同，有的情况下可能需要修改 Powershell 脚本执行策略
+
+
+### 使用系统级 Python 解释器
+下载发行版中的 `.whl` 文件，然后使用 `pip` 或者其他包管理器安装
+
+命令行启动
+```shell
+pixiv-wahu
+```
+
+图形化启动
+```shell
+wahu-gui
+```
+
+启动 `refresh_token` 获取程序
+```shell
+get-px-refreshtoken
+```
 
 ## 配置
 PixivWahu 使用 TOML 格式配置
@@ -74,8 +79,7 @@ PixivWahu 使用 TOML 格式配置
 
 通过 `refresh_token` 可以获得 `access_token` ，而 `access_token` 直接用于访问 Pixiv 服务
 
-`refresh_token`是一个 `Cookie` ，形如`a8sD23d2fU6758zdfDdF`，可以标识用户身份，且长期有效，所以`pixivpy` 的作者使用它来登录p站
-> 为了使用异步架构，本人用异步网络库 `aiohttp` 重构了 `pixivpy` ，命名为 `aiopixivpy`
+`refresh_token`是一个 `Cookie` ，形如`a8sD23d2fU6758zdfDdF`，可以标识用户身份，且长期有效
 
 要获得 `refresh_token` ，需要一个现代浏览器如Edge, Chrome, Firefox
 运行 `GetToken.ps1` ，浏览器会自动打开，按照说明操作即可
@@ -151,3 +155,28 @@ PixivWahu 为了优化体验使用了两个缓存池
 即 `WebSocket Remote Procedure Call` ，是 PixivWahu 前后端的连接，如果连接断开，前端将无法使用
 
 PixivWahu 分为前端和后端，后端由 Python 实现，前端在浏览器中运行，因此使用了 `WebSocket` 协议进行前后端通信
+
+
+## 打包 Wheel
+
+下载源码
+
+构建依赖：
+- `pipenv`
+- `node.js`
+- `quasar-cli`
+
+安装依赖项
+```shell
+pipenv install
+```
+
+打包前端
+```shell
+quasar build
+```
+
+构建 Wheel
+```sheel
+python setup.py bdist_wheel
+```
