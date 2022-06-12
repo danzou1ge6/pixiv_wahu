@@ -244,3 +244,16 @@ def mount(wexe: click.Group):
         else:
             with open(output, 'w', encoding='utf-8') as wf:
                 wf.write('\n'.join(urls))
+
+    @ibd.command()
+    @click.argument('name', type=str, required=True)
+    @wahu_cli_wrap
+    async def update(cctx: click.Context, name: str):
+        """更新数据库 NAME 中的详情
+        """
+
+        obj: 'CliClickCtxObj' = cctx.obj
+
+        num = await WahuMethods.ibd_update(obj.wctx, name)
+
+        obj.pipe.putline(f'更新了 {num} 条插画详情')

@@ -120,7 +120,7 @@ class IllustBookmarkDatabase(DependingDatabase):
         self,
         get_detail: Callable[[int], Coroutine[None, None, IllustDetail]],
         update_all: bool = False
-    ) -> None:
+    ) -> list[IllustDetail]:
         """
         更新插画详情. 通过 `get_detail` 获得所有 `bookmarks` 表中出现的插画 ID 的详情
         - `:param get_detail:` 获取插画详情的方法
@@ -146,6 +146,8 @@ class IllustBookmarkDatabase(DependingDatabase):
         detail_list = await asyncio.gather(*coro_list)
 
         self.illusts_te.insert(detail_list)
+
+        return list(detail_list)
 
     def query_detail(self, iid: int) -> Optional[IllustDetail]:
         """在数据库中查询 `iid` 的详情，若无则返回 `None`"""

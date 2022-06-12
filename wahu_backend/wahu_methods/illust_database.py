@@ -251,5 +251,13 @@ class WahuIllustDatabaseMethods:
             ibd.illusts_te.insert(illusts)
             ibd.bookmarks_te.insert(bookmarks)
 
+    @classmethod
+    @wahu_methodize(middlewares=[_check_db_name])
+    async def ibd_update(
+        cls, ctx: WahuContext, name: str
+    ) -> int:
+        """更新数据库中的插画详情"""
 
-
+        with await ctx.ilst_bmdbs[name](readonly=False) as ibd:
+            detail_list = await ibd.update_detail(ctx.papi.pool_illust_detail)
+        return len(detail_list)

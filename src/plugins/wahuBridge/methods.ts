@@ -186,6 +186,9 @@ export async function ibd_remove (name: string) : Promise<null> {
 export async function ibd_set_bm (name: string, iid: number, pages: Array<number>) : Promise<[boolean, boolean]> {
     return await wahuRPCCall('ibd_set_bm', {name: name, iid: iid, pages: pages})as [boolean, boolean]}
 
+export async function ibd_update (name: string) : Promise<number> {
+    return await wahuRPCCall('ibd_update', {name: name})as number}
+
 export async function ir_add_cache (name: string, file_entries: Array<FileEntry>) : Promise<null> {
     return await wahuRPCCall('ir_add_cache', {name: name, file_entries: file_entries})as null}
 

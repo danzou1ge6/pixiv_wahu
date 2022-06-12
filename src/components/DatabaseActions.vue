@@ -3,6 +3,9 @@
 
     <q-btn-dropdown color="primary" label="操作" class="q-ma-md">
       <q-list dense>
+        <q-item clickable @click="update">
+          更新详情
+        </q-item>
         <q-item clickable @click="exportJson">
           导出 JSON
           <q-menu auto-close anchor="top right">
@@ -65,6 +68,16 @@ function handleJsonUpload(f: File) {
       })
     }
   }
+}
+
+function update() {
+  wm.ibd_update(props.dbName)
+    .then(num => {
+      pushNoti({
+        level: 'success',
+        msg: `更新了 ${props.dbName} 的 ${num} 条详情`
+      })
+    })
 }
 
 </script>
