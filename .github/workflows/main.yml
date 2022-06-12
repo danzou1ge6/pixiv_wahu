@@ -64,6 +64,7 @@ jobs:
       - name: 下载 Python Embed
         run: |
           curl -o dist/python.zip https://www.python.org/ftp/python/3.10.4/python-3.10.4-embed-amd64.zip
+          
       - name: 解压 Python Embed
         run: expand-archive -path dist/python.zip -destinationpath dist/package_base
 
@@ -73,26 +74,30 @@ jobs:
           whl = [f for f in listdir('dist') if f.endswith('.whl')][0]
           system(f'pipenv run pip install dist/{whl}[accelerate_fuzzywuzzy] --prefix dist/package_base -I')
         shell: python
-      
-      - name: 删除 setuptools, scripts
-        run: |
-          rm dist/package_base/Lib/site-packages/setuptools* -r
-          rm dist/package_base/Lib/site-packages/pkg_resources -r
-          rm dist/package_base/Scripts -r
-          
-      - name: 修改 python310._pth
-        run: |
-          with open('dist/package_base/python310._pth', 'a', encoding='utf-8') as wf:
-            wf.write('\n./Lib/site-packages\n')
-        shell: python
 
-      - name: 复制入口文件、配置、README并压缩
+      - name: 打包 cli
         run: python dist_stuff/mk_win_pkg.py
+      
+      - run: |
+          rm dist/package_base -r
+          expand-archive -path dist/python.zip -destinationpath dist/package_base
+      
+      - name: 安装 wheel
+        run: |
+          from os import listdir, system
+          whl = [f for f in listdir('dist') if f.endswith('.whl')][0]
+          system(f'pipenv run pip install dist/{whl}[accelerate_fuzzywuzzy] --prefix dist/package_base -I')
+        shell: python
+      
+      - name: 打包 gui
+        run: python dist_stuff/mk_win_pkg.py gui
         
       - uses: actions/upload-artifact@v3
         with:
           name: windows-package
-          path: dist/PixivWahu-win64.zip
+          path: |
+            dist/PixivWahu-win64.zip
+            dist/PixivWahu-win64-guilauncher.zip
 
       - name: 创建 Release
         if: ${{ github.event_name == 'push' }}
@@ -102,4 +107,5 @@ jobs:
           prerelease: false
           files: |
             dist/PixivWahu-win64.zip
+            dist/PixivWahu-win64-guilauncher.zip
             dist/*.whl
