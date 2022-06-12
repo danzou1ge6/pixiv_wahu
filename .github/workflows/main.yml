@@ -97,8 +97,13 @@ jobs:
           name: windows-package
           path: |
             dist/PixivWahu-win64.zip
-            dist/PixivWahu-win64-guilauncher.zip
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: windows-package-gui
+          path: |
+            dist/PixivWahu-win64-guilauncher.zip
+            
       - name: 创建 Release
         if: ${{ github.event_name == 'push' }}
         uses: "marvinpinto/action-automatic-releases@latest"
