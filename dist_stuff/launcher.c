@@ -1,6 +1,5 @@
 #include "Python.h"
 
-typedef short unsigned int wchar_t;
 
 int main(int argc, wchar_t** argv) {
     int argc_mod = argc + 2;

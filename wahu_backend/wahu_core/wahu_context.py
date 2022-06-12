@@ -1,6 +1,5 @@
 import asyncio
 import atexit
-from logging import config as log_cfg
 from pathlib import Path
 from typing import Iterable
 
@@ -64,9 +63,6 @@ class WahuContext:
         self.config = config
         self.in_terminal = in_terminal
 
-        # pylogging
-        log_cfg.dictConfig(self.config.pylogging_cfg_dict)
-
         # PixivAPI
         self.papi: MaintainedSessionPixivAPI = MaintainedSessionPixivAPI(
             config.account_session_path,
@@ -125,11 +121,10 @@ class WahuContext:
         await self.papi.close_session()
         await self.image_pool.close_session()
 
-    def sync_cleanup(self):
-
         for cs in self.cli_scripts:
             if cs.cleanup_hook is not None:
                 cs.cleanup_hook(self)
 
+    def sync_cleanup(self):
         loop = asyncio.new_event_loop()
         loop.run_until_complete(self.cleanup())

@@ -6,6 +6,7 @@ import toml
 from .config_exceptions import (ConfigLoadBadPath, ConfigLoadError,
                                 ConfigLoadKeyError)
 from .config_object import WahuConfig
+from logging import config as log_cfg
 
 from ..manual_dns.dns_resolve import set_doh_url
 
@@ -96,6 +97,10 @@ def load_config(config_file: Path) -> WahuConfig:
         # 全局设定
         if doh_urls is not None:
             set_doh_url(doh_urls)
+
+        # pylogging
+        log_cfg.dictConfig(pylogging_cfg_dict)
+
 
     except KeyError as ke:
         raise ConfigLoadKeyError(ke.args[0]) from ke

@@ -5,3 +5,4 @@ log_cli = true
 
 [tool.pyright]
 exclude = ["dist/**/*", "build/**/*"]
+ignore = ["wahu_guilauncher/*"]

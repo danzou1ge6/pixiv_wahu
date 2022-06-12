@@ -1,5 +1,4 @@
 import itertools
-from re import L
 from typing import TYPE_CHECKING, Optional
 import click
 

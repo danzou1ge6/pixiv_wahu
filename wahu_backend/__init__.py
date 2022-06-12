@@ -3,7 +3,7 @@ import functools
 import os
 from pathlib import Path
 import traceback
-from typing import Any, Literal
+from typing import Literal
 import webbrowser
 
 import click
@@ -146,6 +146,7 @@ def ui(cctx, browser):
     wctx: WahuContext = cctx.obj
     app = create_app(wctx)
 
+    host = '127.0.0.1' if wctx.config.server_host == '0.0.0.0' else wctx.config.server_host
     if browser:
         webbrowser.open(
             f'http://{wctx.config.server_host}:{wctx.config.server_port}/index.html')

@@ -3,13 +3,14 @@ from setuptools import setup
 
 setup(
     name='pixiv_wahu',
-    version='0.2.4',
+    version='0.2.5',
     python_requires='>=3.10',
     package_dir={
         'wahu_backend': 'wahu_backend',
         'wahu_frontend': 'dist/wahu_frontend',
         'wahu_cli': 'wahu_cli',
-        'token_getter': 'token_getter'
+        'token_getter': 'token_getter',
+        'wahu_guilauncher': 'wahu_guilauncher'
     },
     install_requires=[
         'click',
