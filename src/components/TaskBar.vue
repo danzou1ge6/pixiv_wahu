@@ -1,7 +1,8 @@
 <template>
   <div :style="$q.platform.is.mobile ? '':'max-width: 80vw'">
-    <q-tabs v-model="selected" align="right">
-      <transition-group appear enter-active-class="animated fadeInDown" leave-active-class="animated fadeInUp">
+    <q-tabs v-model="selected" align="left" right-icon="doesnt-exist">
+      <transition-group appear enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp absolute"
+        move-class="task-list-move">
         <div v-for="(win, i) in tabbedWindows" :key="win.key">
           <q-tab no-caps :name="i" @click="displayedWindowN = i">
             <div class="row">
@@ -84,6 +85,10 @@ const groupedWindows = computed(() => {
 <style scoped>
 .menu-item {
   width: 250px;
+}
+
+.task-list-move {
+  transition: transform 0.3s ease;
 }
 </style>
 
