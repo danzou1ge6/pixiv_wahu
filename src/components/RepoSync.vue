@@ -1,73 +1,76 @@
 <template>
-  <q-card>
-    <q-card-section>
-      <div class="row items-center">
-        <div class="col-1">
-          <div class="text-h5" style="display: inline-block">同步</div>
+  <div class="col-12">
+    <q-card>
+      <q-card-section>
+
+        <div class="row items-center">
+          <div class="col-1">
+            <div class="text-h5" style="display: inline-block">同步</div>
+          </div>
+          <div class="col-9">
+            <q-select underlined :options="allDbNames" label="连接数据库" @update:model-value="updateLinkedDb"
+              :model-value="selectedDbName" multiple></q-select>
+          </div>
+          <div class="col">
+            <q-btn class="float-right" color="primary" @click="calcSync">
+              计算差集
+              <q-tooltip>
+                新增 = 数据库 \ 储存库；删除 = 储存库 \ 数据库
+              </q-tooltip>
+            </q-btn>
+          </div>
         </div>
-        <div class="col-9">
-          <q-select underlined :options="allDbNames" label="连接数据库" @update:model-value="updateLinkedDb"
-            :model-value="selectedDbName" multiple></q-select>
-        </div>
-        <div class="col">
-          <q-btn class="float-right" color="primary" @click="calcSync">
-            计算差集
+      </q-card-section>
+
+      <q-linear-progress :indeterminate="calcingSync"></q-linear-progress>
+    </q-card>
+  </div>
+
+  <div class="col-md-7 col-sm-12 col-xs-12 col-lg-7">
+    <q-card>
+
+      <q-table :rows="syncAddTableRows" row-key="fid" selection="multiple" v-model:selected="selectedAdd"
+        :rows-per-page-options="[10, 20, 50, 100, 200, 500, 0]" dense :columns="syncAddTableColDef"
+        :visible-columns="addTableVisibleCols">
+
+        <template v-slot:top>
+          <div class="col-2 q-table__title">新增</div>
+          <q-btn flat @click="submitAdd" color="primary" class="float-right q-ma-sm" v-show="selectedAdd.length != 0">
+            确认新增
             <q-tooltip>
-              新增 = 数据库 \ 储存库；删除 = 储存库 \ 数据库
+              加入选中的条目到储存库索引的缓存区
             </q-tooltip>
           </q-btn>
-        </div>
-      </div>
-    </q-card-section>
+          <q-btn flat @click="submitDownload" color="primary" class="float-right q-ma-sm"
+            v-show="selectedAdd.length != 0">
+            加入下载
+            <q-tooltip>
+              下载选中的条目到储存库的目录中
+            </q-tooltip>
+          </q-btn>
+        </template>
+      </q-table>
+    </q-card>
+  </div>
 
-    <q-linear-progress :indeterminate="calcingSync"></q-linear-progress>
+  <div class="col-md-5 col-sm-12 col-xs-12 col-lg-5">
+    <q-card>
+      <q-table :rows="delList" row-key="fid" selection="multiple" v-model:selected="selectedDel"
+        :rows-per-page-options="[10, 20, 50, 100, 200, 500, 0]" dense :columns="syncDelTableCofDef">
+        <template v-slot:top>
+          <div class="col-2 q-table__title">
+            删除
+            <q-tooltip>
+              从储存库索引删除选中的条目
+            </q-tooltip>
+          </div>
+          <q-btn @click="submitDel" color="warning" class="float-right q-ma-sm" v-if="selectedDel.length != 0">确认删除
+          </q-btn>
+        </template>
+      </q-table>
+    </q-card>
+  </div>
 
-    <div class="row q-col-gutter-sm">
-      <div class="col-md-7 col-sm-12 col-xs-12 col-lg-7">
-
-        <q-table :rows="syncAddTableRows" row-key="fid" selection="multiple" v-model:selected="selectedAdd"
-          :rows-per-page-options="[10, 20, 50, 100, 200, 500, 0]" dense :columns="syncAddTableColDef"
-          :visible-columns="addTableVisibleCols">
-
-          <template v-slot:top>
-            <div class="col-2 q-table__title">新增</div>
-            <q-btn flat @click="submitAdd" color="primary" class="float-right q-ma-sm" v-show="selectedAdd.length != 0">
-              确认新增
-              <q-tooltip>
-                加入选中的条目到储存库索引的缓存区
-              </q-tooltip>
-            </q-btn>
-            <q-btn flat @click="submitDownload" color="primary" class="float-right q-ma-sm"
-              v-show="selectedAdd.length != 0">
-              加入下载
-              <q-tooltip>
-                下载选中的条目到储存库的目录中
-              </q-tooltip>
-            </q-btn>
-          </template>
-        </q-table>
-      </div>
-
-      <div class="col-md-5 col-sm-12 col-xs-12 col-lg-5">
-
-        <q-table :rows="delList" row-key="fid" selection="multiple" v-model:selected="selectedDel"
-          :rows-per-page-options="[10, 20, 50, 100, 200, 500, 0]" dense :columns="syncDelTableCofDef">
-          <template v-slot:top>
-            <div class="col-2 q-table__title">
-              删除
-              <q-tooltip>
-                从储存库索引删除选中的条目
-              </q-tooltip>
-            </div>
-            <q-btn @click="submitDel" color="warning" class="float-right q-ma-sm" v-if="selectedDel.length != 0">确认删除
-            </q-btn>
-          </template>
-        </q-table>
-      </div>
-    </div>
-
-
-  </q-card>
 </template>
 
 <script setup lang="ts">

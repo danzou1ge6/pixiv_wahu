@@ -1,52 +1,53 @@
 <template>
-  <q-card>
-    <q-table :rows="indexed" row-key="fid" :rows-per-page-options="[10, 20, 50, 100, 200, 500, 0]" dense
-      :columns="indexedColDef">
-      <template v-slot:top>
-        <div class="col-4 q-table__title">已索引的文件</div>
-        <q-btn flat @click="loadIndex" color="primary" class="float-right q-ma-sm">刷新
-        </q-btn>
-        <q-btn flat @click="updateIndex" color="primary" class="float-right q-ma-sm"
-          :loading="updating">更新
-          <q-tooltip>
-            将索引缓存中下载完成的项移入索引
-          </q-tooltip>
-        </q-btn>
-        <q-btn flat @click="validate" color="primary" class="float-right q-ma-sm"
-        :loading="validating">校验
-          <q-tooltip>
-            检查是否存在未索引的文件和失效的索引
-          </q-tooltip>
-        </q-btn>
-      </template>
-    </q-table>
+  <div class="col-12">
+    <q-card>
+      <q-table :rows="indexed" row-key="fid" :rows-per-page-options="[10, 20, 50, 100, 200, 500, 0]" dense
+        :columns="indexedColDef">
+        <template v-slot:top>
+          <div class="col-4 q-table__title">已索引的文件</div>
+          <q-btn flat @click="loadIndex" color="primary" class="float-right q-ma-sm">刷新
+          </q-btn>
+          <q-btn flat @click="updateIndex" color="primary" class="float-right q-ma-sm" :loading="updating">更新
+            <q-tooltip>
+              将索引缓存中下载完成的项移入索引
+            </q-tooltip>
+          </q-btn>
+          <q-btn flat @click="validate" color="primary" class="float-right q-ma-sm" :loading="validating">校验
+            <q-tooltip>
+              检查是否存在未索引的文件和失效的索引
+            </q-tooltip>
+          </q-btn>
+        </template>
+      </q-table>
+    </q-card>
+  </div>
 
-    <div class="row q-col-gutter-sm">
-      <div class="col-md-6 col-lg-6 col-sm-1 col-xs-1">
-        <q-table :rows="invalidFiles" row-key="path" :rows-per-page-options="[10, 20, 50, 100, 200, 500, 0]" dense
-          :columns="invalidFileColDef" selection="multiple" v-model:selected="selectedDelFile">
-          <template v-slot:top>
-            <div class="col-2 q-table__title">无效文件</div>
-            <q-btn flat @click="submitDelFile" color="warning" class="float-right q-ma-sm"
-              v-show="selectedDelFile.length != 0">删除</q-btn>
-          </template>
-        </q-table>
-      </div>
+  <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+    <q-card>
+      <q-table :rows="invalidFiles" row-key="path" :rows-per-page-options="[10, 20, 50, 100, 200, 500, 0]" dense
+        :columns="invalidFileColDef" selection="multiple" v-model:selected="selectedDelFile">
+        <template v-slot:top>
+          <div class="col-2 q-table__title">无效文件</div>
+          <q-btn flat @click="submitDelFile" color="warning" class="float-right q-ma-sm"
+            v-show="selectedDelFile.length != 0">删除</q-btn>
+        </template>
+      </q-table>
+    </q-card>
+  </div>
 
-      <div class="col-md-6 col-lg-6 col-sm-1 col-xs-1">
-        <q-table :rows="invalidIndex" row-key="fid" :rows-per-page-options="[10, 20, 50, 100, 200, 500, 0]" dense
-          :columns="indexedColDef" selection="multiple" v-model:selected="selectedDelIndex">
-          <template v-slot:top>
-            <div class="col-2 q-table__title">无效索引</div>
-            <q-btn flat @click="submitDelIndex" color="warning" class="float-right q-ma-sm"
-              v-show="selectedDelIndex.length != 0">删除</q-btn>
-          </template>
-        </q-table>
-      </div>
-    </div>
+  <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+    <q-card>
+      <q-table :rows="invalidIndex" row-key="fid" :rows-per-page-options="[10, 20, 50, 100, 200, 500, 0]" dense
+        :columns="indexedColDef" selection="multiple" v-model:selected="selectedDelIndex">
+        <template v-slot:top>
+          <div class="col-2 q-table__title">无效索引</div>
+          <q-btn flat @click="submitDelIndex" color="warning" class="float-right q-ma-sm"
+            v-show="selectedDelIndex.length != 0">删除</q-btn>
+        </template>
+      </q-table>
+    </q-card>
+  </div>
 
-
-  </q-card>
 </template>
 
 

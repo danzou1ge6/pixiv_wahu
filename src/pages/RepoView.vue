@@ -1,9 +1,13 @@
 <template>
-  <RepoSync :repo-name="repoName" class="q-ma-md" @refresh-cache="refreshCache = !refreshCache"
-    @refresh-index="refreshIndex = !refreshIndex"></RepoSync>
-  <RepoBrowseCache :repo-name="repoName" class="q-ma-md" :refresh="refreshCache"></RepoBrowseCache>
-  <RepoBrowseIndex :repo-name="repoName" class="q-ma-md" :refresh="refreshIndex"
-    @refresh-cache="refreshCache = !refreshCache"></RepoBrowseIndex>
+
+  <div class="row q-col-gutter-sm q-ma-sm">
+    <RepoSync :repo-name="repoName" @refresh-cache="refreshCache = !refreshCache"
+      @refresh-index="refreshIndex = !refreshIndex"></RepoSync>
+    <RepoBrowseCache :repo-name="repoName" :refresh="refreshCache"></RepoBrowseCache>
+    <RepoBrowseIndex :repo-name="repoName" :refresh="refreshIndex"
+      @refresh-cache="refreshCache = !refreshCache"></RepoBrowseIndex>
+  </div>
+
 </template>
 
 <script setup lang="ts">
