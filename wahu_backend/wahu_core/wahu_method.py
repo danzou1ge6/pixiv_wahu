@@ -1,4 +1,3 @@
-import ast
 import inspect
 from functools import partial
 from itertools import chain
@@ -14,12 +13,7 @@ if TYPE_CHECKING:
 
 
 def parse_func_args(f: Callable[..., Any]) -> list[str]:
-    tree = ast.parse(inspect.cleandoc(inspect.getsource(f)))
-
-    if not isinstance(tree.body[0], ast.AsyncFunctionDef):
-        raise WahuMethodParseError(f'解析函数定义 {f} 失败')
-
-    return [arg.arg for arg in tree.body[0].args.args]
+    return list(inspect.signature(f).parameters.keys())
 
 
 RT = TypeVar('RT')  # Return Type
