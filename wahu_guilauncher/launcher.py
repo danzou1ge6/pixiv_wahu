@@ -95,10 +95,15 @@ class Launcher:
         ttk.Button(ctlframe, text='帮助', command=self.help_file) \
             .grid(column=0, row=3)
 
-        # -------------------------------------------------- misc
+        # -------------------------------------------------- loop
 
         self.loop = asyncio.new_event_loop()
 
+        self.root.protocol('WM_DELETE_WINDOW', self.close)
+
+    def close(self):
+        self.root.destroy()
+        self.loop.stop()
 
     def select_conf_file(self, *args):
 
