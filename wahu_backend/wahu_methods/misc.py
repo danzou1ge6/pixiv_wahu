@@ -52,19 +52,18 @@ class WahuMiscMethods:
 
         dtls = [await ctx.papi.pool_illust_detail(iid) for iid in iids]
 
-        path_gen = itertools.chain(
-            *(
-                (ctx.config.temp_download_dir / fname
-                 for fname in await cls.filename_for_illust(ctx, dtl))
-                for dtl in dtls
-            )
-        )
+        path_list = []
+        for dtl in dtls:
+            path_list += [
+                ctx.config.temp_download_dir / fname
+                for fname in await cls.filename_for_illust(ctx, dtl)
+            ]
 
         url_gen = itertools.chain(*(dtl.image_origin for dtl in dtls))
 
         coro_gen = (
             cls.download_image(ctx, url, pth)
-            for url, pth in zip(url_gen, path_gen)
+            for url, pth in zip(url_gen, path_list)
         )
 
         [asyncio.create_task(coro) for coro in coro_gen]
