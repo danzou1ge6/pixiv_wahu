@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition-group appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight"
-      @after-enter="scroll">
+      @enter="scroll">
       <div v-for="(win, i) in openedWindows" :key="win.key" v-show="i == displayedWindowN"
         style="position: absolute; width: 100%">
         <q-scroll-observer @scroll="scrollHandler"></q-scroll-observer>
@@ -16,6 +16,7 @@
 <script setup lang="ts">
 import { watch } from 'vue'
 import { openedWindows, displayedWindowN } from '../plugins/windowManager'
+import { useQuasar } from 'quasar'
 
 
 /** 自动生成 Import Begin */
@@ -46,6 +47,8 @@ const components: componentIndex = {
 }
 /** 自动生成 Import End */
 
+const $q = useQuasar()
+
 function getComponent(name: string) {
   const comp = components[name]
   if (comp === undefined) {
@@ -67,15 +70,14 @@ function scrollHandler(e: any) {
   openedWindows.value[displayedWindowN.value].scrollY = e.position.top
 }
 
-watch(() => openedWindows.value[displayedWindowN.value].key, () => {
-  setTimeout(() => {
-    scroll()
-  }, 100);
-})
-
 
 function scroll() {
-  window.scrollTo(0, openedWindows.value[displayedWindowN.value].scrollY)
+  setTimeout(
+    () => {
+      window.scrollTo(0, openedWindows.value[displayedWindowN.value].scrollY)
+    },
+    $q.platform.is.mobile ? 200 : 100
+  )
 }
 
 

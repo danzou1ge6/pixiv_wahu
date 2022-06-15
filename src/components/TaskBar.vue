@@ -86,9 +86,5 @@ const groupedWindows = computed(() => {
 .menu-item {
   width: 250px;
 }
-
-.task-list-move {
-  transition: transform 0.3s ease;
-}
 </style>
 
