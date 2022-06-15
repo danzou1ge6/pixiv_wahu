@@ -25,7 +25,8 @@ def mount(wexe: click.Group):
         help='指定下载页数，未指定则下载所有页'
     )
     @click.option(
-        '--directory', '-d', type=click.Path(exists=True, file_okay=False, writable=True),
+        '--directory', '-d',
+        type=click.Path(exists=False, file_okay=False, writable=True),
         help='指定下载目录，未指定则下载至配置的临时下载目录'
     )
     @click.option('--progress', '-g', is_flag=True, help='是否显示下载进度')
@@ -51,7 +52,7 @@ def mount(wexe: click.Group):
         if directory is None:
             dir_path = wctx.config.temp_download_dir
         else:
-            dir_path = Path(directory)
+            dir_path = wctx.config.wpath(directory)
 
         fname_list = await WahuMethods.filename_for_illust(wctx, dtl, pages)
         path_list = [dir_path / f for f in fname_list]

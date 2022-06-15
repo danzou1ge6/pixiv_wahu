@@ -209,7 +209,7 @@ def mount(wexe: click.Group):
         '--server-url', '-s', type=str, default='https://i.pximg.net',
         help='设置图片服务器，默认为 https://i.pximg.net')
     @click.option(
-        '--output', '-o', type=click.Path(dir_okay=False, writable=True),
+        '--output', '-o', type=click.Path(dir_okay=False, writable=True, exists=False),
         required=False,
         help='指定输出文件，若未指出则打印'
     )
@@ -241,7 +241,7 @@ def mount(wexe: click.Group):
         if output is None:
             obj.pipe.putline('\n'.join(urls))
         else:
-            with open(output, 'w', encoding='utf-8') as wf:
+            with open(obj.wctx.config.wpath(output), 'w', encoding='utf-8') as wf:
                 wf.write('\n'.join(urls))
 
     @ibd.command()

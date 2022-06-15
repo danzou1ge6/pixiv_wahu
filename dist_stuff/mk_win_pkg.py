@@ -96,6 +96,9 @@ def main():
         print('Write README')
         zf.writestr('README.html', create_readme_html())
 
+        print('Write subscrip')
+        zf.write(dist_stuff / 'ibd_subscrip.toml', 'user/ibd_subscrip.toml')
+
         if gui_launcher:
             print('Write Tkinter')
             write_tkinter(zf)

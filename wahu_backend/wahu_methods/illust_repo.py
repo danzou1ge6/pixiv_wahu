@@ -121,13 +121,13 @@ class IllustRepoMethods:
             raise WahuRuntimeError(f'储存库 {name} 已存在')
 
         new_repo = DatabaseContextManager[FileTracer](
-            FileTracer(name, Path(prefix))
+            FileTracer(name, ctx.config.wpath(prefix))
         )
 
         ctx.ilst_repos[name] = new_repo
 
         ctx.repo_db_link.repos[name] = RepoEntry(
-            Path(prefix), name, []
+            ctx.config.wpath(prefix), name, []
         )
         ctx.repo_db_link.write()
 

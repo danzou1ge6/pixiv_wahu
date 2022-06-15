@@ -1,7 +1,6 @@
 import asyncio
 import itertools
-import time
-from typing import TYPE_CHECKING, Any, AsyncIterable, Optional, TypeVar
+from typing import TYPE_CHECKING, AsyncIterable, Optional, TypeVar
 
 import click
 import toml
@@ -92,7 +91,7 @@ def mount(parent_group: click.Group):
             conf = wctx.config.original_dict['local']['ibd_subscrip']
 
             try:
-                subs_conf = toml.load(conf)[name]
+                subs_conf = toml.load(wctx.config.wpath(conf))[name]
             except KeyError:
                 raise KeyError(f'fatal: {name} 不在订阅配置文件中')
 

@@ -11,48 +11,56 @@ from logging import config as log_cfg
 from ..manual_dns.dns_resolve import set_doh_url
 
 
-def add_prefix(p: Path, prefix: Path | None) -> Path:
-    if prefix is None:
-        return p
-    else:
-        return prefix / p
+class WPath:
+    """
+    `Path` 的工厂函数类，用于带入配置文件中指定的路径常量
+    """
+
+    def __init__(self, path_constants: dict[str, str]):
+        self.path_constants = path_constants
+
+    def __call__(self, p: str) -> Path:
+        try:
+            pth = Path(p.format(**self.path_constants))
+            return pth
+
+        except KeyError as ke:
+            raise KeyError(f'找不到路径常量 {ke.args}')
 
 
 def load_config(config_file: Path) -> WahuConfig:
     d = toml.load(config_file)
 
     try:
-        prefix = d.get('prefix', None)
 
-        if prefix is not None:
-            if prefix.startswith('$env:'):
-                prefix_in_envvar = os.getenv(prefix[4:])
-                if prefix_in_envvar is None:
-                    raise ConfigLoadBadPath(prefix)
-                prefix = Path(prefix_in_envvar)
+        # path
+        path_constants = d.get('path', {})
 
-            elif prefix == '$this':
-                prefix = Path(config_file.parent)
+        for k in path_constants.keys():
+            if path_constants[k].startswith('$env:'):
+                envvar_val = os.getenv(path_constants[k][4:])
+                if envvar_val is None:
+                    raise ConfigLoadBadPath(path_constants[k])
+                path_constants[k] = envvar_val
 
-            else:
-                prefix = Path(prefix)
-                if not prefix.exists():
-                    raise ConfigLoadBadPath(prefix)
+        path_constants['$this'] = str(config_file.parent)
+
+        wpath = WPath(path_constants)
 
 
         # local
-        database_dir = add_prefix(Path(d['local']['database_dir']), prefix)
-        repos_file = add_prefix(Path(d['local']['repos_file']), prefix)
+        database_dir = wpath(d['local']['database_dir'])
+        repos_file = wpath(d['local']['repos_file'])
         file_name_template = d['local']['file_name_template']
-        temp_download_dir = add_prefix(Path(d['local']['temp_download_dir']), prefix)
-        cli_script_dir = add_prefix(Path(d['local']['cli_script_dir']), prefix)
+        temp_download_dir = wpath(d['local']['temp_download_dir'])
+        cli_script_dir = wpath(d['local']['cli_script_dir'])
 
         # pixiv
         refresh_token_path = d['pixiv'].get('refresh_token_path', None)
-        account_session_path = add_prefix(Path(d['pixiv']['account_session_path']), prefix)
+        account_session_path = wpath(d['pixiv']['account_session_path'])
 
         if refresh_token_path is not None:
-            refresh_token_path = add_prefix(Path(refresh_token_path), prefix)
+            refresh_token_path = wpath(refresh_token_path)
         else:
             refresh_token_path = None
 
@@ -110,6 +118,7 @@ def load_config(config_file: Path) -> WahuConfig:
             raise ConfigLoadBadPath(p)
 
     return WahuConfig(
+        wpath=wpath,
         database_dir=database_dir,
         repos_file=repos_file,
         file_name_template=file_name_template,

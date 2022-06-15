@@ -1,10 +1,15 @@
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Literal, Optional
+from typing import TYPE_CHECKING, Any, Literal, Optional
+
+
+if TYPE_CHECKING:
+    from ..wahu_config.load_config import WPath
 
 
 @dataclass
 class WahuConfig:
+    wpath: 'WPath'
     # local
     database_dir: Path
     repos_file: Path

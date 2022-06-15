@@ -77,7 +77,7 @@ class WahuContext:
         self.ilst_bmdbs = scan_illust_bookmark_databases(self.config.database_dir)
 
         # 储存库与数据库的关联
-        self.repo_db_link = RepoDatabaseLink(self.config.repos_file)
+        self.repo_db_link = RepoDatabaseLink(self.config.repos_file, self.config.wpath)
         self.repo_db_link.load()  # 加载配置文件
 
         self.ilst_repos = create_file_tracers(self.repo_db_link.repos.values())

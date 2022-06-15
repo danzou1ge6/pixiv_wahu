@@ -1,13 +1,16 @@
 import dataclasses
-from typing import Iterable
+from typing import TYPE_CHECKING, Iterable
 import toml
 from pathlib import Path
 
-from ..file_tracing import FileTracer
-from ..illust_bookmarking import IllustBookmarkDatabase
 from ..wahu_core.core_exceptions import WahuInitError
 
-from ..sqlite_tools.database_ctx_man import DatabaseContextManager
+if TYPE_CHECKING:
+    from ..file_tracing import FileTracer
+    from ..sqlite_tools.database_ctx_man import DatabaseContextManager
+    from ..illust_bookmarking import IllustBookmarkDatabase
+    from ..wahu_config.load_config import WPath
+
 
 @dataclasses.dataclass
 class RepoEntry:
@@ -46,22 +49,23 @@ class RepoDatabaseLink:
     - `:attr dfr:` 储存库名到数据库名的映射
     """
 
-    def __init__(self, cfg_path: Path):
+    def __init__(self, cfg_path: Path, wpath: 'WPath'):
 
         self.cfg_path = cfg_path
+        self.wpath = wpath
 
         self.repos: dict[str, RepoEntry]
 
     def set_repo_and_db_ref(
         self,
-        repo_ref: dict[str, DatabaseContextManager[FileTracer]],
-        ibd_ref: dict[str, DatabaseContextManager[IllustBookmarkDatabase]]
+        repo_ref: dict[str, 'DatabaseContextManager[FileTracer]'],
+        ibd_ref: dict[str, 'DatabaseContextManager[IllustBookmarkDatabase]']
     ) -> None:
 
         self.repo_ref = repo_ref
         self.ibd_ref = ibd_ref
 
-    def rfd(self, name: str) -> list[DatabaseContextManager[FileTracer]]:
+    def rfd(self, name: str) -> list['DatabaseContextManager[FileTracer]']:
         """
         数据库 到 储存库 的映射；不存在的储存库将被忽略；没有则返回空列表
         """
@@ -71,7 +75,7 @@ class RepoDatabaseLink:
         else:
             return []
 
-    def dfr(self, name: str) -> list[DatabaseContextManager[IllustBookmarkDatabase]]:
+    def dfr(self, name: str) -> list['DatabaseContextManager[IllustBookmarkDatabase]']:
         """
         储存库 到 数据库 的映射；不存在的数据库将被忽略；没有将返回空列表
         """
@@ -89,7 +93,7 @@ class RepoDatabaseLink:
 
             try:
                 repos = [
-                    RepoEntry(Path(r['path']), r['name'], r['linked_databases'])
+                    RepoEntry(self.wpath(r['path']), r['name'], r['linked_databases'])
                     for r in d['repos']
                 ]
                 if not all((isinstance(r.linked_databases, list) for r in repos)):
