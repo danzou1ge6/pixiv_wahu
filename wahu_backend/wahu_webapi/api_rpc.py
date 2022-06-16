@@ -72,8 +72,7 @@ def register(app: web.Application, ctx: WahuContext) -> None:
                 except Exception as excp:
 
                     ret = {
-                        'type': 'exception',
-                        'return': traceback.format_exc(limit=None),
+                        'type': 'failure',
                         'mcid': mcid
                     }
 

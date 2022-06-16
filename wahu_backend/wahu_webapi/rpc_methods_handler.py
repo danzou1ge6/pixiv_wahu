@@ -18,7 +18,7 @@ Wahu POST RPC 协议：
 Wahu WebSocket RPC 协议：
 请求格式追加 `mcid`: Method Call ID ，用于匹配请求和返回
 返回格式追加
-    `type` : 'exception' ，是一个字符串，含有 Traceback 信息
+    `type` : 'failure' ，标识执行失败
     `mcid`
 """
 

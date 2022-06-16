@@ -68,7 +68,7 @@ class WahuStopIteration {
 }
 
 interface WsRPCReturn<T> {
-    type: 'normal' | 'generator' | 'exception' | 'dl_progress' | 'warning';
+    type: 'normal' | 'generator' | 'exception' | 'dl_progress' | 'warning' | 'failure';
     return: T | string;
     mcid: number
 }
@@ -140,11 +140,7 @@ function handleSoecketMessage(ev: MessageEvent) {
 
             resolve(g())
 
-        } else if (ret.type == 'exception') {
-            pushNoti({
-                level: 'error',
-                msg: '异常：' + ret.return
-            })
+        } else if (ret.type == 'failure') {
             reject(ret.return)
 
         } else {
@@ -163,6 +159,12 @@ function handleSoecketMessage(ev: MessageEvent) {
         } else if (ret.type == 'dl_progress') {
 
             dlProgressReportCbk(ret.return)
+
+        } else if (ret.type == 'exception') {
+            pushNoti({
+                level: 'error',
+                msg: ret.return
+            })
 
         } else {
             throw TypeError(`不合法的返回类型 ${ret.type}`)
