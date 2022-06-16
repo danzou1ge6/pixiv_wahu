@@ -1,7 +1,10 @@
+import argparse
 import dataclasses
 import json
 from pathlib import Path
 from typing import TYPE_CHECKING, Literal, Optional, Type, TypeVar
+
+import click
 
 from ..aiopixivpy import IllustDetail, PixivUserSummery, IllustTag
 from ..illust_bookmarking import IllustBookmark, IllustBookmarkDatabase
@@ -10,6 +13,7 @@ from ..wahu_core import (GenericWahuMethod, WahuArguments, WahuContext,
                          wahu_methodize)
 from ..wahu_core.core_exceptions import WahuRuntimeError
 from .logger import logger
+from .modded_argparser import ArgumentParser
 
 if TYPE_CHECKING:
     from . import WahuMethods
@@ -32,6 +36,36 @@ async def _check_db_name(
         raise WahuRuntimeError(f'_check_db_name: 数据库名 {args.name} 不在上下文中')
 
     return await m(cls, args, ctx)
+
+
+def create_ibd_query_parser() -> argparse.ArgumentParser:
+    parser = ArgumentParser(prog='', exit_on_error=False)
+
+    parser.add_argument('keyword', type=str, nargs='?')
+
+    parser.add_argument(
+        '-c', '--cutoff', type=int, default=80, help='模糊查询阈值. 百分制. 默认值 80')
+
+    parser.add_argument('-T', '--title', action='store_true', help='模糊查询标题')
+    parser.add_argument('-t', '--tag', action='store_true', help='模糊查询标签')
+    parser.add_argument('-u', '--username', action='store_true', help='模糊查询用户名')
+    parser.add_argument('-C', '--caption', action='store_true', help='模糊查询描述')
+
+    parser.add_argument(
+        '-i', '--iid', action='store_true', help='查询插画 IID. 用 `,` 隔开多个')
+    parser.add_argument(
+        '-U', '--uid', action='store_true', help='查询用户 UID 的作品'
+    )
+
+    parser.add_argument(
+        '-r', '--restricted', action='store_true', help='查询无效的插画'
+    )
+    parser.add_argument(
+        '-a', '--all', action='store_true', help='显示所有'
+    )
+
+    return parser
+ibd_query_parser = create_ibd_query_parser()
 
 
 class WahuIllustDatabaseMethods:
@@ -144,6 +178,55 @@ class WahuIllustDatabaseMethods:
 
         with await ctx.ilst_bmdbs[name](readonly=True) as ibd:
             return ibd.filter_restricted()
+
+    @classmethod
+    @wahu_methodize(middlewares=[_check_db_name])
+    async def ibd_query(
+        cls, ctx: WahuContext, name: str, qs: str
+    ) -> list[tuple[int, int]]:
+        """使用命令行查询数据库"""
+
+        args = click.parser.split_arg_string(qs)
+        ns = ibd_query_parser.parse_args(args)
+
+        if ns.iid:
+            iids = list(map(int, ns.keyword.split(',')))
+
+            iids_exist = []
+            with await ctx.ilst_bmdbs[name](readonly=True) as ibd:
+                for iid in iids:
+                    if ibd.query_bookmark(iid) is not None:
+                        iids_exist.append(iid)
+
+            return [(iid, -1) for iid in iids_exist]
+
+        elif ns.uid:
+            iids = await cls.ibd_query_uid(ctx, name, int(ns.keyword))
+            return [(iid, -1) for iid in iids]
+
+        elif ns.tag:
+            return await cls.ibd_fuzzy_query(ctx, name, 'tag', ns.keyword, ns.cutoff)
+        elif ns.username:
+            return await cls.ibd_fuzzy_query(ctx, name, 'username', ns.keyword, ns.cutoff)
+        elif ns.caption:
+            return await cls.ibd_fuzzy_query(ctx, name, 'caption', ns.caption, ns.cutoff)
+
+        elif ns.restricted:
+            iids = await cls.ibd_filter_restricted(ctx, name)
+            return [(iid, -1) for iid in iids]
+        elif ns.all:
+            with await ctx.ilst_bmdbs[name](readonly=True) as ibd:
+                return [(bm.iid, -1) for bm in ibd.all_bookmarks()]
+
+        else:  # else if ns.title
+            return await cls.ibd_fuzzy_query(ctx, name, 'title', ns.keyword, ns.cutoff)
+
+    @classmethod
+    @wahu_methodize()
+    async def ibd_query_help(cls, ctx: WahuContext) -> str:
+        """获得数据库查询命令的帮助"""
+
+        return ibd_query_parser.format_help()
 
     @classmethod
     @wahu_methodize()

@@ -174,8 +174,14 @@ export async function ibd_list_bm (name: string) : Promise<Array<IllustBookmark>
 export async function ibd_new (name: string) : Promise<null> {
     return await wahuRPCCall('ibd_new', {name: name})as null}
 
+export async function ibd_query (name: string, qs: string) : Promise<Array<[number, number]>> {
+    return await wahuRPCCall('ibd_query', {name: name, qs: qs})as Array<[number, number]>}
+
 export async function ibd_query_bm (name: string, iid: number) : Promise<null | IllustBookmark> {
     return await wahuRPCCall('ibd_query_bm', {name: name, iid: iid})as null | IllustBookmark}
+
+export async function ibd_query_help () : Promise<string> {
+    return await wahuRPCCall('ibd_query_help', {})as string}
 
 export async function ibd_query_uid (name: string, uid: number) : Promise<Array<number>> {
     return await wahuRPCCall('ibd_query_uid', {name: name, uid: uid})as Array<number>}

@@ -114,7 +114,7 @@ function clickUsername() {
   pushWindow({
     component: 'IllustQueryLocal',
     title: props.dbName,
-    props: { dbName: props.dbName, initialQueryString: 'uid ' + uid.value }
+    props: { dbName: props.dbName, initialQueryString: '-U ' + uid.value }
   }, true)
 }
 
