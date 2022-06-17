@@ -53,6 +53,16 @@ def _parse_ast_arg_anno(arg_anno: ast.Name | ast.Subscript | ast.Constant) -> Py
                 ]
             )
 
+        elif arg_anno.value.id == 'Union':
+            assert isinstance(arg_anno.slice, ast.Tuple)
+            return PyAnnoType(
+                'Union',
+                args=[
+                    _parse_ast_arg_anno(item)  # type: ignore
+                    for item in arg_anno.slice.elts
+                ]
+            )
+
     elif isinstance(arg_anno, ast.Constant):
 
         if arg_anno.value == None:

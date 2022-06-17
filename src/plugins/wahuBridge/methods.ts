@@ -279,6 +279,12 @@ export async function p_query (qs: string) : Promise<AsyncGenerator<Array<Illust
 export async function p_query_help () : Promise<string> {
     return await wahuRPCCall('p_query_help', {})as string}
 
+export async function p_query_user (qs: string) : Promise<AsyncGenerator<Array<PixivUserPreview>, undefined, null> | number> {
+    return await wahuRPCCall('p_query_user', {qs: qs})as AsyncGenerator<Array<PixivUserPreview>, undefined, null> | number}
+
+export async function p_query_user_help () : Promise<string> {
+    return await wahuRPCCall('p_query_user_help', {})as string}
+
 export async function p_trending_tags () : Promise<Array<TrendingTagIllusts>> {
     return await wahuRPCCall('p_trending_tags', {})as Array<TrendingTagIllusts>}
 

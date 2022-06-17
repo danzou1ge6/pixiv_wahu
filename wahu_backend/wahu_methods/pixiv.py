@@ -1,7 +1,9 @@
 import argparse
-from typing import AsyncGenerator, Optional
+from typing import AsyncGenerator, Optional, Union
 
 import click
+
+from wahu_backend.aiopixivpy.datastructure_illust import PixivUserSummery
 
 from ..aiopixivpy import (AccountSession, IllustDetail, PixivUserDetail,
                           PixivUserPreview, TrendingTagIllusts)
@@ -45,6 +47,25 @@ def create_pixiv_query_parser() -> argparse.ArgumentParser:
 
     return parser
 pixiv_query_parser = create_pixiv_query_parser()
+
+
+def create_puser_query_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog='')
+
+    parser.add_argument('keyword', type=str, nargs='?')
+    parser.add_argument('-n', '--name', action='store_true', help='模糊搜索用户名')
+
+    parser.add_argument('-u', '--uid', type=int, help='搜索用户 UID')
+
+    parser.add_argument(
+        '-f', '--follower', type=int, help='关注此用户的用户. 留空使用自己', nargs='?', const=-1)
+    parser.add_argument(
+        '-F', '--following', type=int, help='此用户关注的用户. 留空使用自己', nargs='?', const=-1)
+    parser.add_argument(
+        '-r', '--related', type=int, help='相关用户. 留空使用自己', nargs='?', const=-1)
+
+    return parser
+puser_query_parser = create_puser_query_parser()
 
 
 class WahuPixivMethods:
@@ -230,9 +251,46 @@ class WahuPixivMethods:
 
     @classmethod
     @wahu_methodize()
+    async def p_query_user(
+        cls, ctx: WahuContext, qs: str
+    ) -> Union[AsyncGenerator[list[PixivUserPreview], None], int]:
+
+        args = click.parser.split_arg_string(qs)
+        ns = puser_query_parser.parse_args(args)
+
+
+        if ctx.papi.logged_in:
+            my_uid = ctx.papi.account_session.user_id  # type: ignore
+        else:
+            raise AioPixivPyNotLoggedIn()
+
+        if ns.uid is not None:
+            return ns.uid
+        elif ns.follower is not None:
+            follower = my_uid if ns.follower == -1 else ns.follower
+            return await cls.p_user_follower(ctx, follower)
+        elif ns.following is not None:
+            following = my_uid if ns.following == -1 else ns.following
+            return await cls.p_user_following(ctx, following)
+        elif ns.related is not None:
+            related = my_uid if ns.related == -1 else ns.related
+            return await cls.p_user_related(ctx, related)
+
+        else:  # elif ns.name
+            return await cls.p_user_search(ctx, ns.keyword)
+
+
+    @classmethod
+    @wahu_methodize()
     async def p_query_help(cls, ctx: WahuContext) -> str:
 
         return pixiv_query_parser.format_help()
+
+    @classmethod
+    @wahu_methodize()
+    async def p_query_user_help(cls, ctx: WahuContext) -> str:
+
+        return puser_query_parser.format_help()
 
     @classmethod
     @wahu_methodize()

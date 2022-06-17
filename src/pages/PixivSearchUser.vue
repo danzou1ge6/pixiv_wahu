@@ -9,25 +9,15 @@
         <q-tooltip>帮助</q-tooltip>
       </q-btn>
     </div>
-    <q-dialog v-model="showHelp">
+    <q-dialog v-model="showHelp" full-width>
       <q-card>
-        <div class="q-ma-md">
-          <div class="text-h5">命令列表</div>
-          <div class="q-body-2 text-grey-8">
-            <span>按名称搜索: name &lt;name&gt;</span><br>
-            <span>跳转到 UID 为 &lt;uid&gt; 的用户的详情页面: uid &lt;uid&gt;</span><br>
-            <span>关注了 &lt;uid&gt; 的用户: follower &lt;uid&gt;</span><br>
-            <span>&lt;uid&gt; 关注的用户: following &lt;uid&gt;</span><br>
-            <span>&lt;uid&gt; 的相关用户: related &lt;uid&gt;</span><br>
-            <span>上述的 follower following related 命令，若缺省 &lt;uid&gt; 则使用自己的</span><br>
-          </div>
-        </div>
+        <pre class="q-ma-md">{{ helpText }}</pre>
         <q-btn flat class="float-right q-ma-md" color="primary" @click="showHelp = false">关闭</q-btn>
       </q-card>
     </q-dialog>
 
     <q-input class="q-ma-md" underlined autofocus v-model="queryString" label="查询" @keyup.enter="executeQuery" hide-hint
-      hint="回车发起查询" :error="queryError" @input="queryError = false">
+      hint="回车发起查询" :error="queryError" @input="queryError = false" style="font-family: monospace;">
     </q-input>
 
     <q-linear-progress :indeterminate="queryLoading"></q-linear-progress>
@@ -70,7 +60,7 @@ const queryError = ref<boolean>(false)
 
 const userPreviews = ref<Array<wm.PixivUserPreview>>([])
 
-const generator = ref<AsyncIterator<Array<wm.PixivUserPreview>>>()
+const generator = ref<AsyncIterator<Array<wm.PixivUserPreview>, undefined, null>>()
 
 const loading = ref<boolean>(false)
 
@@ -88,105 +78,33 @@ function cutStringWith(str: string, subStr: string): [string, string | null] {
 
 
 function executeQuery() {
+  queryError.value = false
 
-  let [cmd, keyword] = cutStringWith(queryString.value, ' ')
+  emits('updateTitle', queryString.value)
+  emits('updateProps', { initialQueryString: queryString.value })
 
-  if (keyword !== null) {
-
-    if (cmd == 'name') {
-      queryLoading.value = true
-      wm.p_user_search(keyword)
-        .then(gen => {
-          queryLoading.value = false
-          asignAndInvokeGenerator(gen)
-          emits('updateTitle', `Name:${keyword}`)
-          emits('updateProps', { initialQueryString: queryString.value })
+  queryLoading.value = true
+  wm.p_query_user(queryString.value)
+    .then(ret => {
+      if(typeof(ret) == 'number') {
+        replaceCurrentWindow({
+          component: 'PixivUserDetail',
+          props: { uid: ret },
+          title: 'User:' + ret
         })
-      return
-    }
-    else if (cmd == 'uid') {
-
-      if (isNaN(Number(keyword))) {
-        queryError.value = true
-        return
+      }else {
+        queryLoading.value = false
+        asignAndInvokeGenerator(ret)
       }
-      queryLoading.value = true
-      replaceCurrentWindow({
-        component: 'PixivUserDetail',
-        props: { uid: Number(keyword) },
-        title: 'User:' + keyword
-      })
-      return
-
-    } else if (cmd == 'follower') {
-      if (isNaN(Number(keyword))) {
-        queryError.value = true
-        return
-      }
-      queryLoading.value = true
-      wm.p_user_follower(Number(keyword))
-        .then(gen => {
-          queryLoading.value = false
-          asignAndInvokeGenerator(gen)
-          emits('updateTitle', `Follower:${keyword}`)
-          emits('updateProps', { initialQueryString: queryString.value })
-        })
-      return
-
-    } else if (cmd == 'following') {
-      if (isNaN(Number(keyword))) {
-        queryError.value = true
-        return
-      }
-      queryLoading.value = true
-      wm.p_user_following(Number(keyword))
-        .then(gen => {
-          queryLoading.value = false
-          asignAndInvokeGenerator(gen)
-          emits('updateTitle', `Following:${keyword}`)
-          emits('updateProps', { initialQueryString: queryString.value })
-        })
-      return
-
-    } else if (cmd == 'related') {
-      if (isNaN(Number(keyword))) {
-        queryError.value = true
-        return
-      }
-      queryLoading.value = true
-      wm.p_user_related(Number(keyword))
-        .then(gen => {
-          queryLoading.value = false
-          asignAndInvokeGenerator(gen)
-          emits('updateTitle', `Related:${keyword}`)
-          emits('updateProps', { initialQueryString: queryString.value })
-        })
-      return
-
-    } else {
-      queryError.value = true
-      return
-    }
-  } else {
-    if (cmd == 'following' || cmd == 'follower' || cmd == 'related') {
-      appendMyUidAndQuery()
-    }
-  }
-
-}
-
-function appendMyUidAndQuery() {
-
-  wm.p_account_session()
-    .then(ac => {
-      if (ac === null) {
-        wm.p_attempt_login().then(() => { executeQuery() })
-        return
-      }
-      queryString.value += ' ' + ac.user_id
-      executeQuery()
     })
+    .catch(e => {
+      queryError.value = true
+      queryLoading.value = false
+      console.log(e)
+    })
+
 }
+
 
 onMounted(() => {
   if (props.initialQueryString !== undefined) {
@@ -243,5 +161,16 @@ function asignAndInvokeGenerator(gen: typeof generator.value) {
   invokeGenerator()
 }
 
+const helpText = ref<string>('')
+onMounted(() => {
+  wm.p_query_user_help().then(s => { helpText.value = s })
+})
+
 
 </script>
+
+<style scoped>
+pre {
+  white-space: pre-wrap;
+}
+</style>

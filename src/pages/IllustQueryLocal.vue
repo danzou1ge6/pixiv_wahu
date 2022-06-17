@@ -11,13 +11,14 @@
     </div>
     <q-dialog v-model="showHelp" full-width>
       <q-card>
-        <pre class="q-ma-sm">{{ helpText }}</pre>
+        <pre class="q-ma-md">{{ helpText }}</pre>
         <q-btn flat class="float-right q-ma-md" color="primary" @click="showHelp = false">关闭</q-btn>
       </q-card>
     </q-dialog>
 
     <q-input class="q-ma-md" autofocus v-model="queryString" label="查询" :error="queryStringError"
-      @keyup.enter="executeQuery" @input="queryStringError = false" hide-hint hint="回车发起查询">
+      @keyup.enter="executeQuery" @input="queryStringError = false" hide-hint hint="回车发起查询"
+      style="font-family: monospace;">
     </q-input>
 
     <q-linear-progress :indeterminate="queryLoading"></q-linear-progress>
