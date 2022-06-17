@@ -9,36 +9,9 @@
         <q-tooltip>帮助</q-tooltip>
       </q-btn>
     </div>
-    <q-dialog v-model="showHelp">
+    <q-dialog v-model="showHelp" full-width>
       <q-card>
-        <div class="q-ma-md">
-          <div class="text-h5">命令列表</div>
-          <div class="q-body-2 text-grey-8">
-            <span>推荐插画： recom</span><br>
-            <span>新作： new</span><br>
-            <span>关注画师的新作： follow</span><br>
-            <span>插画收藏： bookmark</span><br>
-            <span>排行： ranking day|week|month|day-male|day-female|week-original|week-rookie</span><br>
-            <span>搜索： search ptag|etag|tc|kw[:ddate|adate|dp] &lt;keyword&gt;</span><br>
-            <span>画师的作品： uid &lt;uid&gt;</span>
-          </div>
-          <div class="text-h5">说明</div>
-          <div class="q-body-2 text-grey-8">
-            <span>「|」: 表示「或」</span><br>
-            <span>「[]」: 表示可选</span><br>
-            <span>「ptag」: 部分标签(partial tag)</span><br>
-            <span>「etag」: 全部标签(exact tag)</span><br>
-            <span>「tc」: 标题和描述(title caption)</span><br>
-            <span>「ddate」: 日期逆序(descend date)</span><br>
-            <span>「adate」: 日期正序(ascend date)</span><br>
-            <span>「dp」: 热门度逆序(descend popularity) 似乎需要「 充 V I P 」才能用</span><br>
-          </div>
-          <div class="text-h5">举例</div>
-          <div class="q-body-2 text-grey-8">
-            <span>「search ptag:ddate white hair」: 逆序日期，部分标签匹配「 white hair 」</span><br>
-            <span>「ranking day」: 今日作品排行</span><br>
-          </div>
-        </div>
+        <pre class="q-ma-md">{{ helpText }}</pre>
         <q-btn flat class="float-right q-ma-md" color="primary" @click="showHelp = false">关闭</q-btn>
       </q-card>
     </q-dialog>
@@ -204,130 +177,22 @@ const recomModes = [
 function executeQuery() {
   queryStringError.value = false
 
-  let [cmd, other] = cutStringWith(queryString.value, ' ')
+  emits('updateProps', { initialQueryString: queryString.value })
+  emits('updateTitle', queryString.value)
 
-  if (other === null) {
-    if (cmd == 'recom') {
-      queryLoading.value = true
-      wm.p_ilst_recom()
-        .then(gen => {
-          asignAndInvokeGenerator(gen)
-          queryLoading.value = false
-          illusts.value = []
-          emits('updateProps', { initialQueryString: 'recom' })
-          emits('updateTitle', '推荐插画')
-        })
-      return
-
-    } else if (cmd == 'new') {
-      queryLoading.value = true
-      wm.p_ilst_new()
-        .then(gen => {
-          asignAndInvokeGenerator(gen)
-          queryLoading.value = false
-          illusts.value = []
-          emits('updateProps', { initialQueryString: 'new' })
-          emits('updateTitle', '新作')
-        })
-      return
-
-    } else if (cmd == 'follow') {
-      queryLoading.value = true
-      wm.p_ilst_folow()
-        .then(gen => {
-          asignAndInvokeGenerator(gen)
-          queryLoading.value = false
-          illusts.value = []
-          emits('updateProps', { initialQueryString: 'follow' })
-          emits('updateTitle', '关注新作')
-        })
-      return
-
-    } else if (cmd == 'bookmark') {
-      wm.p_account_session()
-        .then(ac => {
-          if (ac === null) {
-            wm.p_attempt_login().then(() => { executeQuery() })
-            return
-          }
-          queryString.value += ' ' + ac.user_id
-          executeQuery()
-        })
-      return
-
-    } else {
-      queryStringError.value = true; return
-    }
-  }
-
-  if (cmd == 'search') {
-    searchIllust(other); return
-
-  } else if (cmd == 'ranking') {
-    let rankMode = other.replace('-', '_')
-    if (recomModes.indexOf(rankMode) == -1) {
-      queryStringError.value = true; return
-    }
-    queryLoading.value = true
-    wm.p_ilst_ranking(rankMode as wm.PixivRecomMode)
-      .then(gen => {
-        asignAndInvokeGenerator(gen)
-        queryLoading.value = false
-        emits('updateProps', { initialQueryString: queryString.value })
-        emits('updateTitle', '作品排行')
-      })
-    return
-
-  } else if (cmd == 'bookmark') {
-    let uid = Number(other)
-    if (isNaN(uid)) {
-      queryStringError.value = true; return
-    }
-    queryLoading.value = true
-    wm.p_user_bmilsts(uid)
-      .then(gen => {
-        asignAndInvokeGenerator(gen)
-        queryLoading.value = false
-        emits('updateProps', { initialQueryString: queryString.value })
-        emits('updateTitle', `${uid} 的收藏`)
-      })
-    return
-
-  } else if (cmd == 'iid') {
-    let iids: Array<number> = []
-    for (let s of other.split(',')) {
-      if (isNaN(Number(s))) {
-        queryStringError.value = true
-        return
-      }
-      iids.push(Number(s))
-    }
-    illusts.value = []
-    for (let iid of iids) {
-      wm.p_ilst_detail(iid)
-        .then(dtl => {
-          illusts.value.push(dtl)
-        })
-    }
-    emits('updateProps', { initialQueryString: queryString.value })
-    emits('updateTitle', `iids`)
-    return
-  } else if (cmd == 'uid') {
-    if (isNaN(Number(other))) {
+  queryLoading.value = true
+  wm.p_query(queryString.value)
+    .then(gen => {
+      asignAndInvokeGenerator(gen)
+      queryLoading.value = false
+      illusts.value = []
+    })
+    .catch(e => {
       queryStringError.value = true
-      return
-    }
-    wm.p_user_ilsts(Number(other))
-      .then(gen => {
-        asignAndInvokeGenerator(gen)
-        queryLoading.value = false
-        emits('updateProps', { initialQueryString: queryString.value })
-        emits('updateTitle', `${other} 的作品`)
-        return
-      })
-  } else {
-    queryStringError.value = true; return
-  }
+      queryLoading.value = false
+      console.log(e)
+    })
+
 }
 
 onMounted(() => {
@@ -338,4 +203,17 @@ onMounted(() => {
   emits('updateTitle', 'Pixiv 插画')
 })
 
+const helpText = ref<string>('')
+
+onMounted(() => {
+  wm.p_query_help().then(t => { helpText.value = t })
+})
+
+
 </script>
+
+<style scoped>
+pre {
+  white-space: pre-wrap;
+}
+</style>

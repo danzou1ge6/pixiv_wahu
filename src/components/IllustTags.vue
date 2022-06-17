@@ -33,7 +33,7 @@ function queryTag(tagName: string) {
     pushWindow({
       component: 'IllustQueryLocal',
       title: props.dbName,
-      props: { dbName: props.dbName, initialQueryString: '-t ' + tagName }
+      props: { dbName: props.dbName, initialQueryString: '-t "' + tagName + '"'}
     }, true)
   }
 }

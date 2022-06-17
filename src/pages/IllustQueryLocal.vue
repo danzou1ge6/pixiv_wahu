@@ -9,7 +9,7 @@
         <q-tooltip>帮助</q-tooltip>
       </q-btn>
     </div>
-    <q-dialog v-model="showHelp">
+    <q-dialog v-model="showHelp" full-width>
       <q-card>
         <pre class="q-ma-sm">{{ helpText }}</pre>
         <q-btn flat class="float-right q-ma-md" color="primary" @click="showHelp = false">关闭</q-btn>
@@ -98,6 +98,11 @@ function executeQuery() {
     .then(ret => {
       queryResult.value = ret
       queryLoading.value = false
+    })
+    .catch(e => {
+      queryStringError.value = true
+      queryLoading.value = false
+      console.log(e)
     })
 
 }

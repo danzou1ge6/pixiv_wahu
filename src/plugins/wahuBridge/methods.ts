@@ -273,6 +273,12 @@ export async function p_ilstbm_add (iids: Array<number>) : Promise<null> {
 export async function p_ilstbm_rm (iids: Array<number>) : Promise<null> {
     return await wahuRPCCall('p_ilstbm_rm', {iids: iids})as null}
 
+export async function p_query (qs: string) : Promise<AsyncGenerator<Array<IllustDetail>, undefined, null>> {
+    return await wahuRPCCall('p_query', {qs: qs})as AsyncGenerator<Array<IllustDetail>, undefined, null>}
+
+export async function p_query_help () : Promise<string> {
+    return await wahuRPCCall('p_query_help', {})as string}
+
 export async function p_trending_tags () : Promise<Array<TrendingTagIllusts>> {
     return await wahuRPCCall('p_trending_tags', {})as Array<TrendingTagIllusts>}
 
