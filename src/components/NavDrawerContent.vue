@@ -97,19 +97,19 @@
         <q-card class="q-ml-lg">
           <q-list>
             <q-item clickable v-ripple
-              @click="pushWindow({ component: 'PixivSearchIllust', props: { initialQueryString: 'new' } }); $emit('update:modelValue', false)">
+              @click="pushWindow({ component: 'PixivSearchIllust', props: { initialQueryString: '-n' } }); $emit('update:modelValue', false)">
               新作
             </q-item>
             <q-item clickable v-ripple
-              @click="pushWindow({ component: 'PixivSearchIllust', props: { initialQueryString: 'follow' } }); $emit('update:modelValue', false)">
+              @click="pushWindow({ component: 'PixivSearchIllust', props: { initialQueryString: '-f' } }); $emit('update:modelValue', false)">
               关注画师新作
             </q-item>
             <q-item clickable v-ripple
-              @click="pushWindow({ component: 'PixivSearchIllust', props: { initialQueryString: 'recom' } }); $emit('update:modelValue', false)">
+              @click="pushWindow({ component: 'PixivSearchIllust', props: { initialQueryString: '-r' } }); $emit('update:modelValue', false)">
               推荐
             </q-item>
             <q-item clickable v-ripple
-              @click="pushWindow({ component: 'PixivSearchIllust', props: { initialQueryString: 'bookmark' } }); $emit('update:modelValue', false)">
+              @click="pushWindow({ component: 'PixivSearchIllust', props: { initialQueryString: '-b' } }); $emit('update:modelValue', false)">
               收藏
             </q-item>
             <q-item clickable @click="pushWindow({ component: 'PixivSearchIllust' }); $emit('update:modelValue', false)"
@@ -128,7 +128,7 @@
         <q-card class="q-ml-lg">
           <q-list>
             <q-item clickable v-ripple
-              @click="pushWindow({ component: 'PixivSearchUser', props: { initialQueryString: 'following' } }); $emit('update:modelValue', false)">
+              @click="pushWindow({ component: 'PixivSearchUser', props: { initialQueryString: '-F' } }); $emit('update:modelValue', false)">
               关注
             </q-item>
             <q-item clickable v-ripple

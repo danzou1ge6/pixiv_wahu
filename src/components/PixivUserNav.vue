@@ -1,18 +1,18 @@
 <template>
 
-  <q-btn @click="pushWindow({ component: 'PixivSearchIllust', props: { initialQueryString: 'uid ' + uid } })" flat>
+  <q-btn @click="pushWindow({ component: 'PixivSearchIllust', props: { initialQueryString: '-u ' + uid } })" flat>
     插画作品
   </q-btn>
-  <q-btn @click="pushWindow({ component: 'PixivSearchIllust', props: { initialQueryString: 'bookmark ' + uid } })" flat>
+  <q-btn @click="pushWindow({ component: 'PixivSearchIllust', props: { initialQueryString: '-b ' + uid } })" flat>
     收藏插画
   </q-btn>
-  <q-btn @click="pushWindow({ component: 'PixivSearchUser', props: { initialQueryString: 'following ' + uid } })" flat>
+  <q-btn @click="pushWindow({ component: 'PixivSearchUser', props: { initialQueryString: '-F ' + uid } })" flat>
     {{ name }} 关注的用户
   </q-btn>
-  <q-btn @click="pushWindow({ component: 'PixivSearchUser', props: { initialQueryString: 'follower ' + uid } })" flat>
+  <q-btn @click="pushWindow({ component: 'PixivSearchUser', props: { initialQueryString: '-f ' + uid } })" flat>
     关注 {{ name }} 的用户
   </q-btn>
-  <q-btn @click="pushWindow({ component: 'PixivSearchUser', props: { initialQueryString: 'related ' + uid } })" flat>
+  <q-btn @click="pushWindow({ component: 'PixivSearchUser', props: { initialQueryString: '-r ' + uid } })" flat>
     相关用户
   </q-btn>
 </template>

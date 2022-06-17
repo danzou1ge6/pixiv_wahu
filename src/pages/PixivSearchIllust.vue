@@ -105,81 +105,11 @@ onUnmounted(() => {
 })
 
 
-function cutStringWith(str: string, subStr: string): [string, string | null] {
-  let at = str.indexOf(subStr)
-  if (at == -1) {
-    return [str, null]
-  }
-  return [str.slice(0, at), str.slice(at + 1)]
-}
-
-interface StrMapping {
-  [index: string]: string
-}
-
-const targetMap: StrMapping = {
-  'ptag': "partial_match_for_tags",
-  'etag': "exact_match_for_tags",
-  'tc': "title_and_caption",
-  'kw': "keyword"
-}
-
-const sortMap: StrMapping = {
-  'adate': 'date_asc',
-  'ddate': 'date_desc',
-  'dp': 'popular_desc'
-}
-
-function searchIllust(qs: string) {
-
-  let [cmd, keyword] = cutStringWith(qs, ' ')
-
-  if (keyword === null) {
-    queryStringError.value = true; return
-  }
-
-  let [target, sort] = cutStringWith(cmd, ':')
-
-  let pTarget = targetMap[target]
-  if (pTarget === undefined) {
-    queryStringError.value = true; return
-  }
-  let pSort = null
-  if (sort !== null) {
-    let pSort = sortMap[sort]
-    if (pSort === undefined) {
-      queryStringError.value = true; return
-    }
-  }
-
-  queryLoading.value = true
-  wm.p_ilst_search(keyword, pTarget as wm.PixivSearchTarget,
-    pSort as wm.PixivSort | null)
-    .then(gen => {
-      asignAndInvokeGenerator(gen)
-      queryLoading.value = false
-      illusts.value = []
-      emits('updateTitle', 'Pixiv:' + keyword as string)
-      emits('updateProps', { initialQueryString: 'search ' + qs })
-    })
-
-}
-
-const recomModes = [
-  "day",
-  "week",
-  "month",
-  "day_male",
-  "day_female",
-  "week_original",
-  "week_rookie"
-]
-
 function executeQuery() {
   queryStringError.value = false
 
   emits('updateProps', { initialQueryString: queryString.value })
-  emits('updateTitle', queryString.value)
+  emits('updateTitle', 'Illust:' + queryString.value)
 
   queryLoading.value = true
   wm.p_query(queryString.value)

@@ -26,7 +26,7 @@ function queryTag(tagName: string) {
   if (props.dbName === undefined) {
     pushWindow({
       component: 'PixivSearchIllust',
-      props: { initialQueryString: 'search etag ' + tagName }
+      props: { initialQueryString: '-s etag "' + tagName + '"'}
     })
 
   } else {

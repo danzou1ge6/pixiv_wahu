@@ -80,7 +80,7 @@ function cutStringWith(str: string, subStr: string): [string, string | null] {
 function executeQuery() {
   queryError.value = false
 
-  emits('updateTitle', queryString.value)
+  emits('updateTitle', 'User:' + queryString.value)
   emits('updateProps', { initialQueryString: queryString.value })
 
   queryLoading.value = true
