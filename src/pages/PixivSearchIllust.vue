@@ -17,8 +17,7 @@
     </q-dialog>
 
     <q-input class="q-ma-md" autofocus v-model="queryString" label="查询" :error="queryStringError"
-      @keyup.enter="executeQuery" @input="queryStringError = false" hide-hint hint="回车发起查询"
-      style="font-family: monospace;">
+      @keyup.enter="executeQuery" @input="queryStringError = false" hide-hint hint="回车发起查询">
     </q-input>
 
     <q-linear-progress :indeterminate="queryLoading"></q-linear-progress>
@@ -109,7 +108,7 @@ function executeQuery() {
   queryStringError.value = false
 
   emits('updateProps', { initialQueryString: queryString.value })
-  emits('updateTitle', 'Illust:' + queryString.value)
+  emits('updateTitle', '插画:' + queryString.value)
 
   queryLoading.value = true
   wm.p_query(queryString.value)
@@ -131,7 +130,7 @@ onMounted(() => {
     queryString.value = props.initialQueryString
     executeQuery()
   }
-  emits('updateTitle', 'Pixiv 插画')
+  emits('updateTitle', '插画:' + queryString.value)
 })
 
 const helpText = ref<string>('')

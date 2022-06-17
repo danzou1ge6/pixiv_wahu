@@ -209,7 +209,7 @@ class WahuPixivMethods:
             sort = {
                 'adate': 'date_asc',
                 'ddate': 'date_desc',
-                'pd': 'popular_desc'
+                'dp': 'popular_desc'
             }[ns.sort]
 
             return await cls.p_ilst_search(ctx, ns.keyword, target, sort)  # type: ignore

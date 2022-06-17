@@ -5,10 +5,9 @@
       :label="`选中 ${modelValue.length} 项`" class="db-toolbar" square vertical-actions-align="left"
       persistent v-model="open">
 
-      <q-fab-action color="primary" square @click="cancelSelect">
-        取消选择
+      <q-fab-action color="primary" square @click="cancelSelect" label="取消选择" external-label icon="cancel">
       </q-fab-action>
-      <q-fab-action color="primary" label="复制到" @click="updateDbList(); open = true" square>
+      <q-fab-action color="primary" label="复制到" external-label icon="copy_all" @click="updateDbList(); open = true" square>
         <q-menu>
           <q-list>
             <q-item v-for="dbName in dbNameList" :key="dbName" clickable v-close-popup @click="copyTo(dbName)">
@@ -20,21 +19,24 @@
         </q-menu>
       </q-fab-action>
 
-      <q-fab-action color="primary" square @click="$emit('update:modelValue', all); open = true">
-        全选
+      <q-fab-action color="primary" square @click="$emit('update:modelValue', all); open = true"
+        label="全选" external-label icon="select_all">
       </q-fab-action>
 
-      <q-fab-action color="primary" square @click="reverseSelect(); open = true">
-        反选
+      <q-fab-action color="primary" square @click="reverseSelect(); open = true"
+        label="反选" external-label icon="tab_unselected">
       </q-fab-action>
 
-      <q-fab-action color="primary" label="删除" square @click="confirmDel = !confirmDel">
+      <q-fab-action color="primary" label="删除" external-label icon="delete" square
+        @click="confirmDel = !confirmDel; open = true">
       </q-fab-action>
 
-      <q-fab-action color="primary" label="收藏" square @click="addPBookmark(); open = true" :loading="addPBmLoading">
+      <q-fab-action color="primary" label="收藏" external-label icon="bookmark_add"
+        square @click="addPBookmark(); open = true" :loading="addPBmLoading">
       </q-fab-action>
 
-      <q-fab-action color="primary" label="删除收藏" square @click="delPBookmark(); open = true" :loading="delPBmLoading">
+      <q-fab-action color="primary" label="删除收藏" external-label icon="bookmark_remove"
+        square @click="delPBookmark(); open = true" :loading="delPBmLoading">
       </q-fab-action>
 
     </q-fab>

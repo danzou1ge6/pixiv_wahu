@@ -1,7 +1,7 @@
 <template>
   <div class="q-ma-md">
     <span class="text-h6">命令行脚本列表</span>
-    <q-btn class="float-right q-mr-sm" @click="reload" :loading="reloading">重新加载</q-btn>
+    <q-btn class="float-right q-mr-sm" @click="reload" :loading="reloading" color="primary" icon="refresh" label="重新加载"></q-btn>
   </div>
 
   <q-card style="min-width: 500px; width: 80vw; margin: auto;">

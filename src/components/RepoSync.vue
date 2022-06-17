@@ -12,8 +12,7 @@
               :model-value="selectedDbName" multiple></q-select>
           </div>
           <div class="col">
-            <q-btn class="float-right" color="primary" @click="calcSync">
-              计算差集
+            <q-btn class="float-right" color="primary" @click="calcSync" label="计算差集" icon="data_object">
               <q-tooltip>
                 新增 = 数据库 \ 储存库；删除 = 储存库 \ 数据库
               </q-tooltip>

@@ -15,6 +15,7 @@
                 </q-btn>
               </div>
             </div>
+            <q-tooltip>{{ win.title }}</q-tooltip>
           </q-tab>
         </div>
       </transition-group>

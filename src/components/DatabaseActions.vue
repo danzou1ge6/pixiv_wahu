@@ -1,20 +1,23 @@
 <template>
   <div class="float-right">
 
-    <q-btn-dropdown color="primary" label="操作" class="q-ma-md">
-      <q-list dense>
+    <q-btn-dropdown color="primary" icon="menu" class="q-ma-md">
+      <q-list>
         <q-item clickable @click="update">
-          更新详情
+          <q-item-section avatar><q-icon name="update"></q-icon></q-item-section>
+          <q-item-section>更新详情</q-item-section>
         </q-item>
         <q-item clickable @click="exportJson">
-          导出 JSON
+          <q-item-section avatar><q-icon name="file_upload"></q-icon></q-item-section>
+          <q-item-section>导出 JSON</q-item-section>
           <q-menu auto-close anchor="top right">
             <q-btn :href="objURLForExport" target="_blank" :loading="objURLForExport === undefined"
-              @click="objURLForExport = undefined">下载</q-btn>
+              @click="objURLForExport = undefined" label="下载"></q-btn>
           </q-menu>
         </q-item>
         <q-item clickable>
-          导入 JSON
+          <q-item-section avatar><q-icon name="file_download"></q-icon></q-item-section>
+          <q-item-section>导入 JSON</q-item-section>
           <q-menu anchor="top right">
             <q-file :model-value="jsonUpload" @update:model-value="handleJsonUpload" label="上传 JSON 文件"></q-file>
           </q-menu>

@@ -17,7 +17,7 @@
     </q-dialog>
 
     <q-input class="q-ma-md" underlined autofocus v-model="queryString" label="查询" @keyup.enter="executeQuery" hide-hint
-      hint="回车发起查询" :error="queryError" @input="queryError = false" style="font-family: monospace;">
+      hint="回车发起查询" :error="queryError" @input="queryError = false">
     </q-input>
 
     <q-linear-progress :indeterminate="queryLoading"></q-linear-progress>
@@ -65,7 +65,7 @@ const generator = ref<AsyncIterator<Array<wm.PixivUserPreview>, undefined, null>
 const loading = ref<boolean>(false)
 
 onMounted(() => {
-  emits('updateTitle', 'Pixiv 用户')
+  emits('updateTitle', '用户:' + queryString.value)
 })
 
 function cutStringWith(str: string, subStr: string): [string, string | null] {
@@ -80,7 +80,7 @@ function cutStringWith(str: string, subStr: string): [string, string | null] {
 function executeQuery() {
   queryError.value = false
 
-  emits('updateTitle', 'User:' + queryString.value)
+  emits('updateTitle', '用户:' + queryString.value)
   emits('updateProps', { initialQueryString: queryString.value })
 
   queryLoading.value = true

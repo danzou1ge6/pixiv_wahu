@@ -4,11 +4,11 @@
       :label="`选中 ${modelValue.length} 项`" class="db-toolbar" square vertical-actions-align="left"
       persistent v-model="open">
 
-      <q-fab-action color="primary" square @click="cancelSelect">
-        取消选择
+      <q-fab-action color="primary" square @click="cancelSelect" label="取消选择" external-label icon="cancel">
       </q-fab-action>
 
-      <q-fab-action color="primary" label="添加到" square @click="updateDbList(); open = true">
+      <q-fab-action color="primary" label="添加到" external-label icon="add_to_photos"
+        square @click="updateDbList(); open = true">
         <q-menu>
           <q-list>
             <q-item v-for="dbName in dbNameList" :key="dbName" clickable v-close-popup @click="addTo(dbName)">
@@ -20,20 +20,20 @@
         </q-menu>
       </q-fab-action>
 
-      <q-fab-action color="primary" square @click="$emit('update:modelValue', details.map(item => item.iid)); open = true">
-        全选
+      <q-fab-action color="primary" square label="全选" external-label icon="select_all"
+        @click="$emit('update:modelValue', details.map(item => item.iid)); open = true">
       </q-fab-action>
-      <q-fab-action color="primary" square @click="reverseSelect(); open = true">
-        反选
+      <q-fab-action color="primary" square label="反选" external-label icon="tab_unselected"
+        @click="reverseSelect(); open = true">
       </q-fab-action>
-      <q-fab-action color="primary" square @click="addBookmark(); open = true">
-        收藏
+      <q-fab-action color="primary" square label="收藏" external-label icon="bookmark_add"
+        @click="addBookmark(); open = true">
       </q-fab-action>
-      <q-fab-action color="primary" square @click="delBookmark(); open = true" :loading="addBmLoading">
-        取消收藏
+      <q-fab-action color="primary" square label="取消收藏" external-label icon="bookmark_remove"
+        @click="delBookmark(); open = true" :loading="addBmLoading">
       </q-fab-action>
-      <q-fab-action color="primary" square @click="download(); open = true" :loading="delBmLoading">
-        下载
+      <q-fab-action color="primary" square label="下载" external-label icon="file_download"
+        @click="download(); open = true" :loading="delBmLoading">
       </q-fab-action>
 
 

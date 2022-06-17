@@ -17,8 +17,7 @@
     </q-dialog>
 
     <q-input class="q-ma-md" autofocus v-model="queryString" label="查询" :error="queryStringError"
-      @keyup.enter="executeQuery" @input="queryStringError = false" hide-hint hint="回车发起查询"
-      style="font-family: monospace;">
+      @keyup.enter="executeQuery" @input="queryStringError = false" hide-hint hint="回车发起查询">
     </q-input>
 
     <q-linear-progress :indeterminate="queryLoading"></q-linear-progress>

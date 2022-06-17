@@ -48,7 +48,7 @@
           </div>
         </q-card>
 
-        <q-btn @click="openPixivDetail" stretch class="q-ma-sm">查看 Pixiv 详情页面</q-btn>
+        <q-btn @click="openPixivDetail" stretch class="q-ma-sm" icon="launch" label="查看 Pixiv 详情页面"></q-btn>
       </div>
     </div>
   </q-card>
