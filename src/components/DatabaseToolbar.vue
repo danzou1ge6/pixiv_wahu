@@ -1,63 +1,63 @@
 <template>
   <transition appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
-    <q-banner class="bg-primary db-toolbar" v-if="modelValue.length > 0">
 
-      <div class="text-h6 text-white">选中 {{ modelValue.length }} 项</div>
+    <q-fab color="primary" icon="keyboard_arrow_down" direction="down" v-if="modelValue.length > 0"
+      :label="`选中 ${modelValue.length} 项`" class="db-toolbar" square vertical-actions-align="left"
+      persistent v-model="open">
 
-      <template v-slot:action>
-        <q-btn color="white" flat @click="cancelSelect">
-          取消选择
-        </q-btn>
-        <q-btn color="white" label="复制到" flat @click="updateDbList">
-          <q-menu>
-            <q-list>
-              <q-item v-for="dbName in dbNameList" :key="dbName" clickable v-close-popup @click="copyTo(dbName)">
-                <q-item-section>
-                  {{ dbName }}
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-btn>
+      <q-fab-action color="primary" square @click="cancelSelect">
+        取消选择
+      </q-fab-action>
+      <q-fab-action color="primary" label="复制到" @click="updateDbList(); open = true" square>
+        <q-menu>
+          <q-list>
+            <q-item v-for="dbName in dbNameList" :key="dbName" clickable v-close-popup @click="copyTo(dbName)">
+              <q-item-section>
+                {{ dbName }}
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+      </q-fab-action>
 
-        <q-btn color="white" flat @click="$emit('update:modelValue', all)">
-          全选
-        </q-btn>
+      <q-fab-action color="primary" square @click="$emit('update:modelValue', all); open = true">
+        全选
+      </q-fab-action>
 
-        <q-btn color="white" flat @click="reverseSelect">
-          反选
-        </q-btn>
+      <q-fab-action color="primary" square @click="reverseSelect(); open = true">
+        反选
+      </q-fab-action>
 
-        <q-btn color="white" label="删除" flat @click="confirmDel = !confirmDel">
-        </q-btn>
-        <q-dialog v-model="confirmDel">
-          <q-card>
-            <q-card-section>
-              <div class="text-h5">确认删除？所有详情和收藏信息都将被删除</div>
-            </q-card-section>
-            <q-card-section>
-              <div class="text-body-1">iid: </div>
-            </q-card-section>
-            <q-card-section>
-              <div class="text-body-1">{{ modelValue }}</div>
-            </q-card-section>
-            <q-card-actions align="right">
-              <q-btn flat color="primary" @click="deleteSelected" v-close-popup>确认</q-btn>
-              <q-btn flat color="primary" v-close-popup>取消</q-btn>
-            </q-card-actions>
-          </q-card>
-        </q-dialog>
+      <q-fab-action color="primary" label="删除" square @click="confirmDel = !confirmDel">
+      </q-fab-action>
 
-        <q-btn color="white" label="收藏" flat @click="addPBookmark" :loading="addPBmLoading">
-        </q-btn>
+      <q-fab-action color="primary" label="收藏" square @click="addPBookmark(); open = true" :loading="addPBmLoading">
+      </q-fab-action>
 
-        <q-btn color="white" label="删除收藏" flat @click="delPBookmark" :loading="delPBmLoading">
-        </q-btn>
+      <q-fab-action color="primary" label="删除收藏" square @click="delPBookmark(); open = true" :loading="delPBmLoading">
+      </q-fab-action>
 
-      </template>
-
-    </q-banner>
+    </q-fab>
   </transition>
+
+  <q-dialog v-model="confirmDel">
+    <q-card>
+      <q-card-section>
+        <div class="text-h5">确认删除？所有详情和收藏信息都将被删除</div>
+      </q-card-section>
+      <q-card-section>
+        <div class="text-body-1">iid: </div>
+      </q-card-section>
+      <q-card-section>
+        <div class="text-body-1">{{ modelValue }}</div>
+      </q-card-section>
+      <q-card-actions align="right">
+        <q-btn flat color="primary" @click="deleteSelected" v-close-popup>确认</q-btn>
+        <q-btn flat color="primary" v-close-popup>取消</q-btn>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
 </template>
 
 
@@ -80,6 +80,8 @@ const emits = defineEmits<{
 const dbNameList = ref<Array<string>>([])
 
 const confirmDel = ref<boolean>(false)
+
+const open = ref<boolean>(false)
 
 function updateDbList() {
   wm.ibd_list()
@@ -168,7 +170,5 @@ function delPBookmark() {
   position: fixed;
   left: 10px;
   top: 60px;
-  width: 300px;
-  background: $primary;
 }
 </style>

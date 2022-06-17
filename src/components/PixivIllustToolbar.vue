@@ -1,45 +1,43 @@
 <template>
   <transition appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
-    <q-banner class="bg-primary db-toolbar" v-if="modelValue.length > 0">
+    <q-fab color="primary" icon="keyboard_arrow_down" direction="down" v-if="modelValue.length > 0"
+      :label="`选中 ${modelValue.length} 项`" class="db-toolbar" square vertical-actions-align="left"
+      persistent v-model="open">
 
-      <div class="text-h6 text-white">选中 {{ modelValue.length }} 项</div>
+      <q-fab-action color="primary" square @click="cancelSelect">
+        取消选择
+      </q-fab-action>
 
-      <template v-slot:action>
-        <q-btn color="white" flat @click="cancelSelect">
-          取消选择
-        </q-btn>
+      <q-fab-action color="primary" label="添加到" square @click="updateDbList(); open = true">
+        <q-menu>
+          <q-list>
+            <q-item v-for="dbName in dbNameList" :key="dbName" clickable v-close-popup @click="addTo(dbName)">
+              <q-item-section>
+                {{ dbName }}
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+      </q-fab-action>
 
-        <q-btn color="white" label="添加到" flat @click="updateDbList">
-          <q-menu>
-            <q-list>
-              <q-item v-for="dbName in dbNameList" :key="dbName" clickable v-close-popup @click="addTo(dbName)">
-                <q-item-section>
-                  {{ dbName }}
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-btn>
+      <q-fab-action color="primary" square @click="$emit('update:modelValue', details.map(item => item.iid)); open = true">
+        全选
+      </q-fab-action>
+      <q-fab-action color="primary" square @click="reverseSelect(); open = true">
+        反选
+      </q-fab-action>
+      <q-fab-action color="primary" square @click="addBookmark(); open = true">
+        收藏
+      </q-fab-action>
+      <q-fab-action color="primary" square @click="delBookmark(); open = true" :loading="addBmLoading">
+        取消收藏
+      </q-fab-action>
+      <q-fab-action color="primary" square @click="download(); open = true" :loading="delBmLoading">
+        下载
+      </q-fab-action>
 
-        <q-btn color="white" flat @click="$emit('update:modelValue', details.map(item => item.iid))">
-          全选
-        </q-btn>
-        <q-btn color="white" flat @click="reverseSelect">
-          反选
-        </q-btn>
-        <q-btn color="white" flat @click="addBookmark">
-          收藏
-        </q-btn>
-        <q-btn color="white" flat @click="delBookmark" :loading="addBmLoading">
-          取消收藏
-        </q-btn>
-        <q-btn color="white" flat @click="download" :loading="delBmLoading">
-          下载
-        </q-btn>
 
-      </template>
-
-    </q-banner>
+    </q-fab>
   </transition>
 </template>
 
@@ -59,6 +57,8 @@ const emits = defineEmits<{
 }>()
 
 const dbNameList = ref<Array<string>>([])
+
+const open = ref<boolean>(false)
 
 function updateDbList() {
   wm.ibd_list()
@@ -188,7 +188,5 @@ function delBookmark() {
   position: fixed;
   left: 10px;
   top: 60px;
-  width: 300px;
-  background: $primary;
 }
 </style>
