@@ -54,14 +54,13 @@ def create_file_tracers(
 class WahuContext:
 
 
-    def __init__(self, config: WahuConfig, in_terminal: bool=False):
+    def __init__(self, config: WahuConfig):
 
         self.cli_scripts: list[WahuCliScript]
         self.cli_complete: ShellComplete
         self.wexe: click.Group
 
         self.config = config
-        self.in_terminal = in_terminal
 
         # PixivAPI
         self.papi: MaintainedSessionPixivAPI = MaintainedSessionPixivAPI(

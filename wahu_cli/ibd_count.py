@@ -80,4 +80,4 @@ def mount(parent_group: click.Group):
                 tbl.field_names = ['UID', '名', '次数']
                 tbl.add_rows([(u.uid, u.name, n) for u, n in result])
 
-        await less(tbl.get_string(), pipe, in_terminal=wctx.in_terminal)
+        await less(tbl.get_string(), pipe, in_terminal=obj.in_terminal)

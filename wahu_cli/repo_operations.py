@@ -139,7 +139,7 @@ def mount(wexe: click.Group):
         if no_less:
             pipe.putline(sync_report_text)
         else:
-            await less(sync_report_text, pipe, in_terminal=wctx.in_terminal)
+            await less(sync_report_text, pipe, in_terminal=obj.in_terminal)
 
         if await pipe.get(prefix='继续[y/*]?', echo=False) != 'y':
             return
@@ -215,7 +215,7 @@ def mount(wexe: click.Group):
         if no_less:
             pipe.putline(text)
         else:
-            await less(text, pipe, in_terminal=wctx.in_terminal)
+            await less(text, pipe, in_terminal=obj.in_terminal)
 
         if await pipe.get('继续[y/*]?', echo=False) != 'y':
             return

@@ -140,7 +140,7 @@ def mount(wexe: click.Group):
             '\n'.join(txt),
             cctx.obj.pipe,
             lines_per_page=20,
-            in_terminal=cctx.obj.wctx.in_terminal)
+            in_terminal=cctx.obj.in_terminal)
 
     @example.command()
     @wahu_cli_wrap

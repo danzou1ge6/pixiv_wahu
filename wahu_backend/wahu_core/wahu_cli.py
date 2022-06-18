@@ -36,68 +36,41 @@ class CliIoPipeABC:
     async def get(self, prefix: Optional[str]=None, echo: bool=True) -> str:
         raise NotImplemented
 
+    def close(self) -> None:
+        raise NotImplemented
 
-class CliIOPipe(CliIoPipeABC, AsyncGenerator[str, str]):
-    """使用异步生成器接口的命令行 IO 管道"""
+class AsyncGenPipe(AsyncGenerator[str, str]):
+    """
+    使用异步生成器模拟输入/输出
+          输出
+    后端 ------> 前端
+         <------
+           输入
+    """
 
     def __init__(self, max_size: int = -1):
-        self.oustrut_queue: Queue[str] = Queue(maxsize=max_size)
+        self.output_queue: Queue[str] = Queue(maxsize=max_size)
         self.input_queue: Queue[str] = Queue(maxsize=max_size)
-        self.oustrut_event = Event()
+        self.output_event = Event()
         self.input_event = Event()
 
-    def _oustrut(self, val: str) -> None:
-        """输出"""
+    def output(self, val: str) -> None:
+        """后端输出到前端"""
 
-        self.oustrut_queue.put(val)
-        self.oustrut_event.set()
+        self.output_queue.put(val)
+        self.output_event.set()
 
-    def put(
-        self,
-        text: Optional[str]=None,
-        src: Optional[str]=None,
-        rewrite: bool=False,
-        erase: bool=False
-    ):
-        """
-        在终端打印
+    async def input(self) -> str:
+        """后端读取前端的输入"""
 
-        - 如果 erase 为真，则清除上一块打印
-        - 如果 rewrite 为真，则使用 text 覆盖上一块 <pre>
-        - 如果提供了 src 和 text ，并排打印
-        - 如果提供了 src ，打印图片
-        - 如果提供了 text ，直接打印文本；若 text 以 '\n' 开头，则新建一块 <pre>
-        """
+        await self.input_event.wait()
 
-        if erase:
-            self._oustrut('[:erase]')
-            return
+        val = self.input_queue.get()
 
-        if rewrite:
-            if text is None:
-                raise RuntimeError('rewrite 需要提供 text')
-            else:
-                self._oustrut('[:rewrite]' + text)
-                return
+        if self.input_queue.empty():
+            self.input_event.clear()
 
-        if src is not None:
-            if text is None:
-                self._oustrut(f'[:img={src}]')
-            else:
-                self._oustrut(f'[:img={src}]{text}')
-            return
-
-        if text is not None:
-            self._oustrut(text)
-            return
-
-        raise RuntimeError('至少传入 text')
-
-
-    def putline(self, val: str) -> None:
-        """新建一块 <pre> 打印文本"""
-
-        self.put(text='\n' + val)
+        return val
 
     async def __anext__(self) -> str:
         """
@@ -106,15 +79,15 @@ class CliIOPipe(CliIoPipeABC, AsyncGenerator[str, str]):
         """
 
 
-        await self.oustrut_event.wait()
+        await self.output_event.wait()
 
-        val = self.oustrut_queue.get()
+        val = self.output_queue.get()
 
         if val == '[:close]':
             raise StopAsyncIteration
 
-        if self.oustrut_queue.empty():
-            self.oustrut_event.clear()
+        if self.output_queue.empty():
+            self.output_event.clear()
 
         return val
 
@@ -132,23 +105,6 @@ class CliIOPipe(CliIoPipeABC, AsyncGenerator[str, str]):
 
         return await self.__anext__()
 
-    async def get(self, prefix: str='>', echo=True) -> str:
-        """等待前端输入"""
-
-        self.put(f'[:input={prefix}]')
-
-        await self.input_event.wait()
-
-        val = self.input_queue.get()
-
-        if not echo:
-            self.put('[:erase]')
-
-        if self.input_queue.empty():
-            self.input_event.clear()
-
-        return val
-
     async def athrow(
         self,
         excpt_vale: Exception,
@@ -160,17 +116,86 @@ class CliIOPipe(CliIoPipeABC, AsyncGenerator[str, str]):
 
     async def aclose(self) -> None:
         """设置管道关闭"""
-        self.put('[:close]')
+        self.output('[:close]')
 
     def close(self) -> None:
-        self.put('[:close]')
+        self.output('[:close]')
 
 
-class CliIOPipeTerm(CliIoPipeABC):
-    """输出到终端的命令行 IO 管道"""
+class CliIOPipe(CliIoPipeABC, AsyncGenPipe):
+    """
+    使用异步生成器接口的命令行 IO 管道
+    转义由前端 (WebUI) 解析
+    """
+
+    def put(
+        self,
+        text: Optional[str]=None,
+        src: Optional[str]=None,
+        rewrite: bool=False,
+        erase: bool=False
+    ):
+        """
+        在终端打印，添加前端能识别的转义
+
+        - 如果 erase 为真，则清除上一块打印
+        - 如果 rewrite 为真，则使用 text 覆盖上一块 <pre>
+        - 如果提供了 src 和 text ，并排打印
+        - 如果提供了 src ，打印图片
+        - 如果提供了 text ，直接打印文本；若 text 以 '\n' 开头，则新建一块 <pre>
+        """
+
+        if erase:
+            self.output('[:erase]')
+            return
+
+        if rewrite:
+            if text is None:
+                raise RuntimeError('rewrite 需要提供 text')
+            else:
+                self.output('[:rewrite]' + text)
+                return
+
+        if src is not None:
+            if text is None:
+                self.output(f'[:img={src}]')
+            else:
+                self.output(f'[:img={src}]{text}')
+            return
+
+        if text is not None:
+            self.output(text)
+            return
+
+        raise RuntimeError('至少传入 text')
+
+
+    def putline(self, val: str) -> None:
+        """新建一块 <pre> 打印文本"""
+
+        self.put(text='\n' + val)
+
+    async def get(self, prefix: str='>', echo=True) -> str:
+        """等待前端输入"""
+
+        self.put(f'[:input={prefix}]')
+
+        val = await self.input()
+
+        if not echo:
+            self.put('[:erase]')
+
+        return val
+
+
+class CliIOPipeTerm(AsyncGenPipe, CliIoPipeABC):
+    """
+    输出到终端的命令行 IO 管道
+    使用 ASNI 转义
+    """
 
     def __init__(self):
-        self.close_event = Event()
+        super().__init__()
 
         self.last_block_count: int = 0
 
@@ -180,19 +205,29 @@ class CliIOPipeTerm(CliIoPipeABC):
             k.SetConsoleMode(k.GetStdHandle(-11), 7)
 
     def _back_rows(self, n: int) -> None:
-        print('\r', end='')
-        print(f'\x1b[{n}A', end='')
+        """使用 ASNI 转义后退光标若干行"""
+
+        self.output('\r')
+        self.output(f'\x1b[{n}A')
 
     @property
     def term_width(self) -> int:
+        """
+        此处获取的是后端的终端宽度，因此当前端终端宽度不同时会出问题
+        （但是懒得改
+        """
+
         return shutil.get_terminal_size()[0]
 
     def _calc_displayed_line_count(self, s: str) -> int:
+        """计算若干行字符在终端中打印所需要的行数"""
+
         return sum(
             (int(wcswidth(line) / self.term_width) + 1 for line in s.split('\n'))
         )
 
-    def _output(self, text: str) -> None:
+    def _print(self, text: str) -> None:
+        """打印，但是还要考虑到兼容 [:rewrite] 转义"""
 
         if text.startswith('\n'):
             text = text[1:]
@@ -200,13 +235,15 @@ class CliIOPipeTerm(CliIoPipeABC):
 
         if text.startswith('\n'):
             self.last_block_count = displayed_line_count
-            print('')
+            self.output('\n')
         else:
             self.last_block_count += displayed_line_count
 
-        print(text, end='')
+        self.output(text)
 
     def _clean_lines(self, n: int) -> None:
+        """清空前 `n` 行"""
+
         self._back_rows(n - 1)
         term_width = self.term_width
         for _ in range(n):
@@ -220,6 +257,7 @@ class CliIOPipeTerm(CliIoPipeABC):
         rewrite: bool=False,
         erase: bool=False
     ) -> None:
+        """兼容 `CliIoPipe` 的 API"""
 
         if erase or rewrite:
             self._clean_lines(self.last_block_count)
@@ -229,13 +267,13 @@ class CliIOPipeTerm(CliIoPipeABC):
 
         if src is not None:
             if text is None:
-                self._output(f'[:img={src}]')
+                self._print(f'[:img={src}]')
             else:
-                self._output(f'[:img={src}]\n{text}')
+                self._print(f'[:img={src}]\n{text}')
             return
 
         if text is not None:
-            self._output(text)
+            self._print(text)
 
     def putline(self, val: str) -> None:
 
@@ -243,17 +281,16 @@ class CliIOPipeTerm(CliIoPipeABC):
 
     async def get(self, prefix: str='>', echo=True) -> str:
 
-        click.echo('\n' + prefix + ' ', nl=False)
-        val = input()
+        self.output('\n' + prefix + ' ')
+        self.output('[:input]')  # 此处的转义由前端处理
+
+        val = await self.input()
 
         if not echo:
             self._clean_lines(self._calc_displayed_line_count(val))
             self._back_rows(1)
 
         return val
-
-    def close(self) -> None:
-        self.close_event.set()
 
 
 class CliClickCtxObj:
@@ -262,10 +299,12 @@ class CliClickCtxObj:
     def __init__(
         self,
         wctx: 'WahuContext',
-        pipe: CliIOPipe | CliIOPipeTerm
+        pipe: CliIoPipeABC,
+        in_terminal: bool = False
     ):
         self.wctx = wctx
         self.pipe = pipe
+        self.in_terminal = in_terminal
 
         self.d: dict[str, Any]
 

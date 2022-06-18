@@ -64,7 +64,7 @@ def mount(wexe: click.Group):
             elif verbose == 'gen':
                 keys = list(wctx.agenerator_pool.pool.keys())
 
-            await less('\n'.join(keys), obj.pipe, in_terminal=wctx.in_terminal)
+            await less('\n'.join(keys), obj.pipe, in_terminal=obj.in_terminal)
 
     @pool.command()
     @click.argument('name', type=click.Choice(['img', 'ilst', 'gen']))

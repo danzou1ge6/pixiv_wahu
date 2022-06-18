@@ -2,7 +2,6 @@ import asyncio
 import functools
 import os
 from pathlib import Path
-import traceback
 from typing import Literal
 import webbrowser
 
@@ -10,8 +9,9 @@ import click
 from aiohttp import web
 
 from .wahu_config import load_config
-from .wahu_core import WahuContext, CliClickCtxObj, CliIOPipeTerm
+from .wahu_core import WahuContext
 from .wahu_webapi.server import create_app
+from .cli_client import main as cli_client_main
 
 """
 PixivWahu 的命令行入口
@@ -45,26 +45,66 @@ silent_deco = click.option(
 
 
 @click.group(invoke_without_command=True)
-@port_deco
-@host_deco
-@conf_deco
 @browser_deco
-@logging_deco
-@silent_deco
 @click.pass_context
 def _run(
-    cctx: click.Context,
-    port: int,
-    host: str,
-    config: str,
-    browser: bool,
-    log_level: Literal['ERROR', 'WARNING', 'INFO', 'DEBUG'],
-    quiet: bool
+    cctx: click.Context, browser: bool
 ):
     """运行 PixivWahu
 
     缺省子命令将调用子命令 ui
     """
+
+    if cctx.invoked_subcommand is None:
+        cctx.invoke(ui, browser=browser)
+
+@_run.command(
+    context_settings=dict(ignore_unknown_options=True)
+)
+@click.argument('args', nargs=-1, type=click.UNPROCESSED)
+@click.option(
+    '--help', is_flag=True)
+@click.pass_context
+def exe(cctx: click.Context, args: tuple[str], help: bool):
+    """执行 WahuCli 命令
+    """
+
+    args_list = list(args)
+
+    if help and len(args) == 0:
+        click.echo(cctx.obj.wexe.get_help(cctx))
+        cctx.exit()
+
+    if help:
+        args_list.append('--help')
+
+    async def main():
+        ret_code = await cli_client_main(args_list)
+        if ret_code != 0:
+            print(f'退出代码: {ret_code}')
+
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(main())
+
+@_run.command()
+@port_deco
+@host_deco
+@conf_deco
+@logging_deco
+@silent_deco
+@browser_deco
+def ui(
+    port: int,
+    host: str,
+    config: str,
+    log_level: Literal['ERROR', 'WARNING', 'INFO', 'DEBUG'],
+    quiet: bool,
+    browser: bool,
+):
+    """启动 WebUI
+    """
+
 
     config_obj = load_config(Path(config))
 
@@ -81,69 +121,6 @@ def _run(
 
     wctx = WahuContext(config_obj)
 
-    cctx.obj = wctx
-
-    if cctx.invoked_subcommand is None:
-        cctx.invoke(ui, browser=browser)
-
-
-@_run.command(
-    context_settings=dict(ignore_unknown_options=True)
-)
-@click.argument('args', nargs=-1, type=click.UNPROCESSED)
-@click.option(
-    '--help', is_flag=True)
-@click.pass_context
-def exe(cctx: click.Context, args: tuple[str], help: bool):
-    """执行 WahuCli 命令
-    """
-
-    wctx: WahuContext = cctx.obj
-    wctx.in_terminal = True
-
-    pipe = CliIOPipeTerm()
-
-    args_list = list(args)
-
-    if help and len(args) == 0:
-        click.echo(cctx.obj.wexe.get_help(cctx))
-        cctx.exit()
-
-    if help:
-        args_list.append('--help')
-
-    async def main():
-        try:
-            ret_code = wctx.wexe.main(
-                args_list,
-                prog_name='',
-                obj=CliClickCtxObj(wctx, pipe),
-                standalone_mode=False
-            )
-
-            if ret_code not in {None, -1}:
-                pipe.putline('命令解析出错. 使用 --help 查看帮助')
-                pipe.close()
-
-        except Exception:
-            pipe.putline(traceback.format_exc())
-            pipe.close()
-
-        finally:
-            await pipe.close_event.wait()
-
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    loop.run_until_complete(main())
-
-@_run.command()
-@browser_deco
-@click.pass_context
-def ui(cctx, browser):
-    """启动 WebUI
-    """
-
-    wctx: WahuContext = cctx.obj
     app = create_app(wctx)
 
     if browser:

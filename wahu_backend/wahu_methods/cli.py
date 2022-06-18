@@ -4,7 +4,8 @@ import traceback
 from typing import AsyncGenerator
 import webbrowser
 from click.parser import split_arg_string
-from click.shell_completion import ShellComplete
+
+from wahu_backend.wahu_core.wahu_cli import CliIOPipeTerm, CliIoPipeABC
 
 from ..wahu_core.core_exceptions import WahuRuntimeError
 from ..wahu_core import CliIOPipe, WahuContext, wahu_methodize, CliClickCtxObj
@@ -23,35 +24,63 @@ class CliScriptInfo:
     code: str
 
 
+def _wahu_exec_with_pipe(
+    ctx: WahuContext, args: list[str], pipe: CliIoPipeABC, in_terminal: bool
+) -> None:
+
+    cctx_obj = CliClickCtxObj(ctx, pipe, in_terminal)
+
+    try:
+        ret_code = ctx.wexe.main(
+            args,
+            obj=cctx_obj,
+            standalone_mode=False,
+            prog_name=''
+        )
+
+        if ret_code is not None and ret_code != -1:
+            pipe.putline('命令解析出错. 使用 --help 查看命令语法')
+            pipe.close()
+
+    except Exception:
+        pipe.putline(traceback.format_exc())
+        pipe.close()
+
+
 class WahuMetdodsWithCli(
     WahuIllustDatabaseMethods, WahuPixivMethods, WahuGeneratorMethods,
     IllustRepoMethods, WahuMiscMethods):
 
     @classmethod
     @wahu_methodize()
-    async def wahu_exec(cls, ctx: WahuContext, cmd: str) -> AsyncGenerator[str, str]:
-        """启动一个命令行的执行"""
+    async def wahu_exec(
+        cls, ctx: WahuContext, cmd: str) -> AsyncGenerator[str, str]:
+        """启动一个命令行的执行 (WebUI)"""
 
         pipe = CliIOPipe()
-        cctx_obj = CliClickCtxObj(ctx, pipe)
 
-        try:
-            ret_code = ctx.wexe.main(
-                split_arg_string(cmd),
-                obj=cctx_obj,
-                standalone_mode=False,
-                prog_name=''
-            )
-
-            if ret_code not in {None, -1}:
-                pipe.putline('命令解析出错. 使用 --help 查看命令语法')
-                pipe.close()
-
-        except Exception:
-            pipe.putline(traceback.format_exc())
-            pipe.close()
+        _wahu_exec_with_pipe(
+            ctx,
+            split_arg_string(cmd),
+            pipe,
+            False
+        )
 
         return pipe
+
+    @classmethod
+    @wahu_methodize()
+    async def wahu_client_exec(
+        cls, ctx: WahuContext, args: list[str]
+    ) -> AsyncGenerator[str, str]:
+        """启动一个命令行的执行 (TermCLI)"""
+
+        pipe = CliIOPipeTerm()
+
+        _wahu_exec_with_pipe(ctx, args, pipe, True)
+
+        return pipe
+
 
     @classmethod
     @wahu_methodize()
