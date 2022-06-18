@@ -1,8 +1,10 @@
 import asyncio
+import atexit
+from cmath import e
 import functools
 import os
 from pathlib import Path
-from typing import Literal
+from typing import Any, Coroutine, Literal
 import webbrowser
 
 import click
@@ -13,9 +15,15 @@ from .wahu_core import WahuContext
 from .wahu_webapi.server import create_app
 from .cli_client import main as cli_client_main
 
+
 """
 PixivWahu 的命令行入口
 """
+
+def _run_in_new_loop(coro: Coroutine[Any, Any, Any]) -> None:
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(coro)
 
 
 port_deco = click.option(
@@ -83,9 +91,7 @@ def exe(cctx: click.Context, args: tuple[str], help: bool):
         if ret_code != 0:
             print(f'退出代码: {ret_code}')
 
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    loop.run_until_complete(main())
+    _run_in_new_loop(main())
 
 @_run.command()
 @port_deco
@@ -119,16 +125,16 @@ def ui(
     if log_level is not None:
         config_obj.pylogging_cfg_dict['root']['level'] = log_level
 
-    wctx = WahuContext(config_obj)
+    with WahuContext(config_obj) as wctx:
 
-    app = create_app(wctx)
+        app = create_app(wctx)
 
-    if browser:
-        host = '127.0.0.1' if wctx.config.server_host == '0.0.0.0' else wctx.config.server_host
-        webbrowser.open(
-            f'http://{host}:{wctx.config.server_port}/index.html')
+        if browser:
+            host = '127.0.0.1' if wctx.config.server_host == '0.0.0.0' else wctx.config.server_host
+            webbrowser.open(
+                f'http://{host}:{wctx.config.server_port}/index.html')
 
-    web.run_app(app, host=wctx.config.server_host, port=wctx.config.server_port)
+        web.run_app(app, host=wctx.config.server_host, port=wctx.config.server_port)
 
 
 run = functools.partial(_run.main, standalone_mode=False)  # 确保 atexit hook 被触发

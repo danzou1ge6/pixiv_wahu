@@ -116,6 +116,10 @@ async def main(args: list[str]):
             print(wre)
             return 1
 
+        except aiohttp.ClientConnectorError as e:
+            print(f'无法连接后端: {str(e)}')
+            return 1
+
     return 0
 
 

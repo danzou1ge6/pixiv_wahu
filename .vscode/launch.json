@@ -4,7 +4,7 @@
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-    
+
         {
             "name": "Python: 命令行接口",
             "type": "python",
@@ -25,6 +25,20 @@
             "type": "python",
             "request": "launch",
             "program": "dev_stuff/dev_server.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: 调试命令行启动服务器",
+            "type": "python",
+            "request": "launch",
+            "module": "wahu_backend.__init__",
+            "args": [
+                "ui",
+                "-c",
+                "dev_stuff/dev_conf.toml",
+                "-n"
+            ],
             "console": "integratedTerminal",
             "justMyCode": true
         },

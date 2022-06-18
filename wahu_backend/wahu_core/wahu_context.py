@@ -1,7 +1,9 @@
 import asyncio
-import atexit
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, TYPE_CHECKING, Optional
+
+if TYPE_CHECKING:
+    from inspect import Traceback
 
 import click
 from click.shell_completion import ShellComplete
@@ -103,8 +105,6 @@ class WahuContext:
         self.load_cli_scripts()
 
 
-        atexit.register(self.sync_cleanup)
-
     def load_cli_scripts(self, reload: bool=False):
 
         self.cli_scripts, self.wexe = load_cli_scripts(
@@ -127,3 +127,28 @@ class WahuContext:
     def sync_cleanup(self):
         loop = asyncio.new_event_loop()
         loop.run_until_complete(self.cleanup())
+
+    def __enter__(self) -> 'WahuContext':
+        return self
+
+    def __exit__(
+        self,
+        excpt_type: Optional[type] = None,
+        excpt_value: Optional[Exception] = None,
+        excpt_tcbk: Optional['Traceback'] = None
+    ) -> None:
+        self.sync_cleanup()
+
+    async def __aenter__(self) -> 'WahuContext':
+        return self
+
+    async def __aexit__(
+        self,
+        excpt_type: Optional[type] = None,
+        excpt_value: Optional[Exception] = None,
+        excpt_tcbk: Optional['Traceback'] = None
+    ) -> None:
+        await self.cleanup()
+
+        if excpt_value is not None:
+            raise excpt_value
