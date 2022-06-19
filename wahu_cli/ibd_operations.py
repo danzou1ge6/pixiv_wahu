@@ -188,18 +188,26 @@ def mount(wexe: click.Group):
     @ibd.command()
     @click.argument('name', type=str, required=True)
     @click.argument('iid', type=int, required=True)
-    @click.argument('pages', type=int, nargs=-1, required=True)
+    @click.argument('pages', type=int, nargs=-1, required=False)
+    @click.option('--delete', '-d', is_flag=True)
     @wahu_cli_wrap
     async def set_bm(
         cctx: click.Context,
         name: str,
         iid: int,
-        pages: list[int]
+        pages: list[int],
+        delete: bool
     ):
         """将数据库 NAME 中的插画 IID 的收藏页码设置为 PAGES
         """
 
         obj: 'CliClickCtxObj' = cctx.obj
+
+        if delete:
+            pages = []
+        else:
+            if pages == []:
+                raise RuntimeError('需要参数 pages 或者指明 -d')
 
         await WahuMethods.ibd_set_bm(obj.wctx, name, iid, pages)
 

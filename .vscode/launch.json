@@ -34,9 +34,9 @@
             "request": "launch",
             "module": "wahu_backend.__init__",
             "args": [
-                "ui",
                 "-c",
                 "dev_stuff/dev_conf.toml",
+                "ui",
                 "-n"
             ],
             "console": "integratedTerminal",

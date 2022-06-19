@@ -102,13 +102,6 @@ def load_config(config_file: Path) -> WahuConfig:
         # pylogging
         pylogging_cfg_dict = d['pylogging']
 
-        # 全局设定
-        if doh_urls is not None:
-            set_doh_url(doh_urls)
-
-        # pylogging
-        log_cfg.dictConfig(pylogging_cfg_dict)
-
 
     except KeyError as ke:
         raise ConfigLoadKeyError(ke.args[0]) from ke
@@ -125,6 +118,7 @@ def load_config(config_file: Path) -> WahuConfig:
         refresh_token_path=refresh_token_path,
         temp_download_dir=temp_download_dir,
         cli_script_dir=cli_script_dir,
+        doh_urls=doh_urls,
         account_session_path=account_session_path,
         illust_detail_pool_size=illust_detail_pool_size,
         api_timeout=api_timeout,
@@ -146,3 +140,15 @@ def load_config(config_file: Path) -> WahuConfig:
         pylogging_cfg_dict=pylogging_cfg_dict,
         original_dict=d
     )
+
+def conf_side_effects(conf: WahuConfig):
+    """
+    设置日志，模块级配置
+    """
+
+    # 全局设定
+    if conf.doh_urls is not None:
+        set_doh_url(conf.doh_urls)
+
+    # pylogging
+    log_cfg.dictConfig(conf.pylogging_cfg_dict)

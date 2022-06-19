@@ -1,6 +1,4 @@
 import asyncio
-import atexit
-from cmath import e
 import functools
 import os
 from pathlib import Path
@@ -10,10 +8,10 @@ import webbrowser
 import click
 from aiohttp import web
 
-from .wahu_config import load_config
+from .wahu_config import load_config, WahuConfig, conf_side_effects
 from .wahu_core import WahuContext
 from .wahu_webapi.server import create_app
-from .cli_client import main as cli_client_main
+from .wahu_client.cli_client import main as cli_client_main
 
 
 """
@@ -55,17 +53,39 @@ silent_deco = click.option(
 @click.group(invoke_without_command=True)
 @browser_deco
 @conf_deco
+@port_deco
+@host_deco
+@logging_deco
+@silent_deco
 @click.pass_context
 def _run(
     cctx: click.Context,
     browser: bool,
     config: str,
+    port: int,
+    host: str,
+    log_level: Literal['ERROR', 'WARNING', 'INFO', 'DEBUG'],
+    quiet: bool,
 ):
     """运行 PixivWahu
 
     缺省子命令将调用子命令 ui
     """
-    cctx.obj = Path(config)
+    config_obj = load_config(Path(config))
+
+
+    if port is not None:
+        config_obj.server_port = port
+    if host is not None:
+        config_obj.server_host = host
+
+    if quiet:
+        log_level = 'WARNING'
+
+    if log_level is not None:
+        config_obj.pylogging_cfg_dict['root']['level'] = log_level
+
+    cctx.obj = config_obj
 
     if cctx.invoked_subcommand is None:
         cctx.invoke(ui, browser=browser)
@@ -94,36 +114,17 @@ def exe(cctx: click.Context, args: tuple[str], help: bool):
     _run_in_new_loop(main())
 
 @_run.command()
-@port_deco
-@host_deco
-@logging_deco
-@silent_deco
 @browser_deco
 @click.pass_context
 def ui(
     cctx: click.Context,
-    port: int,
-    host: str,
-    log_level: Literal['ERROR', 'WARNING', 'INFO', 'DEBUG'],
-    quiet: bool,
     browser: bool,
 ):
     """启动 WebUI
     """
 
-
-    config_obj = load_config(cctx.obj)
-
-    if port is not None:
-        config_obj.server_port = port
-    if host is not None:
-        config_obj.server_host = host
-
-    if quiet:
-        log_level = 'WARNING'
-
-    if log_level is not None:
-        config_obj.pylogging_cfg_dict['root']['level'] = log_level
+    config_obj: WahuConfig = cctx.obj
+    conf_side_effects(config_obj)
 
     with WahuContext(config_obj) as wctx:
 
