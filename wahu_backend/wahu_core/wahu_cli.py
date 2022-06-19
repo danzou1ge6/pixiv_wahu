@@ -28,18 +28,18 @@ class CliIoPipeABC:
         rewrite: bool=False,
         erase: bool=False
     ) -> None:
-        raise NotImplemented
+        raise NotImplementedError
 
     def putline(self, val: str) -> None:
-        raise NotImplemented
+        raise NotImplementedError
 
     async def get(self, prefix: Optional[str]=None, echo: bool=True) -> str:
-        raise NotImplemented
+        raise NotImplementedError
 
     def close(self) -> None:
-        raise NotImplemented
+        raise NotImplementedError
 
-class AsyncGenPipe(AsyncGenerator[str, str]):
+class AsyncGenPipe(AsyncGenerator[str, Optional[str]]):
     """
     使用异步生成器模拟输入/输出
           输出
@@ -122,7 +122,7 @@ class AsyncGenPipe(AsyncGenerator[str, str]):
         self.output('[:close]')
 
 
-class CliIOPipe(CliIoPipeABC, AsyncGenPipe):
+class CliIOPipe(AsyncGenPipe, CliIoPipeABC):
     """
     使用异步生成器接口的命令行 IO 管道
     转义由前端 (WebUI) 解析

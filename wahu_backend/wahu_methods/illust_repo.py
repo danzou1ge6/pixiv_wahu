@@ -37,48 +37,6 @@ async def _check_repo_name(
 
     return await m(cls, args, ctx)
 
-async def _cvt_dict2fileentry(
-    m: GenericWahuMethod[RT],
-    cls: Type['WahuMethods'],
-    args: WahuArguments,
-    ctx: WahuContext
-) -> RT:
-    """将字典转为 FileEntry"""
-
-    file_entries = [
-        FileEntry(Path(fe['path']), fe['fid'])
-        for fe in args['file_entries']
-    ]
-    args['file_entries'] = file_entries
-
-    return await m(cls, args, ctx)
-
-async def _cvt_dict2fileentrywithurl(
-    m: GenericWahuMethod[RT],
-    cls: Type['WahuMethods'],
-    args: WahuArguments,
-    ctx: WahuContext
-) -> RT:
-    """将字典转为 FileEntryWithURL"""
-
-    file_entries = [
-        FileEntryWithURL(Path(fe['path']), fe['fid'], fe['url'])
-        for fe in args['file_entries_withurl']
-    ]
-    args['file_entries_withurl'] = file_entries
-
-    return await m(cls, args, ctx)
-
-async def _cvt_str2path(
-    m: GenericWahuMethod[RT],
-    cls: Type['WahuMethods'],
-    args: WahuArguments,
-    ctx: WahuContext
-) -> RT:
-    """将字符串转为 Path"""
-
-    args['files'] = [Path(f) for f in args['files']]
-    return await m(cls, args, ctx)
 
 # ------------------------------------------------------------------- 数据模型
 @dataclass
@@ -242,7 +200,7 @@ class IllustRepoMethods:
         return (to_del_file_entries, to_add_db_file_entries)
 
     @classmethod
-    @wahu_methodize(middlewares=[_check_repo_name, _cvt_dict2fileentry])
+    @wahu_methodize(middlewares=[_check_repo_name])
     async def ir_add_cache(
         cls, ctx: WahuContext, name: str, file_entries: list[FileEntry]
     ) -> None:
@@ -255,7 +213,7 @@ class IllustRepoMethods:
             ft.add_cache(file_entries)
 
     @classmethod
-    @wahu_methodize(middlewares=[_check_repo_name, _cvt_dict2fileentrywithurl])
+    @wahu_methodize(middlewares=[_check_repo_name])
     async def ir_download(
         cls, ctx: WahuContext, name: str, file_entries_withurl: list[FileEntryWithURL]
     ) -> None:
@@ -310,7 +268,7 @@ class IllustRepoMethods:
             )
 
     @classmethod
-    @wahu_methodize(middlewares=[_check_repo_name, _cvt_str2path])
+    @wahu_methodize(middlewares=[_check_repo_name])
     async def ir_remove_file(
         cls, ctx: WahuContext, name: str, files: list[Path]
     ) -> None:

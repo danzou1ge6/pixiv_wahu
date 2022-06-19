@@ -1,3 +1,5 @@
+from typing import Any
+
 
 class WahuCoreException(Exception):
     pass
@@ -13,9 +15,6 @@ class MsgErrorTemplate:
 
 class WahuInitError(WahuCoreException, MsgErrorTemplate):
     """在初始化时出现异常时抛出"""
-
-class WahuMethodParseError(WahuCoreException, MsgErrorTemplate):
-    """在解析 `Wahu` 方法出错时抛出"""
 
 class WahuMethodArgsKeyError(WahuCoreException):
     """当调用 `Wahu` 方法时 rpc 字典缺少键时抛出"""

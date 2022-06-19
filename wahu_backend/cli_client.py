@@ -1,14 +1,24 @@
 import json
-import os
 import aiohttp
 from pathlib import Path
-from typing import Any, AsyncGenerator, Optional, TYPE_CHECKING
+from typing import Any, AsyncGenerator, Callable, Optional, TYPE_CHECKING
+
+from .wahu_config import load_config
+from .constants import postRPCURL
+from .wahu_methods import WahuMethods
 
 if TYPE_CHECKING:
     from inspect import Traceback
 
-from wahu_backend.wahu_config import load_config
-from wahu_backend.constants import postRPCURL
+    from .wahu_core import WahuMethod, WahuContext
+
+    ClientBase = WahuMethods
+
+    __ = WahuContext()  # type: ignore
+else:
+    ClientBase = object
+
+    __ = None
 
 
 class WahuRemoteError(Exception):
@@ -19,7 +29,7 @@ class WahuRemoteError(Exception):
         return self.err
 
 
-class WahuRPCClient:
+class WahuRPCClient(ClientBase):
     """使用 POST RPC 接口和后端通信"""
 
     def __init__(self, rpc_url: str):
@@ -74,14 +84,28 @@ class WahuRPCClient:
 
             return gen()
 
+    def __getattr__(self, name: str) -> Callable[..., Any]:
 
-async def main(args: list[str]):
-    conf_path = os.environ.get('PIXIVWAHU_CONFPATH')
+        m: WahuMethod = getattr(WahuMethods, name)
 
-    if conf_path is None:
-        raise EnvironmentError('环境变量 PIXIVWAHU_CONFPATH 不存在')
+        async def f(*args: tuple[Any, ...]) -> Any:
 
-    conf = load_config(Path(conf_path))
+            args = args[1:]  # 删除第一个 ctx
+
+            if len(args) != len(m.arg_names):
+                raise ValueError(f'方法 {name} 的参数数量错误. 应为 {len(m.arg_names)}')
+
+            args_dict = {
+                n: val for n, val in zip(m.arg_names, args)
+            }
+
+            return await self.call(name, args_dict)
+        return f
+
+
+async def main(args: list[str], conf_path: Path):
+
+    conf = load_config(conf_path)
 
     backend_host = '127.0.0.1' if conf.server_host == '0.0.0.0' else conf.server_host
     rpc_url = f'http://{backend_host}:{conf.server_port}{postRPCURL}'
@@ -90,10 +114,7 @@ async def main(args: list[str]):
 
         try:
 
-            agen: AsyncGenerator[str, str | None] = await client.call(
-                'wahu_client_exec',
-                {'args': args}
-            )
+            agen = await client.wahu_client_exec(__, args)
 
             send_val = None
             while True:

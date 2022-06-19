@@ -13,7 +13,7 @@ interface PostRPCReturn<T> {
 }
 
 
-async function wahuPostRPCCall<T>(method: string, args: object)
+async function wahuPostRPCCall<T>(method: string, args: Array<any>)
     : Promise<T | AsyncIterable<T>> {
     /*
     使用 RPC 调用 WahuMethod
@@ -47,7 +47,7 @@ async function wahuPostRPCCall<T>(method: string, args: object)
 
         async function* g(): AsyncIterable<T> {
             while (true) {
-                let ret = await wahuRPCCall<T>('wahu_anext', { key: gkey })
+                let ret = await wahuPostRPCCall<T>('wahu_anext', [ gkey ])
                 if (ret === undefined) { break }
                 yield ret as T
             }
@@ -118,7 +118,7 @@ function handleSoecketMessage(ev: MessageEvent) {
                 while (true) {
                     const ret: any = await wahuRPCCall<any>(
                         'wahu_anext',
-                        { key: gkey, send_val: sendVal }
+                        [ gkey, sendVal ]
                     )
                     if (ret === null) { break }
 
@@ -131,7 +131,7 @@ function handleSoecketMessage(ev: MessageEvent) {
 
                     } catch (e) {
                         if (e instanceof WahuStopIteration) {
-                            wahuRPCCall('wahu_dispose_generator', { key: gkey })
+                            wahuRPCCall('wahu_dispose_generator', [ gkey, ])
                             return
                         }
                     }
@@ -173,7 +173,7 @@ function handleSoecketMessage(ev: MessageEvent) {
 }
 
 
-async function wahuRPCCall<T>(method: string, args: object)
+async function wahuRPCCall<T>(method: string, args: Array<any>)
     : Promise<T | AsyncIterable<T>> {
 
     await socketOpenPromise

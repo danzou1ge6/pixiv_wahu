@@ -1,7 +1,9 @@
+import inspect
 from ..http_typing import HTTPData, JSONItem
-from ..wahu_core import WahuArguments, WahuContext
+from ..wahu_core import WahuContext, WahuMethod
 from ..wahu_methods import WahuMethods
 from .obj2jsonizeable import jsonizeablize
+from .transform_args import trans_args
 from .webapi_exceptions import WahuWebAPIRPCCallError
 
 
@@ -30,25 +32,22 @@ async def handle_rpc_call(rpc_dict: HTTPData, ctx: WahuContext) -> dict[str, JSO
     try:
 
         method_name = rpc_dict['method']
-        args_dict = rpc_dict['args']
+        args_jsonitem = rpc_dict['args']
 
     except KeyError as e:
         raise WahuWebAPIRPCCallError('参数 method 或 dict 缺失') from e
 
     if not isinstance(method_name, str):
-        raise WahuWebAPIRPCCallError('参数 method 不为 str')
+        raise WahuWebAPIRPCCallError('参数 method 应为 str')
 
-    if not isinstance(args_dict, dict):
-        raise WahuWebAPIRPCCallError('参数 args 不为 dict')
+    if not isinstance(args_jsonitem, list):
+        raise WahuWebAPIRPCCallError('参数 args 应为 list')
 
-    method = WahuMethods.get(method_name)
+    method: WahuMethod = getattr(WahuMethods, method_name)
 
-    if method is None:
-        raise WahuWebAPIRPCCallError(f'不存在方法 {method_name}')
+    args = trans_args(method.paras, args_jsonitem)
 
-    args = WahuArguments(args_dict)
-
-    method_ret = await method(args, ctx)
+    method_ret = await method.apply_mdw_call(WahuMethods, args, ctx)
 
     # 处理生成器
     if hasattr(method_ret, '__anext__'):

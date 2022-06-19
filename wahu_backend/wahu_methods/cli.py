@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 import traceback
-from typing import AsyncGenerator
+from typing import AsyncGenerator, Optional
 import webbrowser
 from click.parser import split_arg_string
 
@@ -54,7 +54,8 @@ class WahuMetdodsWithCli(
     @classmethod
     @wahu_methodize()
     async def wahu_exec(
-        cls, ctx: WahuContext, cmd: str) -> AsyncGenerator[str, str]:
+        cls, ctx: WahuContext, cmd: str
+    ) -> AsyncGenerator[str, Optional[str]]:
         """启动一个命令行的执行 (WebUI)"""
 
         pipe = CliIOPipe()
@@ -72,7 +73,7 @@ class WahuMetdodsWithCli(
     @wahu_methodize()
     async def wahu_client_exec(
         cls, ctx: WahuContext, args: list[str]
-    ) -> AsyncGenerator[str, str]:
+    ) -> AsyncGenerator[str, Optional[str]]:
         """启动一个命令行的执行 (TermCLI)"""
 
         pipe = CliIOPipeTerm()

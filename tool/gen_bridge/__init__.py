@@ -52,8 +52,8 @@ def gen_methods():
         args_vars = args_vars[1:]  # 扔掉参数 ctx
 
         body = f"    return await wahuRPCCall('{m.name}', "
-        body += "{" + \
-            ', '.join((f'{var.name}: {var.name}' for var in args_vars)) + '})'
+        body += "[" + \
+            ', '.join((var.name for var in args_vars)) + '])'
         body += f'as {ret_tp.ts}'
 
         ret += 'export ' + _generage_func_ts_from_anno(

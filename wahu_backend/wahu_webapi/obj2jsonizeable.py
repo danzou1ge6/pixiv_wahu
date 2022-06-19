@@ -6,11 +6,14 @@ from pathlib import Path
 from typing import Any
 
 from ..http_typing import JSONItem
-
-from .webapi_exceptions import WahuWebAPIJsonizeablizeFail
+from .webapi_exceptions import WahuJsonizeablizeFail
 
 
 def jsonizeablize(inp: Any) -> JSONItem:
+    """
+    将 Dataclass, Path, datetime, list, tuple, str, int, bool 转换成可以 JSON 化
+    的 dict, list, str, int, bool 的组合
+    """
 
     if isinstance(inp, list):
         return [jsonizeablize(item) for item in inp]
@@ -37,4 +40,4 @@ def jsonizeablize(inp: Any) -> JSONItem:
         return inp.strftime('%Y-%m-%d %H:%M:%S')
 
     else:
-        raise WahuWebAPIJsonizeablizeFail(inp)
+        raise WahuJsonizeablizeFail(inp)
