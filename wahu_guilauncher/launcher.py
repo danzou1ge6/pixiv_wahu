@@ -7,14 +7,14 @@ from pathlib import Path
 import webbrowser
 from aiohttp import web
 
-from wahu_backend.wahu_config import load_config, ConfigLoadError
+from wahu_backend.wahu_config import load_config, ConfigLoadError, conf_side_effects
 from wahu_backend.wahu_core import WahuContext
 from wahu_backend.wahu_webapi.server import create_app
 from wahu_backend.root_logger import logger
 
 from .log_window import LogWindow
 
-DEFAULT_CONF_PATH = os.environ.get('PIXIVWAHU_CONFPATH', 'user/conf.toml')
+DEFAULT_CONF_PATH = os.environ.get('PIXIVWAHU_CONFPATH', 'conf.toml')
 
 
 class Launcher:
@@ -101,7 +101,11 @@ class Launcher:
 
         self.root.protocol('WM_DELETE_WINDOW', self.close)
 
+        self.load_conf()
+
     def close(self):
+        if hasattr(self, 'app_runner'):
+            self.kill()
         self.root.destroy()
         self.loop.stop()
 
@@ -112,25 +116,31 @@ class Launcher:
             return
 
         self.conf_path.set(p.name)
+        self.load_conf()
 
-    def launch(self, *args):
-        """
-        - 加载配置文件
-        - 创建日志窗口
-        - 创建服务器
-        - 启动服务器
-        - 打开浏览器
-        """
+    def load_conf(self):
 
         try:
             conf_path = Path(self.conf_path.get())
             self.conf = load_config(conf_path)
+            conf_side_effects(self.conf)
         except FileNotFoundError:
             messagebox.showerror('配置文件错误', f'文件 {conf_path} 不存在')
             return
         except ConfigLoadError as e:
             messagebox.showerror('配置文件错误', f'{e}')
             return
+
+        self.host.set(self.conf.server_host)
+        self.port.set(self.conf.server_port)
+
+    def launch(self, *args):
+        """
+        - 创建日志窗口
+        - 创建服务器
+        - 启动服务器
+        - 打开浏览器
+        """
 
         # 使用 conf.pylogging.formatters.standard 作为格式器配置
         self.log_window = LogWindow(self.root)
@@ -146,6 +156,11 @@ class Launcher:
 
         self.wctx = WahuContext(self.conf)
         web_app = create_app(self.wctx)
+
+        async def wctx_cleanup(app):
+            await self.wctx.cleanup()
+
+        web_app.on_cleanup.append(wctx_cleanup)
 
         if self.host.get() != '':
             self.conf.server_host = self.host.get()
@@ -174,7 +189,6 @@ class Launcher:
         """
 
         async def main():
-            await self.wctx.cleanup()
             await self.app_runner.cleanup()
             self.log_window.destroy()
 
