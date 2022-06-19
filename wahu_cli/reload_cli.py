@@ -7,7 +7,7 @@ from wahu_backend.wahu_methods import WahuMethods
 if TYPE_CHECKING:
     from wahu_backend.wahu_core import CliClickCtxObj
 
-from wahu_backend.wahu_core.wahu_cli_helper import wahu_cli_wrap
+from wahu_backend.wahu_core.wahu_cli_util import wahu_cli_wrap
 
 
 NAME = '重新加载命令行脚本'

@@ -1,3 +1,4 @@
+import shutil
 import aiohttp
 
 from ..constants import postRPCURL
@@ -15,7 +16,7 @@ async def main(args: list[str], conf: WahuConfig):
 
         try:
 
-            agen = await WahuMethods.wahu_client_exec(ctx, args)
+            agen = await WahuMethods.wahu_client_exec(ctx, args, shutil.get_terminal_size())
 
             send_val = None
             while True:
@@ -29,6 +30,7 @@ async def main(args: list[str], conf: WahuConfig):
                         if val == '[:input]':
                             send_val = input()
                         else:
+                            send_val = None
                             print(val, end='', flush=True)
 
                 except StopAsyncIteration:

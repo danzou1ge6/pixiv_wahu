@@ -72,11 +72,11 @@ class WahuMetdodsWithCli(
     @classmethod
     @wahu_methodize()
     async def wahu_client_exec(
-        cls, ctx: WahuContext, args: list[str]
+        cls, ctx: WahuContext, args: list[str], term_size: tuple[int, int]
     ) -> AsyncGenerator[str, Optional[str]]:
         """启动一个命令行的执行 (TermCLI)"""
 
-        pipe = CliIOPipeTerm()
+        pipe = CliIOPipeTerm(term_size)
 
         _wahu_exec_with_pipe(ctx, args, pipe, True)
 

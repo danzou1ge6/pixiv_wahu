@@ -13,7 +13,7 @@ from wcwidth import wcswidth
 import click
 
 from .core_exceptions import WahuCliScriptError
-from .wahu_cli_helper import print_help
+from .wahu_cli_util import print_help
 
 if TYPE_CHECKING:
     from .wahu_context import WahuContext
@@ -194,10 +194,12 @@ class CliIOPipeTerm(AsyncGenPipe, CliIoPipeABC):
     使用 ASNI 转义
     """
 
-    def __init__(self):
+    def __init__(self, term_size: tuple[int, int]):
         super().__init__()
 
         self.last_block_count: int = 0
+
+        self.term_size = term_size  # width, height
 
         if platform.system() == 'Windows':
             from ctypes import windll
@@ -210,34 +212,20 @@ class CliIOPipeTerm(AsyncGenPipe, CliIoPipeABC):
         self.output('\r')
         self.output(f'\x1b[{n}A')
 
-    @property
-    def term_width(self) -> int:
-        """
-        此处获取的是后端的终端宽度，因此当前端终端宽度不同时会出问题
-        （但是懒得改
-        """
-
-        return shutil.get_terminal_size()[0]
-
     def _calc_displayed_line_count(self, s: str) -> int:
         """计算若干行字符在终端中打印所需要的行数"""
 
         return sum(
-            (int(wcswidth(line) / self.term_width) + 1 for line in s.split('\n'))
+            (int(wcswidth(line) / self.term_size[0]) + 1 for line in s.split('\n'))
         )
 
     def _print(self, text: str) -> None:
         """打印，但是还要考虑到兼容 [:rewrite] 转义"""
 
         if text.startswith('\n'):
-            text = text[1:]
-        displayed_line_count = self._calc_displayed_line_count(text)
-
-        if text.startswith('\n'):
-            self.last_block_count = displayed_line_count
-            self.output('\n')
+            self.last_block_count = self._calc_displayed_line_count(text[1:])
         else:
-            self.last_block_count += displayed_line_count
+            self.last_block_count += self._calc_displayed_line_count(text)
 
         self.output(text)
 
@@ -245,7 +233,7 @@ class CliIOPipeTerm(AsyncGenPipe, CliIoPipeABC):
         """清空前 `n` 行"""
 
         self._back_rows(n - 1)
-        term_width = self.term_width
+        term_width = self.term_size[0]
         for _ in range(n):
             print(''.join((' ' for _ in range(term_width))))
         self._back_rows(n)
@@ -288,7 +276,7 @@ class CliIOPipeTerm(AsyncGenPipe, CliIoPipeABC):
 
         if not echo:
             self._clean_lines(self._calc_displayed_line_count(val))
-            self._back_rows(1)
+        self._back_rows(1)
 
         return val
 

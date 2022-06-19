@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     from wahu_backend.aiopixivpy.datastructure_illust import IllustTag
     from wahu_backend.wahu_core import CliClickCtxObj
 
-from wahu_backend.wahu_core.wahu_cli_helper import less, wahu_cli_wrap
+from wahu_backend.wahu_core.wahu_cli_util import less, wahu_cli_wrap
 
 from helpers import table_factory
 
@@ -80,4 +80,4 @@ def mount(parent_group: click.Group):
                 tbl.field_names = ['UID', '名', '次数']
                 tbl.add_rows([(u.uid, u.name, n) for u, n in result])
 
-        await less(tbl.get_string(), pipe, in_terminal=obj.in_terminal)
+        await less(tbl.get_string(), pipe)

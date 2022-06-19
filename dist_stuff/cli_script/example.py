@@ -7,7 +7,7 @@ if TYPE_CHECKING:
     from wahu_backend.wahu_core import WahuContext
     from wahu_backend.wahu_methods.cli import CliClickCtxObj
 
-from wahu_backend.wahu_core.wahu_cli_helper import wahu_cli_wrap, print_help, less
+from wahu_backend.wahu_core.wahu_cli_util import wahu_cli_wrap, print_help, less
 from wahu_backend.constants import illustDbImageURL
 from wahu_backend.wahu_methods import WahuMethods
 
@@ -139,8 +139,7 @@ def mount(wexe: click.Group):
         await less(
             '\n'.join(txt),
             cctx.obj.pipe,
-            lines_per_page=20,
-            in_terminal=cctx.obj.in_terminal)
+            lines_per_page=20)
 
     @example.command()
     @wahu_cli_wrap

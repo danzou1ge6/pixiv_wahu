@@ -5,7 +5,7 @@ import itertools
 import json
 import shutil
 import traceback
-from typing import (TYPE_CHECKING, Any, Callable, Concatenate, Coroutine,
+from typing import (TYPE_CHECKING, Any, Callable, Concatenate, Coroutine, Optional,
                     ParamSpec, TypeVar)
 from wcwidth import wcswidth
 
@@ -81,8 +81,7 @@ def _group_str(s: str,  group_size: int) -> list[str]:
 async def less(
     s: str,
     pipe: 'CliIoPipeABC',
-    lines_per_page: int=20,
-    in_terminal: bool=False
+    lines_per_page: int=20
 ) -> None:
     """分页打印
 
@@ -94,13 +93,17 @@ async def less(
     当当前页为 page_num 时，退出分页
     """
 
-    if in_terminal:
-        term_width, term_height = shutil.get_terminal_size()
+    if hasattr(pipe, 'term_size'):
+        # 如果 pipe 是 `CliIoPipeTerm` ，则使用其标识的终端尺寸
+        term_width, term_height = pipe.term_size  # type: ignore
+
         lines: list[str] = list(itertools.chain(
             *(_group_str(ln, term_width) for ln in s.split('\n'))
         ))
         lines_per_page = term_height - 2
+
     else:
+        # 否则认为是 WebUI ，不考虑终端尺寸
         lines = s.split('\n')
 
     page_num = int(len(lines) / lines_per_page) + 1

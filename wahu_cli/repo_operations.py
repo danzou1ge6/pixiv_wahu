@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 from helpers import table_factory, report_dl_coro
 
-from wahu_backend.wahu_core.wahu_cli_helper import print_help, wahu_cli_wrap, less
+from wahu_backend.wahu_core.wahu_cli_util import print_help, wahu_cli_wrap, less
 from wahu_backend.wahu_methods import WahuMethods
 from wahu_backend.pixiv_image.image_getter import PixivImageGetError
 
@@ -139,7 +139,7 @@ def mount(wexe: click.Group):
         if no_less:
             pipe.putline(sync_report_text)
         else:
-            await less(sync_report_text, pipe, in_terminal=obj.in_terminal)
+            await less(sync_report_text, pipe)
 
         if await pipe.get(prefix='继续[y/*]?', echo=False) != 'y':
             return
@@ -215,7 +215,7 @@ def mount(wexe: click.Group):
         if no_less:
             pipe.putline(text)
         else:
-            await less(text, pipe, in_terminal=obj.in_terminal)
+            await less(text, pipe)
 
         if await pipe.get('继续[y/*]?', echo=False) != 'y':
             return

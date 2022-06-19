@@ -9,7 +9,7 @@ import click
 if TYPE_CHECKING:
     from wahu_backend.wahu_core import CliClickCtxObj, WahuContext
 
-from wahu_backend.wahu_core.wahu_cli_helper import wahu_cli_wrap
+from wahu_backend.wahu_core.wahu_cli_util import wahu_cli_wrap
 from wahu_backend.wahu_methods import WahuMethods
 
 

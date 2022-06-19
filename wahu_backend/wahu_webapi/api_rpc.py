@@ -35,8 +35,10 @@ def register(app: web.Application, ctx: WahuContext) -> None:
             ret = await handle_rpc_call(data, ctx)
             jret = json.dumps(ret, ensure_ascii=False)
 
-            app.logger.debug('Backend: POST RPC 返回: %s' % _cut_string(jret,
-                                                                    ctx.config.log_rpc_ret_length))
+            app.logger.debug('Backend: POST RPC 返回: %s' % _cut_string(
+                jret.replace('\x1b', '\\x1b').replace('\r', '\\r'),
+                ctx.config.log_rpc_ret_length)
+            )
 
 
         except Exception as e:

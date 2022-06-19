@@ -5,7 +5,7 @@ import click
 if TYPE_CHECKING:
     from wahu_backend.wahu_core import CliClickCtxObj
 
-from wahu_backend.wahu_core.wahu_cli_helper import less, wahu_cli_wrap, print_help
+from wahu_backend.wahu_core.wahu_cli_util import less, wahu_cli_wrap, print_help
 
 from helpers import table_factory
 
@@ -64,7 +64,7 @@ def mount(wexe: click.Group):
             elif verbose == 'gen':
                 keys = list(wctx.agenerator_pool.pool.keys())
 
-            await less('\n'.join(keys), obj.pipe, in_terminal=obj.in_terminal)
+            await less('\n'.join(keys), obj.pipe)
 
     @pool.command()
     @click.argument('name', type=click.Choice(['img', 'ilst', 'gen']))
