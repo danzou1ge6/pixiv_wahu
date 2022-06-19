@@ -315,14 +315,20 @@ export async function p_user_related (uid: number) : Promise<AsyncGenerator<Arra
 export async function p_user_search (keyword: string) : Promise<AsyncGenerator<Array<PixivUserPreview>, undefined, null>> {
     return await wahuRPCCall('p_user_search', [keyword])as AsyncGenerator<Array<PixivUserPreview>, undefined, null>}
 
+export async function token_get_loginurl () : Promise<string> {
+    return await wahuRPCCall('token_get_loginurl', [])as string}
+
+export async function token_submit_code (code: string) : Promise<string> {
+    return await wahuRPCCall('token_submit_code', [code])as string}
+
 export async function wahu_anext (key: string, send_val: any) : Promise<null | any> {
     return await wahuRPCCall('wahu_anext', [key, send_val])as null | any}
 
 export async function wahu_cli_complete (cmd: string) : Promise<Array<string>> {
     return await wahuRPCCall('wahu_cli_complete', [cmd])as Array<string>}
 
-export async function wahu_client_exec (args: Array<string>) : Promise<AsyncGenerator<string, undefined, null | string>> {
-    return await wahuRPCCall('wahu_client_exec', [args])as AsyncGenerator<string, undefined, null | string>}
+export async function wahu_client_exec (args: Array<string>, term_size: [number, number]) : Promise<AsyncGenerator<string, undefined, null | string>> {
+    return await wahuRPCCall('wahu_client_exec', [args, term_size])as AsyncGenerator<string, undefined, null | string>}
 
 export async function wahu_dispose_generator (key: string) : Promise<boolean> {
     return await wahuRPCCall('wahu_dispose_generator', [key])as boolean}

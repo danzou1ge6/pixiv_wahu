@@ -5,8 +5,8 @@ from typing import AsyncGenerator, Optional
 import webbrowser
 from click.parser import split_arg_string
 
-from wahu_backend.wahu_core.wahu_cli import CliIOPipeTerm, CliIoPipeABC
 
+from ..wahu_core.wahu_cli import CliIOPipeTerm, CliIoPipeABC
 from ..wahu_core.core_exceptions import WahuRuntimeError
 from ..wahu_core import CliIOPipe, WahuContext, wahu_methodize, CliClickCtxObj
 from .illust_database import WahuIllustDatabaseMethods
@@ -14,6 +14,7 @@ from .illust_repo import IllustRepoMethods
 from .misc import WahuMiscMethods
 from .pixiv import WahuPixivMethods
 from .wahu_generator import WahuGeneratorMethods
+from .get_token import WahuGetTokenMethods
 
 
 @dataclass
@@ -49,7 +50,7 @@ def _wahu_exec_with_pipe(
 
 class WahuMetdodsWithCli(
     WahuIllustDatabaseMethods, WahuPixivMethods, WahuGeneratorMethods,
-    IllustRepoMethods, WahuMiscMethods):
+    IllustRepoMethods, WahuMiscMethods, WahuGetTokenMethods):
 
     @classmethod
     @wahu_methodize()

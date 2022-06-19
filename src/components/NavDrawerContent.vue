@@ -12,6 +12,11 @@
         <q-item-section>命令行脚本</q-item-section>
       </q-item>
 
+      <q-item clickable @click="pushWindow({ component: 'GetToken'}); $emit('update:modelValue', false)">
+        <q-item-section avatar><q-icon name="token"></q-icon></q-item-section>
+        <q-item-section>获取 Refresh Token</q-item-section>
+      </q-item>
+
       <q-item-label header>本地</q-item-label>
 
       <q-expansion-item label="插画数据库" icon="data_array">
@@ -33,7 +38,7 @@
                 <q-icon name="add"></q-icon>
                 <q-tooltip>新建</q-tooltip>
               </q-item-section>
-              <q-menu>
+              <q-menu transition-show="slide-right" transition-hide="slide-left">
                 <q-input label="数据库名" underlined class="q-ma-md" @keyup.enter="newDb(newDbName)" v-model="newDbName"
                   :error="newDbInputError" @input="newDbInputError = false" autofocus></q-input>
               </q-menu>
@@ -77,7 +82,7 @@
                 <q-icon name="add"></q-icon>
                 <q-tooltip>新建</q-tooltip>
               </q-item-section>
-              <q-menu>
+              <q-menu transition-show="slide-right" transition-hide="slide-left">
                 <q-input label="储存库名" underlined class="q-ma-md" v-model="newRepoName" :error="newRepoInputError"
                   @input="newRepoInputError = false" autofocus></q-input>
                 <q-input label="路径" underlined class="q-ma-md" @keyup.enter="newRepo" v-model="newRepoPrefix"

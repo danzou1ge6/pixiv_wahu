@@ -5,9 +5,8 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     component: () => import('layouts/MainLayout.vue')
   },
-
   {
-    path: '/:n',
+    path: '/:n(\\d+)',
     component: () => import('layouts/MainLayout.vue')
   },
 

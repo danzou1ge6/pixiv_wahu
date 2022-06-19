@@ -22,6 +22,7 @@ import { useQuasar } from 'quasar'
 /** 自动生成 Import Begin */
 import CliScriptView from './CliScriptView.vue'
 import ErrorNotFound from './ErrorNotFound.vue'
+import GetToken from './GetToken.vue'
 import Home from './Home.vue'
 import IllustDetailLocal from './IllustDetailLocal.vue'
 import IllustDetailPixiv from './IllustDetailPixiv.vue'
@@ -35,6 +36,7 @@ interface componentIndex {[index: string] : any}
 const components: componentIndex = {
   CliScriptView: CliScriptView,
   ErrorNotFound: ErrorNotFound,
+  GetToken: GetToken,
   Home: Home,
   IllustDetailLocal: IllustDetailLocal,
   IllustDetailPixiv: IllustDetailPixiv,
