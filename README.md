@@ -82,7 +82,7 @@ PixivWahu 使用 TOML 格式配置
 `refresh_token`是一个 `Cookie` ，形如`a8sD23d2fU6758zdfDdF`，可以标识用户身份，且长期有效
 
 要获得 `refresh_token` ，需要一个现代浏览器如Edge, Chrome, Firefox
-运行 `GetToken.ps1` ，浏览器会自动打开，按照说明操作即可
+在 PixivWahu 的导航抽屉中点击「获取 Refresh Token」，按照说明操作即可
 > 来自[PixivBiu@txperl](https://github.com/txperl/PixivBiu)
 > 还可参考[@ZipFile Pixiv OAuth Flow](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362) 及 [OAuth with Selenium/ChromeDriver]( https://gist.github.com/upbit/6edda27cb1644e94183291109b8a5fde)
 

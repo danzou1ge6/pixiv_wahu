@@ -69,7 +69,6 @@ def load_config(config_file: Path) -> WahuConfig:
         api_timeout = d['pixiv']['timeout']
 
         api_host_ip = d['pixiv'].get('host_ip', None)
-        api_host_ip = None if api_host_ip == -1 else api_host_ip
 
         tag_language = d['pixiv']['tag_language']
         api_connection_limit = d['pixiv'].get('connection_limit', 20)
@@ -78,7 +77,6 @@ def load_config(config_file: Path) -> WahuConfig:
         image_timeout = d['image']['timeout']
 
         image_host_ip = d['image'].get('host_ip', None)
-        image_host_ip = None if image_host_ip == -1 else image_host_ip
 
         fallback_image_size = d['image']['fallback_size']
         if fallback_image_size not in {'original', 'medium', 'large', 'square_medium'}:

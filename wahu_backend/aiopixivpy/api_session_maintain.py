@@ -7,7 +7,7 @@ from typing import AsyncGenerator, Optional
 
 import toml
 
-from .ap_exceptions import AioPixivPyCantLogin
+from .ap_exceptions import AioPixivPyNoRefreshToken
 from .api_base import AccountSession
 from .api_main import PixivAPI
 
@@ -122,11 +122,12 @@ class MaintainedSessionPixivAPI(PixivAPI):
         """从文件读取 refresh_token"""
 
         if self.refresh_token_path is None:
-            raise AioPixivPyCantLogin('没有提供 refresh_token')
+            raise AioPixivPyNoRefreshToken('未设定 refresh_token_path')
 
         if not self.refresh_token_path.exists():
-            raise FileNotFoundError('未找到 %s ，无法读取 refresh_token'
-                                    % str(self.refresh_token_path))
+            raise AioPixivPyNoRefreshToken(
+                '未找到 %s ，无法读取 refresh_token'
+                % str(self.refresh_token_path))
 
         with open(self.refresh_token_path, 'r', encoding='utf-8') as rf:
             return rf.read().lstrip().rstrip()

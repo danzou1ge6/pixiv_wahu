@@ -34,13 +34,8 @@ class AioPixivPyInvalidHTTPStatus(AioPixivPyError):
             return '状态： %s ；原因： %s ；文本： %s'  \
                     % (self.status, self.reason, self.text)
 
-class AioPixivPyCantLogin(AioPixivPyError):
+class AioPixivPyNoRefreshToken(AioPixivPyError):
     """当无法登录时抛出"""
-
-    def __init__(self, arg: str):
-        self.arg = arg
-    def __str__(self) -> str:
-        return self.arg
 
 class AioPixivPyNotLoggedIn(AioPixivPyError):
     """`当试图调用需要登录的 Pixiv API 时抛出`"""

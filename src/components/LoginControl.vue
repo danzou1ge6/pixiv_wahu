@@ -25,12 +25,34 @@
 
     </q-card>
   </transition>
+
+  <q-dialog v-model="showDialog">
+    <q-card>
+      <q-card-section><div class="text-h6">
+        没有提供 Refresh Token
+      </div></q-card-section>
+      <q-card-section v-if="loginExcep !== undefined">
+        <div class="text-subtitle1">错误信息：</div>
+        <pre style="white-space: pre-wrap;">{{ loginExcep.type }}: {{ loginExcep.repr }}</pre>
+      </q-card-section>
+      <q-card-actions align="right">
+        <q-btn flat color="primary"
+          @click="pushWindow({component: 'GetToken'}); showDialog = false">
+          去获取 Refresh Token
+        </q-btn>
+        <q-btn @click="showDialog = false" flat color="primary">关闭</q-btn>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
 import * as wm from '../plugins/wahuBridge/methods'
+import { WahuBackendException } from '../plugins/wahuBridge/client'
 import type { AccountSession } from 'src/plugins/wahuBridge/methods';
+import { pushWindow } from 'src/plugins/windowManager';
 
 const loginLoading = ref<boolean>(false)
 
@@ -51,6 +73,9 @@ watch(props, () => {
   if (props.modelValue) { updateAS() }
 })
 
+const showDialog = ref<boolean>(false)
+const loginExcep = ref<WahuBackendException>()
+
 function attemptLogin() {
   loginLoading.value = true
   wm.p_attempt_login()
@@ -58,6 +83,15 @@ function attemptLogin() {
       accountSession.value = ac
       loginLoading.value = false
     })
+    .catch((e: WahuBackendException) => {
+      if(e.type == 'AioPixivPyNoRefreshToken') {
+        showDialog.value = true
+        loginExcep.value = e
+      }else {
+        throw(e)
+      }
+    })
+    .finally(() => { loginLoading.value = false })
 }
 
 const emits = defineEmits<{

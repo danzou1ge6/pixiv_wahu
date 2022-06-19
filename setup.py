@@ -9,7 +9,6 @@ setup(
         'wahu_backend': 'wahu_backend',
         'wahu_frontend': 'dist/wahu_frontend',
         'wahu_cli': 'wahu_cli',
-        'token_getter': 'token_getter',
         'wahu_guilauncher': 'wahu_guilauncher'
     },
     install_requires=[
@@ -24,12 +23,10 @@ setup(
     },
     package_data={
         'wahu_frontend': ['*', 'assets/*'],
-        'token_getter': ['*.html']
     },
     entry_points={
         'console_scripts': [
             'pixiv-wahu=wahu_backend:run',
-            'get-px-refreshtoken=token_getter:main',
             'wahu-gui=wahu_guilauncher:main'
         ]
     }

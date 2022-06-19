@@ -42,8 +42,8 @@ account_session_path = '{prefix}/account_session.toml'
 # 连接超时
 timeout = 5.0
 # PixivAPI 主机 IP 地址
-# -1 表示运行时通过 DNS over HTTPS 解析
-host_ip = -1
+# 不设置，则运行时通过 DNS over HTTPS 解析
+# host_ip =
 # 插画标签翻译的语言
 # 还可用 'zh-cn' ，但是考虑到中文翻译较少，不建议
 # 这是通过设置请求头 'Accept-Language' 实现修改的
@@ -61,8 +61,8 @@ download_record_size = 300
 # 从 Pximg 图片服务器下载图片的超时
 timeout = 5.0
 # Pximg 主机 IP 地址
-# -1 表示运行时通过 DNS over HTTPS 解析
-host_ip = -1
+# 不设置，则运行时通过 DNS over HTTPS 解析
+# host_ip =
 # 在浏览插画数据库中的文件时，如果本地没有找到，使用的图片大小
 # 可选: 'original' 'large' 'medium' 'square_medium'
 fallback_size = 'medium'

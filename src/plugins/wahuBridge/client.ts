@@ -67,8 +67,17 @@ class WahuStopIteration {
     constructor() { }
 }
 
+class WahuBackendException {
+    type: string
+    repr: string
+    constructor(type: string, repr: string) {
+        this.type = type
+        this.repr = repr
+    }
+}
+
 interface WsRPCReturn<T> {
-    type: 'normal' | 'generator' | 'exception' | 'dl_progress' | 'warning' | 'failure';
+    type: 'normal' | 'generator' | 'error' | 'dl_progress' | 'warning' | 'failure';
     return: T | string;
     mcid: number
 }
@@ -141,7 +150,8 @@ function handleSoecketMessage(ev: MessageEvent) {
             resolve(g())
 
         } else if (ret.type == 'failure') {
-            reject(ret.return)
+            const [type, repr] = ret.return
+            reject(new WahuBackendException(type, repr))
 
         } else {
             reject()
@@ -160,7 +170,7 @@ function handleSoecketMessage(ev: MessageEvent) {
 
             dlProgressReportCbk(ret.return)
 
-        } else if (ret.type == 'exception') {
+        } else if (ret.type == 'error') {
             pushNoti({
                 level: 'error',
                 msg: ret.return
@@ -230,4 +240,5 @@ function regDlProgressReportCbk(f: Function) {
 
 
 
-export { wahuRPCCall, initWahuWsBridge, regDlProgressReportCbk, WahuStopIteration, soecketStatusReact }
+export { wahuRPCCall, initWahuWsBridge, regDlProgressReportCbk, WahuStopIteration,
+    soecketStatusReact, WahuBackendException }
