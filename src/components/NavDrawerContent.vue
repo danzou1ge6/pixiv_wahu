@@ -12,11 +12,6 @@
         <q-item-section>命令行脚本</q-item-section>
       </q-item>
 
-      <q-item clickable @click="pushWindow({ component: 'GetToken'}); $emit('update:modelValue', false)">
-        <q-item-section avatar><q-icon name="token"></q-icon></q-item-section>
-        <q-item-section>获取 Refresh Token</q-item-section>
-      </q-item>
-
       <q-item-label header>本地</q-item-label>
 
       <q-expansion-item label="插画数据库" icon="data_array">
@@ -165,6 +160,10 @@
         </q-card>
       </q-expansion-item>
 
+      <q-item clickable @click="pushWindow({ component: 'GetToken'}); $emit('update:modelValue', false)">
+        <q-item-section avatar><q-icon name="token"></q-icon></q-item-section>
+        <q-item-section>获取 Refresh Token</q-item-section>
+      </q-item>
 
     </q-list>
   </q-drawer>

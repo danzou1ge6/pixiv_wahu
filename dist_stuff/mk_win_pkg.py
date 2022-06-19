@@ -39,12 +39,10 @@ def compile_launcher():
 
     print('Compiling CLI launcher')
 
-    pypath = str(Path(sys.executable).parent).replace('\\', '/')
+    os.system('pip install nuitka')
 
-    cli_launcher_path = str(dist_base / 'PixivWahu.exe').replace('\\', '/')
-
-    os.system(f'gcc -o "{cli_launcher_path}" -I "{pypath}/include"'
-              f' {dist_stuff}/launcher.c "{pypath}/python310.dll"')
+    os.system(f'python -m nuitka --nofollow-imports {dist_stuff / "launcher.py"}'
+              f'-o PixivWahu.exe --output-dir={dist_base}')
 
 def write_tkinter(zf: ZipFile):
         print('Write Tkinter stuff')
@@ -64,7 +62,7 @@ def edit__path():
 def remove_useless():
     try:
         shutil.rmtree(str(dist_base / 'Lib' / 'site-packages' / 'setuptools'))
-        shutil.rmtree(str(dist_base / 'Lib' / 'site-packages' / 'setuptools'))
+        shutil.rmtree(str(dist_base / 'Lib' / 'site-packages' / 'pkg_resources'))
         shutil.rmtree(str(dist_base / 'Scripts'))
     except FileNotFoundError:
         pass
