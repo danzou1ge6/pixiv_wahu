@@ -54,14 +54,18 @@ silent_deco = click.option(
 
 @click.group(invoke_without_command=True)
 @browser_deco
+@conf_deco
 @click.pass_context
 def _run(
-    cctx: click.Context, browser: bool
+    cctx: click.Context,
+    browser: bool,
+    config: str,
 ):
     """运行 PixivWahu
 
     缺省子命令将调用子命令 ui
     """
+    cctx.obj = Path(config)
 
     if cctx.invoked_subcommand is None:
         cctx.invoke(ui, browser=browser)
@@ -79,15 +83,11 @@ def exe(cctx: click.Context, args: tuple[str], help: bool):
 
     args_list = list(args)
 
-    if help and len(args) == 0:
-        click.echo(cctx.obj.wexe.get_help(cctx))
-        cctx.exit()
-
     if help:
         args_list.append('--help')
 
     async def main():
-        ret_code = await cli_client_main(args_list)
+        ret_code = await cli_client_main(args_list, cctx.obj)
         if ret_code != 0:
             print(f'退出代码: {ret_code}')
 
@@ -96,14 +96,14 @@ def exe(cctx: click.Context, args: tuple[str], help: bool):
 @_run.command()
 @port_deco
 @host_deco
-@conf_deco
 @logging_deco
 @silent_deco
 @browser_deco
+@click.pass_context
 def ui(
+    cctx: click.Context,
     port: int,
     host: str,
-    config: str,
     log_level: Literal['ERROR', 'WARNING', 'INFO', 'DEBUG'],
     quiet: bool,
     browser: bool,
@@ -112,7 +112,7 @@ def ui(
     """
 
 
-    config_obj = load_config(Path(config))
+    config_obj = load_config(cctx.obj)
 
     if port is not None:
         config_obj.server_port = port
