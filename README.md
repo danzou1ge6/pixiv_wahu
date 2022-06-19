@@ -57,10 +57,6 @@ pixiv-wahu
 wahu-gui
 ```
 
-启动 `refresh_token` 获取程序
-```shell
-get-px-refreshtoken
-```
 
 ## 配置
 PixivWahu 使用 TOML 格式配置
@@ -125,13 +121,14 @@ PixivWahu 使用 TOML 格式配置
 ### 命令行
 PixivWahu 也具有命令行界面
 
-执行 `.\PixivWahu.ps1 --help` 或者 `.\python -m wahu_backend.__init__ --help` 查看命令行帮助
+执行 `.\PixivWahu.exe --help` 或者 `.\python -m wahu_backend.__init__ --help` 查看命令行帮助
 
 > 对于每个子命令，在命令行加上 `--help` 可以查看子命令帮助
 
 ### WahuCli
 使用 [`click`](https://click.palletsprojects.com/en/8.1.x/) 创建命令行脚本，
 在「Home」页码的命令行终端上执行，或者使用上述的命令行界面中 `exe` 子命令执行
+> 要使用 `exe` 子命令，需要先启动一个 PixivWahu 后端
 
 PixivWahu 预置了几个命令行脚本；也可以自行创建
 
