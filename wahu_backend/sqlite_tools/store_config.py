@@ -26,6 +26,8 @@ class ConfigStoredinSqlite(SqliteTableEditor[RT]):
     - `:property v:` 返回一个 setter 和 getter 的代理对象，在其上可以直接进行 `.` 操作
     """
 
+    __slots__ = ('cfg')
+
     def __init__(self,
                  row_obj_type: Type[RT],
                  name: str = 'config') -> None:

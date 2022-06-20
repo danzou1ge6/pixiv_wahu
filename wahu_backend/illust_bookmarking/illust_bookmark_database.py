@@ -23,6 +23,8 @@ class IllustBookmarkDatabase(DependingDatabase):
     illusts_te: SqliteTableEditor[IllustDetail] = SqliteTableEditor('illusts', IllustDetail)
     bookmarks_te: SqliteTableEditor[IllustBookmark] = SqliteTableEditor('bookmarks', IllustBookmark)
 
+    __slots__ = ('name', 'db_path', 'log_adapter', 'db_con')
+
     def __init__(self, name: str, db_path: Union[str, Path]):
 
         self.name: str = name

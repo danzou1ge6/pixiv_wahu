@@ -5,7 +5,7 @@ from ..sqlite_tools.adapters import BoolAdapter, IntAdapter, StrAdapter
 from .datastructure_illust import IllustDetail, PixivUserSummery
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(slots=True)
 class PixivUserDetailRaw:
     uid: int
     account: str
@@ -48,7 +48,7 @@ class PixivUserDetail(PixivUserDetailRaw, DatabaseRow):
 
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(slots=True)
 class PixivUserPreview:
     """搜索用户、获取相关用户时返回的数据结构"""
 

@@ -6,7 +6,7 @@ from collections import OrderedDict
 
 
 
-@dataclass
+@dataclass(slots=True)
 class DownloadProgressRaw:
     gid: str
     total_size: Optional[int]
@@ -16,6 +16,8 @@ class DownloadProgressRaw:
 
 
 class DownloadProgress(DownloadProgressRaw):
+
+    __slots__ = ('url')
 
     def __init__(
         self,

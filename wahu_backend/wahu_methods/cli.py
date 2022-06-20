@@ -17,7 +17,7 @@ from .wahu_generator import WahuGeneratorMethods
 from .get_token import WahuGetTokenMethods
 
 
-@dataclass
+@dataclass(slots=True)
 class CliScriptInfo:
     path: Path
     name: str

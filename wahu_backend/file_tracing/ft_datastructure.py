@@ -5,7 +5,7 @@ from ..sqlite_tools.abc import DatabaseRow
 from ..sqlite_tools.adapters import (IntAdapter, JsonAdapter, PathAdapter,
                                      StrAdapter)
 
-@dataclass
+@dataclass(slots=True)
 class FileEntryRaw:
     """
     FileTracer 的一条索引
@@ -29,7 +29,7 @@ class FileEntry(FileEntryRaw, DatabaseRow):
     index = 'fid'
 
 
-@dataclass
+@dataclass(slots=True)
 class FileTracingConfigRaw:
     """
     某一目录下的 FileTracer 的配置

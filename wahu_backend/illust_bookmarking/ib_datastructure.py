@@ -4,7 +4,7 @@ from ..sqlite_tools.abc import DatabaseRow
 from ..sqlite_tools.adapters import IntAdapter, JsonAdapter, StrAdapter
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(slots=True)
 class IllustBookmarkRaw:
     iid: int
     pages: list[int]

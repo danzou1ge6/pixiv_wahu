@@ -7,7 +7,7 @@ if TYPE_CHECKING:
     from ..wahu_config.load_config import WPath
 
 
-@dataclass
+@dataclass(slots=True)
 class WahuConfig:
     wpath: 'WPath'
     # local

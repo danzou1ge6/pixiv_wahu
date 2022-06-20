@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from ..wahu_config.load_config import WPath
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(slots=True)
 class RepoEntry:
     path: Path
     name: str

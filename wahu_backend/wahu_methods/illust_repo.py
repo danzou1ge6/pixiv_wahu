@@ -39,7 +39,7 @@ async def _check_repo_name(
 
 
 # ------------------------------------------------------------------- 数据模型
-@dataclass
+@dataclass(slots=True)
 class FileEntryWithURL(FileEntry):
     url: str
 
@@ -49,7 +49,7 @@ class FileEntryWithURL(FileEntry):
     def __eq__(self, __o: object) -> bool:
         return self.fid == __o.__dict__.get('fid')
 
-@dataclass
+@dataclass(slots=True)
 class RepoSyncAddReport:
     db_name: str
     entries: list[FileEntryWithURL]

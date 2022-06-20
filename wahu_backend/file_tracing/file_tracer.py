@@ -45,6 +45,11 @@ class FileTracerBase(DependingDatabase):
             FileTracingConfig,
             name='config'
     )
+    
+    __slots__ = (
+        'log_adapter', 'name', 'root_path', 'index_path', 'config',
+        'index_con'
+    )
 
     def __init__(self, name: str, root_path: Path):
 

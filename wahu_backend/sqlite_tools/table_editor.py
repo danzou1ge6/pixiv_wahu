@@ -10,6 +10,8 @@ RT = TypeVar('RT', bound=DatabaseRow)  # row_obj_type for type static checking
 
 class SqliteTableEditor(Generic[RT]):
 
+    __slots__ = ('name', 'heads', 'index_name', 'row_obj_type', 'cursor')
+
     def __init__(self, name: str, row_obj_type: Type[RT]) -> None:
         """
         实例化一个数据库表编辑器
@@ -140,8 +142,8 @@ class SqliteTableEditor(Generic[RT]):
         result: list[bool] = []
         for row in rows:
             # 清理旧值
-            if self.has(row.__dict__[self.index_name]):
-                self.delete([row.__dict__[self.index_name]])
+            if self.has(getattr(row, self.index_name)):
+                self.delete([getattr(row, self.index_name)])
                 result.append(False)
             else:
                 result.append(True)

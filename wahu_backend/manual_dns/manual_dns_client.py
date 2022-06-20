@@ -1,6 +1,6 @@
 import logging
 from random import choice
-from typing import Union
+from typing import Optional, Union
 from asyncio import Lock
 
 import aiohttp
@@ -32,14 +32,16 @@ class ManualDNSClient:
     - `:attr session:` `aiohttp.ClientSession` 实例
     """
 
+    __slots__ = ['host_name', 'timeout', 'connection_limit', 'host', 'session', 'env_chk_lock']
+
     host_name: str
 
     def __init__(self, connection_limit: int = 100):
         self.timeout: float = 5
         self.connection_limit: int = connection_limit
 
-        self.host: str
-        self.session: aiohttp.ClientSession
+        self.host: Optional[str] = None
+        self.session: Optional[aiohttp.ClientSession] = None
         self.base_headers: Union[HTTPHeaders, None]
         self.log_adapter: Union[logging.LoggerAdapter, logging.Logger]
 
@@ -52,7 +54,7 @@ class ManualDNSClient:
         self.log_adapter.debug('create_session: 创建 aiohttp.ClientSession')
 
     async def close_session(self) -> None:
-        if hasattr(self, '_session'):
+        if self.session is not None:
             await self.session.close()
         self.log_adapter.debug('close_session: 关闭 aiohttp.ClientSession')
 
@@ -60,6 +62,10 @@ class ManualDNSClient:
 
         host_list = await resolve_host(self.host_name,
                                               timeout=self.timeout)
+
+        if self.session is None:
+            await self.create_session()
+            assert self.session is not None
 
         for host in host_list:
             try:
@@ -78,10 +84,10 @@ class ManualDNSClient:
         """确保完成了 DNS 解析，以及是否创建了 `ClientSession`"""
         async with self.env_chk_lock:
 
-            if not hasattr(self, 'session'):
+            if self.session is None:
                 await self.create_session()
 
-            if not hasattr(self, 'host'):
+            if self.host is None:
                 await self.resolve_host()
 
 

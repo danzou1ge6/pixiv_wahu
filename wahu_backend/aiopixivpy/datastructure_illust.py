@@ -17,7 +17,7 @@ from ..sqlite_tools.adapters import (BoolAdapter, IntAdapter, JsonAdapter,
 """
 
 
-@dataclass
+@dataclass(slots=True)
 class PixivUserSummery:
     '''保存用户详情的 dataclass 基类'''
     account: str
@@ -49,7 +49,7 @@ class PixivUserSummeryAdapter(SqliteAdapter):
         return PixivUserSummery(*json.loads(j))
 
 
-@dataclass
+@dataclass(slots=True)
 class IllustTag:
     name: str
     translated: str
@@ -78,7 +78,7 @@ class IllustTagListAdapter(SqliteAdapter):
 
 
 
-@dataclass
+@dataclass(slots=True)
 class IllustDetailRaw:
     '''
     保存插画详情的 dataclass 基类
@@ -143,7 +143,7 @@ class IllustDetail(IllustDetailRaw, DatabaseRow):
     index = 'iid'
 
 
-@dataclass
+@dataclass(slots=True)
 class TrendingTagIllusts:
     tag: IllustTag
     illust: IllustDetail

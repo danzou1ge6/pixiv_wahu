@@ -17,7 +17,7 @@ from .logger import logger
 from .pixivpy_typing import HTTPData, HTTPHeaders, URLParams
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(slots=True)
 class AccountSession:
     user_name: str
     user_id: int

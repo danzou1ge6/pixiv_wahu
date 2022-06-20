@@ -13,12 +13,14 @@ class DatabaseRow:
     adapters: dict[str, Type[SqliteAdapter[Any, Any]]]
     index: str
 
+    __slots__ = ()
+
     def __init__(self, *args: Any):
         raise NotImplementedError
 
 class DependingDatabase:
     """需要数据库连接的抽象基类"""
-    pass
+    __slots__ = ()
 
     def connect(self) -> None:
         raise NotImplementedError

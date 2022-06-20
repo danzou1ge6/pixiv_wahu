@@ -10,6 +10,8 @@ T = TypeVar('T', bound=DependingDatabase)
 
 class CtxInstance(Generic[T]):
 
+    __slots__ = ('dd', 'lock', 'readonly')
+
     def __init__(self, dd: T, lock: Lock, readonly: bool=False):
         self.dd = dd
         self.lock = lock
@@ -28,14 +30,16 @@ class CtxInstance(Generic[T]):
 
         self.dd.close(commit=(not self.readonly))
         self.lock.release()
-    
+
 class DatabaseContextManager(Generic[T]):
     """对 DependingDatabase 类对象进行上下文管理"""
+
+    __slots__ = ('dd', 'lock')
 
     def __init__(self, dd: T):
         self.dd = dd
         self.lock = Lock()
-    
+
     async def __call__(self, readonly: bool=False) -> CtxInstance[T]:
 
         await self.lock.acquire()
