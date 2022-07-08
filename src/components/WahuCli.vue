@@ -1,6 +1,6 @@
 <template>
-  <q-scroll-area ref="scrollArea" :style="`width: ${width}; height: ${height}; padding-left: 0px; padding-right: 0px;`">
-    <div :style="`width: ${width}; height: ${height};`" class="q-mx-sm">
+  <q-scroll-area ref="scrollArea" :style="`padding-left: 0px; padding-right: 0px;`">
+    <div style="width: 100%; height: 100%;" class="q-mx-sm">
       <div>
         <div v-for="(item, i) in content" :key="i">
           <WahuCliItem v-bind="item"></WahuCliItem>
@@ -27,8 +27,6 @@ import WahuCliItem from './WahuCliItem.vue';
 
 const props = defineProps<{
   dark: boolean,
-  width: string,
-  height: string
 }>()
 
 const displayedHistoryNum = 5
@@ -50,7 +48,7 @@ const scrollArea = ref<HTMLTemplateElement | null>(null)
 const inputBox = ref<HTMLTemplateElement | null>(null)
 const inputBoxAnchor = ref<HTMLTemplateElement | null>(null)
 
-let generator = ref<AsyncGenerator<string, undefined, string | undefined>>()
+let generator = ref<AsyncGenerator<string, undefined, string | null>>()
 
 function enter() {
   const cmd = cmdInp.value
@@ -109,7 +107,9 @@ onMounted(() => {
 
 async function listenGenerator(initalSendVal?: string) {
   while (generator.value !== undefined) {
-    const ret = await generator.value.next(initalSendVal)
+    const ret = await generator.value.next(
+      initalSendVal === undefined ? null : initalSendVal
+    )
     initalSendVal = undefined
 
     inpPrefix.value = '>'
@@ -240,7 +240,6 @@ const manText = `
 清屏：
   执行 clear 清屏
 每个命令行终端之间相互独立，并发执行，也就是说可以打开多个 Home 页面分别执行命令
-在任何一个页面，可以使用快捷加 Ctrl+\` 呼出快捷命令行终端
 `.trim()
 
 function handleSpecialCmd(cmd: string): boolean {

@@ -15,17 +15,19 @@
   <transition appear enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp">
     <div v-show="modelValue" class="noti-box-opened">
       <q-card class="noti-card">
-        <div class="text-subtitle-2 q-ma-md">通知</div>
-        <transition-group enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight">
-          <div v-for="(noti, i) in appAllNoti" :key="i" class="py-1 px-0">
-            <q-banner :class="bannerClass(noti.level)" class="q-ma-sm">
-              <template v-slot:avatar>
-                <q-icon :name="iconName(noti.level)"></q-icon>
-              </template>
-              <pre>{{ noti.msg }}</pre>
-            </q-banner>
-          </div>
-        </transition-group>
+        <q-scroll-area style="height: 100%">
+          <div class="text-subtitle-2 q-ma-md">通知</div>
+          <transition-group enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight">
+            <div v-for="(noti, i) in appAllNoti" :key="i" class="py-1 px-0">
+              <q-banner :class="bannerClass(noti.level)" class="q-ma-sm">
+                <template v-slot:avatar>
+                  <q-icon :name="iconName(noti.level)"></q-icon>
+                </template>
+                <pre>{{ noti.msg }}</pre>
+              </q-banner>
+            </div>
+          </transition-group>
+        </q-scroll-area>
       </q-card>
     </div>
   </transition>
@@ -116,12 +118,13 @@ function iconName(level: 'error' | 'warning' | 'info' | 'success'): string {
   }
   min-width: 300px;
   right: 10px;
+  height: 80vh;
   top: 55px;
   z-index: 999;
 }
 
 .noti-card {
-  max-height: 80vh;
+  height: 80vh;
   overflow-y: auto;
 }
 

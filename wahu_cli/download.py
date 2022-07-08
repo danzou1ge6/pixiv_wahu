@@ -54,7 +54,7 @@ def mount(wexe: click.Group):
         else:
             dir_path = wctx.config.wpath(directory)
 
-        fname_list = await WahuMethods.filename_for_illust(wctx, dtl, pages)
+        fname_list = await WahuMethods.filename_for_illust(wctx, dtl, list(pages))
         path_list = [dir_path / f for f in fname_list]
         url_list = [dtl.image_origin[p] for p in pages]
 

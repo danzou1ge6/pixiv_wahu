@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-    <q-header elevated>
+    <q-header elevated class="blur">
       <Transition appear enter-active-class="animated fadeInDown" leave-active-class="animated fadeInUp">
         <q-bar v-if="showNotConnectedBar" class="bg-negative">
           <q-icon name="error"></q-icon>
@@ -63,11 +63,6 @@
       <LoginControl v-model="showLoginCtl"></LoginControl>
       <DownloadProgress v-model="showDlProgress"></DownloadProgress>
 
-      <Transition appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
-        <WahuCli :dark="false" class="wahu-cli shadow-24" v-show="showCli" width="75vw" height="calc(100vh - 50px)"
-        ></WahuCli>
-      </Transition>
-
       <DynamicComponent></DynamicComponent>
     </q-page-container>
   </q-layout>
@@ -107,7 +102,6 @@ export default defineComponent({
     const showNotification = ref(false)
     const showLoginCtl = ref(false)
     const showDlProgress = ref(false)
-    const showCli = ref(false)
 
     const route = useRoute()
     const router = useRouter()
@@ -121,8 +115,6 @@ export default defineComponent({
         return
 
       }
-
-
     }
 
     onMounted(() => {
@@ -133,12 +125,6 @@ export default defineComponent({
         router.push(currentPath)
         pushWindowFromRouter()
       }, false)
-
-      document.addEventListener('keyup', (ev: KeyboardEvent) => {
-        if(ev.ctrlKey && ev.key == '`') {
-          showCli.value = ! showCli.value
-        }
-      })
 
       pushWindowFromRouter()
     })
@@ -160,20 +146,14 @@ export default defineComponent({
       showDlProgress,
       windowRefresh,
       showNotConnectedBar,
-      showCli,
       initWahuWsBridge
     }
   }
 });
 </script>
 
-<style scoped>
-.wahu-cli {
-  z-index: 99;
-  position: fixed;
-  left: 0px;
-  top: 50px;
-  background-color: white;
-  opacity: 0.9;
+<style lang="scss" scoped>
+.blur {
+  backdrop-filter: blur(7px);
 }
 </style>

@@ -11,14 +11,12 @@ interface AppWindow {
 
 interface KeyedAppWindow extends AppWindow {
   key: number;
-  scrollY: number
 }
 
 const openedWindows = ref<Array<KeyedAppWindow>>([{
   component: 'Home',
   title: 'Home',
   key: randomId(),
-  scrollY: 0
 }])
 let displayedWindowN = ref<number>(0)
 
@@ -59,8 +57,7 @@ function removeWindow(i: number) {
     openedWindows.value.splice(i, 1, {
       component: 'Home',
       title: 'home',
-      key: randomId(),
-      scrollY: 0
+      key: randomId()
     })
     return
   }

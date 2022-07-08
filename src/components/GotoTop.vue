@@ -4,7 +4,8 @@
   <q-scroll-observer @scroll="scrollHandler"></q-scroll-observer>
 
   <Transition appear enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-    <q-btn v-show="showGotoTop" @click="gotoTop" style="position: fixed; right: 10px; bottom: 75px; z-index: 5;"
+    <q-btn v-show="showGotoTop" @click="gotoTop"
+      style="position: fixed; right: 10px; bottom: 75px; z-index: 5; backdrop-filter: blur(7px);"
       color="primary">
       <q-icon name="arrow_upward"></q-icon>
     </q-btn>

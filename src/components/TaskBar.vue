@@ -4,7 +4,7 @@
       <transition-group appear enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp absolute"
         move-class="task-list-move">
         <div v-for="(win, i) in tabbedWindows" :key="win.key">
-          <q-tab no-caps :name="i" @click="displayedWindowN = i">
+          <q-tab no-caps :name="i" @click="gotoWindow(i)">
             <div class="row">
               <div class="col-10" style="max-width: 180px;overflow: hidden; text-overflow: clip;">
                 {{ win.title }}
@@ -23,7 +23,7 @@
       <q-btn-dropdown auto-close stretch flat v-show="openedWindows.length > maxTabbedN">
         <q-list>
           <q-item v-for="(win, j) in groupedWindows" :key="win.key" clickable
-            @click="displayedWindowN = j + maxTabbedN" class="menu-item">
+            @click="gotoWindow(j + maxTabbedN)" class="menu-item">
             <q-item-section side>
               <div class="row">
                 <div class="col-1">
@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import { computed } from '@vue/reactivity';
 import { ref, watch } from 'vue';
-import { openedWindows, displayedWindowN, removeWindow } from '../plugins/windowManager';
+import { openedWindows, displayedWindowN, removeWindow, gotoWindow } from '../plugins/windowManager';
 import { useQuasar } from 'quasar';
 
 const selected = ref<number>(0)

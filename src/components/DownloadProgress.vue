@@ -1,6 +1,6 @@
 <template>
   <transition appear enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp">
-    <q-card class="dl-card" v-show="modelValue">
+    <q-card class="dl-card scroll" v-show="modelValue">
       <q-checkbox v-model="showFinished" label="显示已完成"></q-checkbox>
       <q-markup-table>
         <thead>
@@ -99,6 +99,5 @@ function getColor(status: string) {
   top: 55px;
   z-index: 999;
   max-height: 80vh;
-  overflow-y: auto;
 }
 </style>

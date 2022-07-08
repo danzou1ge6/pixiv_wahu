@@ -3,6 +3,7 @@
 
     <q-fab color="primary" icon="keyboard_arrow_down" direction="down" v-if="modelValue.length > 0"
       :label="`选中 ${modelValue.length} 项`" class="db-toolbar" square vertical-actions-align="left"
+      style="backdrop-filter: blur(7px);"
       persistent v-model="open">
 
       <q-fab-action color="primary" square @click="cancelSelect" label="取消选择" external-label icon="cancel">

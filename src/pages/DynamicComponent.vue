@@ -1,20 +1,18 @@
 <template>
-  <div>
-    <transition-group appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight"
-      @enter="scroll">
-      <div v-for="(win, i) in openedWindows" :key="win.key" v-show="i == displayedWindowN"
-        style="position: absolute; width: 100%">
-        <q-scroll-observer @scroll="scrollHandler"></q-scroll-observer>
-        <component :is="getComponent(win.component)" v-bind="win.props" @update-props="updateProps(i, $event)"
-          @update-title="updateTitle(i, $event)">
-        </component>
+  <div class="component-container">
+    <transition-group appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight">
+      <div v-for="(win, i) in openedWindows" :key="win.key" v-show="i == displayedWindowN" style="height: 100%;">
+        <q-scroll-area style="height: 100%">
+          <component :is="getComponent(win.component)" v-bind="win.props" @update-props="updateProps(i, $event)"
+            @update-title="updateTitle(i, $event)">
+          </component>
+        </q-scroll-area>
       </div>
     </transition-group>
   </div>
 </template>
 
 <script setup lang="ts">
-import { watch } from 'vue'
 import { openedWindows, displayedWindowN } from '../plugins/windowManager'
 import { useQuasar } from 'quasar'
 
@@ -68,19 +66,13 @@ function updateTitle(i: number, title: string) {
   openedWindows.value[i].title = title
 }
 
-function scrollHandler(e: any) {
-  openedWindows.value[displayedWindowN.value].scrollY = e.position.top
-}
-
-
-function scroll() {
-  setTimeout(
-    () => {
-      window.scrollTo(0, openedWindows.value[displayedWindowN.value].scrollY)
-    },
-    $q.platform.is.mobile ? 200 : 100
-  )
-}
-
 
 </script>
+<style lang="scss" scoped>
+.component-container {
+  position: absolute;
+  width: 100%;
+  height: $page-height;
+  overflow: hidden;
+}
+</style>

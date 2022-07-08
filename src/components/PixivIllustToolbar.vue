@@ -2,6 +2,7 @@
   <transition appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
     <q-fab color="primary" icon="keyboard_arrow_down" direction="down" v-if="modelValue.length > 0"
       :label="`选中 ${modelValue.length} 项`" class="db-toolbar" square vertical-actions-align="left"
+      style="backdrop-filter: blur(7px);"
       persistent v-model="open">
 
       <q-fab-action color="primary" square @click="cancelSelect" label="取消选择" external-label icon="cancel">
@@ -27,13 +28,13 @@
         @click="reverseSelect(); open = true">
       </q-fab-action>
       <q-fab-action color="primary" square label="收藏" external-label icon="bookmark_add"
-        @click="addBookmark(); open = true">
+        @click="addBookmark(); open = true" :loading="addBmLoading">
       </q-fab-action>
       <q-fab-action color="primary" square label="取消收藏" external-label icon="bookmark_remove"
-        @click="delBookmark(); open = true" :loading="addBmLoading">
+        @click="delBookmark(); open = true" :loading="delBmLoading">
       </q-fab-action>
       <q-fab-action color="primary" square label="下载" external-label icon="file_download"
-        @click="download(); open = true" :loading="delBmLoading">
+        @click="download(); open = true">
       </q-fab-action>
 
 
