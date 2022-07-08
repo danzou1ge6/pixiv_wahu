@@ -38,11 +38,12 @@ def create_readme_html():
 def compile_launcher():
 
     print('Compiling CLI launcher')
+    pypath = str(Path(sys.executable).parent).replace('\\', '/')
 
-    os.system('pip install nuitka')
+    cli_launcher_path = str(dist_base / 'PixivWahu.exe').replace('\\', '/')
 
-    os.system(f'python -m nuitka --nofollow-imports {dist_stuff / "launcher.py"}'
-              f'-o PixivWahu.exe --output-dir={dist_base}')
+    os.system(f'gcc -o "{cli_launcher_path}" -I "{pypath}/include"'
+              f' {dist_stuff}/launcher.c "{pypath}/python310.dll" -municode')
 
 def write_tkinter(zf: ZipFile):
         print('Write Tkinter stuff')

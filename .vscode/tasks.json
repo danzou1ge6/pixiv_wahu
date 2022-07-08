@@ -31,13 +31,13 @@
             "label": "生成启动器",
             "command": "C:\\Program Files\\mingw\\bin\\gcc.exe",
             "args": [
-                "-fdiagnostics-color=always",
                 "-o",
                 "dist_stuff/PixivWahu.exe",
+                "dist_stuff/launcher.c",
+                "C:/Program Files/python310/python310.dll",
                 "-I",
                 "C:/Program Files/python310/include",
-                "dist_stuff/launcher.c",
-                "C:/Program Files/python310/python310.dll"
+                "-municode"
             ],
             "options": {
                 "cwd": "${fileDirname}"
