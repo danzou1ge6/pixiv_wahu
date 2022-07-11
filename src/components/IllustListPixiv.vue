@@ -5,9 +5,10 @@
 
       <div class="row q-col-gutter-sm q-ma-md">
         <transition-group appear enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-          <div class="col-md-3 col-sm-6 col-xs-12 col-lg-2" v-for="ilst in illusts" :key="ilst.iid">
+          <div class="col-md-3 col-sm-6 col-xs-12 col-lg-2" v-for="ilst, i in illusts" :key="ilst.iid">
             <IllustCardPixiv @update:select="toggle(ilst.iid, $event)" :detail="ilst" :selected="getState(ilst.iid)"
-              height="300px">
+              height="300px"
+              :score="scores === undefined ? undefined : (scores[i] == -1 ? undefined : scores[i].toFixed(2))">
             </IllustCardPixiv>
           </div>
         </transition-group>
@@ -31,7 +32,8 @@ import GotoTop from 'src/components/GotoTop.vue';
 import PixivIllustToolbar from 'src/components/PixivIllustToolbar.vue';
 
 const props = defineProps<{
-  illusts: Array<IllustDetail>
+  illusts: Array<IllustDetail>,
+  scores?: Array<number>
 }>()
 
 

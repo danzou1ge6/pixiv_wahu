@@ -24,7 +24,7 @@ def jsonizeablize(inp: Any) -> JSONItem:
     elif isinstance(inp, tuple):
         return [jsonizeablize(item) for item in inp]
 
-    elif isinstance(inp, (str, int, bool)):
+    elif isinstance(inp, (str, int, bool, float)):
         return inp
 
     elif dataclasses.is_dataclass(inp):

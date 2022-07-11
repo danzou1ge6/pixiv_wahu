@@ -13,7 +13,7 @@ from ..wahu_core import (GenericWahuMethod, WahuArguments, WahuContext,
                          wahu_methodize)
 from ..wahu_core.core_exceptions import WahuRuntimeError
 from .logger import logger
-from .modded_argparser import ArgumentParser
+from .lib_modded_argparser import ArgumentParser
 
 if TYPE_CHECKING:
     from . import WahuMethods
@@ -84,6 +84,16 @@ class WahuIllustDatabaseMethods:
 
         with await ctx.ilst_bmdbs[name](readonly=True) as ibd:
             return ibd.all_bookmarks()
+
+    @classmethod
+    @wahu_methodize(middlewares=[_check_db_name])
+    async def ibd_ilst_count(cls, ctx: WahuContext, name: str) -> int:
+        """返回所有储存了的详情的数量"""
+
+        with await ctx.ilst_bmdbs[name](readonly=True) as ibd:
+            lst = ibd.all_illusts()
+
+        return len(lst)
 
     @classmethod
     @wahu_methodize(middlewares=[_check_db_name])

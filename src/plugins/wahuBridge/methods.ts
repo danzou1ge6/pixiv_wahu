@@ -127,7 +127,24 @@ interface CliScriptInfo {
     code: string;
 }
 
-export type {PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserDetail, PixivUserPreview, IllustBookmark, FileEntry, TrendingTagIllusts, FileTracingConfig, RepoSyncAddReport, AccountSession, FileEntryWithURL, DownloadProgress, CliScriptInfo}
+interface WeighedIllustTag {
+    name: string;
+    translated: string;
+    weight: number;
+}
+
+interface CountedIllustTag {
+    name: string;
+    translated: string;
+    count: number;
+}
+
+interface TagRegressionModel {
+    weighed_tags: Array<WeighedIllustTag>;
+    bias: number;
+}
+
+export type {PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserDetail, PixivUserPreview, IllustBookmark, FileEntry, TrendingTagIllusts, FileTracingConfig, RepoSyncAddReport, AccountSession, FileEntryWithURL, DownloadProgress, CliScriptInfo, WeighedIllustTag, CountedIllustTag, TagRegressionModel}
 
 export async function cli_list () : Promise<Array<CliScriptInfo>> {
     return await wahuRPCCall('cli_list', [])as Array<CliScriptInfo>}
@@ -158,6 +175,9 @@ export async function ibd_filter_restricted (name: string) : Promise<Array<numbe
 
 export async function ibd_fuzzy_query (name: string, target: 'title' | 'caption' | 'tag' | 'username', keyword: string, cutoff: null | number) : Promise<Array<[number, number]>> {
     return await wahuRPCCall('ibd_fuzzy_query', [name, target, keyword, cutoff])as Array<[number, number]>}
+
+export async function ibd_ilst_count (name: string) : Promise<number> {
+    return await wahuRPCCall('ibd_ilst_count', [name])as number}
 
 export async function ibd_ilst_detail (name: string, iid: number) : Promise<null | IllustDetail> {
     return await wahuRPCCall('ibd_ilst_detail', [name, iid])as null | IllustDetail}
@@ -194,6 +214,15 @@ export async function ibd_set_bm (name: string, iid: number, pages: Array<number
 
 export async function ibd_update (name: string) : Promise<number> {
     return await wahuRPCCall('ibd_update', [name])as number}
+
+export async function ibdtag_count (names: Array<string>) : Promise<Array<CountedIllustTag>> {
+    return await wahuRPCCall('ibdtag_count', [names])as Array<CountedIllustTag>}
+
+export async function ibdtag_logistic_regression (pos: Array<string>, neg: Array<string>, tags: Array<IllustTag>, lr: number, batch_size: number, epoch: number, test_set_ratio: number) : Promise<AsyncGenerator<[number, null | [Array<number>, Array<number>, TagRegressionModel]], undefined, null>> {
+    return await wahuRPCCall('ibdtag_logistic_regression', [pos, neg, tags, lr, batch_size, epoch, test_set_ratio])as AsyncGenerator<[number, null | [Array<number>, Array<number>, TagRegressionModel]], undefined, null>}
+
+export async function ibdtag_write_model (model: TagRegressionModel, model_name: string) : Promise<null> {
+    return await wahuRPCCall('ibdtag_write_model', [model, model_name])as null}
 
 export async function ir_add_cache (name: string, file_entries: Array<FileEntry>) : Promise<null> {
     return await wahuRPCCall('ir_add_cache', [name, file_entries])as null}
@@ -273,8 +302,8 @@ export async function p_ilstbm_add (iids: Array<number>) : Promise<null> {
 export async function p_ilstbm_rm (iids: Array<number>) : Promise<null> {
     return await wahuRPCCall('p_ilstbm_rm', [iids])as null}
 
-export async function p_query (qs: string) : Promise<AsyncGenerator<Array<IllustDetail>, undefined, null>> {
-    return await wahuRPCCall('p_query', [qs])as AsyncGenerator<Array<IllustDetail>, undefined, null>}
+export async function p_query (qs: string) : Promise<AsyncGenerator<Array<[IllustDetail, number]>, undefined, null>> {
+    return await wahuRPCCall('p_query', [qs])as AsyncGenerator<Array<[IllustDetail, number]>, undefined, null>}
 
 export async function p_query_help () : Promise<string> {
     return await wahuRPCCall('p_query_help', [])as string}

@@ -24,7 +24,7 @@
   </q-card>
 
 
-  <IllustListPixiv :illusts="illusts"></IllustListPixiv>
+  <IllustListPixiv :illusts="illusts" :scores="scores"></IllustListPixiv>
 
   <div class="row q-ma-lg" v-show="generator !== undefined">
     <div class="col-12">
@@ -57,8 +57,9 @@ const queryLoading = ref<boolean>(false)
 
 const loading = ref<boolean>(false)
 const illusts = ref<Array<wm.IllustDetail>>([])
+const scores = ref<Array<number>>([])
 
-let generator = ref<AsyncGenerator<Array<wm.IllustDetail>>>()
+let generator = ref<AsyncGenerator<Array<[wm.IllustDetail, number]>>>()
 
 function asignGenerator(gen: typeof generator.value) {
   if (generator.value !== undefined && generator.value.throw !== undefined) {
@@ -81,7 +82,8 @@ function invokeGenerator() {
         return
       }
 
-      illusts.value = illusts.value.concat(ret.value)
+      illusts.value = illusts.value.concat(ret.value.map(item => item[0]))
+      scores.value = scores.value.concat(ret.value.map(item => item[1]))
       loading.value = false
       pushNoti({
         level: 'success',

@@ -3,6 +3,12 @@
 
     <q-item>
       <q-item-section>
+        <q-item-label v-if="score !== undefined">
+          <q-badge>
+            <q-icon name="check"></q-icon>{{ score }}
+          </q-badge>
+          <q-tooltip>模糊匹配的分数</q-tooltip>
+        </q-item-label>
         <q-item-label @click="clickTitle" class="cursor-pointer">
           {{ detail.title }}
         </q-item-label>
@@ -56,7 +62,8 @@ interface Props {
   detail: wm.IllustDetail,
   height: string,
   selected: boolean,
-  unselectable?: boolean
+  unselectable?: boolean,
+  score?: number | string
 }
 
 const props = defineProps<Props>()

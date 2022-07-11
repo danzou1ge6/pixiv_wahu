@@ -9,15 +9,19 @@
         Oops. Nothing here...
       </div>
 
-      <q-btn class="q-mt-xl" color="white" text-color="blue" unelevated to="/" label="Go Home" no-caps />
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
+import { onMounted } from 'vue';
 
-export default defineComponent({
-  name: 'ErrorNotFound'
-});
+const emits = defineEmits<{
+  (e: 'updateProps', val: object): void,
+  (e: 'updateTitle', val: string): void,
+}>()
+
+onMounted(() => {
+  emits('updateTitle', '404')
+})
 </script>

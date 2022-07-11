@@ -27,7 +27,7 @@ async def write_bookmark_db(ibd: IllustBookmarkDatabase, illusts: list[IllustDet
     ibd.close()
 
 
-@click.command
+@click.command()
 @click.option('--input', '-i', type=click.Path(exists=True, dir_okay=False))
 @click.option('--output', '-o', type=click.Path(dir_okay=False))
 def cvt(input: str, output: str) -> None:

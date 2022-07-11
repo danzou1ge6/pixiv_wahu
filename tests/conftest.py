@@ -16,6 +16,8 @@ from wahu_backend.aiopixivpy.datastructure_processing import (
 from wahu_backend.aiopixivpy.datastructure_user import PixivUserPreview
 from pixiv_dict_examples import (illust_dict1, illust_dict2, user_detail_dict,
                                  user_preview_dict)
+import pyximport
+pyximport.install()
 
 
 @pytest.fixture(params=[illust_dict1, illust_dict2], scope='session')

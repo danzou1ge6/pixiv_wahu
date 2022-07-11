@@ -1,11 +1,13 @@
 <template>
-  <div class="component-container">
+  <div class="page-container">
     <transition-group appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight">
       <div v-for="(win, i) in openedWindows" :key="win.key" v-show="i == displayedWindowN" style="height: 100%;">
         <q-scroll-area style="height: 100%">
-          <component :is="getComponent(win.component)" v-bind="win.props" @update-props="updateProps(i, $event)"
-            @update-title="updateTitle(i, $event)">
-          </component>
+          <div class="component-container">
+            <component :is="getComponent(win.component)" v-bind="win.props" @update-props="updateProps(i, $event)"
+              @update-title="updateTitle(i, $event)">
+            </component>
+          </div>
         </q-scroll-area>
       </div>
     </transition-group>
@@ -29,6 +31,7 @@ import PixivSearchIllust from './PixivSearchIllust.vue'
 import PixivSearchUser from './PixivSearchUser.vue'
 import PixivUserDetail from './PixivUserDetail.vue'
 import RepoView from './RepoView.vue'
+import TagRegression from './TagRegression.vue'
 import TrendingTags from './TrendingTags.vue'
 interface componentIndex {[index: string] : any}
 const components: componentIndex = {
@@ -43,6 +46,7 @@ const components: componentIndex = {
   PixivSearchUser: PixivSearchUser,
   PixivUserDetail: PixivUserDetail,
   RepoView: RepoView,
+  TagRegression: TagRegression,
   TrendingTags: TrendingTags,
 }
 /** 自动生成 Import End */
@@ -69,10 +73,16 @@ function updateTitle(i: number, title: string) {
 
 </script>
 <style lang="scss" scoped>
-.component-container {
+.page-container {
   position: absolute;
+  top: 0px;
   width: 100%;
-  height: $page-height;
+  height: 100vh;
   overflow: hidden;
+}
+.component-container {
+  position: relative;
+  width: 100%;
+  top: $header-height
 }
 </style>

@@ -9,16 +9,30 @@ import { pushNoti } from '../notifications'
 
 interface PostRPCReturn<T> {
     type: 'normal' | 'generator';
-    return: T | string
+    return: T | string | Array<string>
+}
+
+function wahuPostRPCGeneratorFactory<T>(gkey: string) {
+
+    async function* g(): AsyncIterable<T> {
+        while (true) {
+            let ret = await wahuPostRPCCall<T>('wahu_anext', [ gkey ])
+            if (ret === undefined) { break }
+            yield ret as T
+        }
+    }
+
+    return g()
+
 }
 
 
 async function wahuPostRPCCall<T>(method: string, args: Array<any>)
-    : Promise<T | AsyncIterable<T>> {
+    : Promise<T | AsyncIterable<T> | Array<AsyncIterable<T>>> {
     /*
     使用 RPC 调用 WahuMethod
     如果后端返回的 `RPCReturn.type` 为 `normal` ，则返回 `RPCReturn.return` ，
-    如果为 `generator` ，则返回一个异步生成器
+    如果为 `generator` ，则返回一个或若干个异步生成器
     */
     let resp = await fetch('/rpc', {
         method: 'POST',
@@ -41,19 +55,20 @@ async function wahuPostRPCCall<T>(method: string, args: Array<any>)
     if (ret.type == 'normal') {
 
         return (<T>ret.return)
+
     } else if (ret.type == 'generator') {
 
-        let gkey = ret.return as string
+        if(typeof(ret.return) == 'object') {
+            let gkeys = ret.return as Array<string>
 
-        async function* g(): AsyncIterable<T> {
-            while (true) {
-                let ret = await wahuPostRPCCall<T>('wahu_anext', [ gkey ])
-                if (ret === undefined) { break }
-                yield ret as T
-            }
+            return gkeys.map(gkey => wahuPostRPCGeneratorFactory(gkey))
+        }else {
+
+            let gkey = ret.return as string
+
+            return wahuPostRPCGeneratorFactory(gkey)
         }
 
-        return g()
     } else {
         throw TypeError(`不合法的返回类型 ${ret.type}`)
     }
@@ -78,7 +93,7 @@ class WahuBackendException {
 
 interface WsRPCReturn<T> {
     type: 'normal' | 'generator' | 'error' | 'dl_progress' | 'warning' | 'failure';
-    return: T | string;
+    return: T | string | Array<string>;
     mcid: number
 }
 
@@ -105,6 +120,36 @@ function randomID(): number {
 
 let dlProgressReportCbk: Function = (ret: any) => { }
 
+function wahuWsRPCGeneratorFactory(gkey: string) {
+
+    async function* g(): AsyncGenerator<any, any, any> {
+        let sendVal = null
+
+        while (true) {
+            const ret: any = await wahuRPCCall<any>(
+                'wahu_anext',
+                [ gkey, sendVal ]
+            )
+            if (ret === null) { break }
+
+            try {
+                sendVal = yield ret as any
+
+                if(sendVal === undefined) {
+                    sendVal = null
+                }
+
+            } catch (e) {
+                if (e instanceof WahuStopIteration) {
+                    wahuRPCCall('wahu_dispose_generator', [ gkey, ])
+                    return
+                }
+            }
+        }
+    }
+    return g()
+}
+
 function handleSoecketMessage(ev: MessageEvent) {
 
     const ret = JSON.parse(ev.data) as WsRPCReturn<any>
@@ -119,35 +164,16 @@ function handleSoecketMessage(ev: MessageEvent) {
 
         } else if (ret.type == 'generator') {
 
-            const gkey = ret.return as string
+            if(typeof(ret.return) == 'object') {
+                const gkeys = ret.return as Array<string>
 
-            async function* g(): AsyncGenerator<any, any, any> {
-                let sendVal = null
+                resolve(gkeys.map(gkey=> wahuWsRPCGeneratorFactory(gkey)))
 
-                while (true) {
-                    const ret: any = await wahuRPCCall<any>(
-                        'wahu_anext',
-                        [ gkey, sendVal ]
-                    )
-                    if (ret === null) { break }
+            }else {
+                const gkey = ret.return as string
 
-                    try {
-                        sendVal = yield ret as any
-
-                        if(sendVal === undefined) {
-                            sendVal = null
-                        }
-
-                    } catch (e) {
-                        if (e instanceof WahuStopIteration) {
-                            wahuRPCCall('wahu_dispose_generator', [ gkey, ])
-                            return
-                        }
-                    }
-                }
+                resolve(wahuWsRPCGeneratorFactory(gkey))
             }
-
-            resolve(g())
 
         } else if (ret.type == 'failure') {
             const [type, repr] = ret.return

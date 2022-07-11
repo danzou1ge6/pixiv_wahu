@@ -16,6 +16,7 @@ class WahuConfig:
     file_name_template: str
     temp_download_dir: Path
     cli_script_dir: Path
+    tag_model_dir: Path
     # network
     doh_urls: Optional[list[str]]
     # pixiv

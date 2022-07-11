@@ -46,6 +46,8 @@ __pycache__/
 /build
 /pixiv_wahu.egg-info
 
+*.pyd
+
 PipFile.lock
 
 # pytest

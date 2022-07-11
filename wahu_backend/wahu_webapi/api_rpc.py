@@ -1,8 +1,9 @@
+import asyncio
 import json
 import traceback
 
 import aiohttp
-from aiohttp import web
+from aiohttp import WSMessage, web
 
 from .. import constants
 from ..http_typing import HTTPData, JSONItem
@@ -25,7 +26,7 @@ Wahu POST RPC 协议：
         'normal': 返回 JSON 数据
         'error': 返回错误的 traceback 字符串
     - return:
-        | 若 `type` 为 `normal` ，为 JSON ，否则为一个 `key` ，用于方法
+        | 若 `type` 为 `normal` ，为 JSON ，否则为一个或若干个 `key` ，用于方法
         | `anext` 的 `args` 中
 
 Wahu WebSocket RPC 协议：
@@ -85,10 +86,56 @@ async def handle_rpc_call(rpc_dict: HTTPData, ctx: WahuContext) -> dict[str, JSO
 
         return {'type': 'generator', 'return': gen_key}
 
+    if isinstance(method_ret, tuple) and all(hasattr(item, '__anext__') for item in method_ret):
+        gen_key_list = [ctx.agenerator_pool.new(gen) for gen in method_ret]
+
+        return {'type': 'generator', 'return': gen_key_list}  # type: ignore
+
     json_ret = jsonizeablize(method_ret)
 
     return {'type': 'normal', 'return': json_ret}
 
+
+async def ws_handle_msg(
+    msg: WSMessage,ws: web.WebSocketResponse, app: web.Application, ctx: WahuContext
+) -> None:
+
+    if msg.type == aiohttp.WSMsgType.TEXT:
+
+        jdata = json.loads(msg.data)
+        app.logger.debug('Backend: WS RPC 调用[%s][%s]: %s' % (
+            jdata['method'], jdata['mcid'], jdata['args']
+        ))
+
+        mcid = jdata['mcid']
+
+        try:
+            ret = await handle_rpc_call(jdata, ctx)
+            ret['mcid'] = mcid
+
+            app.logger.debug(
+                'Backend: WS RPC 返回[%s][%s]: %s' % (
+                    mcid, ret['type'],
+                    _cut_string(
+                        json.dumps(ret['return']), ctx.config.log_rpc_ret_length
+                    )
+                )
+            )
+            jret = json.dumps(ret, ensure_ascii=False)
+            await ws.send_str(jret)
+
+        except Exception as excp:
+
+            ret = {
+                'type': 'failure',
+                'mcid': mcid,
+                'return': [
+                    type(excp).__name__, str(excp)
+                ]
+            }
+
+            await ws.send_str(json.dumps(ret))
+            app.logger.exception(excp, exc_info=True)
 
 """
 后端的 RPC 端口
@@ -143,35 +190,9 @@ def register(app: web.Application, ctx: WahuContext) -> None:
         app.logger.info('Backend: WS RPC 已连接')
 
         async for msg in ws:
-            if msg.type == aiohttp.WSMsgType.TEXT:
-
-                jdata = json.loads(msg.data)
-                app.logger.debug('Backend: WS RPC 调用: %s' % jdata)
-
-                mcid = jdata['mcid']
-
-                try:
-                    ret = await handle_rpc_call(jdata, ctx)
-                    ret['mcid'] = mcid
-
-                    jret = json.dumps(ret, ensure_ascii=False)
-                    app.logger.debug(
-                        'Backend: WS RPC 返回: %s' % _cut_string(jret,
-                                                                ctx.config.log_rpc_ret_length))
-                    await ws.send_str(jret)
-
-                except Exception as excp:
-
-                    ret = {
-                        'type': 'failure',
-                        'mcid': mcid,
-                        'return': [
-                            type(excp).__name__, str(excp)
-                        ]
-                    }
-
-                    await ws.send_str(json.dumps(ret))
-                    app.logger.exception(excp, exc_info=True)
+            asyncio.create_task(ws_handle_msg(
+                msg, ws, app, ctx
+            ))
 
         app.logger.warning('Backend: WS RPC 已关闭')
 

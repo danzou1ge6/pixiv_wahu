@@ -11,6 +11,8 @@ from .illust_bookmarking import IllustBookmark
 from .pixiv_image import DownloadProgress
 from .wahu_methods.cli import CliScriptInfo
 from .wahu_methods.illust_repo import FileEntryWithURL, RepoSyncAddReport
+from .wahu_methods.lib_tag_utils import WeighedIllustTag, TagRegressionModel
+from .wahu_methods.tag_statistic import CountedIllustTag
 
 """
 暴露给前端的 dataclass
@@ -19,7 +21,8 @@ from .wahu_methods.illust_repo import FileEntryWithURL, RepoSyncAddReport
 exports = [PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserDetail,
            PixivUserPreview, IllustBookmark, FileEntry, TrendingTagIllusts,
            FileTracingConfig, RepoSyncAddReport, AccountSession,
-           FileEntryWithURL, DownloadProgress, CliScriptInfo]
+           FileEntryWithURL, DownloadProgress, CliScriptInfo, WeighedIllustTag,
+           CountedIllustTag, TagRegressionModel]
 
 exports_type = {
     'PixivRecomMode': PixivRecomMode,

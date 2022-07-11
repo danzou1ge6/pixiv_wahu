@@ -202,7 +202,7 @@ class CliIOPipeTerm(AsyncGenPipe, CliIoPipeABC):
         self.term_size = term_size  # width, height
 
         if platform.system() == 'Windows':
-            from ctypes import windll
+            from ctypes import windll  # type: ignore
             k = windll.kernel32
             k.SetConsoleMode(k.GetStdHandle(-11), 7)
 

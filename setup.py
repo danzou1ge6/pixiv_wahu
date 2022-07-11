@@ -1,4 +1,5 @@
 from setuptools import setup
+from Cython.Build import cythonize
 
 
 setup(
@@ -29,5 +30,6 @@ setup(
             'pixiv-wahu=wahu_backend:run',
             'wahu-gui=wahu_guilauncher:main'
         ]
-    }
+    },
+    ext_modules=cythonize(['wahu_backend/logistic_regression/simple_mat.pyx'])
 )

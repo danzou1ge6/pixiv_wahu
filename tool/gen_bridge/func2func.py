@@ -37,10 +37,9 @@ def _parse_ast_arg_anno(arg_anno: ast.Name | ast.Subscript | ast.Constant) -> Py
             )
 
         elif arg_anno.value.id == 'Optional':
-            assert isinstance(arg_anno.slice, ast.Name)
             return PyAnnoType(
                 'Optional',
-                args=[_parse_ast_arg_anno(arg_anno.slice)]
+                args=[_parse_ast_arg_anno(arg_anno.slice)]  # type: ignore
             )
 
         elif arg_anno.value.id == 'Literal':

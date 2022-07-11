@@ -12,7 +12,8 @@ from ..aiopixivpy.pixivpy_typing import (PixivRecomMode, PixivSearchTarget,
                                          PixivSort)
 from ..wahu_core import WahuContext, wahu_methodize
 from ..wahu_core.core_exceptions import WahuRuntimeError
-from .modded_argparser import ArgumentParser
+from .lib_modded_argparser import ArgumentParser
+from .lib_tag_utils import load_tag_model, process_illusts
 
 
 def create_pixiv_query_parser() -> argparse.ArgumentParser:
@@ -43,6 +44,15 @@ def create_pixiv_query_parser() -> argparse.ArgumentParser:
         '-S', '--sort',
         help='使用 Pixiv 搜索时的结果排序. `ddate` for 日期降序, `adate` for 日期升序, `dp` for 热门度降序',
         choices=['ddate', 'adate', 'dp'], default='ddate'
+    )
+
+    parser.add_argument(
+        '-m', '--tag-model', action='store',
+        help='使用标签逻辑回归模型计算插画得分'
+    )
+    parser.add_argument(
+        '-F', '--filter', action='store', type=float, const=0.5, nargs='?',
+        help='筛选得分'
     )
 
     return parser
@@ -192,7 +202,7 @@ class WahuPixivMethods:
     @wahu_methodize()
     async def p_query(
         cls, ctx: WahuContext, qs: str
-    ) -> AsyncGenerator[list[IllustDetail], None]:
+    ) -> AsyncGenerator[list[tuple[IllustDetail, float]], None]:
 
         args = click.parser.split_arg_string(qs)
         ns = pixiv_query_parser.parse_args(args)
@@ -212,17 +222,17 @@ class WahuPixivMethods:
                 'dp': 'popular_desc'
             }[ns.sort]
 
-            return await cls.p_ilst_search(ctx, ns.keyword, target, sort)  # type: ignore
+            ret_gen = await cls.p_ilst_search(ctx, ns.keyword, target, sort)  # type: ignore
 
         elif ns.rank is not None:
-            return await cls.p_ilst_ranking(ctx, ns.rank)
+            ret_gen = await cls.p_ilst_ranking(ctx, ns.rank)
 
         elif ns.recom:
-            return await cls.p_ilst_recom(ctx)
+            ret_gen = await cls.p_ilst_recom(ctx)
         elif ns.new:
-            return await cls.p_ilst_new(ctx)
+            ret_gen = await cls.p_ilst_new(ctx)
         elif ns.follow:
-            return await cls.p_ilst_folow(ctx)
+            ret_gen = await cls.p_ilst_folow(ctx)
 
         elif ns.bookmark is not None:
             if ns.bookmark == -1:
@@ -232,7 +242,7 @@ class WahuPixivMethods:
                     raise AioPixivPyNotLoggedIn()
             else:
                 uid = ns.bookmark
-            return await cls.p_user_bmilsts(ctx, uid)
+            ret_gen = await cls.p_user_bmilsts(ctx, uid)
 
         elif ns.iid is not None:
             iids = map(int, ns.iid.split(','))
@@ -241,13 +251,35 @@ class WahuPixivMethods:
                 yield [
                     await ctx.papi.pool_illust_detail(iid) for iid in iids
                 ]
-            return gen()
+            ret_gen = gen()
 
         elif ns.uid is not None:
-            return await cls.p_user_ilsts(ctx, ns.uid)
+            ret_gen = await cls.p_user_ilsts(ctx, ns.uid)
 
         else:
-            return await cls.p_ilst_search(ctx, ns.keyword, None, None)
+            ret_gen = await cls.p_ilst_search(ctx, ns.keyword, None, None)
+
+        if ns.tag_model is None:
+            async def unscored_ret_gen():
+                async for illusts in ret_gen:
+                    yield [(ilst, -1.) for ilst in illusts]
+            return unscored_ret_gen()
+
+        else:
+            model = load_tag_model(ctx.config.tag_model_dir / (ns.tag_model + '.toml'))
+
+            async def scored_ret_gen():
+                async for illusts in ret_gen:
+
+                    scores = process_illusts(model, illusts)
+                    zipped = zip(illusts, scores)
+                    if ns.filter is None:
+                        yield list(zipped)
+                    else:
+                        yield [item for item in zipped if item[1] > ns.filter]
+
+            return scored_ret_gen()
+
 
     @classmethod
     @wahu_methodize()

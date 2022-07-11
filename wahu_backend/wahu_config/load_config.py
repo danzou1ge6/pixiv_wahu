@@ -54,6 +54,7 @@ def load_config(config_file: Path) -> WahuConfig:
         file_name_template = d['local']['file_name_template']
         temp_download_dir = wpath(d['local']['temp_download_dir'])
         cli_script_dir = wpath(d['local']['cli_script_dir'])
+        tag_model_dir = wpath(d['local']['tag_model_dir'])
 
         # pixiv
         refresh_token_path = d['pixiv'].get('refresh_token_path', None)
@@ -116,6 +117,7 @@ def load_config(config_file: Path) -> WahuConfig:
         refresh_token_path=refresh_token_path,
         temp_download_dir=temp_download_dir,
         cli_script_dir=cli_script_dir,
+        tag_model_dir=tag_model_dir,
         doh_urls=doh_urls,
         account_session_path=account_session_path,
         illust_detail_pool_size=illust_detail_pool_size,

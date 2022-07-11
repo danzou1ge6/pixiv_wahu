@@ -17,7 +17,7 @@
 
         <q-item-label header>本地</q-item-label>
 
-        <q-expansion-item label="插画数据库" icon="data_array" v-ripple>
+        <q-expansion-item label="插画数据库" icon="data_array">
           <q-list>
             <div class="q-ml-lg">
               <q-item clickable v-for="dbn in dbNameList" :key="dbn" v-ripple>
@@ -61,7 +61,7 @@
           </q-card>
         </q-dialog>
 
-        <q-expansion-item label="插画储存库" icon="storage" v-ripple>
+        <q-expansion-item label="插画储存库" icon="storage">
           <q-list>
             <div class="q-ml-lg">
               <q-item v-for="rpn in repoNameList" :key="rpn" v-ripple clickable>
@@ -91,6 +91,11 @@
           </q-list>
         </q-expansion-item>
 
+        <q-item v-ripple clickable>
+          <q-item-section avatar><q-icon name="analytics"></q-icon></q-item-section>
+          <q-item-section @click="pushWindow({component: 'TagRegression'}); $emit('update:modelValue', false)">
+            插画标签逻辑回归</q-item-section>
+        </q-item>
 
         <q-dialog v-model="showDelRpDiag">
           <q-card>

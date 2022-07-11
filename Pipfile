@@ -12,7 +12,8 @@ prettytable = "*"
 
 [dev-packages]
 pytest = "*"
-pytest-asyncio = "*"
+pytest_asyncio = "*"
+cython = "*"
 
 [requires]
 python_version = "3.10"

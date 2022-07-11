@@ -4,7 +4,7 @@ import { Router, useRouter } from 'vue-router'
 /** 自动生成 Interface Begin */
 interface AppWindow {
     title?: string;
-    component: 'CliScriptView' | 'ErrorNotFound' | 'GetToken' | 'Home' | 'IllustDetailLocal' | 'IllustDetailPixiv' | 'IllustQueryLocal' | 'PixivSearchIllust' | 'PixivSearchUser' | 'PixivUserDetail' | 'RepoView' | 'TrendingTags';
+    component: 'CliScriptView' | 'ErrorNotFound' | 'GetToken' | 'Home' | 'IllustDetailLocal' | 'IllustDetailPixiv' | 'IllustQueryLocal' | 'PixivSearchIllust' | 'PixivSearchUser' | 'PixivUserDetail' | 'RepoView' | 'TagRegression' | 'TrendingTags';
     props?: object;
 }
 /** 自动生成 Interface End */
