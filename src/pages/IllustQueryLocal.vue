@@ -5,7 +5,7 @@
     <DatabaseActions :db-name="dbName"></DatabaseActions>
 
     <div class="absolute-bottom-right">
-      <q-btn icon="help" size="sm" flat @click="showHelp = !showHelp">
+      <q-btn icon="help" size="sm" flat @click="getHelpText(); showHelp = !showHelp">
         <q-tooltip>帮助</q-tooltip>
       </q-btn>
     </div>
@@ -130,9 +130,9 @@ function handleDelete() {
 
 const helpText = ref<string>('')
 
-onMounted(() => {
+function getHelpText() {
   wm.ibd_query_help().then(s => helpText.value = s)
-})
+}
 
 </script>
 

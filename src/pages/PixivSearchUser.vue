@@ -5,7 +5,7 @@
     <div class="text-h5 q-ma-md" style="display: inline-block">Pixiv 用户</div>
 
     <div class="float-right q-ma-md">
-      <q-btn icon="help" size="sm" flat @click="showHelp = !showHelp">
+      <q-btn icon="help" size="sm" flat @click="getHelpText(); showHelp = !showHelp">
         <q-tooltip>帮助</q-tooltip>
       </q-btn>
     </div>
@@ -162,9 +162,9 @@ function asignAndInvokeGenerator(gen: typeof generator.value) {
 }
 
 const helpText = ref<string>('')
-onMounted(() => {
+function getHelpText() {
   wm.p_query_user_help().then(s => { helpText.value = s })
-})
+}
 
 
 </script>

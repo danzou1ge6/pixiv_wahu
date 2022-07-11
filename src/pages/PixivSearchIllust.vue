@@ -5,7 +5,7 @@
     <div class="text-h5 q-ma-md" style="display: inline-block">Pixiv 插画</div>
 
     <div class="float-right q-ma-md">
-      <q-btn icon="help" size="sm" flat @click="showHelp = !showHelp">
+      <q-btn icon="help" size="sm" flat @click="getHelpText(); showHelp = !showHelp">
         <q-tooltip>帮助</q-tooltip>
       </q-btn>
     </div>
@@ -137,9 +137,9 @@ onMounted(() => {
 
 const helpText = ref<string>('')
 
-onMounted(() => {
+function getHelpText() {
   wm.p_query_help().then(t => { helpText.value = t })
-})
+}
 
 
 </script>
