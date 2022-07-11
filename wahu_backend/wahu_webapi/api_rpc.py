@@ -1,17 +1,17 @@
 import asyncio
 import json
 import traceback
+from typing import Any
 
 import aiohttp
 from aiohttp import WSMessage, web
 
 from .. import constants
-from ..http_typing import HTTPData, JSONItem
+from ..http_typing import JSONItem
 from ..wahu_core import WahuContext, WahuMethod
 from ..wahu_methods import WahuMethods
 from .obj2jsonizeable import jsonizeablize
 from .transform_args import trans_args
-from .webapi_exceptions import WahuWebAPIRPCCallError
 
 
 """
@@ -30,117 +30,139 @@ Wahu POST RPC 协议：
         | `anext` 的 `args` 中
 
 Wahu WebSocket RPC 协议：
-被动：
-    请求格式：
-        - method: str 方法名
-        - args: dict 参数字典
-        - mcid: int 标识每一次调用
-    返回格式:
-        - type:
-            'generator': 返回异步生成器
-            'normal': 返回 JSON 数据
-            'failure': 调用失败
-        - mcid: int 标识每一次调用
-        - return:
-            当 type='generator' 或 'normal' 和 POST RPC 一样
-            当 type='failure' 返回 [异常类名, 异常的字符串表示]
-
-主动：
+请求格式：
+    - method: str 方法名
+    - args: dict 参数字典
+    - mcid: int 标识每一次调用
+返回格式:
     - type:
-        'warning': 日志警告
-        'error': 日志错误
-        'dl_progress': 下载进度
+        'generator': 返回异步生成器
+        'normal': 返回 JSON 数据
+        'failure': 调用失败
+    - mcid: int 标识每一次调用
     - return:
-        当 type='warning' 或 'error' 返回日志的字符串表示
-        当 type='dl_progress 返回 JSON 化的 `list[DownloadProgress]`
+        当 type='generator' 或 'normal' 和 POST RPC 一样
+        当 type='failure' 返回 [异常类名, 异常的字符串表示]
 """
 
 
-async def handle_rpc_call(rpc_dict: HTTPData, ctx: WahuContext) -> dict[str, JSONItem]:
-    """处理一个rpc请求，返回一个可以 JSON 化的对象"""
+async def handle_call(
+    method: WahuMethod,
+    args_json: list[JSONItem],
+    ctx: WahuContext
+) -> tuple[str | list[str] | None, Any]:
 
-
-    try:
-
-        method_name = rpc_dict['method']
-        args_jsonitem = rpc_dict['args']
-
-    except KeyError as e:
-        raise WahuWebAPIRPCCallError('参数 method 或 dict 缺失') from e
-
-    if not isinstance(method_name, str):
-        raise WahuWebAPIRPCCallError('参数 method 应为 str')
-
-    if not isinstance(args_jsonitem, list):
-        raise WahuWebAPIRPCCallError('参数 args 应为 list')
-
-    method: WahuMethod = getattr(WahuMethods, method_name)
-
-    args = trans_args(method.paras, args_jsonitem)
+    args = trans_args(method.paras, args_json)
 
     method_ret = await method.apply_mdw_call(WahuMethods, args, ctx)
 
     # 处理生成器
     if hasattr(method_ret, '__anext__'):
         gen_key = ctx.agenerator_pool.new(method_ret)
+        return gen_key, None
 
-        return {'type': 'generator', 'return': gen_key}
 
     if isinstance(method_ret, tuple) and all(hasattr(item, '__anext__') for item in method_ret):
         gen_key_list = [ctx.agenerator_pool.new(gen) for gen in method_ret]
+        return gen_key_list, None
 
-        return {'type': 'generator', 'return': gen_key_list}  # type: ignore
 
     json_ret = jsonizeablize(method_ret)
+    return None, json_ret
 
-    return {'type': 'normal', 'return': json_ret}
 
 
-async def ws_handle_msg(
-    msg: WSMessage,ws: web.WebSocketResponse, app: web.Application, ctx: WahuContext
-) -> None:
+class WsMsgHandler:
+    """
+    处理每一个 ws 连接
+    """
 
-    if msg.type == aiohttp.WSMsgType.TEXT:
+    def __init__(self, ws: web.WebSocketResponse, app: web.Application, ctx: WahuContext):
+        self.ws = ws
+        self.app = app
+        self.ctx = ctx
 
-        jdata = json.loads(msg.data)
-        app.logger.debug('Backend: WS RPC 调用[%s][%s]: %s' % (
-            jdata['method'], jdata['mcid'], jdata['args']
-        ))
+        self.gen_key_record = []  # 记录与当前 ws 连接有关的生成器 key
 
-        mcid = jdata['mcid']
+    async def handle(self, msg: WSMessage) -> None:
 
-        try:
-            ret = await handle_rpc_call(jdata, ctx)
-            ret['mcid'] = mcid
+        if msg.type == aiohttp.WSMsgType.TEXT:
 
-            app.logger.debug(
-                'Backend: WS RPC 返回[%s][%s]: %s' % (
-                    mcid, ret['type'],
-                    _cut_string(
-                        json.dumps(ret['return']), ctx.config.log_rpc_ret_length
+            req = json.loads(msg.data)
+            mcid = req['mcid']
+
+            try:
+                method_name = req['method']
+                method = getattr(WahuMethods, method_name)
+                args = req['args']
+
+                if method.logged:
+                    self.app.logger.info(
+                        'Call[WS][%s]: %s(%s)'
+                        % (mcid, method_name, _cut_string(args, self.ctx.config.log_rpc_ret_length))
                     )
+
+                gen_related, ret = await handle_call(
+                    method,
+                    args,
+                    self.ctx
                 )
-            )
-            jret = json.dumps(ret, ensure_ascii=False)
-            await ws.send_str(jret)
 
-        except Exception as excp:
+                if gen_related is not None:
+                    resp = {
+                        'type': 'generator',
+                        'return': gen_related,
+                        'mcid': mcid
+                    }
+                    if isinstance(gen_related, list):
+                        self.gen_key_record += gen_related
+                    else:
+                        self.gen_key_record.append(gen_related)
 
-            ret = {
-                'type': 'failure',
-                'mcid': mcid,
-                'return': [
-                    type(excp).__name__, str(excp)
-                ]
-            }
+                    if method.logged:
+                        self.app.logger.info(
+                            'Return[WS][%s]: [Generator]%s' % (mcid, gen_related)
+                        )
 
-            await ws.send_str(json.dumps(ret))
-            app.logger.exception(excp, exc_info=True)
+                else:
+                    resp = {
+                        'type': 'normal',
+                        'return': ret,
+                        'mcid': mcid
+                    }
 
-"""
-后端的 RPC 端口
-"""
-def _cut_string(s: str, size: int):
+                    if method.logged:
+                        self.app.logger.info(
+                            'Return[WS][%s]: %s'
+                            % (mcid,
+                               _cut_string(
+                                json.dumps(ret, ensure_ascii=False),
+                                self.ctx.config.log_rpc_ret_length
+                            ))
+                        )
+
+                await self.ws.send_str(json.dumps(resp))
+
+            except Exception as excp:
+
+                resp = {
+                    'type': 'failure',
+                    'mcid': mcid,
+                    'return': [
+                        type(excp).__name__, str(excp)
+                    ]
+                }
+                self.app.logger.error(str(excp) + '\n' + traceback.format_exc())
+
+                await self.ws.send_str(json.dumps(resp))
+
+    def clear_related_gen(self):
+        for key in self.gen_key_record:
+            self.ctx.agenerator_pool.pop(key)
+
+
+def _cut_string(s: object, size: int):
+    s = str(s)
     if len(s) <= size:
         return s
     else:
@@ -154,28 +176,54 @@ def register(app: web.Application, ctx: WahuContext) -> None:
     async def postrpc(req: web.Request) -> web.Response:
         """POST 方法 RPC 接口"""
 
-        data = await req.json()
-
-        app.logger.debug('Backend: POST RPC 调用: %s' % data)
+        rpc_req = await req.json()
 
         try:
-            ret = await handle_rpc_call(data, ctx)
-            jret = json.dumps(ret, ensure_ascii=False)
+            method_name = req['method']
+            method = getattr(WahuMethods, method_name)
+            args = req['args']
 
-            app.logger.debug('Backend: POST RPC 返回: %s' % _cut_string(
-                jret.replace('\x1b', '\\x1b').replace('\r', '\\r'),
-                ctx.config.log_rpc_ret_length)
+            if method.logged:
+                app.logger.info(
+                    'Call[POST]: %s(%s)'
+                    % (method_name, _cut_string(args, ctx.config.log_rpc_ret_length))
+                )
+
+            gen_related, ret = await handle_call(
+                method,
+                args,
+                ctx
             )
 
+            if gen_related is not None:
+                rpc_resp = {
+                    'type': 'generator',
+                    'return': gen_related
+                }
+                if method.logged:
+                    app.logger.info(
+                        'Return[POST]: [Generator]%s' % gen_related
+                    )
+            else:
+                rpc_resp = {
+                    'type': 'normal',
+                    'return': ret
+                }
+                if method.logged:
+                    app.logger.info(
+                        'Return[POST]: %s'
+                        % _cut_string(json.dumps(ret, ensure_ascii=False), ctx.config.log_rpc_ret_length)
+                    )
 
-        except Exception as e:
-            jret = json.dumps({
+            resp_text = json.dumps(rpc_resp)
+
+        except Exception as excp:
+            resp_text = json.dumps({
                 'type': 'error', 'return': traceback.format_exc()
             })
+            app.logger.error(str(excp) + '\n' + traceback.format_exc())
 
-            app.logger.exception(e, exc_info=True)
-
-        resp = web.Response(text=jret, content_type='application/json')
+        resp = web.Response(text=resp_text, content_type='application/json')
 
         return resp
 
@@ -189,12 +237,13 @@ def register(app: web.Application, ctx: WahuContext) -> None:
         app['ws'] = ws
         app.logger.info('Backend: WS RPC 已连接')
 
+        handler = WsMsgHandler(ws, app, ctx)
+
         async for msg in ws:
-            asyncio.create_task(ws_handle_msg(
-                msg, ws, app, ctx
-            ))
+            asyncio.create_task(handler.handle(msg))
 
         app.logger.warning('Backend: WS RPC 已关闭')
+        handler.clear_related_gen()
 
         return ws
 

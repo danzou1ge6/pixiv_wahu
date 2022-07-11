@@ -118,8 +118,6 @@ function randomID(): number {
     return ret
 }
 
-let dlProgressReportCbk: Function = (ret: any) => { }
-
 function wahuWsRPCGeneratorFactory(gkey: string) {
 
     async function* g(): AsyncGenerator<any, any, any> {
@@ -186,25 +184,7 @@ function handleSoecketMessage(ev: MessageEvent) {
 
     } else {
 
-        if (ret.type == 'warning') {
-            pushNoti({
-                level: 'warning',
-                msg: ret.return
-            })
-
-        } else if (ret.type == 'dl_progress') {
-
-            dlProgressReportCbk(ret.return)
-
-        } else if (ret.type == 'error') {
-            pushNoti({
-                level: 'error',
-                msg: ret.return
-            })
-
-        } else {
             throw TypeError(`不合法的返回类型 ${ret.type}`)
-        }
     }
 }
 
@@ -260,11 +240,6 @@ function initWahuWsBridge(): void {
 
 }
 
-function regDlProgressReportCbk(f: Function) {
-    dlProgressReportCbk = f
-}
 
-
-
-export { wahuRPCCall, initWahuWsBridge, regDlProgressReportCbk, WahuStopIteration,
+export { wahuRPCCall, initWahuWsBridge, WahuStopIteration,
     soecketStatusReact, WahuBackendException }

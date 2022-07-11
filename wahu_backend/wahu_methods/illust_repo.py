@@ -13,7 +13,7 @@ from ..wahu_core import (GenericWahuMethod, WahuArguments, WahuContext,
                          wahu_methodize)
 from ..wahu_core.core_exceptions import WahuRuntimeError
 from ..wahu_core.repo_db_link import RepoEntry
-from .logger import logger
+from .lib_logger import logger
 
 if TYPE_CHECKING:
     from . import WahuMethods

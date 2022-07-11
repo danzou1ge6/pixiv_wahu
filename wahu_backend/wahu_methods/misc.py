@@ -1,14 +1,14 @@
 import asyncio
 import itertools
 from pathlib import Path
-from typing import Optional
 
 from wahu_backend.aiopixivpy.datastructure_illust import IllustDetail
+from wahu_backend.pixiv_image.download_status import DownloadProgress
 
 from ..wahu_core import wahu_methodize, WahuContext
 from ..wahu_core.core_exceptions import WahuRuntimeError
 
-from .logger import logger
+from .lib_logger import logger
 
 class WahuMiscMethods:
 
@@ -79,3 +79,11 @@ class WahuMiscMethods:
 
         return str(getattr(ctx.config, name))
 
+    @classmethod
+    @wahu_methodize([], logged=False)
+    async def wahu_dl_status(
+        cls, ctx: WahuContext
+    ) -> list[DownloadProgress]:
+        """返回下载进度"""
+
+        return list(ctx.image_pool.dl_stats)

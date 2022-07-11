@@ -12,7 +12,7 @@ from ..sqlite_tools.database_ctx_man import DatabaseContextManager
 from ..wahu_core import (GenericWahuMethod, WahuArguments, WahuContext,
                          wahu_methodize)
 from ..wahu_core.core_exceptions import WahuRuntimeError
-from .logger import logger
+from .lib_logger import logger
 from .lib_modded_argparser import ArgumentParser
 
 if TYPE_CHECKING:

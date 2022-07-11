@@ -8,7 +8,7 @@ import aiohttp
 
 
 from ..wahu_core import wahu_methodize, WahuContext
-from .logger import logger
+from .lib_logger import logger
 
 
 REDIRECT_URI = "https://app-api.pixiv.net/web/v1/users/auth/pixiv/callback"

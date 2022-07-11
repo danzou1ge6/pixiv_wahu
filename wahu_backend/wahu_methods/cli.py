@@ -16,6 +16,7 @@ from .pixiv import WahuPixivMethods
 from .wahu_generator import WahuGeneratorMethods
 from .get_token import WahuGetTokenMethods
 from .tag_statistic import WahuTagStatisticMethods
+from .log import WahuLoggingMethods
 
 
 @dataclass(slots=True)
@@ -52,7 +53,7 @@ def _wahu_exec_with_pipe(
 class WahuMetdodsWithCli(
     WahuIllustDatabaseMethods, WahuPixivMethods, WahuGeneratorMethods,
     IllustRepoMethods, WahuMiscMethods, WahuGetTokenMethods,
-    WahuTagStatisticMethods
+    WahuTagStatisticMethods, WahuLoggingMethods
 ):
 
     @classmethod

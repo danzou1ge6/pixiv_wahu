@@ -1,7 +1,7 @@
 import inspect
 from functools import partial
 from itertools import chain
-from typing import (TYPE_CHECKING, Any, Callable, Concatenate, Coroutine,
+from typing import (TYPE_CHECKING, Callable, Concatenate, Coroutine,
                     Generic, ParamSpec, Type, TypeVar)
 
 from .core_exceptions import WahuMethodArgsKeyError
@@ -25,7 +25,8 @@ class WahuMethod(Generic[RT, P]):
         self,
         name: str,
         f: Callable[Concatenate['WahuMethods', P], Coroutine[None, None, RT]], *,
-        middlewares: list[WahuMiddleWare[RT]]
+        middlewares: list[WahuMiddleWare[RT]],
+        logged: bool = True
     ):
         """
         - `:param name:` 方法的名称，用于在 `WahuMethods` 的解析中
@@ -38,6 +39,8 @@ class WahuMethod(Generic[RT, P]):
 
         self.paras = list(inspect.signature(f).parameters.values())[2:]
         self.arg_names = [para.name for para in self.paras]
+
+        self.logged = logged
 
     async def dict_call(
         self,
@@ -89,6 +92,7 @@ class WahuMethod(Generic[RT, P]):
 
 def wahu_methodize(
     middlewares: list[WahuMiddleWare] = [],
+    logged: bool = True
 ) -> Callable[[Callable[Concatenate['WahuMethods', P], Coroutine[None, None, RT]]], WahuMethod[RT, P]]:
     """
     `WahuMethod` 的工厂函数，将一个异步函数转换为带有中间件的 `WahuMethod`
@@ -99,7 +103,8 @@ def wahu_methodize(
         h = WahuMethod(
             g.__name__,
             g,
-            middlewares=middlewares
+            middlewares=middlewares,
+            logged=logged
         )
 
         return h

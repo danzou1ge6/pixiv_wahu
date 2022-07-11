@@ -6,16 +6,6 @@ class WahuWebAPIError(Exception):
     pass
 
 
-class WahuWebAPIRPCCallError(WahuWebAPIError):
-    """当 RPC 调用格式错误时抛出"""
-
-    def __init__(self, msg: str):
-        self.msg = msg
-
-    def __str__(self) -> str:
-        return self.msg
-
-
 class WahuJsonizeablizeFail(WahuWebAPIError):
     """当将对象转换为可以 JSON 化的列表或者字典时失败"""
 

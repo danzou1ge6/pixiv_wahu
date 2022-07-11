@@ -35,9 +35,10 @@
 
 
 <script setup lang="ts">
-import { AppNotification, appAllNoti } from '../plugins/notifications'
-import { ref, watch } from 'vue'
+import { AppNotification, appAllNoti, pushNoti } from '../plugins/notifications'
+import { onMounted, ref, watch } from 'vue'
 import { notificationTime } from '../constants'
+import { wahu_logger_client } from '../plugins/wahuBridge/methods'
 
 
 interface Props {
@@ -50,6 +51,29 @@ const emits = defineEmits<{
   (e: 'update:modelValue', id: boolean): void
 }>()
 
+async function listenLogGen(gen: AsyncGenerator<[number, string], undefined, null>) {
+  while(true) {
+    const ret = await gen.next()
+
+    if(ret.value === undefined) {
+      throw(new Error('logGen returned undefined'))
+    }
+
+    const [level, msg] = ret.value
+    if(level == 30) { // warning
+      pushNoti({level: 'warning', msg})
+    }else if(level >= 40) {  // error, fatal
+      pushNoti({level: 'error', msg})
+    }
+  }
+}
+
+onMounted(() => {
+  wahu_logger_client()
+    .then(logGen => {
+      listenLogGen(logGen)
+    })
+})
 
 
 const displayedNotifications = ref<Array<AppNotification>>([])
@@ -134,5 +158,6 @@ pre {
 
 .semi-transparent {
   opacity: 0.8;
+  backdrop-filter: blur(5px);
 }
 </style>

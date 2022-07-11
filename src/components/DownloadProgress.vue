@@ -21,9 +21,7 @@
               >
               </q-linear-progress>
               <div class="text-body-2">
-                {{
-                `${(dl.downloaded_size / 1024).toFixed(0)} / ${dl.total_size === null ? '':(dl.total_size / 1024).toFixed(0)} kb`
-                }}
+                {{ (dl.downloaded_size / 1024).toFixed(0) }} / {{ dl.total_size === null ? '':(dl.total_size / 1024).toFixed(0) }} kb
               </div>
             </td>
             <td>
@@ -38,7 +36,6 @@
 
 <script setup lang="ts">
 import * as wm from '../plugins/wahuBridge/methods'
-import { regDlProgressReportCbk } from '../plugins/wahuBridge/client'
 import { computed, onMounted, ref } from 'vue';
 
 const props = defineProps<{ modelValue: boolean }>()
@@ -48,13 +45,20 @@ const dlProgList = ref<Array<wm.DownloadProgress>>([])
 
 const showFinished = ref<boolean>(false)
 
-function updateDlProg(val: Array<wm.DownloadProgress>) {
-  dlProgList.value = val
+
+function listen() {
+  wm.wahu_dl_status()
+    .then(status => {
+      dlProgList.value = status
+    })
+    .then(() => {
+      setTimeout(listen, 500)
+    })
 }
 
 
 onMounted(() => {
-  regDlProgressReportCbk(updateDlProg)
+  listen()
 })
 
 function statusStringFor(val: string) {

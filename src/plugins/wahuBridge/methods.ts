@@ -362,9 +362,15 @@ export async function wahu_client_exec (args: Array<string>, term_size: [number,
 export async function wahu_dispose_generator (key: string) : Promise<boolean> {
     return await wahuRPCCall('wahu_dispose_generator', [key])as boolean}
 
+export async function wahu_dl_status () : Promise<Array<DownloadProgress>> {
+    return await wahuRPCCall('wahu_dl_status', [])as Array<DownloadProgress>}
+
 export async function wahu_download (iids: Array<number>) : Promise<null> {
     return await wahuRPCCall('wahu_download', [iids])as null}
 
 export async function wahu_exec (cmd: string) : Promise<AsyncGenerator<string, undefined, null | string>> {
     return await wahuRPCCall('wahu_exec', [cmd])as AsyncGenerator<string, undefined, null | string>}
+
+export async function wahu_logger_client () : Promise<AsyncGenerator<[number, string], undefined, null>> {
+    return await wahuRPCCall('wahu_logger_client', [])as AsyncGenerator<[number, string], undefined, null>}
 
