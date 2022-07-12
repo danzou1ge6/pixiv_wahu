@@ -15,7 +15,40 @@
           icon="check"></q-btn>
       </div>
     </div>
+    <div class="absolute-top-right">
+      <q-btn icon="help" @click="showHelp = true" flat size="sm"></q-btn>
+    </div>
   </q-card>
+
+  <q-dialog full-width v-model="showHelp">
+    <q-card>
+      <q-card-section>
+        <div class="text-body-1">
+          <ul>
+            <li>第一步，选择正负样本. 可以选择多个数据库中的插画作为正负样本. 重复插画不会被处理，将影响结果.</li>
+            <li>第二步，选择要统计的标签. 通过「最小次数」滑动条可以控制选中标签在样本中出现的最少次数. 也可以在表中手动选择</li>
+            <li>
+              第三步，设定各个超参数求解模型.
+              <ul>
+                <li>批处理批大小：每次迭代使用的样本数</li>
+                <li>学习率：梯度下降法的学习率</li>
+                <li>迭代次数：执行梯度下降的次数</li>
+                <li>测试集占比：测试集用于评估模型的准确率</li>
+              </ul>
+            </li>
+            <li>第四步，评估模型. 求解完成后会出现「损失曲线」「测试集准确率」的曲线，无论「迭代次数」设为多少，图中总是有 100 个左右数据点</li>
+            <li>
+              第五步，保存模型. 求解完成后会出现模型参数表格. 在表格下方可以给定一个「模型名」保存到配置文件中的 `tag_model_dir` 目录中.
+              保存后可以在「搜索 Pixiv 插画」页面使用「-m ;&lt模型名;&gt」选项调用模型
+            </li>
+          </ul>
+        </div>
+      </q-card-section>
+      <q-card-actions align="right">
+        <q-btn flat color="primary" @click="showHelp = false">关闭</q-btn>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 
   <q-card class="q-ma-sm">
     <q-table :rows="countedTags" row-key="name" selection="multiple" v-model:selected="selectedTags"
@@ -94,7 +127,7 @@
 
     <q-card-actions align="right">
       <q-btn flat color="primary" label="保存" icon="save">
-        <q-menu transition-show="slide-right" transition-hide="slide-left">
+        <q-menu transition-show="slide-left" transition-hide="slide-right" v-model="showSaveInput">
           <q-input label="模型名" underlined class="q-ma-md" @keyup.enter="saveModel"
             v-model="modelName" @input="saveModelError = false" autofocus></q-input>
         </q-menu>
@@ -276,13 +309,20 @@ function runRegression() {
 
 const modelName = ref<string>('')
 const saveModelError = ref<boolean>(false)
+const showSaveInput = ref<boolean>(false)
 
 function saveModel() {
   wm.ibdtag_write_model(model.value as wm.TagRegressionModel, modelName.value)
     .then(() => {
-      pushNoti({level: 'success', msg: '保存成功'})
+      showSaveInput.value = false
+      wm.get_config('tag_model_dir')
+        .then(dir => {
+          pushNoti({level: 'success', msg: `已保存为 ${dir}/${modelName.value}.toml`})
+        })
     })
     .catch(err => saveModelError.value = true)
 }
+
+const showHelp = ref(false)
 
 </script>
