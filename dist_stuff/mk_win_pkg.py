@@ -65,6 +65,11 @@ def remove_useless():
         shutil.rmtree(str(dist_base / 'Lib' / 'site-packages' / 'setuptools'))
         shutil.rmtree(str(dist_base / 'Lib' / 'site-packages' / 'pkg_resources'))
         shutil.rmtree(str(dist_base / 'Scripts'))
+
+        for item in (dist_base / 'Lib' / 'site-packages' / 'aiohttp').iterdir():
+            if item.is_file() and item.suffix == '.c':
+                item.unlink()
+                
     except FileNotFoundError:
         pass
 
