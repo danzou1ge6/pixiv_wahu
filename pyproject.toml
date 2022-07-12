@@ -5,13 +5,11 @@ log_cli = true
 
 [tool.pyright]
 exclude = ["dist/**/*", "build/**/*"]
-ignore = ["wahu_guilauncher/*"]
 
 [tool.setuptools.package-dir]
 wahu_backend = "wahu_backend"
 wahu_frontend = "dist/wahu_frontend"
 wahu_cli = "wahu_cli"
-wahu_guilauncher = "wahu_guilauncher"
 
 [tool.setuptools.package-data]
 wahu_frontend = ["*"]
@@ -37,4 +35,3 @@ accelerate_fuzzywuzzy = ["python-levenshtein"]
 
 [project.scripts]
 pixiv-wahu = "wahu_backend:run"
-wahu-gui = "wahu_guilauncher"

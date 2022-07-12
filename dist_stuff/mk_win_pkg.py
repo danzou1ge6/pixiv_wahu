@@ -7,17 +7,13 @@ from zipfile import ZIP_DEFLATED, ZipFile as ZipFileOriginal
 backend_src = Path('wahu_backend')
 frontend_emit = Path('dist/wahu_frontend')
 dist_base = Path('dist/package_base')
+dist_dir = Path('dist')
 dist_stuff = Path('dist_stuff')
+dist_bundle = Path('dist/PixivWahu-win64.zip')
 
 COMPRESSION_METHOD = ZIP_DEFLATED
 COMPRESSION_LEVEL = 9
 
-if len(sys.argv) > 1 and sys.argv[1] == 'gui':
-    gui_launcher = True
-    dist_bundle = Path('dist/PixivWahu-win64-guilauncher.zip')
-else:
-    gui_launcher = False
-    dist_bundle = Path('dist/PixivWahu-win64.zip')
 
 class ZipFile(ZipFileOriginal):
     def write_dir(self, p: Path, arcname: Path):
@@ -45,20 +41,22 @@ def compile_launcher():
     os.system(f'gcc -o "{cli_launcher_path}" -I "{pypath}/include"'
               f' {dist_stuff}/launcher.c "{pypath}/python310.dll" -municode')
 
-def write_tkinter(zf: ZipFile):
-        print('Write Tkinter stuff')
-
-        pypath = Path(sys.executable).parent
-
-        zf.write_dir(pypath / 'tcl', Path('tcl'))
-        zf.write_dir(pypath / 'Lib' / 'tkinter', Path('tkinter'))
-        zf.write(pypath / 'DLLs' / '_tkinter.pyd', '_tkinter.pyd')
-        zf.write(pypath / 'DLLs' / 'tcl86t.dll', 'tcl86t.dll')
-        zf.write(pypath / 'DLLs' / 'tk86t.dll', 'tk86t.dll')
-
 def edit__path():
     with open(dist_base / 'python310._pth', 'a', encoding='utf-8') as wf:
         wf.write('\n./Lib/site-packages\n')
+
+def download_embed_python():
+    print(f'Downloading Python Embed to {dist_dir / "python.zip"}')
+    os.system(f'curl -o {dist_dir / "python.zip"} https://www.python.org/ftp/python/3.10.4/python-3.10.4-embed-amd64.zip')
+
+    print(f'Decompressing to {dist_base}')
+    with ZipFile(dist_dir / 'python.zip', 'r') as zf:
+        zf.extractall(dist_base)
+
+def install_wheel():
+    from os import listdir, system
+    whl = [f for f in listdir(dist_dir) if f.endswith('.whl')][0]
+    os.system(f'pipenv run pip install dist/{whl}[accelerate_fuzzywuzzy] --prefix dist/package_base -I')
 
 def remove_useless():
     try:
@@ -66,14 +64,22 @@ def remove_useless():
         shutil.rmtree(str(dist_base / 'Lib' / 'site-packages' / 'pkg_resources'))
         shutil.rmtree(str(dist_base / 'Scripts'))
 
-        for item in (dist_base / 'Lib' / 'site-packages' / 'aiohttp').iterdir():
-            if item.is_file() and item.suffix == '.c':
-                item.unlink()
-                
+        for package in ('aiohttp', 'wahu_backend.logistic_regression'):
+
+            for item in (dist_base / 'Lib' / 'site-packages' / package).iterdir():
+                if item.is_file() and item.suffix == '.c':
+                    item.unlink()
+
     except FileNotFoundError:
         pass
 
 def main():
+    if dist_bundle.exists():
+        dist_bundle.unlink()
+
+    download_embed_python()
+
+    install_wheel()  # from dist_dir / *.whl
 
     remove_useless()
 
@@ -101,13 +107,6 @@ def main():
 
         print('Write subscrip')
         zf.write(dist_stuff / 'ibd_subscrip.toml', 'user/ibd_subscrip.toml')
-
-        if gui_launcher:
-            print('Write Tkinter')
-            write_tkinter(zf)
-
-            print('Write GUI launcher script')
-            zf.write(dist_stuff / 'WahuLauncher.ps1', 'WahuLauncher.ps1')
 
 
 if __name__ == '__main__':

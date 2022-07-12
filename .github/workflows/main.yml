@@ -1,0 +1,81 @@
+name: build-windows
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  bdist-windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 建立 node 环境
+        uses: actions/setup-node@v3
+        with:
+           node-version: 14
+
+      - name: 建立 quasar 环境
+        run: |
+          npm i -g yarn
+          yarn global add @quasar/cli
+      - name: 安装前端依赖
+        run: yarn install
+
+      - name: 打包前端
+        run: |
+          yarn quasar build
+          compress-archive -path dist/wahu_frontend -destinationpath dist/wahu_frontend.zip
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: frontend-emits
+          path: dist/wahu_frontend.zip
+
+      - name: 安装 pip, pipenv
+        run: |
+          python -m pip install pip==22.0.4 pipenv
+
+      - name: 升级 setuptools, wheel
+        run: |
+          pipenv run pip install --upgrade setuptools wheel
+
+      - name: pipenv lock
+        run: pipenv lock
+
+      - name: 建立 python 环境
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+          architecture: x64
+          cache: 'pipenv'
+
+      - name: 构建 wheel
+        run: pipenv run python setup.py bdist_wheel
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: wheel
+          path: dist/*.whl
+
+      - name: 打包
+        run: python dist_stuff/mk_win_pkg.py
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: windows-package
+          path: |
+            dist/PixivWahu-win64.zip
+
+      - name: 创建 Release
+        if: ${{ github.event_name == 'push' }}
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            dist/PixivWahu-win64.zip
+            dist/*.whl
