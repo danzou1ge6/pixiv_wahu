@@ -44,7 +44,9 @@ jobs:
           pipenv run pip install --upgrade setuptools wheel
 
       - name: pipenv lock
-        run: pipenv lock
+        run: |
+          pipenv lock
+          pipenv install
 
       - name: 建立 python 环境
         uses: actions/setup-python@v3
