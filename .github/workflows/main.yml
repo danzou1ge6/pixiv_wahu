@@ -46,7 +46,7 @@ jobs:
       - name: pipenv lock
         run: |
           pipenv lock
-          pipenv install
+          pipenv install -d
 
       - name: 建立 python 环境
         uses: actions/setup-python@v3
