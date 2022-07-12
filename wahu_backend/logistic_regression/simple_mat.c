@@ -4,12 +4,12 @@
 {
     "distutils": {
         "depends": [],
-        "name": "simple_mat",
+        "name": "wahu_backend.logistic_regression.simple_mat",
         "sources": [
-            "wahu_backend/logistic_regression/simple_mat.pyx"
+            "./wahu_backend/logistic_regression/simple_mat.pyx"
         ]
     },
-    "module_name": "simple_mat"
+    "module_name": "wahu_backend.logistic_regression.simple_mat"
 }
 END: Cython Metadata */
 
@@ -703,8 +703,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__simple_mat
-#define __PYX_HAVE_API__simple_mat
+#define __PYX_HAVE__wahu_backend__logistic_regression__simple_mat
+#define __PYX_HAVE_API__wahu_backend__logistic_regression__simple_mat
 /* Early includes */
 #include <string.h>
 #include <stdlib.h>
@@ -923,36 +923,36 @@ static const char *__pyx_f[] = {
 };
 
 /*--- Type declarations ---*/
-struct __pyx_obj_10simple_mat_Mat;
-struct __pyx_t_10simple_mat__Mat;
+struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat;
+struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat;
 
-/* "simple_mat.pxd":1
+/* "wahu_backend/logistic_regression/simple_mat.pxd":1
  * cdef struct _Mat:             # <<<<<<<<<<<<<<
  *     #
  *     #
  */
-struct __pyx_t_10simple_mat__Mat {
+struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat {
   int rows;
   int cols;
   double *data;
 };
 
-/* "simple_mat.pxd":30
+/* "wahu_backend/logistic_regression/simple_mat.pxd":30
  * cdef int _Mat_divedby_double(_Mat* mat, double scaler, _Mat* ret)
  * 
  * cdef class Mat:             # <<<<<<<<<<<<<<
  *     cdef _Mat* _mat
  *     @staticmethod
  */
-struct __pyx_obj_10simple_mat_Mat {
+struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat {
   PyObject_HEAD
-  struct __pyx_vtabstruct_10simple_mat_Mat *__pyx_vtab;
-  struct __pyx_t_10simple_mat__Mat *_mat;
+  struct __pyx_vtabstruct_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_vtab;
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *_mat;
 };
 
 
 
-/* "simple_mat.pyx":259
+/* "wahu_backend/logistic_regression/simple_mat.pyx":259
  * 
  * 
  * cdef class Mat:             # <<<<<<<<<<<<<<
@@ -960,11 +960,11 @@ struct __pyx_obj_10simple_mat_Mat {
  *     def __cinit__(self, lst=None):
  */
 
-struct __pyx_vtabstruct_10simple_mat_Mat {
-  PyObject *(*_from_pointer)(struct __pyx_t_10simple_mat__Mat *);
-  struct __pyx_t_10simple_mat__Mat *(*_new__mat)(int, int);
+struct __pyx_vtabstruct_12wahu_backend_19logistic_regression_10simple_mat_Mat {
+  PyObject *(*_from_pointer)(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *);
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *(*_new__mat)(int, int);
 };
-static struct __pyx_vtabstruct_10simple_mat_Mat *__pyx_vtabptr_10simple_mat_Mat;
+static struct __pyx_vtabstruct_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_vtabptr_12wahu_backend_19logistic_regression_10simple_mat_Mat;
 
 /* --- Runtime support code (head) --- */
 /* Refnanny.proto */
@@ -1363,8 +1363,8 @@ static int __Pyx_ExportFunction(const char *name, void (*f)(void), const char *s
 /* InitStrings.proto */
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
-static PyObject *__pyx_f_10simple_mat_3Mat__from_pointer(struct __pyx_t_10simple_mat__Mat *__pyx_v__mat); /* proto*/
-static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat_3Mat__new__mat(int __pyx_v_rows, int __pyx_v_cols); /* proto*/
+static PyObject *__pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__mat); /* proto*/
+static struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(int __pyx_v_rows, int __pyx_v_cols); /* proto*/
 
 /* Module declarations from 'libc.string' */
 
@@ -1372,29 +1372,29 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat_3Mat__new__mat(int
 
 /* Module declarations from 'libc.math' */
 
-/* Module declarations from 'simple_mat' */
-static PyTypeObject *__pyx_ptype_10simple_mat_Mat = 0;
-static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat__Mat_new(int, int); /*proto*/
-static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *); /*proto*/
-static int __pyx_f_10simple_mat__Mat_copy(struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *); /*proto*/
-static int __pyx_f_10simple_mat__Mat_transpose(struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *); /*proto*/
-static int __pyx_f_10simple_mat__Mat_add(struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *); /*proto*/
-static int __pyx_f_10simple_mat__Mat_add_double(struct __pyx_t_10simple_mat__Mat *, double, struct __pyx_t_10simple_mat__Mat *); /*proto*/
-static int __pyx_f_10simple_mat__Mat_subtract(struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *); /*proto*/
-static int __pyx_f_10simple_mat__Mat_subtract_double(struct __pyx_t_10simple_mat__Mat *, double, struct __pyx_t_10simple_mat__Mat *); /*proto*/
-static int __pyx_f_10simple_mat__Mat_subtractedby_double(struct __pyx_t_10simple_mat__Mat *, double, struct __pyx_t_10simple_mat__Mat *); /*proto*/
-static int __pyx_f_10simple_mat__Mat_scale(struct __pyx_t_10simple_mat__Mat *, double, struct __pyx_t_10simple_mat__Mat *); /*proto*/
-static int __pyx_f_10simple_mat__Mat_exp(struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *); /*proto*/
-static int __pyx_f_10simple_mat__Mat_log(struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *); /*proto*/
-static int __pyx_f_10simple_mat__Mat_mul(struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *); /*proto*/
-static int __pyx_f_10simple_mat__Mat_div(struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *); /*proto*/
-static int __pyx_f_10simple_mat__Mat_divedby_double(struct __pyx_t_10simple_mat__Mat *, double, struct __pyx_t_10simple_mat__Mat *); /*proto*/
-static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *, int, struct __pyx_t_10simple_mat__Mat *); /*proto*/
-#define __Pyx_MODULE_NAME "simple_mat"
-extern int __pyx_module_is_main_simple_mat;
-int __pyx_module_is_main_simple_mat = 0;
+/* Module declarations from 'wahu_backend.logistic_regression.simple_mat' */
+static PyTypeObject *__pyx_ptype_12wahu_backend_19logistic_regression_10simple_mat_Mat = 0;
+static struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_new(int, int); /*proto*/
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_dot(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *); /*proto*/
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_copy(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *); /*proto*/
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_transpose(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *); /*proto*/
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_add(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *); /*proto*/
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_add_double(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, double, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *); /*proto*/
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_subtract(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *); /*proto*/
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_subtract_double(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, double, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *); /*proto*/
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_subtractedby_double(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, double, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *); /*proto*/
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_scale(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, double, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *); /*proto*/
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_exp(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *); /*proto*/
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_log(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *); /*proto*/
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_mul(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *); /*proto*/
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_div(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *); /*proto*/
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_divedby_double(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, double, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *); /*proto*/
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_average(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, int, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *); /*proto*/
+#define __Pyx_MODULE_NAME "wahu_backend.logistic_regression.simple_mat"
+extern int __pyx_module_is_main_wahu_backend__logistic_regression__simple_mat;
+int __pyx_module_is_main_wahu_backend__logistic_regression__simple_mat = 0;
 
-/* Implementation of 'simple_mat' */
+/* Implementation of 'wahu_backend.logistic_regression.simple_mat' */
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin_MemoryError;
 static PyObject *__pyx_builtin_enumerate;
@@ -1442,7 +1442,6 @@ static const char __pyx_k_IndexError[] = "IndexError";
 static const char __pyx_k_ValueError[] = "ValueError";
 static const char __pyx_k_add_double[] = "add_double";
 static const char __pyx_k_pyx_vtable[] = "__pyx_vtable__";
-static const char __pyx_k_simple_mat[] = "simple_mat";
 static const char __pyx_k_MemoryError[] = "MemoryError";
 static const char __pyx_k_float_Mat_2[] = "\345\217\252\350\203\275\350\242\253 float / Mat \345\207\217";
 static const char __pyx_k_float_Mat_3[] = "\345\217\252\350\203\275\345\207\217\345\216\273 float / Mat";
@@ -1456,6 +1455,7 @@ static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_subtractedby_double[] = "subtractedby_double";
 static const char __pyx_k_no_default___reduce___due_to_non[] = "no default __reduce__ due to non-trivial __cinit__";
 static const char __pyx_k_wahu_backend_logistic_regression[] = "wahu_backend\\logistic_regression\\simple_mat.pyx";
+static const char __pyx_k_wahu_backend_logistic_regression_2[] = "wahu_backend.logistic_regression.simple_mat";
 static PyObject *__pyx_kp_u_;
 static PyObject *__pyx_n_s_IndexError;
 static PyObject *__pyx_n_s_Mat;
@@ -1504,43 +1504,43 @@ static PyObject *__pyx_n_s_rows;
 static PyObject *__pyx_n_s_scale;
 static PyObject *__pyx_n_s_setstate;
 static PyObject *__pyx_n_s_setstate_cython;
-static PyObject *__pyx_n_s_simple_mat;
 static PyObject *__pyx_n_s_subtract;
 static PyObject *__pyx_n_s_subtract_double;
 static PyObject *__pyx_n_s_subtractedby_double;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_val;
 static PyObject *__pyx_kp_s_wahu_backend_logistic_regression;
-static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, PyObject *__pyx_v_lst); /* proto */
-static void __pyx_pf_10simple_mat_3Mat_2__dealloc__(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_4rows___get__(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_4cols___get__(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_4as_list(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_6dot(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_10simple_mat_Mat *__pyx_v_other); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_8copy(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_10__str__(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_1T___get__(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_12add(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_10simple_mat_Mat *__pyx_v_other); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_14subtract(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_10simple_mat_Mat *__pyx_v_other); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_16add_double(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_18subtract_double(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_20subtractedby_double(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_22scale(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_24mul(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_10simple_mat_Mat *__pyx_v_other); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_26div(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_10simple_mat_Mat *__pyx_v_other); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_28divedby_double(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_30average(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, PyObject *__pyx_v_axis); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_32__add__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_36__mul__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_40__getitem__(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, PyObject *__pyx_v_idx); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_42__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_10simple_mat_Mat *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_10simple_mat_3Mat_44__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_10simple_mat_many(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_rows, int __pyx_v_cols, double __pyx_v_val); /* proto */
-static PyObject *__pyx_pf_10simple_mat_2exp_mat(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_10simple_mat_Mat *__pyx_v_mat); /* proto */
-static PyObject *__pyx_pf_10simple_mat_4log_mat(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_10simple_mat_Mat *__pyx_v_mat); /* proto */
-static PyObject *__pyx_tp_new_10simple_mat_Mat(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_n_s_wahu_backend_logistic_regression_2;
+static int __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat___cinit__(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, PyObject *__pyx_v_lst); /* proto */
+static void __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_2__dealloc__(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_4rows___get__(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_4cols___get__(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_4as_list(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_6dot(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_other); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_8copy(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_10__str__(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_1T___get__(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_12add(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_other); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_14subtract(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_other); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_16add_double(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_18subtract_double(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_20subtractedby_double(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_22scale(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_24mul(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_other); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_26div(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_other); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_28divedby_double(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_30average(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, PyObject *__pyx_v_axis); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_32__add__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_36__mul__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_40__getitem__(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, PyObject *__pyx_v_idx); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_42__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_44__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_many(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_rows, int __pyx_v_cols, double __pyx_v_val); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_2exp_mat(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_mat); /* proto */
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_4log_mat(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_mat); /* proto */
+static PyObject *__pyx_tp_new_12wahu_backend_19logistic_regression_10simple_mat_Mat(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_2;
@@ -1561,7 +1561,7 @@ static PyObject *__pyx_codeobj__16;
 static PyObject *__pyx_codeobj__18;
 /* Late includes */
 
-/* "simple_mat.pyx":8
+/* "wahu_backend/logistic_regression/simple_mat.pyx":8
  * 
  * 
  * cdef _Mat* _Mat_new(int rows, int cols):             # <<<<<<<<<<<<<<
@@ -1569,25 +1569,25 @@ static PyObject *__pyx_codeobj__18;
  *     cdef double * data = <double*> malloc(sizeof(double) * rows * cols)
  */
 
-static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat__Mat_new(int __pyx_v_rows, int __pyx_v_cols) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v_mat;
+static struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_new(int __pyx_v_rows, int __pyx_v_cols) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_mat;
   double *__pyx_v_data;
-  struct __pyx_t_10simple_mat__Mat *__pyx_r;
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("_Mat_new", 0);
 
-  /* "simple_mat.pyx":9
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":9
  * 
  * cdef _Mat* _Mat_new(int rows, int cols):
  *     cdef _Mat* mat = <_Mat*> malloc(sizeof(_Mat))             # <<<<<<<<<<<<<<
  *     cdef double * data = <double*> malloc(sizeof(double) * rows * cols)
  * 
  */
-  __pyx_v_mat = ((struct __pyx_t_10simple_mat__Mat *)malloc((sizeof(struct __pyx_t_10simple_mat__Mat))));
+  __pyx_v_mat = ((struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *)malloc((sizeof(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat))));
 
-  /* "simple_mat.pyx":10
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":10
  * cdef _Mat* _Mat_new(int rows, int cols):
  *     cdef _Mat* mat = <_Mat*> malloc(sizeof(_Mat))
  *     cdef double * data = <double*> malloc(sizeof(double) * rows * cols)             # <<<<<<<<<<<<<<
@@ -1596,7 +1596,7 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat__Mat_new(int __pyx
  */
   __pyx_v_data = ((double *)malloc((((sizeof(double)) * __pyx_v_rows) * __pyx_v_cols)));
 
-  /* "simple_mat.pyx":12
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":12
  *     cdef double * data = <double*> malloc(sizeof(double) * rows * cols)
  * 
  *     if mat is NULL or data is NULL:             # <<<<<<<<<<<<<<
@@ -1614,7 +1614,7 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat__Mat_new(int __pyx
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":13
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":13
  * 
  *     if mat is NULL or data is NULL:
  *         return NULL             # <<<<<<<<<<<<<<
@@ -1624,7 +1624,7 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat__Mat_new(int __pyx
     __pyx_r = NULL;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":12
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":12
  *     cdef double * data = <double*> malloc(sizeof(double) * rows * cols)
  * 
  *     if mat is NULL or data is NULL:             # <<<<<<<<<<<<<<
@@ -1633,7 +1633,7 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat__Mat_new(int __pyx
  */
   }
 
-  /* "simple_mat.pyx":15
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":15
  *         return NULL
  * 
  *     mat.data = data             # <<<<<<<<<<<<<<
@@ -1642,7 +1642,7 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat__Mat_new(int __pyx
  */
   __pyx_v_mat->data = __pyx_v_data;
 
-  /* "simple_mat.pyx":16
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":16
  * 
  *     mat.data = data
  *     mat.rows = rows             # <<<<<<<<<<<<<<
@@ -1651,7 +1651,7 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat__Mat_new(int __pyx
  */
   __pyx_v_mat->rows = __pyx_v_rows;
 
-  /* "simple_mat.pyx":17
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":17
  *     mat.data = data
  *     mat.rows = rows
  *     mat.cols = cols             # <<<<<<<<<<<<<<
@@ -1660,7 +1660,7 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat__Mat_new(int __pyx
  */
   __pyx_v_mat->cols = __pyx_v_cols;
 
-  /* "simple_mat.pyx":19
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":19
  *     mat.cols = cols
  * 
  *     return mat             # <<<<<<<<<<<<<<
@@ -1670,7 +1670,7 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat__Mat_new(int __pyx
   __pyx_r = __pyx_v_mat;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":8
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":8
  * 
  * 
  * cdef _Mat* _Mat_new(int rows, int cols):             # <<<<<<<<<<<<<<
@@ -1684,7 +1684,7 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat__Mat_new(int __pyx
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":22
+/* "wahu_backend/logistic_regression/simple_mat.pyx":22
  * 
  * 
  * cdef int _Mat_dot(_Mat *a, _Mat *b, _Mat *ret):             # <<<<<<<<<<<<<<
@@ -1692,7 +1692,7 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat__Mat_new(int __pyx
  *     #  a  b  -1
  */
 
-static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *__pyx_v_a, struct __pyx_t_10simple_mat__Mat *__pyx_v_b, struct __pyx_t_10simple_mat__Mat *__pyx_v_ret) {
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_dot(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_a, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_b, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_ret) {
   int __pyx_v_i;
   int __pyx_v_j;
   int __pyx_v_k;
@@ -1712,7 +1712,7 @@ static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *__pyx
   int __pyx_t_12;
   __Pyx_RefNannySetupContext("_Mat_dot", 0);
 
-  /* "simple_mat.pyx":27
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":27
  *     #   ret  -2
  * 
  *     if a.cols != b.rows:             # <<<<<<<<<<<<<<
@@ -1722,7 +1722,7 @@ static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *__pyx
   __pyx_t_1 = ((__pyx_v_a->cols != __pyx_v_b->rows) != 0);
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":28
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":28
  * 
  *     if a.cols != b.rows:
  *         return -1             # <<<<<<<<<<<<<<
@@ -1732,7 +1732,7 @@ static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *__pyx
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":27
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":27
  *     #   ret  -2
  * 
  *     if a.cols != b.rows:             # <<<<<<<<<<<<<<
@@ -1741,7 +1741,7 @@ static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *__pyx
  */
   }
 
-  /* "simple_mat.pyx":30
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":30
  *         return -1
  * 
  *     if a.rows != ret.rows or b.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -1759,7 +1759,7 @@ static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *__pyx
   __pyx_L5_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":31
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":31
  * 
  *     if a.rows != ret.rows or b.cols != ret.cols:
  *         return -2             # <<<<<<<<<<<<<<
@@ -1769,7 +1769,7 @@ static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *__pyx
     __pyx_r = -2;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":30
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":30
  *         return -1
  * 
  *     if a.rows != ret.rows or b.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -1778,7 +1778,7 @@ static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *__pyx
  */
   }
 
-  /* "simple_mat.pyx":35
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":35
  *     cdef int i, j, k
  * 
  *     for i in range(ret.rows):             # <<<<<<<<<<<<<<
@@ -1790,7 +1790,7 @@ static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *__pyx
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "simple_mat.pyx":36
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":36
  * 
  *     for i in range(ret.rows):
  *         for j in range(ret.cols):             # <<<<<<<<<<<<<<
@@ -1802,7 +1802,7 @@ static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *__pyx
     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
       __pyx_v_j = __pyx_t_8;
 
-      /* "simple_mat.pyx":38
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":38
  *         for j in range(ret.cols):
  * 
  *             ret.data[i * ret.cols + j] = 0             # <<<<<<<<<<<<<<
@@ -1811,7 +1811,7 @@ static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *__pyx
  */
       (__pyx_v_ret->data[((__pyx_v_i * __pyx_v_ret->cols) + __pyx_v_j)]) = 0.0;
 
-      /* "simple_mat.pyx":40
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":40
  *             ret.data[i * ret.cols + j] = 0
  * 
  *             for k in range(a.cols):             # <<<<<<<<<<<<<<
@@ -1823,7 +1823,7 @@ static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *__pyx
       for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
         __pyx_v_k = __pyx_t_11;
 
-        /* "simple_mat.pyx":41
+        /* "wahu_backend/logistic_regression/simple_mat.pyx":41
  * 
  *             for k in range(a.cols):
  *                 ret.data[i * ret.cols + j] += a.data[i * a.cols + k] * b.data[k * b.cols + j]             # <<<<<<<<<<<<<<
@@ -1836,7 +1836,7 @@ static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *__pyx
     }
   }
 
-  /* "simple_mat.pyx":43
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":43
  *                 ret.data[i * ret.cols + j] += a.data[i * a.cols + k] * b.data[k * b.cols + j]
  * 
  *     return 0             # <<<<<<<<<<<<<<
@@ -1846,7 +1846,7 @@ static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *__pyx
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":22
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":22
  * 
  * 
  * cdef int _Mat_dot(_Mat *a, _Mat *b, _Mat *ret):             # <<<<<<<<<<<<<<
@@ -1860,7 +1860,7 @@ static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *__pyx
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":45
+/* "wahu_backend/logistic_regression/simple_mat.pyx":45
  *     return 0
  * 
  * cdef int _Mat_copy(_Mat* frm, _Mat* to):             # <<<<<<<<<<<<<<
@@ -1868,14 +1868,14 @@ static int __pyx_f_10simple_mat__Mat_dot(struct __pyx_t_10simple_mat__Mat *__pyx
  *     #  -1
  */
 
-static int __pyx_f_10simple_mat__Mat_copy(struct __pyx_t_10simple_mat__Mat *__pyx_v_frm, struct __pyx_t_10simple_mat__Mat *__pyx_v_to) {
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_copy(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_frm, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_to) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("_Mat_copy", 0);
 
-  /* "simple_mat.pyx":49
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":49
  *     #  -1
  * 
  *     if frm.rows != to.rows or frm.cols != to.cols:             # <<<<<<<<<<<<<<
@@ -1893,7 +1893,7 @@ static int __pyx_f_10simple_mat__Mat_copy(struct __pyx_t_10simple_mat__Mat *__py
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":50
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":50
  * 
  *     if frm.rows != to.rows or frm.cols != to.cols:
  *         return -1             # <<<<<<<<<<<<<<
@@ -1903,7 +1903,7 @@ static int __pyx_f_10simple_mat__Mat_copy(struct __pyx_t_10simple_mat__Mat *__py
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":49
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":49
  *     #  -1
  * 
  *     if frm.rows != to.rows or frm.cols != to.cols:             # <<<<<<<<<<<<<<
@@ -1912,7 +1912,7 @@ static int __pyx_f_10simple_mat__Mat_copy(struct __pyx_t_10simple_mat__Mat *__py
  */
   }
 
-  /* "simple_mat.pyx":52
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":52
  *         return -1
  * 
  *     memcpy(to.data, frm.data, sizeof(double) * frm.rows * frm.cols)             # <<<<<<<<<<<<<<
@@ -1921,7 +1921,7 @@ static int __pyx_f_10simple_mat__Mat_copy(struct __pyx_t_10simple_mat__Mat *__py
  */
   (void)(memcpy(__pyx_v_to->data, __pyx_v_frm->data, (((sizeof(double)) * __pyx_v_frm->rows) * __pyx_v_frm->cols)));
 
-  /* "simple_mat.pyx":54
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":54
  *     memcpy(to.data, frm.data, sizeof(double) * frm.rows * frm.cols)
  * 
  *     return 0             # <<<<<<<<<<<<<<
@@ -1931,7 +1931,7 @@ static int __pyx_f_10simple_mat__Mat_copy(struct __pyx_t_10simple_mat__Mat *__py
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":45
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":45
  *     return 0
  * 
  * cdef int _Mat_copy(_Mat* frm, _Mat* to):             # <<<<<<<<<<<<<<
@@ -1945,7 +1945,7 @@ static int __pyx_f_10simple_mat__Mat_copy(struct __pyx_t_10simple_mat__Mat *__py
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":56
+/* "wahu_backend/logistic_regression/simple_mat.pyx":56
  *     return 0
  * 
  * cdef int _Mat_transpose(_Mat* mat, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -1953,7 +1953,7 @@ static int __pyx_f_10simple_mat__Mat_copy(struct __pyx_t_10simple_mat__Mat *__py
  *     #  -1
  */
 
-static int __pyx_f_10simple_mat__Mat_transpose(struct __pyx_t_10simple_mat__Mat *__pyx_v_mat, struct __pyx_t_10simple_mat__Mat *__pyx_v_ret) {
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_transpose(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_mat, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_ret) {
   int __pyx_v_i;
   int __pyx_v_j;
   int __pyx_r;
@@ -1968,7 +1968,7 @@ static int __pyx_f_10simple_mat__Mat_transpose(struct __pyx_t_10simple_mat__Mat 
   int __pyx_t_8;
   __Pyx_RefNannySetupContext("_Mat_transpose", 0);
 
-  /* "simple_mat.pyx":60
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":60
  *     #  -1
  * 
  *     if mat.rows != ret.cols or mat.cols != ret.rows:             # <<<<<<<<<<<<<<
@@ -1986,7 +1986,7 @@ static int __pyx_f_10simple_mat__Mat_transpose(struct __pyx_t_10simple_mat__Mat 
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":61
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":61
  * 
  *     if mat.rows != ret.cols or mat.cols != ret.rows:
  *         return -1             # <<<<<<<<<<<<<<
@@ -1996,7 +1996,7 @@ static int __pyx_f_10simple_mat__Mat_transpose(struct __pyx_t_10simple_mat__Mat 
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":60
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":60
  *     #  -1
  * 
  *     if mat.rows != ret.cols or mat.cols != ret.rows:             # <<<<<<<<<<<<<<
@@ -2005,7 +2005,7 @@ static int __pyx_f_10simple_mat__Mat_transpose(struct __pyx_t_10simple_mat__Mat 
  */
   }
 
-  /* "simple_mat.pyx":64
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":64
  * 
  *     cdef int i, j
  *     for i in range(mat.rows):             # <<<<<<<<<<<<<<
@@ -2017,7 +2017,7 @@ static int __pyx_f_10simple_mat__Mat_transpose(struct __pyx_t_10simple_mat__Mat 
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "simple_mat.pyx":65
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":65
  *     cdef int i, j
  *     for i in range(mat.rows):
  *         for j in range(mat.cols):             # <<<<<<<<<<<<<<
@@ -2029,7 +2029,7 @@ static int __pyx_f_10simple_mat__Mat_transpose(struct __pyx_t_10simple_mat__Mat 
     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
       __pyx_v_j = __pyx_t_8;
 
-      /* "simple_mat.pyx":67
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":67
  *         for j in range(mat.cols):
  * 
  *             ret.data[j * ret.cols + i] = mat.data[i * mat.cols + j]             # <<<<<<<<<<<<<<
@@ -2040,7 +2040,7 @@ static int __pyx_f_10simple_mat__Mat_transpose(struct __pyx_t_10simple_mat__Mat 
     }
   }
 
-  /* "simple_mat.pyx":69
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":69
  *             ret.data[j * ret.cols + i] = mat.data[i * mat.cols + j]
  * 
  *     return 0             # <<<<<<<<<<<<<<
@@ -2050,7 +2050,7 @@ static int __pyx_f_10simple_mat__Mat_transpose(struct __pyx_t_10simple_mat__Mat 
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":56
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":56
  *     return 0
  * 
  * cdef int _Mat_transpose(_Mat* mat, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2064,7 +2064,7 @@ static int __pyx_f_10simple_mat__Mat_transpose(struct __pyx_t_10simple_mat__Mat 
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":71
+/* "wahu_backend/logistic_regression/simple_mat.pyx":71
  *     return 0
  * 
  * cdef int _Mat_add(_Mat* a, _Mat* b, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2072,7 +2072,7 @@ static int __pyx_f_10simple_mat__Mat_transpose(struct __pyx_t_10simple_mat__Mat 
  *     #  -1
  */
 
-static int __pyx_f_10simple_mat__Mat_add(struct __pyx_t_10simple_mat__Mat *__pyx_v_a, struct __pyx_t_10simple_mat__Mat *__pyx_v_b, struct __pyx_t_10simple_mat__Mat *__pyx_v_ret) {
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_add(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_a, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_b, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_ret) {
   int __pyx_v_i;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -2083,7 +2083,7 @@ static int __pyx_f_10simple_mat__Mat_add(struct __pyx_t_10simple_mat__Mat *__pyx
   int __pyx_t_5;
   __Pyx_RefNannySetupContext("_Mat_add", 0);
 
-  /* "simple_mat.pyx":75
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":75
  *     #  -1
  * 
  *     if a.rows != b.rows or a.cols != b.cols or a.rows != ret.rows or a.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2113,7 +2113,7 @@ static int __pyx_f_10simple_mat__Mat_add(struct __pyx_t_10simple_mat__Mat *__pyx
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":76
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":76
  * 
  *     if a.rows != b.rows or a.cols != b.cols or a.rows != ret.rows or a.cols != ret.cols:
  *         return -1             # <<<<<<<<<<<<<<
@@ -2123,7 +2123,7 @@ static int __pyx_f_10simple_mat__Mat_add(struct __pyx_t_10simple_mat__Mat *__pyx
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":75
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":75
  *     #  -1
  * 
  *     if a.rows != b.rows or a.cols != b.cols or a.rows != ret.rows or a.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2132,7 +2132,7 @@ static int __pyx_f_10simple_mat__Mat_add(struct __pyx_t_10simple_mat__Mat *__pyx
  */
   }
 
-  /* "simple_mat.pyx":80
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":80
  *     cdef int i
  * 
  *     for i in range(a.rows * a.cols):             # <<<<<<<<<<<<<<
@@ -2144,7 +2144,7 @@ static int __pyx_f_10simple_mat__Mat_add(struct __pyx_t_10simple_mat__Mat *__pyx
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "simple_mat.pyx":81
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":81
  * 
  *     for i in range(a.rows * a.cols):
  *             ret.data[i] = a.data[i] + b.data[i]             # <<<<<<<<<<<<<<
@@ -2154,7 +2154,7 @@ static int __pyx_f_10simple_mat__Mat_add(struct __pyx_t_10simple_mat__Mat *__pyx
     (__pyx_v_ret->data[__pyx_v_i]) = ((__pyx_v_a->data[__pyx_v_i]) + (__pyx_v_b->data[__pyx_v_i]));
   }
 
-  /* "simple_mat.pyx":83
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":83
  *             ret.data[i] = a.data[i] + b.data[i]
  * 
  *     return 0             # <<<<<<<<<<<<<<
@@ -2164,7 +2164,7 @@ static int __pyx_f_10simple_mat__Mat_add(struct __pyx_t_10simple_mat__Mat *__pyx
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":71
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":71
  *     return 0
  * 
  * cdef int _Mat_add(_Mat* a, _Mat* b, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2178,7 +2178,7 @@ static int __pyx_f_10simple_mat__Mat_add(struct __pyx_t_10simple_mat__Mat *__pyx
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":85
+/* "wahu_backend/logistic_regression/simple_mat.pyx":85
  *     return 0
  * 
  * cdef int _Mat_subtract(_Mat* a, _Mat* b, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2186,7 +2186,7 @@ static int __pyx_f_10simple_mat__Mat_add(struct __pyx_t_10simple_mat__Mat *__pyx
  *     #  -1
  */
 
-static int __pyx_f_10simple_mat__Mat_subtract(struct __pyx_t_10simple_mat__Mat *__pyx_v_a, struct __pyx_t_10simple_mat__Mat *__pyx_v_b, struct __pyx_t_10simple_mat__Mat *__pyx_v_ret) {
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_subtract(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_a, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_b, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_ret) {
   int __pyx_v_i;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -2197,7 +2197,7 @@ static int __pyx_f_10simple_mat__Mat_subtract(struct __pyx_t_10simple_mat__Mat *
   int __pyx_t_5;
   __Pyx_RefNannySetupContext("_Mat_subtract", 0);
 
-  /* "simple_mat.pyx":89
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":89
  *     #  -1
  * 
  *     if a.rows != b.rows or a.cols != b.cols or a.rows != ret.rows or a.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2227,7 +2227,7 @@ static int __pyx_f_10simple_mat__Mat_subtract(struct __pyx_t_10simple_mat__Mat *
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":90
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":90
  * 
  *     if a.rows != b.rows or a.cols != b.cols or a.rows != ret.rows or a.cols != ret.cols:
  *         return -1             # <<<<<<<<<<<<<<
@@ -2237,7 +2237,7 @@ static int __pyx_f_10simple_mat__Mat_subtract(struct __pyx_t_10simple_mat__Mat *
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":89
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":89
  *     #  -1
  * 
  *     if a.rows != b.rows or a.cols != b.cols or a.rows != ret.rows or a.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2246,7 +2246,7 @@ static int __pyx_f_10simple_mat__Mat_subtract(struct __pyx_t_10simple_mat__Mat *
  */
   }
 
-  /* "simple_mat.pyx":94
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":94
  *     cdef int i
  * 
  *     for i in range(a.rows * a.cols):             # <<<<<<<<<<<<<<
@@ -2258,7 +2258,7 @@ static int __pyx_f_10simple_mat__Mat_subtract(struct __pyx_t_10simple_mat__Mat *
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "simple_mat.pyx":95
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":95
  * 
  *     for i in range(a.rows * a.cols):
  *             ret.data[i] = a.data[i] - b.data[i]             # <<<<<<<<<<<<<<
@@ -2268,7 +2268,7 @@ static int __pyx_f_10simple_mat__Mat_subtract(struct __pyx_t_10simple_mat__Mat *
     (__pyx_v_ret->data[__pyx_v_i]) = ((__pyx_v_a->data[__pyx_v_i]) - (__pyx_v_b->data[__pyx_v_i]));
   }
 
-  /* "simple_mat.pyx":97
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":97
  *             ret.data[i] = a.data[i] - b.data[i]
  * 
  *     return 0             # <<<<<<<<<<<<<<
@@ -2278,7 +2278,7 @@ static int __pyx_f_10simple_mat__Mat_subtract(struct __pyx_t_10simple_mat__Mat *
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":85
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":85
  *     return 0
  * 
  * cdef int _Mat_subtract(_Mat* a, _Mat* b, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2292,7 +2292,7 @@ static int __pyx_f_10simple_mat__Mat_subtract(struct __pyx_t_10simple_mat__Mat *
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":99
+/* "wahu_backend/logistic_regression/simple_mat.pyx":99
  *     return 0
  * 
  * cdef int _Mat_add_double(_Mat* mat, double flt, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2300,7 +2300,7 @@ static int __pyx_f_10simple_mat__Mat_subtract(struct __pyx_t_10simple_mat__Mat *
  *     #  -1
  */
 
-static int __pyx_f_10simple_mat__Mat_add_double(struct __pyx_t_10simple_mat__Mat *__pyx_v_mat, double __pyx_v_flt, struct __pyx_t_10simple_mat__Mat *__pyx_v_ret) {
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_add_double(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_mat, double __pyx_v_flt, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_ret) {
   int __pyx_v_i;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -2311,7 +2311,7 @@ static int __pyx_f_10simple_mat__Mat_add_double(struct __pyx_t_10simple_mat__Mat
   int __pyx_t_5;
   __Pyx_RefNannySetupContext("_Mat_add_double", 0);
 
-  /* "simple_mat.pyx":103
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":103
  *     #  -1
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2329,7 +2329,7 @@ static int __pyx_f_10simple_mat__Mat_add_double(struct __pyx_t_10simple_mat__Mat
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":104
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":104
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:
  *         return -1             # <<<<<<<<<<<<<<
@@ -2339,7 +2339,7 @@ static int __pyx_f_10simple_mat__Mat_add_double(struct __pyx_t_10simple_mat__Mat
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":103
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":103
  *     #  -1
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2348,7 +2348,7 @@ static int __pyx_f_10simple_mat__Mat_add_double(struct __pyx_t_10simple_mat__Mat
  */
   }
 
-  /* "simple_mat.pyx":107
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":107
  * 
  *     cdef int i
  *     for i in range(mat.rows * mat.cols):             # <<<<<<<<<<<<<<
@@ -2360,7 +2360,7 @@ static int __pyx_f_10simple_mat__Mat_add_double(struct __pyx_t_10simple_mat__Mat
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "simple_mat.pyx":108
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":108
  *     cdef int i
  *     for i in range(mat.rows * mat.cols):
  *         ret.data[i] = mat.data[i] + flt             # <<<<<<<<<<<<<<
@@ -2370,7 +2370,7 @@ static int __pyx_f_10simple_mat__Mat_add_double(struct __pyx_t_10simple_mat__Mat
     (__pyx_v_ret->data[__pyx_v_i]) = ((__pyx_v_mat->data[__pyx_v_i]) + __pyx_v_flt);
   }
 
-  /* "simple_mat.pyx":110
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":110
  *         ret.data[i] = mat.data[i] + flt
  * 
  *     return 0             # <<<<<<<<<<<<<<
@@ -2380,7 +2380,7 @@ static int __pyx_f_10simple_mat__Mat_add_double(struct __pyx_t_10simple_mat__Mat
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":99
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":99
  *     return 0
  * 
  * cdef int _Mat_add_double(_Mat* mat, double flt, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2394,7 +2394,7 @@ static int __pyx_f_10simple_mat__Mat_add_double(struct __pyx_t_10simple_mat__Mat
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":112
+/* "wahu_backend/logistic_regression/simple_mat.pyx":112
  *     return 0
  * 
  * cdef int _Mat_subtract_double(_Mat* mat, double flt, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2402,7 +2402,7 @@ static int __pyx_f_10simple_mat__Mat_add_double(struct __pyx_t_10simple_mat__Mat
  *     #  -1
  */
 
-static int __pyx_f_10simple_mat__Mat_subtract_double(struct __pyx_t_10simple_mat__Mat *__pyx_v_mat, double __pyx_v_flt, struct __pyx_t_10simple_mat__Mat *__pyx_v_ret) {
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_subtract_double(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_mat, double __pyx_v_flt, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_ret) {
   int __pyx_v_i;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -2413,7 +2413,7 @@ static int __pyx_f_10simple_mat__Mat_subtract_double(struct __pyx_t_10simple_mat
   int __pyx_t_5;
   __Pyx_RefNannySetupContext("_Mat_subtract_double", 0);
 
-  /* "simple_mat.pyx":116
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":116
  *     #  -1
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2431,7 +2431,7 @@ static int __pyx_f_10simple_mat__Mat_subtract_double(struct __pyx_t_10simple_mat
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":117
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":117
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:
  *         return -1             # <<<<<<<<<<<<<<
@@ -2441,7 +2441,7 @@ static int __pyx_f_10simple_mat__Mat_subtract_double(struct __pyx_t_10simple_mat
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":116
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":116
  *     #  -1
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2450,7 +2450,7 @@ static int __pyx_f_10simple_mat__Mat_subtract_double(struct __pyx_t_10simple_mat
  */
   }
 
-  /* "simple_mat.pyx":120
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":120
  * 
  *     cdef int i
  *     for i in range(mat.rows * mat.cols):             # <<<<<<<<<<<<<<
@@ -2462,7 +2462,7 @@ static int __pyx_f_10simple_mat__Mat_subtract_double(struct __pyx_t_10simple_mat
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "simple_mat.pyx":121
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":121
  *     cdef int i
  *     for i in range(mat.rows * mat.cols):
  *         ret.data[i] = mat.data[i] - flt             # <<<<<<<<<<<<<<
@@ -2472,7 +2472,7 @@ static int __pyx_f_10simple_mat__Mat_subtract_double(struct __pyx_t_10simple_mat
     (__pyx_v_ret->data[__pyx_v_i]) = ((__pyx_v_mat->data[__pyx_v_i]) - __pyx_v_flt);
   }
 
-  /* "simple_mat.pyx":123
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":123
  *         ret.data[i] = mat.data[i] - flt
  * 
  *     return 0             # <<<<<<<<<<<<<<
@@ -2482,7 +2482,7 @@ static int __pyx_f_10simple_mat__Mat_subtract_double(struct __pyx_t_10simple_mat
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":112
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":112
  *     return 0
  * 
  * cdef int _Mat_subtract_double(_Mat* mat, double flt, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2496,7 +2496,7 @@ static int __pyx_f_10simple_mat__Mat_subtract_double(struct __pyx_t_10simple_mat
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":125
+/* "wahu_backend/logistic_regression/simple_mat.pyx":125
  *     return 0
  * 
  * cdef int _Mat_subtractedby_double(_Mat* mat, double flt, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2504,7 +2504,7 @@ static int __pyx_f_10simple_mat__Mat_subtract_double(struct __pyx_t_10simple_mat
  *     #  -1
  */
 
-static int __pyx_f_10simple_mat__Mat_subtractedby_double(struct __pyx_t_10simple_mat__Mat *__pyx_v_mat, double __pyx_v_flt, struct __pyx_t_10simple_mat__Mat *__pyx_v_ret) {
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_subtractedby_double(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_mat, double __pyx_v_flt, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_ret) {
   int __pyx_v_i;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -2515,7 +2515,7 @@ static int __pyx_f_10simple_mat__Mat_subtractedby_double(struct __pyx_t_10simple
   int __pyx_t_5;
   __Pyx_RefNannySetupContext("_Mat_subtractedby_double", 0);
 
-  /* "simple_mat.pyx":129
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":129
  *     #  -1
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2533,7 +2533,7 @@ static int __pyx_f_10simple_mat__Mat_subtractedby_double(struct __pyx_t_10simple
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":130
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":130
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:
  *         return -1             # <<<<<<<<<<<<<<
@@ -2543,7 +2543,7 @@ static int __pyx_f_10simple_mat__Mat_subtractedby_double(struct __pyx_t_10simple
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":129
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":129
  *     #  -1
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2552,7 +2552,7 @@ static int __pyx_f_10simple_mat__Mat_subtractedby_double(struct __pyx_t_10simple
  */
   }
 
-  /* "simple_mat.pyx":133
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":133
  * 
  *     cdef int i
  *     for i in range(mat.rows * mat.cols):             # <<<<<<<<<<<<<<
@@ -2564,7 +2564,7 @@ static int __pyx_f_10simple_mat__Mat_subtractedby_double(struct __pyx_t_10simple
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "simple_mat.pyx":134
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":134
  *     cdef int i
  *     for i in range(mat.rows * mat.cols):
  *         ret.data[i] = flt - mat.data[i]             # <<<<<<<<<<<<<<
@@ -2574,7 +2574,7 @@ static int __pyx_f_10simple_mat__Mat_subtractedby_double(struct __pyx_t_10simple
     (__pyx_v_ret->data[__pyx_v_i]) = (__pyx_v_flt - (__pyx_v_mat->data[__pyx_v_i]));
   }
 
-  /* "simple_mat.pyx":136
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":136
  *         ret.data[i] = flt - mat.data[i]
  * 
  *     return 0             # <<<<<<<<<<<<<<
@@ -2584,7 +2584,7 @@ static int __pyx_f_10simple_mat__Mat_subtractedby_double(struct __pyx_t_10simple
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":125
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":125
  *     return 0
  * 
  * cdef int _Mat_subtractedby_double(_Mat* mat, double flt, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2598,7 +2598,7 @@ static int __pyx_f_10simple_mat__Mat_subtractedby_double(struct __pyx_t_10simple
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":139
+/* "wahu_backend/logistic_regression/simple_mat.pyx":139
  * 
  * 
  * cdef int _Mat_scale(_Mat* mat, double scaler, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2606,7 +2606,7 @@ static int __pyx_f_10simple_mat__Mat_subtractedby_double(struct __pyx_t_10simple
  *     #  -1
  */
 
-static int __pyx_f_10simple_mat__Mat_scale(struct __pyx_t_10simple_mat__Mat *__pyx_v_mat, double __pyx_v_scaler, struct __pyx_t_10simple_mat__Mat *__pyx_v_ret) {
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_scale(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_mat, double __pyx_v_scaler, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_ret) {
   int __pyx_v_i;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -2617,7 +2617,7 @@ static int __pyx_f_10simple_mat__Mat_scale(struct __pyx_t_10simple_mat__Mat *__p
   int __pyx_t_5;
   __Pyx_RefNannySetupContext("_Mat_scale", 0);
 
-  /* "simple_mat.pyx":143
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":143
  *     #  -1
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2635,7 +2635,7 @@ static int __pyx_f_10simple_mat__Mat_scale(struct __pyx_t_10simple_mat__Mat *__p
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":144
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":144
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:
  *         return -1             # <<<<<<<<<<<<<<
@@ -2645,7 +2645,7 @@ static int __pyx_f_10simple_mat__Mat_scale(struct __pyx_t_10simple_mat__Mat *__p
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":143
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":143
  *     #  -1
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2654,7 +2654,7 @@ static int __pyx_f_10simple_mat__Mat_scale(struct __pyx_t_10simple_mat__Mat *__p
  */
   }
 
-  /* "simple_mat.pyx":147
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":147
  * 
  *     cdef int i
  *     for i in range(mat.rows * mat.cols):             # <<<<<<<<<<<<<<
@@ -2666,7 +2666,7 @@ static int __pyx_f_10simple_mat__Mat_scale(struct __pyx_t_10simple_mat__Mat *__p
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "simple_mat.pyx":148
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":148
  *     cdef int i
  *     for i in range(mat.rows * mat.cols):
  *         ret.data[i] = mat.data[i] * scaler             # <<<<<<<<<<<<<<
@@ -2676,7 +2676,7 @@ static int __pyx_f_10simple_mat__Mat_scale(struct __pyx_t_10simple_mat__Mat *__p
     (__pyx_v_ret->data[__pyx_v_i]) = ((__pyx_v_mat->data[__pyx_v_i]) * __pyx_v_scaler);
   }
 
-  /* "simple_mat.pyx":150
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":150
  *         ret.data[i] = mat.data[i] * scaler
  * 
  *     return 0             # <<<<<<<<<<<<<<
@@ -2686,7 +2686,7 @@ static int __pyx_f_10simple_mat__Mat_scale(struct __pyx_t_10simple_mat__Mat *__p
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":139
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":139
  * 
  * 
  * cdef int _Mat_scale(_Mat* mat, double scaler, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2700,7 +2700,7 @@ static int __pyx_f_10simple_mat__Mat_scale(struct __pyx_t_10simple_mat__Mat *__p
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":152
+/* "wahu_backend/logistic_regression/simple_mat.pyx":152
  *     return 0
  * 
  * cdef int _Mat_exp(_Mat* mat, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2708,7 +2708,7 @@ static int __pyx_f_10simple_mat__Mat_scale(struct __pyx_t_10simple_mat__Mat *__p
  *     #  mat  ret  -1
  */
 
-static int __pyx_f_10simple_mat__Mat_exp(struct __pyx_t_10simple_mat__Mat *__pyx_v_mat, struct __pyx_t_10simple_mat__Mat *__pyx_v_ret) {
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_exp(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_mat, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_ret) {
   int __pyx_v_i;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -2719,7 +2719,7 @@ static int __pyx_f_10simple_mat__Mat_exp(struct __pyx_t_10simple_mat__Mat *__pyx
   int __pyx_t_5;
   __Pyx_RefNannySetupContext("_Mat_exp", 0);
 
-  /* "simple_mat.pyx":156
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":156
  *     #  mat  ret  -1
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2737,7 +2737,7 @@ static int __pyx_f_10simple_mat__Mat_exp(struct __pyx_t_10simple_mat__Mat *__pyx
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":157
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":157
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:
  *         return -1             # <<<<<<<<<<<<<<
@@ -2747,7 +2747,7 @@ static int __pyx_f_10simple_mat__Mat_exp(struct __pyx_t_10simple_mat__Mat *__pyx
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":156
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":156
  *     #  mat  ret  -1
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2756,7 +2756,7 @@ static int __pyx_f_10simple_mat__Mat_exp(struct __pyx_t_10simple_mat__Mat *__pyx
  */
   }
 
-  /* "simple_mat.pyx":160
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":160
  * 
  *     cdef int i
  *     for i in range(mat.rows * mat.cols):             # <<<<<<<<<<<<<<
@@ -2768,7 +2768,7 @@ static int __pyx_f_10simple_mat__Mat_exp(struct __pyx_t_10simple_mat__Mat *__pyx
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "simple_mat.pyx":161
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":161
  *     cdef int i
  *     for i in range(mat.rows * mat.cols):
  *         ret.data[i] = exp(mat.data[i])             # <<<<<<<<<<<<<<
@@ -2778,7 +2778,7 @@ static int __pyx_f_10simple_mat__Mat_exp(struct __pyx_t_10simple_mat__Mat *__pyx
     (__pyx_v_ret->data[__pyx_v_i]) = exp((__pyx_v_mat->data[__pyx_v_i]));
   }
 
-  /* "simple_mat.pyx":163
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":163
  *         ret.data[i] = exp(mat.data[i])
  * 
  *     return 0             # <<<<<<<<<<<<<<
@@ -2788,7 +2788,7 @@ static int __pyx_f_10simple_mat__Mat_exp(struct __pyx_t_10simple_mat__Mat *__pyx
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":152
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":152
  *     return 0
  * 
  * cdef int _Mat_exp(_Mat* mat, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2802,7 +2802,7 @@ static int __pyx_f_10simple_mat__Mat_exp(struct __pyx_t_10simple_mat__Mat *__pyx
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":165
+/* "wahu_backend/logistic_regression/simple_mat.pyx":165
  *     return 0
  * 
  * cdef int _Mat_log(_Mat* mat, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2810,7 +2810,7 @@ static int __pyx_f_10simple_mat__Mat_exp(struct __pyx_t_10simple_mat__Mat *__pyx
  *     #  mat  ret  -1
  */
 
-static int __pyx_f_10simple_mat__Mat_log(struct __pyx_t_10simple_mat__Mat *__pyx_v_mat, struct __pyx_t_10simple_mat__Mat *__pyx_v_ret) {
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_log(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_mat, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_ret) {
   int __pyx_v_i;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -2821,7 +2821,7 @@ static int __pyx_f_10simple_mat__Mat_log(struct __pyx_t_10simple_mat__Mat *__pyx
   int __pyx_t_5;
   __Pyx_RefNannySetupContext("_Mat_log", 0);
 
-  /* "simple_mat.pyx":169
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":169
  *     #  mat  ret  -1
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2839,7 +2839,7 @@ static int __pyx_f_10simple_mat__Mat_log(struct __pyx_t_10simple_mat__Mat *__pyx
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":170
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":170
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:
  *         return -1             # <<<<<<<<<<<<<<
@@ -2849,7 +2849,7 @@ static int __pyx_f_10simple_mat__Mat_log(struct __pyx_t_10simple_mat__Mat *__pyx
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":169
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":169
  *     #  mat  ret  -1
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2858,7 +2858,7 @@ static int __pyx_f_10simple_mat__Mat_log(struct __pyx_t_10simple_mat__Mat *__pyx
  */
   }
 
-  /* "simple_mat.pyx":173
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":173
  * 
  *     cdef int i
  *     for i in range(mat.rows * mat.cols):             # <<<<<<<<<<<<<<
@@ -2870,7 +2870,7 @@ static int __pyx_f_10simple_mat__Mat_log(struct __pyx_t_10simple_mat__Mat *__pyx
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "simple_mat.pyx":174
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":174
  *     cdef int i
  *     for i in range(mat.rows * mat.cols):
  *         ret.data[i] = log(mat.data[i])             # <<<<<<<<<<<<<<
@@ -2880,7 +2880,7 @@ static int __pyx_f_10simple_mat__Mat_log(struct __pyx_t_10simple_mat__Mat *__pyx
     (__pyx_v_ret->data[__pyx_v_i]) = log((__pyx_v_mat->data[__pyx_v_i]));
   }
 
-  /* "simple_mat.pyx":176
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":176
  *         ret.data[i] = log(mat.data[i])
  * 
  *     return 0             # <<<<<<<<<<<<<<
@@ -2890,7 +2890,7 @@ static int __pyx_f_10simple_mat__Mat_log(struct __pyx_t_10simple_mat__Mat *__pyx
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":165
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":165
  *     return 0
  * 
  * cdef int _Mat_log(_Mat* mat, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2904,7 +2904,7 @@ static int __pyx_f_10simple_mat__Mat_log(struct __pyx_t_10simple_mat__Mat *__pyx
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":178
+/* "wahu_backend/logistic_regression/simple_mat.pyx":178
  *     return 0
  * 
  * cdef int _Mat_mul(_Mat* a, _Mat* b, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -2912,7 +2912,7 @@ static int __pyx_f_10simple_mat__Mat_log(struct __pyx_t_10simple_mat__Mat *__pyx
  *     #  -1
  */
 
-static int __pyx_f_10simple_mat__Mat_mul(struct __pyx_t_10simple_mat__Mat *__pyx_v_a, struct __pyx_t_10simple_mat__Mat *__pyx_v_b, struct __pyx_t_10simple_mat__Mat *__pyx_v_ret) {
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_mul(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_a, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_b, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_ret) {
   int __pyx_v_i;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -2923,7 +2923,7 @@ static int __pyx_f_10simple_mat__Mat_mul(struct __pyx_t_10simple_mat__Mat *__pyx
   int __pyx_t_5;
   __Pyx_RefNannySetupContext("_Mat_mul", 0);
 
-  /* "simple_mat.pyx":182
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":182
  *     #  -1
  * 
  *     if a.rows != b.rows or a.cols != b.cols or a.rows != ret.rows or a.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2953,7 +2953,7 @@ static int __pyx_f_10simple_mat__Mat_mul(struct __pyx_t_10simple_mat__Mat *__pyx
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":183
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":183
  * 
  *     if a.rows != b.rows or a.cols != b.cols or a.rows != ret.rows or a.cols != ret.cols:
  *         return -1             # <<<<<<<<<<<<<<
@@ -2963,7 +2963,7 @@ static int __pyx_f_10simple_mat__Mat_mul(struct __pyx_t_10simple_mat__Mat *__pyx
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":182
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":182
  *     #  -1
  * 
  *     if a.rows != b.rows or a.cols != b.cols or a.rows != ret.rows or a.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -2972,7 +2972,7 @@ static int __pyx_f_10simple_mat__Mat_mul(struct __pyx_t_10simple_mat__Mat *__pyx
  */
   }
 
-  /* "simple_mat.pyx":187
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":187
  *     cdef int i
  * 
  *     for i in range(a.rows * a.cols):             # <<<<<<<<<<<<<<
@@ -2984,7 +2984,7 @@ static int __pyx_f_10simple_mat__Mat_mul(struct __pyx_t_10simple_mat__Mat *__pyx
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "simple_mat.pyx":188
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":188
  * 
  *     for i in range(a.rows * a.cols):
  *             ret.data[i] = a.data[i] * b.data[i]             # <<<<<<<<<<<<<<
@@ -2994,7 +2994,7 @@ static int __pyx_f_10simple_mat__Mat_mul(struct __pyx_t_10simple_mat__Mat *__pyx
     (__pyx_v_ret->data[__pyx_v_i]) = ((__pyx_v_a->data[__pyx_v_i]) * (__pyx_v_b->data[__pyx_v_i]));
   }
 
-  /* "simple_mat.pyx":190
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":190
  *             ret.data[i] = a.data[i] * b.data[i]
  * 
  *     return 0             # <<<<<<<<<<<<<<
@@ -3004,7 +3004,7 @@ static int __pyx_f_10simple_mat__Mat_mul(struct __pyx_t_10simple_mat__Mat *__pyx
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":178
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":178
  *     return 0
  * 
  * cdef int _Mat_mul(_Mat* a, _Mat* b, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -3018,7 +3018,7 @@ static int __pyx_f_10simple_mat__Mat_mul(struct __pyx_t_10simple_mat__Mat *__pyx
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":192
+/* "wahu_backend/logistic_regression/simple_mat.pyx":192
  *     return 0
  * 
  * cdef int _Mat_div(_Mat* a, _Mat* b, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -3026,7 +3026,7 @@ static int __pyx_f_10simple_mat__Mat_mul(struct __pyx_t_10simple_mat__Mat *__pyx
  *     #  -1
  */
 
-static int __pyx_f_10simple_mat__Mat_div(struct __pyx_t_10simple_mat__Mat *__pyx_v_a, struct __pyx_t_10simple_mat__Mat *__pyx_v_b, struct __pyx_t_10simple_mat__Mat *__pyx_v_ret) {
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_div(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_a, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_b, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_ret) {
   int __pyx_v_i;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -3040,7 +3040,7 @@ static int __pyx_f_10simple_mat__Mat_div(struct __pyx_t_10simple_mat__Mat *__pyx
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_Mat_div", 0);
 
-  /* "simple_mat.pyx":196
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":196
  *     #  -1
  * 
  *     if a.rows != b.rows or a.cols != b.cols or a.rows != ret.rows or a.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -3070,7 +3070,7 @@ static int __pyx_f_10simple_mat__Mat_div(struct __pyx_t_10simple_mat__Mat *__pyx
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":197
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":197
  * 
  *     if a.rows != b.rows or a.cols != b.cols or a.rows != ret.rows or a.cols != ret.cols:
  *         return -1             # <<<<<<<<<<<<<<
@@ -3080,7 +3080,7 @@ static int __pyx_f_10simple_mat__Mat_div(struct __pyx_t_10simple_mat__Mat *__pyx
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":196
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":196
  *     #  -1
  * 
  *     if a.rows != b.rows or a.cols != b.cols or a.rows != ret.rows or a.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -3089,7 +3089,7 @@ static int __pyx_f_10simple_mat__Mat_div(struct __pyx_t_10simple_mat__Mat *__pyx
  */
   }
 
-  /* "simple_mat.pyx":201
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":201
  *     cdef int i
  * 
  *     for i in range(a.rows * a.cols):             # <<<<<<<<<<<<<<
@@ -3101,7 +3101,7 @@ static int __pyx_f_10simple_mat__Mat_div(struct __pyx_t_10simple_mat__Mat *__pyx
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "simple_mat.pyx":202
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":202
  * 
  *     for i in range(a.rows * a.cols):
  *             ret.data[i] = a.data[i] / b.data[i]             # <<<<<<<<<<<<<<
@@ -3115,7 +3115,7 @@ static int __pyx_f_10simple_mat__Mat_div(struct __pyx_t_10simple_mat__Mat *__pyx
     (__pyx_v_ret->data[__pyx_v_i]) = ((__pyx_v_a->data[__pyx_v_i]) / (__pyx_v_b->data[__pyx_v_i]));
   }
 
-  /* "simple_mat.pyx":204
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":204
  *             ret.data[i] = a.data[i] / b.data[i]
  * 
  *     return 0             # <<<<<<<<<<<<<<
@@ -3125,7 +3125,7 @@ static int __pyx_f_10simple_mat__Mat_div(struct __pyx_t_10simple_mat__Mat *__pyx
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":192
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":192
  *     return 0
  * 
  * cdef int _Mat_div(_Mat* a, _Mat* b, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -3135,14 +3135,14 @@ static int __pyx_f_10simple_mat__Mat_div(struct __pyx_t_10simple_mat__Mat *__pyx
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_WriteUnraisable("simple_mat._Mat_div", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("wahu_backend.logistic_regression.simple_mat._Mat_div", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":206
+/* "wahu_backend/logistic_regression/simple_mat.pyx":206
  *     return 0
  * 
  * cdef int _Mat_divedby_double(_Mat* mat, double scaler, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -3150,7 +3150,7 @@ static int __pyx_f_10simple_mat__Mat_div(struct __pyx_t_10simple_mat__Mat *__pyx
  *     #  -1
  */
 
-static int __pyx_f_10simple_mat__Mat_divedby_double(struct __pyx_t_10simple_mat__Mat *__pyx_v_mat, double __pyx_v_scaler, struct __pyx_t_10simple_mat__Mat *__pyx_v_ret) {
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_divedby_double(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_mat, double __pyx_v_scaler, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_ret) {
   int __pyx_v_i;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -3164,7 +3164,7 @@ static int __pyx_f_10simple_mat__Mat_divedby_double(struct __pyx_t_10simple_mat_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_Mat_divedby_double", 0);
 
-  /* "simple_mat.pyx":210
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":210
  *     #  -1
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -3182,7 +3182,7 @@ static int __pyx_f_10simple_mat__Mat_divedby_double(struct __pyx_t_10simple_mat_
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":211
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":211
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:
  *         return -1             # <<<<<<<<<<<<<<
@@ -3192,7 +3192,7 @@ static int __pyx_f_10simple_mat__Mat_divedby_double(struct __pyx_t_10simple_mat_
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":210
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":210
  *     #  -1
  * 
  *     if mat.rows != ret.rows or mat.cols != ret.cols:             # <<<<<<<<<<<<<<
@@ -3201,7 +3201,7 @@ static int __pyx_f_10simple_mat__Mat_divedby_double(struct __pyx_t_10simple_mat_
  */
   }
 
-  /* "simple_mat.pyx":214
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":214
  * 
  *     cdef int i
  *     for i in range(mat.rows * mat.cols):             # <<<<<<<<<<<<<<
@@ -3213,7 +3213,7 @@ static int __pyx_f_10simple_mat__Mat_divedby_double(struct __pyx_t_10simple_mat_
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "simple_mat.pyx":215
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":215
  *     cdef int i
  *     for i in range(mat.rows * mat.cols):
  *         ret.data[i] = scaler / mat.data[i]             # <<<<<<<<<<<<<<
@@ -3227,7 +3227,7 @@ static int __pyx_f_10simple_mat__Mat_divedby_double(struct __pyx_t_10simple_mat_
     (__pyx_v_ret->data[__pyx_v_i]) = (__pyx_v_scaler / (__pyx_v_mat->data[__pyx_v_i]));
   }
 
-  /* "simple_mat.pyx":217
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":217
  *         ret.data[i] = scaler / mat.data[i]
  * 
  *     return 0             # <<<<<<<<<<<<<<
@@ -3237,7 +3237,7 @@ static int __pyx_f_10simple_mat__Mat_divedby_double(struct __pyx_t_10simple_mat_
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":206
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":206
  *     return 0
  * 
  * cdef int _Mat_divedby_double(_Mat* mat, double scaler, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -3247,14 +3247,14 @@ static int __pyx_f_10simple_mat__Mat_divedby_double(struct __pyx_t_10simple_mat_
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_WriteUnraisable("simple_mat._Mat_divedby_double", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("wahu_backend.logistic_regression.simple_mat._Mat_divedby_double", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":219
+/* "wahu_backend/logistic_regression/simple_mat.pyx":219
  *     return 0
  * 
  * cdef int _Mat_average(_Mat* mat, int axis, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -3262,7 +3262,7 @@ static int __pyx_f_10simple_mat__Mat_divedby_double(struct __pyx_t_10simple_mat_
  *     #  mat  ret  -1
  */
 
-static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *__pyx_v_mat, int __pyx_v_axis, struct __pyx_t_10simple_mat__Mat *__pyx_v_ret) {
+static int __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_average(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_mat, int __pyx_v_axis, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v_ret) {
   int __pyx_v_i;
   int __pyx_v_j;
   double __pyx_v_s;
@@ -3281,7 +3281,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_Mat_average", 0);
 
-  /* "simple_mat.pyx":227
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":227
  *     cdef double s
  * 
  *     if axis == 1:  #  dim1: 1 dim2: cols             # <<<<<<<<<<<<<<
@@ -3291,7 +3291,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
   switch (__pyx_v_axis) {
     case 1:
 
-    /* "simple_mat.pyx":229
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":229
  *     if axis == 1:  #  dim1: 1 dim2: cols
  * 
  *         if ret.rows != 1 or ret.cols != mat.cols:             # <<<<<<<<<<<<<<
@@ -3309,7 +3309,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
     __pyx_L4_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "simple_mat.pyx":230
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":230
  * 
  *         if ret.rows != 1 or ret.cols != mat.cols:
  *             return -1             # <<<<<<<<<<<<<<
@@ -3319,7 +3319,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
       __pyx_r = -1;
       goto __pyx_L0;
 
-      /* "simple_mat.pyx":229
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":229
  *     if axis == 1:  #  dim1: 1 dim2: cols
  * 
  *         if ret.rows != 1 or ret.cols != mat.cols:             # <<<<<<<<<<<<<<
@@ -3328,7 +3328,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
  */
     }
 
-    /* "simple_mat.pyx":232
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":232
  *             return -1
  * 
  *         for j in range(mat.cols):             # <<<<<<<<<<<<<<
@@ -3340,7 +3340,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
     for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
       __pyx_v_j = __pyx_t_5;
 
-      /* "simple_mat.pyx":234
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":234
  *         for j in range(mat.cols):
  * 
  *             s = 0             # <<<<<<<<<<<<<<
@@ -3349,7 +3349,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
  */
       __pyx_v_s = 0.0;
 
-      /* "simple_mat.pyx":235
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":235
  * 
  *             s = 0
  *             for i in range(mat.rows):             # <<<<<<<<<<<<<<
@@ -3361,7 +3361,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
       for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
         __pyx_v_i = __pyx_t_8;
 
-        /* "simple_mat.pyx":236
+        /* "wahu_backend/logistic_regression/simple_mat.pyx":236
  *             s = 0
  *             for i in range(mat.rows):
  *                 s += mat.data[i * mat.cols + j]             # <<<<<<<<<<<<<<
@@ -3371,7 +3371,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
         __pyx_v_s = (__pyx_v_s + (__pyx_v_mat->data[((__pyx_v_i * __pyx_v_mat->cols) + __pyx_v_j)]));
       }
 
-      /* "simple_mat.pyx":238
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":238
  *                 s += mat.data[i * mat.cols + j]
  * 
  *             ret.data[j] = s / mat.rows             # <<<<<<<<<<<<<<
@@ -3385,7 +3385,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
       (__pyx_v_ret->data[__pyx_v_j]) = (__pyx_v_s / __pyx_v_mat->rows);
     }
 
-    /* "simple_mat.pyx":227
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":227
  *     cdef double s
  * 
  *     if axis == 1:  #  dim1: 1 dim2: cols             # <<<<<<<<<<<<<<
@@ -3395,7 +3395,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
     break;
     case 2:
 
-    /* "simple_mat.pyx":242
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":242
  *     elif axis == 2:  #  dim1: rows dim2: 1
  * 
  *         if ret.rows != mat.rows or ret.rows != 1:             # <<<<<<<<<<<<<<
@@ -3413,7 +3413,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
     __pyx_L11_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "simple_mat.pyx":243
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":243
  * 
  *         if ret.rows != mat.rows or ret.rows != 1:
  *             return -1             # <<<<<<<<<<<<<<
@@ -3423,7 +3423,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
       __pyx_r = -1;
       goto __pyx_L0;
 
-      /* "simple_mat.pyx":242
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":242
  *     elif axis == 2:  #  dim1: rows dim2: 1
  * 
  *         if ret.rows != mat.rows or ret.rows != 1:             # <<<<<<<<<<<<<<
@@ -3432,7 +3432,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
  */
     }
 
-    /* "simple_mat.pyx":245
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":245
  *             return -1
  * 
  *         for i in range(mat.rows):             # <<<<<<<<<<<<<<
@@ -3444,7 +3444,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
     for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
       __pyx_v_i = __pyx_t_5;
 
-      /* "simple_mat.pyx":247
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":247
  *         for i in range(mat.rows):
  * 
  *             s = 0             # <<<<<<<<<<<<<<
@@ -3453,7 +3453,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
  */
       __pyx_v_s = 0.0;
 
-      /* "simple_mat.pyx":248
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":248
  * 
  *             s = 0
  *             for j in range(mat.cols):             # <<<<<<<<<<<<<<
@@ -3465,7 +3465,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
       for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
         __pyx_v_j = __pyx_t_8;
 
-        /* "simple_mat.pyx":249
+        /* "wahu_backend/logistic_regression/simple_mat.pyx":249
  *             s = 0
  *             for j in range(mat.cols):
  *                 s += mat.data[i * mat.cols + j]             # <<<<<<<<<<<<<<
@@ -3475,7 +3475,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
         __pyx_v_s = (__pyx_v_s + (__pyx_v_mat->data[((__pyx_v_i * __pyx_v_mat->cols) + __pyx_v_j)]));
       }
 
-      /* "simple_mat.pyx":251
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":251
  *                 s += mat.data[i * mat.cols + j]
  * 
  *             ret.data[i] = s / mat.cols             # <<<<<<<<<<<<<<
@@ -3489,7 +3489,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
       (__pyx_v_ret->data[__pyx_v_i]) = (__pyx_v_s / __pyx_v_mat->cols);
     }
 
-    /* "simple_mat.pyx":240
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":240
  *             ret.data[j] = s / mat.rows
  * 
  *     elif axis == 2:  #  dim1: rows dim2: 1             # <<<<<<<<<<<<<<
@@ -3499,7 +3499,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
     break;
     default:
 
-    /* "simple_mat.pyx":254
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":254
  * 
  *     else:
  *         return -2             # <<<<<<<<<<<<<<
@@ -3511,7 +3511,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
     break;
   }
 
-  /* "simple_mat.pyx":256
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":256
  *         return -2
  * 
  *     return 0             # <<<<<<<<<<<<<<
@@ -3521,7 +3521,7 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":219
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":219
  *     return 0
  * 
  * cdef int _Mat_average(_Mat* mat, int axis, _Mat* ret):             # <<<<<<<<<<<<<<
@@ -3531,14 +3531,14 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_WriteUnraisable("simple_mat._Mat_average", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("wahu_backend.logistic_regression.simple_mat._Mat_average", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":261
+/* "wahu_backend/logistic_regression/simple_mat.pyx":261
  * cdef class Mat:
  * 
  *     def __cinit__(self, lst=None):             # <<<<<<<<<<<<<<
@@ -3547,8 +3547,8 @@ static int __pyx_f_10simple_mat__Mat_average(struct __pyx_t_10simple_mat__Mat *_
  */
 
 /* Python wrapper */
-static int __pyx_pw_10simple_mat_3Mat_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_10simple_mat_3Mat_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_lst = 0;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -3594,18 +3594,18 @@ static int __pyx_pw_10simple_mat_3Mat_1__cinit__(PyObject *__pyx_v_self, PyObjec
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 261, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("simple_mat.Mat.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10simple_mat_3Mat___cinit__(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self), __pyx_v_lst);
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat___cinit__(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self), __pyx_v_lst);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, PyObject *__pyx_v_lst) {
+static int __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat___cinit__(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, PyObject *__pyx_v_lst) {
   int __pyx_v_rows;
   int __pyx_v_cols;
   PyObject *__pyx_v_i = NULL;
@@ -3633,7 +3633,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "simple_mat.pyx":265
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":265
  *         #  _mat
  * 
  *         self._mat = NULL             # <<<<<<<<<<<<<<
@@ -3642,7 +3642,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
  */
   __pyx_v_self->_mat = NULL;
 
-  /* "simple_mat.pyx":269
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":269
  *         cdef int rows, cols
  * 
  *         if lst is not None:             # <<<<<<<<<<<<<<
@@ -3653,7 +3653,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "simple_mat.pyx":270
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":270
  * 
  *         if lst is not None:
  *             rows = len(lst)             # <<<<<<<<<<<<<<
@@ -3663,7 +3663,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
     __pyx_t_3 = PyObject_Length(__pyx_v_lst); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 270, __pyx_L1_error)
     __pyx_v_rows = __pyx_t_3;
 
-    /* "simple_mat.pyx":271
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":271
  *         if lst is not None:
  *             rows = len(lst)
  *             cols = len(lst[0])             # <<<<<<<<<<<<<<
@@ -3676,16 +3676,16 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_cols = __pyx_t_3;
 
-    /* "simple_mat.pyx":273
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":273
  *             cols = len(lst[0])
  * 
  *             self._mat = _Mat_new(rows, cols)             # <<<<<<<<<<<<<<
  * 
  *             if self._mat is NULL:
  */
-    __pyx_v_self->_mat = __pyx_f_10simple_mat__Mat_new(__pyx_v_rows, __pyx_v_cols);
+    __pyx_v_self->_mat = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_new(__pyx_v_rows, __pyx_v_cols);
 
-    /* "simple_mat.pyx":275
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":275
  *             self._mat = _Mat_new(rows, cols)
  * 
  *             if self._mat is NULL:             # <<<<<<<<<<<<<<
@@ -3695,7 +3695,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
     __pyx_t_2 = ((__pyx_v_self->_mat == NULL) != 0);
     if (unlikely(__pyx_t_2)) {
 
-      /* "simple_mat.pyx":276
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":276
  * 
  *             if self._mat is NULL:
  *                 raise MemoryError()             # <<<<<<<<<<<<<<
@@ -3704,7 +3704,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
  */
       PyErr_NoMemory(); __PYX_ERR(0, 276, __pyx_L1_error)
 
-      /* "simple_mat.pyx":275
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":275
  *             self._mat = _Mat_new(rows, cols)
  * 
  *             if self._mat is NULL:             # <<<<<<<<<<<<<<
@@ -3713,7 +3713,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
  */
     }
 
-    /* "simple_mat.pyx":278
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":278
  *                 raise MemoryError()
  * 
  *             self._mat.rows = rows             # <<<<<<<<<<<<<<
@@ -3722,7 +3722,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
  */
     __pyx_v_self->_mat->rows = __pyx_v_rows;
 
-    /* "simple_mat.pyx":279
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":279
  * 
  *             self._mat.rows = rows
  *             self._mat.cols = cols             # <<<<<<<<<<<<<<
@@ -3731,7 +3731,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
  */
     __pyx_v_self->_mat->cols = __pyx_v_cols;
 
-    /* "simple_mat.pyx":281
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":281
  *             self._mat.cols = cols
  * 
  *             for i, row in enumerate(lst):             # <<<<<<<<<<<<<<
@@ -3789,7 +3789,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
       __pyx_t_4 = __pyx_t_7;
       __pyx_t_7 = 0;
 
-      /* "simple_mat.pyx":282
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":282
  * 
  *             for i, row in enumerate(lst):
  *                 for j, item in enumerate(row):             # <<<<<<<<<<<<<<
@@ -3847,7 +3847,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
         __pyx_t_7 = __pyx_t_11;
         __pyx_t_11 = 0;
 
-        /* "simple_mat.pyx":283
+        /* "wahu_backend/logistic_regression/simple_mat.pyx":283
  *             for i, row in enumerate(lst):
  *                 for j, item in enumerate(row):
  *                     self._mat.data[i * cols + j] = item             # <<<<<<<<<<<<<<
@@ -3867,7 +3867,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         (__pyx_v_self->_mat->data[__pyx_t_14]) = __pyx_t_12;
 
-        /* "simple_mat.pyx":282
+        /* "wahu_backend/logistic_regression/simple_mat.pyx":282
  * 
  *             for i, row in enumerate(lst):
  *                 for j, item in enumerate(row):             # <<<<<<<<<<<<<<
@@ -3878,7 +3878,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-      /* "simple_mat.pyx":281
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":281
  *             self._mat.cols = cols
  * 
  *             for i, row in enumerate(lst):             # <<<<<<<<<<<<<<
@@ -3889,7 +3889,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "simple_mat.pyx":269
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":269
  *         cdef int rows, cols
  * 
  *         if lst is not None:             # <<<<<<<<<<<<<<
@@ -3898,7 +3898,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
  */
   }
 
-  /* "simple_mat.pyx":261
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":261
  * cdef class Mat:
  * 
  *     def __cinit__(self, lst=None):             # <<<<<<<<<<<<<<
@@ -3916,7 +3916,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_11);
   __Pyx_XDECREF(__pyx_t_13);
-  __Pyx_AddTraceback("simple_mat.Mat.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_i);
@@ -3927,7 +3927,7 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":285
+/* "wahu_backend/logistic_regression/simple_mat.pyx":285
  *                     self._mat.data[i * cols + j] = item
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -3936,22 +3936,22 @@ static int __pyx_pf_10simple_mat_3Mat___cinit__(struct __pyx_obj_10simple_mat_Ma
  */
 
 /* Python wrapper */
-static void __pyx_pw_10simple_mat_3Mat_3__dealloc__(PyObject *__pyx_v_self); /*proto*/
-static void __pyx_pw_10simple_mat_3Mat_3__dealloc__(PyObject *__pyx_v_self) {
+static void __pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_3__dealloc__(PyObject *__pyx_v_self); /*proto*/
+static void __pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_3__dealloc__(PyObject *__pyx_v_self) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__ (wrapper)", 0);
-  __pyx_pf_10simple_mat_3Mat_2__dealloc__(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self));
+  __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_2__dealloc__(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
 }
 
-static void __pyx_pf_10simple_mat_3Mat_2__dealloc__(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self) {
+static void __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_2__dealloc__(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self) {
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "simple_mat.pyx":286
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":286
  * 
  *     def __dealloc__(self):
  *         if self._mat is not NULL:             # <<<<<<<<<<<<<<
@@ -3961,7 +3961,7 @@ static void __pyx_pf_10simple_mat_3Mat_2__dealloc__(struct __pyx_obj_10simple_ma
   __pyx_t_1 = ((__pyx_v_self->_mat != NULL) != 0);
   if (__pyx_t_1) {
 
-    /* "simple_mat.pyx":287
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":287
  *     def __dealloc__(self):
  *         if self._mat is not NULL:
  *             free(self._mat)             # <<<<<<<<<<<<<<
@@ -3970,7 +3970,7 @@ static void __pyx_pf_10simple_mat_3Mat_2__dealloc__(struct __pyx_obj_10simple_ma
  */
     free(__pyx_v_self->_mat);
 
-    /* "simple_mat.pyx":286
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":286
  * 
  *     def __dealloc__(self):
  *         if self._mat is not NULL:             # <<<<<<<<<<<<<<
@@ -3979,7 +3979,7 @@ static void __pyx_pf_10simple_mat_3Mat_2__dealloc__(struct __pyx_obj_10simple_ma
  */
   }
 
-  /* "simple_mat.pyx":285
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":285
  *                     self._mat.data[i * cols + j] = item
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -3991,7 +3991,7 @@ static void __pyx_pf_10simple_mat_3Mat_2__dealloc__(struct __pyx_obj_10simple_ma
   __Pyx_RefNannyFinishContext();
 }
 
-/* "simple_mat.pyx":290
+/* "wahu_backend/logistic_regression/simple_mat.pyx":290
  * 
  *     @property
  *     def rows(self):             # <<<<<<<<<<<<<<
@@ -4000,19 +4000,19 @@ static void __pyx_pf_10simple_mat_3Mat_2__dealloc__(struct __pyx_obj_10simple_ma
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_4rows_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_4rows_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_4rows_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_4rows_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_4rows___get__(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_4rows___get__(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_4rows___get__(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self) {
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_4rows___get__(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4021,7 +4021,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4rows___get__(struct __pyx_obj_10sim
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "simple_mat.pyx":291
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":291
  *     @property
  *     def rows(self):
  *         return self._mat.rows             # <<<<<<<<<<<<<<
@@ -4035,7 +4035,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4rows___get__(struct __pyx_obj_10sim
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":290
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":290
  * 
  *     @property
  *     def rows(self):             # <<<<<<<<<<<<<<
@@ -4046,7 +4046,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4rows___get__(struct __pyx_obj_10sim
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.Mat.rows.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.rows.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4054,7 +4054,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4rows___get__(struct __pyx_obj_10sim
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":294
+/* "wahu_backend/logistic_regression/simple_mat.pyx":294
  * 
  *     @property
  *     def cols(self):             # <<<<<<<<<<<<<<
@@ -4063,19 +4063,19 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4rows___get__(struct __pyx_obj_10sim
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_4cols_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_4cols_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_4cols_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_4cols_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_4cols___get__(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_4cols___get__(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_4cols___get__(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self) {
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_4cols___get__(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4084,7 +4084,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4cols___get__(struct __pyx_obj_10sim
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "simple_mat.pyx":295
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":295
  *     @property
  *     def cols(self):
  *         return self._mat.cols             # <<<<<<<<<<<<<<
@@ -4098,7 +4098,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4cols___get__(struct __pyx_obj_10sim
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":294
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":294
  * 
  *     @property
  *     def cols(self):             # <<<<<<<<<<<<<<
@@ -4109,7 +4109,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4cols___get__(struct __pyx_obj_10sim
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.Mat.cols.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.cols.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4117,7 +4117,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4cols___get__(struct __pyx_obj_10sim
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":297
+/* "wahu_backend/logistic_regression/simple_mat.pyx":297
  *         return self._mat.cols
  * 
  *     def as_list(self):             # <<<<<<<<<<<<<<
@@ -4126,19 +4126,19 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4cols___get__(struct __pyx_obj_10sim
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_5as_list(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_5as_list(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_5as_list(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_5as_list(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("as_list (wrapper)", 0);
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_4as_list(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_4as_list(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_4as_list(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self) {
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_4as_list(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self) {
   PyObject *__pyx_v_i = NULL;
   PyObject *__pyx_v_j = NULL;
   PyObject *__pyx_r = NULL;
@@ -4159,7 +4159,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4as_list(struct __pyx_obj_10simple_m
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("as_list", 0);
 
-  /* "simple_mat.pyx":298
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":298
  * 
  *     def as_list(self):
  *         return [             # <<<<<<<<<<<<<<
@@ -4170,7 +4170,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4as_list(struct __pyx_obj_10simple_m
   __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 298, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "simple_mat.pyx":300
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":300
  *         return [
  *             [self._mat.data[i * self._mat.cols + j] for j in range(self._mat.cols)]
  *             for i in range(self._mat.rows)             # <<<<<<<<<<<<<<
@@ -4225,7 +4225,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4as_list(struct __pyx_obj_10simple_m
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "simple_mat.pyx":299
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":299
  *     def as_list(self):
  *         return [
  *             [self._mat.data[i * self._mat.cols + j] for j in range(self._mat.cols)]             # <<<<<<<<<<<<<<
@@ -4300,7 +4300,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4as_list(struct __pyx_obj_10simple_m
     if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_3))) __PYX_ERR(0, 298, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "simple_mat.pyx":300
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":300
  *         return [
  *             [self._mat.data[i * self._mat.cols + j] for j in range(self._mat.cols)]
  *             for i in range(self._mat.rows)             # <<<<<<<<<<<<<<
@@ -4313,7 +4313,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4as_list(struct __pyx_obj_10simple_m
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":297
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":297
  *         return self._mat.cols
  * 
  *     def as_list(self):             # <<<<<<<<<<<<<<
@@ -4329,7 +4329,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4as_list(struct __pyx_obj_10simple_m
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_10);
-  __Pyx_AddTraceback("simple_mat.Mat.as_list", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.as_list", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_i);
@@ -4339,7 +4339,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4as_list(struct __pyx_obj_10simple_m
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":304
+/* "wahu_backend/logistic_regression/simple_mat.pyx":304
  * 
  *     @staticmethod
  *     cdef _from_pointer(_Mat* _mat):             # <<<<<<<<<<<<<<
@@ -4347,8 +4347,8 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_4as_list(struct __pyx_obj_10simple_m
  * 
  */
 
-static PyObject *__pyx_f_10simple_mat_3Mat__from_pointer(struct __pyx_t_10simple_mat__Mat *__pyx_v__mat) {
-  struct __pyx_obj_10simple_mat_Mat *__pyx_v_mat = NULL;
+static PyObject *__pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__mat) {
+  struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_mat = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4357,19 +4357,19 @@ static PyObject *__pyx_f_10simple_mat_3Mat__from_pointer(struct __pyx_t_10simple
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_from_pointer", 0);
 
-  /* "simple_mat.pyx":307
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":307
  *         #  _Mat  Mat
  * 
  *         mat = Mat()             # <<<<<<<<<<<<<<
  *         mat._mat = _mat
  *         return mat
  */
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_10simple_mat_Mat)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 307, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_12wahu_backend_19logistic_regression_10simple_mat_Mat)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 307, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_v_mat = ((struct __pyx_obj_10simple_mat_Mat *)__pyx_t_1);
+  __pyx_v_mat = ((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "simple_mat.pyx":308
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":308
  * 
  *         mat = Mat()
  *         mat._mat = _mat             # <<<<<<<<<<<<<<
@@ -4378,7 +4378,7 @@ static PyObject *__pyx_f_10simple_mat_3Mat__from_pointer(struct __pyx_t_10simple
  */
   __pyx_v_mat->_mat = __pyx_v__mat;
 
-  /* "simple_mat.pyx":309
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":309
  *         mat = Mat()
  *         mat._mat = _mat
  *         return mat             # <<<<<<<<<<<<<<
@@ -4390,7 +4390,7 @@ static PyObject *__pyx_f_10simple_mat_3Mat__from_pointer(struct __pyx_t_10simple
   __pyx_r = ((PyObject *)__pyx_v_mat);
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":304
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":304
  * 
  *     @staticmethod
  *     cdef _from_pointer(_Mat* _mat):             # <<<<<<<<<<<<<<
@@ -4401,7 +4401,7 @@ static PyObject *__pyx_f_10simple_mat_3Mat__from_pointer(struct __pyx_t_10simple
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.Mat._from_pointer", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat._from_pointer", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF((PyObject *)__pyx_v_mat);
@@ -4410,7 +4410,7 @@ static PyObject *__pyx_f_10simple_mat_3Mat__from_pointer(struct __pyx_t_10simple
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":312
+/* "wahu_backend/logistic_regression/simple_mat.pyx":312
  * 
  *     @staticmethod
  *     cdef _Mat* _new__mat(int rows, int cols):             # <<<<<<<<<<<<<<
@@ -4418,9 +4418,9 @@ static PyObject *__pyx_f_10simple_mat_3Mat__from_pointer(struct __pyx_t_10simple
  *         #  MemoryError
  */
 
-static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat_3Mat__new__mat(int __pyx_v_rows, int __pyx_v_cols) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__new;
-  struct __pyx_t_10simple_mat__Mat *__pyx_r;
+static struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(int __pyx_v_rows, int __pyx_v_cols) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__new;
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   int __pyx_lineno = 0;
@@ -4428,16 +4428,16 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat_3Mat__new__mat(int
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_new__mat", 0);
 
-  /* "simple_mat.pyx":316
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":316
  *         #  MemoryError
  * 
  *         cdef _Mat *_new = _Mat_new(rows, cols)             # <<<<<<<<<<<<<<
  *         if _new is NULL:
  *             raise MemoryError()
  */
-  __pyx_v__new = __pyx_f_10simple_mat__Mat_new(__pyx_v_rows, __pyx_v_cols);
+  __pyx_v__new = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_new(__pyx_v_rows, __pyx_v_cols);
 
-  /* "simple_mat.pyx":317
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":317
  * 
  *         cdef _Mat *_new = _Mat_new(rows, cols)
  *         if _new is NULL:             # <<<<<<<<<<<<<<
@@ -4447,7 +4447,7 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat_3Mat__new__mat(int
   __pyx_t_1 = ((__pyx_v__new == NULL) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "simple_mat.pyx":318
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":318
  *         cdef _Mat *_new = _Mat_new(rows, cols)
  *         if _new is NULL:
  *             raise MemoryError()             # <<<<<<<<<<<<<<
@@ -4456,7 +4456,7 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat_3Mat__new__mat(int
  */
     PyErr_NoMemory(); __PYX_ERR(0, 318, __pyx_L1_error)
 
-    /* "simple_mat.pyx":317
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":317
  * 
  *         cdef _Mat *_new = _Mat_new(rows, cols)
  *         if _new is NULL:             # <<<<<<<<<<<<<<
@@ -4465,7 +4465,7 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat_3Mat__new__mat(int
  */
   }
 
-  /* "simple_mat.pyx":319
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":319
  *         if _new is NULL:
  *             raise MemoryError()
  *         return _new             # <<<<<<<<<<<<<<
@@ -4475,7 +4475,7 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat_3Mat__new__mat(int
   __pyx_r = __pyx_v__new;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":312
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":312
  * 
  *     @staticmethod
  *     cdef _Mat* _new__mat(int rows, int cols):             # <<<<<<<<<<<<<<
@@ -4485,14 +4485,14 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat_3Mat__new__mat(int
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_WriteUnraisable("simple_mat.Mat._new__mat", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("wahu_backend.logistic_regression.simple_mat.Mat._new__mat", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":321
+/* "wahu_backend/logistic_regression/simple_mat.pyx":321
  *         return _new
  * 
  *     def dot(self, Mat other):             # <<<<<<<<<<<<<<
@@ -4501,16 +4501,16 @@ static struct __pyx_t_10simple_mat__Mat *__pyx_f_10simple_mat_3Mat__new__mat(int
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_7dot(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_7dot(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_7dot(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_7dot(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("dot (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_other), __pyx_ptype_10simple_mat_Mat, 1, "other", 0))) __PYX_ERR(0, 321, __pyx_L1_error)
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_6dot(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self), ((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_other));
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_other), __pyx_ptype_12wahu_backend_19logistic_regression_10simple_mat_Mat, 1, "other", 0))) __PYX_ERR(0, 321, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_6dot(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self), ((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_other));
 
   /* function exit code */
   goto __pyx_L0;
@@ -4521,8 +4521,8 @@ static PyObject *__pyx_pw_10simple_mat_3Mat_7dot(PyObject *__pyx_v_self, PyObjec
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_6dot(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_10simple_mat_Mat *__pyx_v_other) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__ret;
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_6dot(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_other) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__ret;
   int __pyx_v_ret_code;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -4536,25 +4536,25 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_6dot(struct __pyx_obj_10simple_mat_M
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("dot", 0);
 
-  /* "simple_mat.pyx":324
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":324
  *         #
  * 
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, other._mat.cols)             # <<<<<<<<<<<<<<
  * 
  *         cdef int ret_code = _Mat_dot(self._mat, other._mat, _ret)
  */
-  __pyx_v__ret = __pyx_f_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_other->_mat->cols);
+  __pyx_v__ret = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_other->_mat->cols);
 
-  /* "simple_mat.pyx":326
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":326
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, other._mat.cols)
  * 
  *         cdef int ret_code = _Mat_dot(self._mat, other._mat, _ret)             # <<<<<<<<<<<<<<
  * 
  *         if ret_code == -1:
  */
-  __pyx_v_ret_code = __pyx_f_10simple_mat__Mat_dot(__pyx_v_self->_mat, __pyx_v_other->_mat, __pyx_v__ret);
+  __pyx_v_ret_code = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_dot(__pyx_v_self->_mat, __pyx_v_other->_mat, __pyx_v__ret);
 
-  /* "simple_mat.pyx":328
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":328
  *         cdef int ret_code = _Mat_dot(self._mat, other._mat, _ret)
  * 
  *         if ret_code == -1:             # <<<<<<<<<<<<<<
@@ -4564,7 +4564,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_6dot(struct __pyx_obj_10simple_mat_M
   __pyx_t_1 = ((__pyx_v_ret_code == -1L) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "simple_mat.pyx":329
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":329
  * 
  *         if ret_code == -1:
  *             raise ValueError(f'a.cols ({self._mat.cols})  b.rows ({other._mat.rows})')             # <<<<<<<<<<<<<<
@@ -4610,7 +4610,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_6dot(struct __pyx_obj_10simple_mat_M
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __PYX_ERR(0, 329, __pyx_L1_error)
 
-    /* "simple_mat.pyx":328
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":328
  *         cdef int ret_code = _Mat_dot(self._mat, other._mat, _ret)
  * 
  *         if ret_code == -1:             # <<<<<<<<<<<<<<
@@ -4619,7 +4619,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_6dot(struct __pyx_obj_10simple_mat_M
  */
   }
 
-  /* "simple_mat.pyx":331
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":331
  *             raise ValueError(f'a.cols ({self._mat.cols})  b.rows ({other._mat.rows})')
  * 
  *         return Mat._from_pointer(_ret)             # <<<<<<<<<<<<<<
@@ -4627,13 +4627,13 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_6dot(struct __pyx_obj_10simple_mat_M
  *     def copy(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __pyx_f_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 331, __pyx_L1_error)
+  __pyx_t_2 = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 331, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":321
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":321
  *         return _new
  * 
  *     def dot(self, Mat other):             # <<<<<<<<<<<<<<
@@ -4645,7 +4645,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_6dot(struct __pyx_obj_10simple_mat_M
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("simple_mat.Mat.dot", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.dot", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4653,7 +4653,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_6dot(struct __pyx_obj_10simple_mat_M
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":333
+/* "wahu_backend/logistic_regression/simple_mat.pyx":333
  *         return Mat._from_pointer(_ret)
  * 
  *     def copy(self):             # <<<<<<<<<<<<<<
@@ -4662,20 +4662,20 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_6dot(struct __pyx_obj_10simple_mat_M
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_9copy(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_9copy(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_9copy(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_9copy(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("copy (wrapper)", 0);
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_8copy(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_8copy(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_8copy(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__new;
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_8copy(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__new;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4684,25 +4684,25 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_8copy(struct __pyx_obj_10simple_mat_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("copy", 0);
 
-  /* "simple_mat.pyx":336
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":336
  *         #
  * 
  *         cdef _Mat *_new = Mat._new__mat(self._mat.rows, self._mat.cols)             # <<<<<<<<<<<<<<
  * 
  *         _Mat_copy(self._mat, _new)
  */
-  __pyx_v__new = __pyx_f_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
+  __pyx_v__new = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
 
-  /* "simple_mat.pyx":338
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":338
  *         cdef _Mat *_new = Mat._new__mat(self._mat.rows, self._mat.cols)
  * 
  *         _Mat_copy(self._mat, _new)             # <<<<<<<<<<<<<<
  * 
  *         return Mat._from_pointer(_new)
  */
-  (void)(__pyx_f_10simple_mat__Mat_copy(__pyx_v_self->_mat, __pyx_v__new));
+  (void)(__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_copy(__pyx_v_self->_mat, __pyx_v__new));
 
-  /* "simple_mat.pyx":340
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":340
  *         _Mat_copy(self._mat, _new)
  * 
  *         return Mat._from_pointer(_new)             # <<<<<<<<<<<<<<
@@ -4710,13 +4710,13 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_8copy(struct __pyx_obj_10simple_mat_
  *     def __str__(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_10simple_mat_3Mat__from_pointer(__pyx_v__new); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(__pyx_v__new); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 340, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":333
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":333
  *         return Mat._from_pointer(_ret)
  * 
  *     def copy(self):             # <<<<<<<<<<<<<<
@@ -4727,7 +4727,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_8copy(struct __pyx_obj_10simple_mat_
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.Mat.copy", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.copy", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4735,7 +4735,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_8copy(struct __pyx_obj_10simple_mat_
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":342
+/* "wahu_backend/logistic_regression/simple_mat.pyx":342
  *         return Mat._from_pointer(_new)
  * 
  *     def __str__(self):             # <<<<<<<<<<<<<<
@@ -4744,19 +4744,19 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_8copy(struct __pyx_obj_10simple_mat_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_11__str__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_11__str__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_11__str__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_11__str__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__str__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_10__str__(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_10__str__(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_10__str__(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self) {
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_10__str__(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4767,7 +4767,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_10__str__(struct __pyx_obj_10simple_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__str__", 0);
 
-  /* "simple_mat.pyx":343
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":343
  * 
  *     def __str__(self):
  *         return str(self.as_list())             # <<<<<<<<<<<<<<
@@ -4799,7 +4799,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_10__str__(struct __pyx_obj_10simple_
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":342
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":342
  *         return Mat._from_pointer(_new)
  * 
  *     def __str__(self):             # <<<<<<<<<<<<<<
@@ -4812,7 +4812,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_10__str__(struct __pyx_obj_10simple_
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("simple_mat.Mat.__str__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.__str__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4820,7 +4820,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_10__str__(struct __pyx_obj_10simple_
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":346
+/* "wahu_backend/logistic_regression/simple_mat.pyx":346
  * 
  *     @property
  *     def T(self):             # <<<<<<<<<<<<<<
@@ -4829,20 +4829,20 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_10__str__(struct __pyx_obj_10simple_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_1T_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_1T_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_1T_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_1T_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_1T___get__(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_1T___get__(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_1T___get__(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__tps;
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_1T___get__(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__tps;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4851,25 +4851,25 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_1T___get__(struct __pyx_obj_10simple
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "simple_mat.pyx":349
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":349
  *         #
  * 
  *         cdef _Mat *_tps = Mat._new__mat(self._mat.cols, self._mat.rows)             # <<<<<<<<<<<<<<
  * 
  *         _Mat_transpose(self._mat, _tps)
  */
-  __pyx_v__tps = __pyx_f_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->cols, __pyx_v_self->_mat->rows);
+  __pyx_v__tps = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->cols, __pyx_v_self->_mat->rows);
 
-  /* "simple_mat.pyx":351
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":351
  *         cdef _Mat *_tps = Mat._new__mat(self._mat.cols, self._mat.rows)
  * 
  *         _Mat_transpose(self._mat, _tps)             # <<<<<<<<<<<<<<
  * 
  *         return Mat._from_pointer(_tps)
  */
-  (void)(__pyx_f_10simple_mat__Mat_transpose(__pyx_v_self->_mat, __pyx_v__tps));
+  (void)(__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_transpose(__pyx_v_self->_mat, __pyx_v__tps));
 
-  /* "simple_mat.pyx":353
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":353
  *         _Mat_transpose(self._mat, _tps)
  * 
  *         return Mat._from_pointer(_tps)             # <<<<<<<<<<<<<<
@@ -4877,13 +4877,13 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_1T___get__(struct __pyx_obj_10simple
  *     def add(self, Mat other):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_10simple_mat_3Mat__from_pointer(__pyx_v__tps); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 353, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(__pyx_v__tps); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 353, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":346
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":346
  * 
  *     @property
  *     def T(self):             # <<<<<<<<<<<<<<
@@ -4894,7 +4894,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_1T___get__(struct __pyx_obj_10simple
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.Mat.T.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.T.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4902,7 +4902,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_1T___get__(struct __pyx_obj_10simple
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":355
+/* "wahu_backend/logistic_regression/simple_mat.pyx":355
  *         return Mat._from_pointer(_tps)
  * 
  *     def add(self, Mat other):             # <<<<<<<<<<<<<<
@@ -4911,16 +4911,16 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_1T___get__(struct __pyx_obj_10simple
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_13add(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_13add(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_13add(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_13add(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("add (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_other), __pyx_ptype_10simple_mat_Mat, 1, "other", 0))) __PYX_ERR(0, 355, __pyx_L1_error)
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_12add(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self), ((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_other));
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_other), __pyx_ptype_12wahu_backend_19logistic_regression_10simple_mat_Mat, 1, "other", 0))) __PYX_ERR(0, 355, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_12add(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self), ((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_other));
 
   /* function exit code */
   goto __pyx_L0;
@@ -4931,8 +4931,8 @@ static PyObject *__pyx_pw_10simple_mat_3Mat_13add(PyObject *__pyx_v_self, PyObje
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_12add(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_10simple_mat_Mat *__pyx_v_other) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__ret;
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_12add(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_other) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__ret;
   int __pyx_v_ret_code;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -4943,25 +4943,25 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_12add(struct __pyx_obj_10simple_mat_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("add", 0);
 
-  /* "simple_mat.pyx":356
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":356
  * 
  *     def add(self, Mat other):
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)             # <<<<<<<<<<<<<<
  * 
  *         cdef int ret_code = _Mat_add(self._mat, other._mat, _ret)
  */
-  __pyx_v__ret = __pyx_f_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
+  __pyx_v__ret = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
 
-  /* "simple_mat.pyx":358
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":358
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)
  * 
  *         cdef int ret_code = _Mat_add(self._mat, other._mat, _ret)             # <<<<<<<<<<<<<<
  *         if ret_code == -1:
  *             raise ValueError('a  b ')
  */
-  __pyx_v_ret_code = __pyx_f_10simple_mat__Mat_add(__pyx_v_self->_mat, __pyx_v_other->_mat, __pyx_v__ret);
+  __pyx_v_ret_code = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_add(__pyx_v_self->_mat, __pyx_v_other->_mat, __pyx_v__ret);
 
-  /* "simple_mat.pyx":359
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":359
  * 
  *         cdef int ret_code = _Mat_add(self._mat, other._mat, _ret)
  *         if ret_code == -1:             # <<<<<<<<<<<<<<
@@ -4971,7 +4971,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_12add(struct __pyx_obj_10simple_mat_
   __pyx_t_1 = ((__pyx_v_ret_code == -1L) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "simple_mat.pyx":360
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":360
  *         cdef int ret_code = _Mat_add(self._mat, other._mat, _ret)
  *         if ret_code == -1:
  *             raise ValueError('a  b ')             # <<<<<<<<<<<<<<
@@ -4984,7 +4984,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_12add(struct __pyx_obj_10simple_mat_
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __PYX_ERR(0, 360, __pyx_L1_error)
 
-    /* "simple_mat.pyx":359
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":359
  * 
  *         cdef int ret_code = _Mat_add(self._mat, other._mat, _ret)
  *         if ret_code == -1:             # <<<<<<<<<<<<<<
@@ -4993,7 +4993,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_12add(struct __pyx_obj_10simple_mat_
  */
   }
 
-  /* "simple_mat.pyx":362
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":362
  *             raise ValueError('a  b ')
  * 
  *         return Mat._from_pointer(_ret)             # <<<<<<<<<<<<<<
@@ -5001,13 +5001,13 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_12add(struct __pyx_obj_10simple_mat_
  *     def subtract(self, Mat other):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __pyx_f_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 362, __pyx_L1_error)
+  __pyx_t_2 = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 362, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":355
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":355
  *         return Mat._from_pointer(_tps)
  * 
  *     def add(self, Mat other):             # <<<<<<<<<<<<<<
@@ -5018,7 +5018,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_12add(struct __pyx_obj_10simple_mat_
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("simple_mat.Mat.add", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.add", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -5026,7 +5026,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_12add(struct __pyx_obj_10simple_mat_
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":364
+/* "wahu_backend/logistic_regression/simple_mat.pyx":364
  *         return Mat._from_pointer(_ret)
  * 
  *     def subtract(self, Mat other):             # <<<<<<<<<<<<<<
@@ -5035,16 +5035,16 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_12add(struct __pyx_obj_10simple_mat_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_15subtract(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_15subtract(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_15subtract(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_15subtract(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("subtract (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_other), __pyx_ptype_10simple_mat_Mat, 1, "other", 0))) __PYX_ERR(0, 364, __pyx_L1_error)
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_14subtract(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self), ((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_other));
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_other), __pyx_ptype_12wahu_backend_19logistic_regression_10simple_mat_Mat, 1, "other", 0))) __PYX_ERR(0, 364, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_14subtract(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self), ((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_other));
 
   /* function exit code */
   goto __pyx_L0;
@@ -5055,8 +5055,8 @@ static PyObject *__pyx_pw_10simple_mat_3Mat_15subtract(PyObject *__pyx_v_self, P
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_14subtract(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_10simple_mat_Mat *__pyx_v_other) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__ret;
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_14subtract(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_other) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__ret;
   int __pyx_v_ret_code;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -5067,25 +5067,25 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_14subtract(struct __pyx_obj_10simple
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("subtract", 0);
 
-  /* "simple_mat.pyx":365
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":365
  * 
  *     def subtract(self, Mat other):
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)             # <<<<<<<<<<<<<<
  * 
  *         cdef int ret_code = _Mat_subtract(self._mat, other._mat, _ret)
  */
-  __pyx_v__ret = __pyx_f_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
+  __pyx_v__ret = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
 
-  /* "simple_mat.pyx":367
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":367
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)
  * 
  *         cdef int ret_code = _Mat_subtract(self._mat, other._mat, _ret)             # <<<<<<<<<<<<<<
  *         if ret_code == -1:
  *             raise ValueError('a  b ')
  */
-  __pyx_v_ret_code = __pyx_f_10simple_mat__Mat_subtract(__pyx_v_self->_mat, __pyx_v_other->_mat, __pyx_v__ret);
+  __pyx_v_ret_code = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_subtract(__pyx_v_self->_mat, __pyx_v_other->_mat, __pyx_v__ret);
 
-  /* "simple_mat.pyx":368
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":368
  * 
  *         cdef int ret_code = _Mat_subtract(self._mat, other._mat, _ret)
  *         if ret_code == -1:             # <<<<<<<<<<<<<<
@@ -5095,7 +5095,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_14subtract(struct __pyx_obj_10simple
   __pyx_t_1 = ((__pyx_v_ret_code == -1L) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "simple_mat.pyx":369
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":369
  *         cdef int ret_code = _Mat_subtract(self._mat, other._mat, _ret)
  *         if ret_code == -1:
  *             raise ValueError('a  b ')             # <<<<<<<<<<<<<<
@@ -5108,7 +5108,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_14subtract(struct __pyx_obj_10simple
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __PYX_ERR(0, 369, __pyx_L1_error)
 
-    /* "simple_mat.pyx":368
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":368
  * 
  *         cdef int ret_code = _Mat_subtract(self._mat, other._mat, _ret)
  *         if ret_code == -1:             # <<<<<<<<<<<<<<
@@ -5117,7 +5117,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_14subtract(struct __pyx_obj_10simple
  */
   }
 
-  /* "simple_mat.pyx":371
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":371
  *             raise ValueError('a  b ')
  * 
  *         return Mat._from_pointer(_ret)             # <<<<<<<<<<<<<<
@@ -5125,13 +5125,13 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_14subtract(struct __pyx_obj_10simple
  *     def add_double(self, double scaler):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __pyx_f_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 371, __pyx_L1_error)
+  __pyx_t_2 = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 371, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":364
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":364
  *         return Mat._from_pointer(_ret)
  * 
  *     def subtract(self, Mat other):             # <<<<<<<<<<<<<<
@@ -5142,7 +5142,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_14subtract(struct __pyx_obj_10simple
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("simple_mat.Mat.subtract", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.subtract", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -5150,7 +5150,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_14subtract(struct __pyx_obj_10simple
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":373
+/* "wahu_backend/logistic_regression/simple_mat.pyx":373
  *         return Mat._from_pointer(_ret)
  * 
  *     def add_double(self, double scaler):             # <<<<<<<<<<<<<<
@@ -5159,8 +5159,8 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_14subtract(struct __pyx_obj_10simple
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_17add_double(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_17add_double(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_17add_double(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_17add_double(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler) {
   double __pyx_v_scaler;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -5173,19 +5173,19 @@ static PyObject *__pyx_pw_10simple_mat_3Mat_17add_double(PyObject *__pyx_v_self,
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
-  __Pyx_AddTraceback("simple_mat.Mat.add_double", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.add_double", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_16add_double(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self), ((double)__pyx_v_scaler));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_16add_double(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self), ((double)__pyx_v_scaler));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_16add_double(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__ret;
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_16add_double(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__ret;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -5194,25 +5194,25 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_16add_double(struct __pyx_obj_10simp
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("add_double", 0);
 
-  /* "simple_mat.pyx":374
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":374
  * 
  *     def add_double(self, double scaler):
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)             # <<<<<<<<<<<<<<
  * 
  *         _Mat_add_double(self._mat, scaler, _ret)
  */
-  __pyx_v__ret = __pyx_f_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
+  __pyx_v__ret = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
 
-  /* "simple_mat.pyx":376
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":376
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)
  * 
  *         _Mat_add_double(self._mat, scaler, _ret)             # <<<<<<<<<<<<<<
  * 
  *         return Mat._from_pointer(_ret)
  */
-  (void)(__pyx_f_10simple_mat__Mat_add_double(__pyx_v_self->_mat, __pyx_v_scaler, __pyx_v__ret));
+  (void)(__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_add_double(__pyx_v_self->_mat, __pyx_v_scaler, __pyx_v__ret));
 
-  /* "simple_mat.pyx":378
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":378
  *         _Mat_add_double(self._mat, scaler, _ret)
  * 
  *         return Mat._from_pointer(_ret)             # <<<<<<<<<<<<<<
@@ -5220,13 +5220,13 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_16add_double(struct __pyx_obj_10simp
  *     def subtract_double(self, double scaler):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 378, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 378, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":373
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":373
  *         return Mat._from_pointer(_ret)
  * 
  *     def add_double(self, double scaler):             # <<<<<<<<<<<<<<
@@ -5237,7 +5237,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_16add_double(struct __pyx_obj_10simp
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.Mat.add_double", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.add_double", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -5245,7 +5245,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_16add_double(struct __pyx_obj_10simp
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":380
+/* "wahu_backend/logistic_regression/simple_mat.pyx":380
  *         return Mat._from_pointer(_ret)
  * 
  *     def subtract_double(self, double scaler):             # <<<<<<<<<<<<<<
@@ -5254,8 +5254,8 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_16add_double(struct __pyx_obj_10simp
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_19subtract_double(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_19subtract_double(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_19subtract_double(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_19subtract_double(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler) {
   double __pyx_v_scaler;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -5268,19 +5268,19 @@ static PyObject *__pyx_pw_10simple_mat_3Mat_19subtract_double(PyObject *__pyx_v_
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
-  __Pyx_AddTraceback("simple_mat.Mat.subtract_double", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.subtract_double", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_18subtract_double(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self), ((double)__pyx_v_scaler));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_18subtract_double(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self), ((double)__pyx_v_scaler));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_18subtract_double(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__ret;
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_18subtract_double(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__ret;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -5289,25 +5289,25 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_18subtract_double(struct __pyx_obj_1
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("subtract_double", 0);
 
-  /* "simple_mat.pyx":381
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":381
  * 
  *     def subtract_double(self, double scaler):
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)             # <<<<<<<<<<<<<<
  * 
  *         _Mat_subtract_double(self._mat, scaler, _ret)
  */
-  __pyx_v__ret = __pyx_f_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
+  __pyx_v__ret = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
 
-  /* "simple_mat.pyx":383
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":383
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)
  * 
  *         _Mat_subtract_double(self._mat, scaler, _ret)             # <<<<<<<<<<<<<<
  * 
  *         return Mat._from_pointer(_ret)
  */
-  (void)(__pyx_f_10simple_mat__Mat_subtract_double(__pyx_v_self->_mat, __pyx_v_scaler, __pyx_v__ret));
+  (void)(__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_subtract_double(__pyx_v_self->_mat, __pyx_v_scaler, __pyx_v__ret));
 
-  /* "simple_mat.pyx":385
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":385
  *         _Mat_subtract_double(self._mat, scaler, _ret)
  * 
  *         return Mat._from_pointer(_ret)             # <<<<<<<<<<<<<<
@@ -5315,13 +5315,13 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_18subtract_double(struct __pyx_obj_1
  *     def subtractedby_double(self, double scaler):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 385, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 385, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":380
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":380
  *         return Mat._from_pointer(_ret)
  * 
  *     def subtract_double(self, double scaler):             # <<<<<<<<<<<<<<
@@ -5332,7 +5332,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_18subtract_double(struct __pyx_obj_1
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.Mat.subtract_double", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.subtract_double", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -5340,7 +5340,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_18subtract_double(struct __pyx_obj_1
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":387
+/* "wahu_backend/logistic_regression/simple_mat.pyx":387
  *         return Mat._from_pointer(_ret)
  * 
  *     def subtractedby_double(self, double scaler):             # <<<<<<<<<<<<<<
@@ -5349,8 +5349,8 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_18subtract_double(struct __pyx_obj_1
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_21subtractedby_double(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_21subtractedby_double(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_21subtractedby_double(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_21subtractedby_double(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler) {
   double __pyx_v_scaler;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -5363,19 +5363,19 @@ static PyObject *__pyx_pw_10simple_mat_3Mat_21subtractedby_double(PyObject *__py
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
-  __Pyx_AddTraceback("simple_mat.Mat.subtractedby_double", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.subtractedby_double", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_20subtractedby_double(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self), ((double)__pyx_v_scaler));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_20subtractedby_double(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self), ((double)__pyx_v_scaler));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_20subtractedby_double(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__ret;
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_20subtractedby_double(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__ret;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -5384,25 +5384,25 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_20subtractedby_double(struct __pyx_o
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("subtractedby_double", 0);
 
-  /* "simple_mat.pyx":388
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":388
  * 
  *     def subtractedby_double(self, double scaler):
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)             # <<<<<<<<<<<<<<
  * 
  *         _Mat_subtractedby_double(self._mat, scaler, _ret)
  */
-  __pyx_v__ret = __pyx_f_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
+  __pyx_v__ret = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
 
-  /* "simple_mat.pyx":390
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":390
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)
  * 
  *         _Mat_subtractedby_double(self._mat, scaler, _ret)             # <<<<<<<<<<<<<<
  * 
  *         return Mat._from_pointer(_ret)
  */
-  (void)(__pyx_f_10simple_mat__Mat_subtractedby_double(__pyx_v_self->_mat, __pyx_v_scaler, __pyx_v__ret));
+  (void)(__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_subtractedby_double(__pyx_v_self->_mat, __pyx_v_scaler, __pyx_v__ret));
 
-  /* "simple_mat.pyx":392
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":392
  *         _Mat_subtractedby_double(self._mat, scaler, _ret)
  * 
  *         return Mat._from_pointer(_ret)             # <<<<<<<<<<<<<<
@@ -5410,13 +5410,13 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_20subtractedby_double(struct __pyx_o
  *     def scale(self, double scaler):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 392, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 392, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":387
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":387
  *         return Mat._from_pointer(_ret)
  * 
  *     def subtractedby_double(self, double scaler):             # <<<<<<<<<<<<<<
@@ -5427,7 +5427,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_20subtractedby_double(struct __pyx_o
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.Mat.subtractedby_double", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.subtractedby_double", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -5435,7 +5435,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_20subtractedby_double(struct __pyx_o
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":394
+/* "wahu_backend/logistic_regression/simple_mat.pyx":394
  *         return Mat._from_pointer(_ret)
  * 
  *     def scale(self, double scaler):             # <<<<<<<<<<<<<<
@@ -5444,8 +5444,8 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_20subtractedby_double(struct __pyx_o
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_23scale(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_23scale(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_23scale(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_23scale(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler) {
   double __pyx_v_scaler;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -5458,19 +5458,19 @@ static PyObject *__pyx_pw_10simple_mat_3Mat_23scale(PyObject *__pyx_v_self, PyOb
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
-  __Pyx_AddTraceback("simple_mat.Mat.scale", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.scale", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_22scale(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self), ((double)__pyx_v_scaler));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_22scale(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self), ((double)__pyx_v_scaler));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_22scale(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__ret;
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_22scale(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__ret;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -5479,25 +5479,25 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_22scale(struct __pyx_obj_10simple_ma
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("scale", 0);
 
-  /* "simple_mat.pyx":395
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":395
  * 
  *     def scale(self, double scaler):
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)             # <<<<<<<<<<<<<<
  * 
  *         _Mat_scale(self._mat, scaler, _ret)
  */
-  __pyx_v__ret = __pyx_f_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
+  __pyx_v__ret = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
 
-  /* "simple_mat.pyx":397
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":397
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)
  * 
  *         _Mat_scale(self._mat, scaler, _ret)             # <<<<<<<<<<<<<<
  * 
  *         return Mat._from_pointer(_ret)
  */
-  (void)(__pyx_f_10simple_mat__Mat_scale(__pyx_v_self->_mat, __pyx_v_scaler, __pyx_v__ret));
+  (void)(__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_scale(__pyx_v_self->_mat, __pyx_v_scaler, __pyx_v__ret));
 
-  /* "simple_mat.pyx":399
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":399
  *         _Mat_scale(self._mat, scaler, _ret)
  * 
  *         return Mat._from_pointer(_ret)             # <<<<<<<<<<<<<<
@@ -5505,13 +5505,13 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_22scale(struct __pyx_obj_10simple_ma
  *     def mul(self, Mat other):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 399, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 399, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":394
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":394
  *         return Mat._from_pointer(_ret)
  * 
  *     def scale(self, double scaler):             # <<<<<<<<<<<<<<
@@ -5522,7 +5522,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_22scale(struct __pyx_obj_10simple_ma
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.Mat.scale", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.scale", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -5530,7 +5530,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_22scale(struct __pyx_obj_10simple_ma
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":401
+/* "wahu_backend/logistic_regression/simple_mat.pyx":401
  *         return Mat._from_pointer(_ret)
  * 
  *     def mul(self, Mat other):             # <<<<<<<<<<<<<<
@@ -5539,16 +5539,16 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_22scale(struct __pyx_obj_10simple_ma
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_25mul(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_25mul(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_25mul(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_25mul(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("mul (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_other), __pyx_ptype_10simple_mat_Mat, 1, "other", 0))) __PYX_ERR(0, 401, __pyx_L1_error)
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_24mul(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self), ((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_other));
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_other), __pyx_ptype_12wahu_backend_19logistic_regression_10simple_mat_Mat, 1, "other", 0))) __PYX_ERR(0, 401, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_24mul(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self), ((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_other));
 
   /* function exit code */
   goto __pyx_L0;
@@ -5559,8 +5559,8 @@ static PyObject *__pyx_pw_10simple_mat_3Mat_25mul(PyObject *__pyx_v_self, PyObje
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_24mul(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_10simple_mat_Mat *__pyx_v_other) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__ret;
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_24mul(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_other) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__ret;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -5569,25 +5569,25 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_24mul(struct __pyx_obj_10simple_mat_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("mul", 0);
 
-  /* "simple_mat.pyx":402
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":402
  * 
  *     def mul(self, Mat other):
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)             # <<<<<<<<<<<<<<
  * 
  *         _Mat_mul(self._mat, other._mat, _ret)
  */
-  __pyx_v__ret = __pyx_f_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
+  __pyx_v__ret = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
 
-  /* "simple_mat.pyx":404
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":404
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)
  * 
  *         _Mat_mul(self._mat, other._mat, _ret)             # <<<<<<<<<<<<<<
  * 
  *         return Mat._from_pointer(_ret)
  */
-  (void)(__pyx_f_10simple_mat__Mat_mul(__pyx_v_self->_mat, __pyx_v_other->_mat, __pyx_v__ret));
+  (void)(__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_mul(__pyx_v_self->_mat, __pyx_v_other->_mat, __pyx_v__ret));
 
-  /* "simple_mat.pyx":406
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":406
  *         _Mat_mul(self._mat, other._mat, _ret)
  * 
  *         return Mat._from_pointer(_ret)             # <<<<<<<<<<<<<<
@@ -5595,13 +5595,13 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_24mul(struct __pyx_obj_10simple_mat_
  *     def div(self, Mat other):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 406, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 406, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":401
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":401
  *         return Mat._from_pointer(_ret)
  * 
  *     def mul(self, Mat other):             # <<<<<<<<<<<<<<
@@ -5612,7 +5612,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_24mul(struct __pyx_obj_10simple_mat_
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.Mat.mul", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.mul", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -5620,7 +5620,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_24mul(struct __pyx_obj_10simple_mat_
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":408
+/* "wahu_backend/logistic_regression/simple_mat.pyx":408
  *         return Mat._from_pointer(_ret)
  * 
  *     def div(self, Mat other):             # <<<<<<<<<<<<<<
@@ -5629,16 +5629,16 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_24mul(struct __pyx_obj_10simple_mat_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_27div(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_27div(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_27div(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_27div(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("div (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_other), __pyx_ptype_10simple_mat_Mat, 1, "other", 0))) __PYX_ERR(0, 408, __pyx_L1_error)
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_26div(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self), ((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_other));
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_other), __pyx_ptype_12wahu_backend_19logistic_regression_10simple_mat_Mat, 1, "other", 0))) __PYX_ERR(0, 408, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_26div(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self), ((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_other));
 
   /* function exit code */
   goto __pyx_L0;
@@ -5649,8 +5649,8 @@ static PyObject *__pyx_pw_10simple_mat_3Mat_27div(PyObject *__pyx_v_self, PyObje
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_26div(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_10simple_mat_Mat *__pyx_v_other) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__ret;
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_26div(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_other) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__ret;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -5659,25 +5659,25 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_26div(struct __pyx_obj_10simple_mat_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("div", 0);
 
-  /* "simple_mat.pyx":409
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":409
  * 
  *     def div(self, Mat other):
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)             # <<<<<<<<<<<<<<
  * 
  *         _Mat_div(self._mat, other._mat, _ret)
  */
-  __pyx_v__ret = __pyx_f_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
+  __pyx_v__ret = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
 
-  /* "simple_mat.pyx":411
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":411
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)
  * 
  *         _Mat_div(self._mat, other._mat, _ret)             # <<<<<<<<<<<<<<
  * 
  *         return Mat._from_pointer(_ret)
  */
-  (void)(__pyx_f_10simple_mat__Mat_div(__pyx_v_self->_mat, __pyx_v_other->_mat, __pyx_v__ret));
+  (void)(__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_div(__pyx_v_self->_mat, __pyx_v_other->_mat, __pyx_v__ret));
 
-  /* "simple_mat.pyx":413
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":413
  *         _Mat_div(self._mat, other._mat, _ret)
  * 
  *         return Mat._from_pointer(_ret)             # <<<<<<<<<<<<<<
@@ -5685,13 +5685,13 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_26div(struct __pyx_obj_10simple_mat_
  *     def divedby_double(self, double scaler):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 413, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 413, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":408
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":408
  *         return Mat._from_pointer(_ret)
  * 
  *     def div(self, Mat other):             # <<<<<<<<<<<<<<
@@ -5702,7 +5702,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_26div(struct __pyx_obj_10simple_mat_
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.Mat.div", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.div", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -5710,7 +5710,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_26div(struct __pyx_obj_10simple_mat_
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":415
+/* "wahu_backend/logistic_regression/simple_mat.pyx":415
  *         return Mat._from_pointer(_ret)
  * 
  *     def divedby_double(self, double scaler):             # <<<<<<<<<<<<<<
@@ -5719,8 +5719,8 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_26div(struct __pyx_obj_10simple_mat_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_29divedby_double(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_29divedby_double(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_29divedby_double(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_29divedby_double(PyObject *__pyx_v_self, PyObject *__pyx_arg_scaler) {
   double __pyx_v_scaler;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -5733,19 +5733,19 @@ static PyObject *__pyx_pw_10simple_mat_3Mat_29divedby_double(PyObject *__pyx_v_s
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
-  __Pyx_AddTraceback("simple_mat.Mat.divedby_double", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.divedby_double", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_28divedby_double(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self), ((double)__pyx_v_scaler));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_28divedby_double(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self), ((double)__pyx_v_scaler));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_28divedby_double(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__ret;
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_28divedby_double(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, double __pyx_v_scaler) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__ret;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -5754,25 +5754,25 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_28divedby_double(struct __pyx_obj_10
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("divedby_double", 0);
 
-  /* "simple_mat.pyx":416
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":416
  * 
  *     def divedby_double(self, double scaler):
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)             # <<<<<<<<<<<<<<
  * 
  *         _Mat_divedby_double(self._mat, scaler, _ret)
  */
-  __pyx_v__ret = __pyx_f_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
+  __pyx_v__ret = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, __pyx_v_self->_mat->cols);
 
-  /* "simple_mat.pyx":418
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":418
  *         cdef _Mat *_ret = Mat._new__mat(self._mat.rows, self._mat.cols)
  * 
  *         _Mat_divedby_double(self._mat, scaler, _ret)             # <<<<<<<<<<<<<<
  * 
  *         return Mat._from_pointer(_ret)
  */
-  (void)(__pyx_f_10simple_mat__Mat_divedby_double(__pyx_v_self->_mat, __pyx_v_scaler, __pyx_v__ret));
+  (void)(__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_divedby_double(__pyx_v_self->_mat, __pyx_v_scaler, __pyx_v__ret));
 
-  /* "simple_mat.pyx":420
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":420
  *         _Mat_divedby_double(self._mat, scaler, _ret)
  * 
  *         return Mat._from_pointer(_ret)             # <<<<<<<<<<<<<<
@@ -5780,13 +5780,13 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_28divedby_double(struct __pyx_obj_10
  *     def average(self, axis=1):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 420, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 420, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":415
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":415
  *         return Mat._from_pointer(_ret)
  * 
  *     def divedby_double(self, double scaler):             # <<<<<<<<<<<<<<
@@ -5797,7 +5797,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_28divedby_double(struct __pyx_obj_10
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.Mat.divedby_double", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.divedby_double", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -5805,7 +5805,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_28divedby_double(struct __pyx_obj_10
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":422
+/* "wahu_backend/logistic_regression/simple_mat.pyx":422
  *         return Mat._from_pointer(_ret)
  * 
  *     def average(self, axis=1):             # <<<<<<<<<<<<<<
@@ -5814,8 +5814,8 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_28divedby_double(struct __pyx_obj_10
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_31average(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_31average(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_31average(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_31average(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_axis = 0;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -5861,19 +5861,19 @@ static PyObject *__pyx_pw_10simple_mat_3Mat_31average(PyObject *__pyx_v_self, Py
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("average", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 422, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("simple_mat.Mat.average", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.average", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_30average(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self), __pyx_v_axis);
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_30average(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self), __pyx_v_axis);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_30average(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, PyObject *__pyx_v_axis) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__ret;
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_30average(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, PyObject *__pyx_v_axis) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__ret;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -5884,7 +5884,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_30average(struct __pyx_obj_10simple_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("average", 0);
 
-  /* "simple_mat.pyx":425
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":425
  *         cdef _Mat *_ret
  * 
  *         if axis == 1:             # <<<<<<<<<<<<<<
@@ -5897,16 +5897,16 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_30average(struct __pyx_obj_10simple_
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_2) {
 
-    /* "simple_mat.pyx":426
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":426
  * 
  *         if axis == 1:
  *             _ret = Mat._new__mat(1, self._mat.cols)             # <<<<<<<<<<<<<<
  *         elif axis == 2:
  *             _ret = Mat._new__mat(self._mat.rows, 1)
  */
-    __pyx_v__ret = __pyx_f_10simple_mat_3Mat__new__mat(1, __pyx_v_self->_mat->cols);
+    __pyx_v__ret = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(1, __pyx_v_self->_mat->cols);
 
-    /* "simple_mat.pyx":425
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":425
  *         cdef _Mat *_ret
  * 
  *         if axis == 1:             # <<<<<<<<<<<<<<
@@ -5916,7 +5916,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_30average(struct __pyx_obj_10simple_
     goto __pyx_L3;
   }
 
-  /* "simple_mat.pyx":427
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":427
  *         if axis == 1:
  *             _ret = Mat._new__mat(1, self._mat.cols)
  *         elif axis == 2:             # <<<<<<<<<<<<<<
@@ -5929,16 +5929,16 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_30average(struct __pyx_obj_10simple_
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (likely(__pyx_t_2)) {
 
-    /* "simple_mat.pyx":428
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":428
  *             _ret = Mat._new__mat(1, self._mat.cols)
  *         elif axis == 2:
  *             _ret = Mat._new__mat(self._mat.rows, 1)             # <<<<<<<<<<<<<<
  *         else:
  *             raise ValueError('axis  1  2')
  */
-    __pyx_v__ret = __pyx_f_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, 1);
+    __pyx_v__ret = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(__pyx_v_self->_mat->rows, 1);
 
-    /* "simple_mat.pyx":427
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":427
  *         if axis == 1:
  *             _ret = Mat._new__mat(1, self._mat.cols)
  *         elif axis == 2:             # <<<<<<<<<<<<<<
@@ -5948,7 +5948,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_30average(struct __pyx_obj_10simple_
     goto __pyx_L3;
   }
 
-  /* "simple_mat.pyx":430
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":430
  *             _ret = Mat._new__mat(self._mat.rows, 1)
  *         else:
  *             raise ValueError('axis  1  2')             # <<<<<<<<<<<<<<
@@ -5964,7 +5964,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_30average(struct __pyx_obj_10simple_
   }
   __pyx_L3:;
 
-  /* "simple_mat.pyx":432
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":432
  *             raise ValueError('axis  1  2')
  * 
  *         _Mat_average(self._mat, axis, _ret)             # <<<<<<<<<<<<<<
@@ -5972,9 +5972,9 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_30average(struct __pyx_obj_10simple_
  *         return Mat._from_pointer(_ret)
  */
   __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_v_axis); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 432, __pyx_L1_error)
-  (void)(__pyx_f_10simple_mat__Mat_average(__pyx_v_self->_mat, __pyx_t_3, __pyx_v__ret));
+  (void)(__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_average(__pyx_v_self->_mat, __pyx_t_3, __pyx_v__ret));
 
-  /* "simple_mat.pyx":434
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":434
  *         _Mat_average(self._mat, axis, _ret)
  * 
  *         return Mat._from_pointer(_ret)             # <<<<<<<<<<<<<<
@@ -5982,13 +5982,13 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_30average(struct __pyx_obj_10simple_
  *     def __add__(self, other):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 434, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 434, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":422
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":422
  *         return Mat._from_pointer(_ret)
  * 
  *     def average(self, axis=1):             # <<<<<<<<<<<<<<
@@ -5999,7 +5999,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_30average(struct __pyx_obj_10simple_
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.Mat.average", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.average", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -6007,7 +6007,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_30average(struct __pyx_obj_10simple_
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":436
+/* "wahu_backend/logistic_regression/simple_mat.pyx":436
  *         return Mat._from_pointer(_ret)
  * 
  *     def __add__(self, other):             # <<<<<<<<<<<<<<
@@ -6016,19 +6016,19 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_30average(struct __pyx_obj_10simple_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_33__add__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_33__add__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_33__add__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_33__add__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__add__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_32__add__(((PyObject *)__pyx_v_self), ((PyObject *)__pyx_v_other));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_32__add__(((PyObject *)__pyx_v_self), ((PyObject *)__pyx_v_other));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_32__add__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_32__add__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -6041,18 +6041,18 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_32__add__(PyObject *__pyx_v_self, Py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__add__", 0);
 
-  /* "simple_mat.pyx":437
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":437
  * 
  *     def __add__(self, other):
  *         if isinstance(other, Mat):             # <<<<<<<<<<<<<<
  *             return self.add(other)
  *         elif isinstance(other, float):
  */
-  __pyx_t_1 = __Pyx_TypeCheck(__pyx_v_other, __pyx_ptype_10simple_mat_Mat); 
+  __pyx_t_1 = __Pyx_TypeCheck(__pyx_v_other, __pyx_ptype_12wahu_backend_19logistic_regression_10simple_mat_Mat); 
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "simple_mat.pyx":438
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":438
  *     def __add__(self, other):
  *         if isinstance(other, Mat):
  *             return self.add(other)             # <<<<<<<<<<<<<<
@@ -6081,7 +6081,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_32__add__(PyObject *__pyx_v_self, Py
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":437
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":437
  * 
  *     def __add__(self, other):
  *         if isinstance(other, Mat):             # <<<<<<<<<<<<<<
@@ -6090,7 +6090,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_32__add__(PyObject *__pyx_v_self, Py
  */
   }
 
-  /* "simple_mat.pyx":439
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":439
  *         if isinstance(other, Mat):
  *             return self.add(other)
  *         elif isinstance(other, float):             # <<<<<<<<<<<<<<
@@ -6101,7 +6101,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_32__add__(PyObject *__pyx_v_self, Py
   __pyx_t_1 = (__pyx_t_2 != 0);
   if (likely(__pyx_t_1)) {
 
-    /* "simple_mat.pyx":440
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":440
  *             return self.add(other)
  *         elif isinstance(other, float):
  *             return self.add_double(other)             # <<<<<<<<<<<<<<
@@ -6130,7 +6130,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_32__add__(PyObject *__pyx_v_self, Py
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":439
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":439
  *         if isinstance(other, Mat):
  *             return self.add(other)
  *         elif isinstance(other, float):             # <<<<<<<<<<<<<<
@@ -6139,7 +6139,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_32__add__(PyObject *__pyx_v_self, Py
  */
   }
 
-  /* "simple_mat.pyx":442
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":442
  *             return self.add_double(other)
  *         else:
  *             raise TypeError(' float / Mat')             # <<<<<<<<<<<<<<
@@ -6154,7 +6154,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_32__add__(PyObject *__pyx_v_self, Py
     __PYX_ERR(0, 442, __pyx_L1_error)
   }
 
-  /* "simple_mat.pyx":436
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":436
  *         return Mat._from_pointer(_ret)
  * 
  *     def __add__(self, other):             # <<<<<<<<<<<<<<
@@ -6167,7 +6167,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_32__add__(PyObject *__pyx_v_self, Py
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("simple_mat.Mat.__add__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.__add__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -6175,7 +6175,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_32__add__(PyObject *__pyx_v_self, Py
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":444
+/* "wahu_backend/logistic_regression/simple_mat.pyx":444
  *             raise TypeError(' float / Mat')
  * 
  *     def __sub__(self, other):             # <<<<<<<<<<<<<<
@@ -6184,19 +6184,19 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_32__add__(PyObject *__pyx_v_self, Py
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_35__sub__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_35__sub__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_35__sub__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_35__sub__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__sub__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_34__sub__(((PyObject *)__pyx_v_self), ((PyObject *)__pyx_v_other));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_34__sub__(((PyObject *)__pyx_v_self), ((PyObject *)__pyx_v_other));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -6209,29 +6209,29 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, Py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__sub__", 0);
 
-  /* "simple_mat.pyx":445
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":445
  * 
  *     def __sub__(self, other):
  *         if isinstance(other, Mat):             # <<<<<<<<<<<<<<
  *             if isinstance(self, Mat):
  *                 return self.subtract(other)
  */
-  __pyx_t_1 = __Pyx_TypeCheck(__pyx_v_other, __pyx_ptype_10simple_mat_Mat); 
+  __pyx_t_1 = __Pyx_TypeCheck(__pyx_v_other, __pyx_ptype_12wahu_backend_19logistic_regression_10simple_mat_Mat); 
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "simple_mat.pyx":446
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":446
  *     def __sub__(self, other):
  *         if isinstance(other, Mat):
  *             if isinstance(self, Mat):             # <<<<<<<<<<<<<<
  *                 return self.subtract(other)
  *             elif isinstance(self, float):
  */
-    __pyx_t_2 = __Pyx_TypeCheck(__pyx_v_self, __pyx_ptype_10simple_mat_Mat); 
+    __pyx_t_2 = __Pyx_TypeCheck(__pyx_v_self, __pyx_ptype_12wahu_backend_19logistic_regression_10simple_mat_Mat); 
     __pyx_t_1 = (__pyx_t_2 != 0);
     if (__pyx_t_1) {
 
-      /* "simple_mat.pyx":447
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":447
  *         if isinstance(other, Mat):
  *             if isinstance(self, Mat):
  *                 return self.subtract(other)             # <<<<<<<<<<<<<<
@@ -6260,7 +6260,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, Py
       __pyx_t_3 = 0;
       goto __pyx_L0;
 
-      /* "simple_mat.pyx":446
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":446
  *     def __sub__(self, other):
  *         if isinstance(other, Mat):
  *             if isinstance(self, Mat):             # <<<<<<<<<<<<<<
@@ -6269,7 +6269,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, Py
  */
     }
 
-    /* "simple_mat.pyx":448
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":448
  *             if isinstance(self, Mat):
  *                 return self.subtract(other)
  *             elif isinstance(self, float):             # <<<<<<<<<<<<<<
@@ -6280,7 +6280,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, Py
     __pyx_t_2 = (__pyx_t_1 != 0);
     if (likely(__pyx_t_2)) {
 
-      /* "simple_mat.pyx":449
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":449
  *                 return self.subtract(other)
  *             elif isinstance(self, float):
  *                 return other.subtractedby_double(self)             # <<<<<<<<<<<<<<
@@ -6309,7 +6309,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, Py
       __pyx_t_3 = 0;
       goto __pyx_L0;
 
-      /* "simple_mat.pyx":448
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":448
  *             if isinstance(self, Mat):
  *                 return self.subtract(other)
  *             elif isinstance(self, float):             # <<<<<<<<<<<<<<
@@ -6318,7 +6318,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, Py
  */
     }
 
-    /* "simple_mat.pyx":451
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":451
  *                 return other.subtractedby_double(self)
  *             else:
  *                 raise TypeError(' float / Mat ')             # <<<<<<<<<<<<<<
@@ -6333,7 +6333,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, Py
       __PYX_ERR(0, 451, __pyx_L1_error)
     }
 
-    /* "simple_mat.pyx":445
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":445
  * 
  *     def __sub__(self, other):
  *         if isinstance(other, Mat):             # <<<<<<<<<<<<<<
@@ -6342,7 +6342,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, Py
  */
   }
 
-  /* "simple_mat.pyx":453
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":453
  *                 raise TypeError(' float / Mat ')
  * 
  *         elif isinstance(other, float):             # <<<<<<<<<<<<<<
@@ -6353,7 +6353,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, Py
   __pyx_t_1 = (__pyx_t_2 != 0);
   if (likely(__pyx_t_1)) {
 
-    /* "simple_mat.pyx":454
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":454
  * 
  *         elif isinstance(other, float):
  *             return self.subtract_double(other)             # <<<<<<<<<<<<<<
@@ -6382,7 +6382,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, Py
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":453
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":453
  *                 raise TypeError(' float / Mat ')
  * 
  *         elif isinstance(other, float):             # <<<<<<<<<<<<<<
@@ -6391,7 +6391,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, Py
  */
   }
 
-  /* "simple_mat.pyx":456
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":456
  *             return self.subtract_double(other)
  *         else:
  *             raise TypeError(' float / Mat')             # <<<<<<<<<<<<<<
@@ -6406,7 +6406,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, Py
     __PYX_ERR(0, 456, __pyx_L1_error)
   }
 
-  /* "simple_mat.pyx":444
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":444
  *             raise TypeError(' float / Mat')
  * 
  *     def __sub__(self, other):             # <<<<<<<<<<<<<<
@@ -6419,7 +6419,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, Py
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("simple_mat.Mat.__sub__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.__sub__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -6427,7 +6427,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, Py
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":459
+/* "wahu_backend/logistic_regression/simple_mat.pyx":459
  * 
  * 
  *     def __mul__(self, other):             # <<<<<<<<<<<<<<
@@ -6436,19 +6436,19 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_34__sub__(PyObject *__pyx_v_self, Py
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_37__mul__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_37__mul__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_37__mul__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_37__mul__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__mul__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_36__mul__(((PyObject *)__pyx_v_self), ((PyObject *)__pyx_v_other));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_36__mul__(((PyObject *)__pyx_v_self), ((PyObject *)__pyx_v_other));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_36__mul__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_36__mul__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -6461,7 +6461,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_36__mul__(PyObject *__pyx_v_self, Py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__mul__", 0);
 
-  /* "simple_mat.pyx":460
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":460
  * 
  *     def __mul__(self, other):
  *         if isinstance(other, float):             # <<<<<<<<<<<<<<
@@ -6472,7 +6472,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_36__mul__(PyObject *__pyx_v_self, Py
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "simple_mat.pyx":461
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":461
  *     def __mul__(self, other):
  *         if isinstance(other, float):
  *             return self.scale(other)             # <<<<<<<<<<<<<<
@@ -6501,7 +6501,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_36__mul__(PyObject *__pyx_v_self, Py
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":460
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":460
  * 
  *     def __mul__(self, other):
  *         if isinstance(other, float):             # <<<<<<<<<<<<<<
@@ -6510,18 +6510,18 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_36__mul__(PyObject *__pyx_v_self, Py
  */
   }
 
-  /* "simple_mat.pyx":462
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":462
  *         if isinstance(other, float):
  *             return self.scale(other)
  *         elif isinstance(other, Mat):             # <<<<<<<<<<<<<<
  *             return self.mul(other)
  *         else:
  */
-  __pyx_t_2 = __Pyx_TypeCheck(__pyx_v_other, __pyx_ptype_10simple_mat_Mat); 
+  __pyx_t_2 = __Pyx_TypeCheck(__pyx_v_other, __pyx_ptype_12wahu_backend_19logistic_regression_10simple_mat_Mat); 
   __pyx_t_1 = (__pyx_t_2 != 0);
   if (likely(__pyx_t_1)) {
 
-    /* "simple_mat.pyx":463
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":463
  *             return self.scale(other)
  *         elif isinstance(other, Mat):
  *             return self.mul(other)             # <<<<<<<<<<<<<<
@@ -6550,7 +6550,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_36__mul__(PyObject *__pyx_v_self, Py
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":462
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":462
  *         if isinstance(other, float):
  *             return self.scale(other)
  *         elif isinstance(other, Mat):             # <<<<<<<<<<<<<<
@@ -6559,7 +6559,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_36__mul__(PyObject *__pyx_v_self, Py
  */
   }
 
-  /* "simple_mat.pyx":465
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":465
  *             return self.mul(other)
  *         else:
  *             raise TypeError(' float / Mat')             # <<<<<<<<<<<<<<
@@ -6574,7 +6574,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_36__mul__(PyObject *__pyx_v_self, Py
     __PYX_ERR(0, 465, __pyx_L1_error)
   }
 
-  /* "simple_mat.pyx":459
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":459
  * 
  * 
  *     def __mul__(self, other):             # <<<<<<<<<<<<<<
@@ -6587,7 +6587,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_36__mul__(PyObject *__pyx_v_self, Py
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("simple_mat.Mat.__mul__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.__mul__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -6595,7 +6595,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_36__mul__(PyObject *__pyx_v_self, Py
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":467
+/* "wahu_backend/logistic_regression/simple_mat.pyx":467
  *             raise TypeError(' float / Mat')
  * 
  *     def __truediv__(self, other):             # <<<<<<<<<<<<<<
@@ -6604,19 +6604,19 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_36__mul__(PyObject *__pyx_v_self, Py
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_39__truediv__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_39__truediv__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_39__truediv__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_39__truediv__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__truediv__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_38__truediv__(((PyObject *)__pyx_v_self), ((PyObject *)__pyx_v_other));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_38__truediv__(((PyObject *)__pyx_v_self), ((PyObject *)__pyx_v_other));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -6630,7 +6630,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__truediv__", 0);
 
-  /* "simple_mat.pyx":468
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":468
  * 
  *     def __truediv__(self, other):
  *         if isinstance(other, float):             # <<<<<<<<<<<<<<
@@ -6641,7 +6641,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "simple_mat.pyx":469
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":469
  *     def __truediv__(self, other):
  *         if isinstance(other, float):
  *             return self.scale(1 / other)             # <<<<<<<<<<<<<<
@@ -6673,7 +6673,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "simple_mat.pyx":468
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":468
  * 
  *     def __truediv__(self, other):
  *         if isinstance(other, float):             # <<<<<<<<<<<<<<
@@ -6682,29 +6682,29 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self
  */
   }
 
-  /* "simple_mat.pyx":471
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":471
  *             return self.scale(1 / other)
  * 
  *         elif isinstance(other, Mat):             # <<<<<<<<<<<<<<
  *             if isinstance(self, Mat):
  *                 return self.div(other)
  */
-  __pyx_t_2 = __Pyx_TypeCheck(__pyx_v_other, __pyx_ptype_10simple_mat_Mat); 
+  __pyx_t_2 = __Pyx_TypeCheck(__pyx_v_other, __pyx_ptype_12wahu_backend_19logistic_regression_10simple_mat_Mat); 
   __pyx_t_1 = (__pyx_t_2 != 0);
   if (likely(__pyx_t_1)) {
 
-    /* "simple_mat.pyx":472
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":472
  * 
  *         elif isinstance(other, Mat):
  *             if isinstance(self, Mat):             # <<<<<<<<<<<<<<
  *                 return self.div(other)
  *             elif isinstance(self, float):
  */
-    __pyx_t_1 = __Pyx_TypeCheck(__pyx_v_self, __pyx_ptype_10simple_mat_Mat); 
+    __pyx_t_1 = __Pyx_TypeCheck(__pyx_v_self, __pyx_ptype_12wahu_backend_19logistic_regression_10simple_mat_Mat); 
     __pyx_t_2 = (__pyx_t_1 != 0);
     if (__pyx_t_2) {
 
-      /* "simple_mat.pyx":473
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":473
  *         elif isinstance(other, Mat):
  *             if isinstance(self, Mat):
  *                 return self.div(other)             # <<<<<<<<<<<<<<
@@ -6733,7 +6733,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self
       __pyx_t_3 = 0;
       goto __pyx_L0;
 
-      /* "simple_mat.pyx":472
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":472
  * 
  *         elif isinstance(other, Mat):
  *             if isinstance(self, Mat):             # <<<<<<<<<<<<<<
@@ -6742,7 +6742,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self
  */
     }
 
-    /* "simple_mat.pyx":474
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":474
  *             if isinstance(self, Mat):
  *                 return self.div(other)
  *             elif isinstance(self, float):             # <<<<<<<<<<<<<<
@@ -6753,7 +6753,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self
     __pyx_t_1 = (__pyx_t_2 != 0);
     if (likely(__pyx_t_1)) {
 
-      /* "simple_mat.pyx":475
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":475
  *                 return self.div(other)
  *             elif isinstance(self, float):
  *                 return other.divedby_double(self)             # <<<<<<<<<<<<<<
@@ -6782,7 +6782,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self
       __pyx_t_3 = 0;
       goto __pyx_L0;
 
-      /* "simple_mat.pyx":474
+      /* "wahu_backend/logistic_regression/simple_mat.pyx":474
  *             if isinstance(self, Mat):
  *                 return self.div(other)
  *             elif isinstance(self, float):             # <<<<<<<<<<<<<<
@@ -6791,7 +6791,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self
  */
     }
 
-    /* "simple_mat.pyx":477
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":477
  *                 return other.divedby_double(self)
  *             else:
  *                 raise TypeError(' float / Mat ')             # <<<<<<<<<<<<<<
@@ -6806,7 +6806,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self
       __PYX_ERR(0, 477, __pyx_L1_error)
     }
 
-    /* "simple_mat.pyx":471
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":471
  *             return self.scale(1 / other)
  * 
  *         elif isinstance(other, Mat):             # <<<<<<<<<<<<<<
@@ -6815,7 +6815,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self
  */
   }
 
-  /* "simple_mat.pyx":480
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":480
  * 
  *         else:
  *             raise TypeError(' float / Mat')             # <<<<<<<<<<<<<<
@@ -6830,7 +6830,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self
     __PYX_ERR(0, 480, __pyx_L1_error)
   }
 
-  /* "simple_mat.pyx":467
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":467
  *             raise TypeError(' float / Mat')
  * 
  *     def __truediv__(self, other):             # <<<<<<<<<<<<<<
@@ -6844,7 +6844,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_AddTraceback("simple_mat.Mat.__truediv__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.__truediv__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -6852,7 +6852,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":482
+/* "wahu_backend/logistic_regression/simple_mat.pyx":482
  *             raise TypeError(' float / Mat')
  * 
  *     def __getitem__(self, idx):             # <<<<<<<<<<<<<<
@@ -6861,19 +6861,19 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_38__truediv__(PyObject *__pyx_v_self
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_41__getitem__(PyObject *__pyx_v_self, PyObject *__pyx_v_idx); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_41__getitem__(PyObject *__pyx_v_self, PyObject *__pyx_v_idx) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_41__getitem__(PyObject *__pyx_v_self, PyObject *__pyx_v_idx); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_41__getitem__(PyObject *__pyx_v_self, PyObject *__pyx_v_idx) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__getitem__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_40__getitem__(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self), ((PyObject *)__pyx_v_idx));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_40__getitem__(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self), ((PyObject *)__pyx_v_idx));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_40__getitem__(struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, PyObject *__pyx_v_idx) {
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_40__getitem__(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, PyObject *__pyx_v_idx) {
   PyObject *__pyx_v_i = NULL;
   PyObject *__pyx_v_j = NULL;
   PyObject *__pyx_r = NULL;
@@ -6890,7 +6890,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_40__getitem__(struct __pyx_obj_10sim
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__getitem__", 0);
 
-  /* "simple_mat.pyx":483
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":483
  * 
  *     def __getitem__(self, idx):
  *         i, j = idx             # <<<<<<<<<<<<<<
@@ -6946,7 +6946,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_40__getitem__(struct __pyx_obj_10sim
   __pyx_v_j = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "simple_mat.pyx":485
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":485
  *         i, j = idx
  * 
  *         if i >= self._mat.rows:             # <<<<<<<<<<<<<<
@@ -6961,7 +6961,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_40__getitem__(struct __pyx_obj_10sim
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (unlikely(__pyx_t_5)) {
 
-    /* "simple_mat.pyx":486
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":486
  * 
  *         if i >= self._mat.rows:
  *             raise IndexError(f' {self._mat.rows} ')             # <<<<<<<<<<<<<<
@@ -6998,7 +6998,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_40__getitem__(struct __pyx_obj_10sim
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __PYX_ERR(0, 486, __pyx_L1_error)
 
-    /* "simple_mat.pyx":485
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":485
  *         i, j = idx
  * 
  *         if i >= self._mat.rows:             # <<<<<<<<<<<<<<
@@ -7007,7 +7007,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_40__getitem__(struct __pyx_obj_10sim
  */
   }
 
-  /* "simple_mat.pyx":487
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":487
  *         if i >= self._mat.rows:
  *             raise IndexError(f' {self._mat.rows} ')
  *         if j >= self._mat.cols:             # <<<<<<<<<<<<<<
@@ -7022,7 +7022,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_40__getitem__(struct __pyx_obj_10sim
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (unlikely(__pyx_t_5)) {
 
-    /* "simple_mat.pyx":488
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":488
  *             raise IndexError(f' {self._mat.rows} ')
  *         if j >= self._mat.cols:
  *             raise IndexError(f' {self._mat.cols} ')             # <<<<<<<<<<<<<<
@@ -7059,7 +7059,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_40__getitem__(struct __pyx_obj_10sim
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __PYX_ERR(0, 488, __pyx_L1_error)
 
-    /* "simple_mat.pyx":487
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":487
  *         if i >= self._mat.rows:
  *             raise IndexError(f' {self._mat.rows} ')
  *         if j >= self._mat.cols:             # <<<<<<<<<<<<<<
@@ -7068,7 +7068,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_40__getitem__(struct __pyx_obj_10sim
  */
   }
 
-  /* "simple_mat.pyx":490
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":490
  *             raise IndexError(f' {self._mat.cols} ')
  * 
  *         return self._mat.data[i * self._mat.cols + j]             # <<<<<<<<<<<<<<
@@ -7092,7 +7092,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_40__getitem__(struct __pyx_obj_10sim
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":482
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":482
  *             raise TypeError(' float / Mat')
  * 
  *     def __getitem__(self, idx):             # <<<<<<<<<<<<<<
@@ -7105,7 +7105,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_40__getitem__(struct __pyx_obj_10sim
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("simple_mat.Mat.__getitem__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.__getitem__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_i);
@@ -7122,19 +7122,19 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_40__getitem__(struct __pyx_obj_10sim
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_43__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_43__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_43__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_43__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_42__reduce_cython__(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_42__reduce_cython__(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_42__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_10simple_mat_Mat *__pyx_v_self) {
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_42__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -7164,7 +7164,7 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_42__reduce_cython__(CYTHON_UNUSED st
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.Mat.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
@@ -7179,19 +7179,19 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_42__reduce_cython__(CYTHON_UNUSED st
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3Mat_45__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_10simple_mat_3Mat_45__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_45__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_45__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10simple_mat_3Mat_44__setstate_cython__(((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_44__setstate_cython__(((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_3Mat_44__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_10simple_mat_Mat *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_3Mat_44__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -7221,14 +7221,14 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_44__setstate_cython__(CYTHON_UNUSED 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.Mat.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.Mat.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":493
+/* "wahu_backend/logistic_regression/simple_mat.pyx":493
  * 
  * 
  * def many(int rows, int cols, double val):             # <<<<<<<<<<<<<<
@@ -7237,9 +7237,9 @@ static PyObject *__pyx_pf_10simple_mat_3Mat_44__setstate_cython__(CYTHON_UNUSED 
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_1many(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_10simple_mat_1many = {"many", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_10simple_mat_1many, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_10simple_mat_1many(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_1many(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_12wahu_backend_19logistic_regression_10simple_mat_1many = {"many", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_1many, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_1many(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int __pyx_v_rows;
   int __pyx_v_cols;
   double __pyx_v_val;
@@ -7301,19 +7301,19 @@ static PyObject *__pyx_pw_10simple_mat_1many(PyObject *__pyx_self, PyObject *__p
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("many", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 493, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("simple_mat.many", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.many", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10simple_mat_many(__pyx_self, __pyx_v_rows, __pyx_v_cols, __pyx_v_val);
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_many(__pyx_self, __pyx_v_rows, __pyx_v_cols, __pyx_v_val);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_many(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_rows, int __pyx_v_cols, double __pyx_v_val) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__new;
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_many(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_rows, int __pyx_v_cols, double __pyx_v_val) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__new;
   int __pyx_v_i;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -7326,16 +7326,16 @@ static PyObject *__pyx_pf_10simple_mat_many(CYTHON_UNUSED PyObject *__pyx_self, 
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("many", 0);
 
-  /* "simple_mat.pyx":494
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":494
  * 
  * def many(int rows, int cols, double val):
  *     cdef _Mat *_new = Mat._new__mat(rows, cols)             # <<<<<<<<<<<<<<
  * 
  *     cdef int i
  */
-  __pyx_v__new = __pyx_f_10simple_mat_3Mat__new__mat(__pyx_v_rows, __pyx_v_cols);
+  __pyx_v__new = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(__pyx_v_rows, __pyx_v_cols);
 
-  /* "simple_mat.pyx":497
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":497
  * 
  *     cdef int i
  *     for i in range(rows * cols):             # <<<<<<<<<<<<<<
@@ -7347,7 +7347,7 @@ static PyObject *__pyx_pf_10simple_mat_many(CYTHON_UNUSED PyObject *__pyx_self, 
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "simple_mat.pyx":498
+    /* "wahu_backend/logistic_regression/simple_mat.pyx":498
  *     cdef int i
  *     for i in range(rows * cols):
  *         _new.data[i] = val             # <<<<<<<<<<<<<<
@@ -7357,7 +7357,7 @@ static PyObject *__pyx_pf_10simple_mat_many(CYTHON_UNUSED PyObject *__pyx_self, 
     (__pyx_v__new->data[__pyx_v_i]) = __pyx_v_val;
   }
 
-  /* "simple_mat.pyx":500
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":500
  *         _new.data[i] = val
  * 
  *     return Mat._from_pointer(_new)             # <<<<<<<<<<<<<<
@@ -7365,13 +7365,13 @@ static PyObject *__pyx_pf_10simple_mat_many(CYTHON_UNUSED PyObject *__pyx_self, 
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_4 = __pyx_f_10simple_mat_3Mat__from_pointer(__pyx_v__new); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 500, __pyx_L1_error)
+  __pyx_t_4 = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(__pyx_v__new); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 500, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_r = __pyx_t_4;
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":493
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":493
  * 
  * 
  * def many(int rows, int cols, double val):             # <<<<<<<<<<<<<<
@@ -7382,7 +7382,7 @@ static PyObject *__pyx_pf_10simple_mat_many(CYTHON_UNUSED PyObject *__pyx_self, 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("simple_mat.many", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.many", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -7390,7 +7390,7 @@ static PyObject *__pyx_pf_10simple_mat_many(CYTHON_UNUSED PyObject *__pyx_self, 
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":503
+/* "wahu_backend/logistic_regression/simple_mat.pyx":503
  * 
  * 
  * def exp_mat(Mat mat):             # <<<<<<<<<<<<<<
@@ -7399,17 +7399,17 @@ static PyObject *__pyx_pf_10simple_mat_many(CYTHON_UNUSED PyObject *__pyx_self, 
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_3exp_mat(PyObject *__pyx_self, PyObject *__pyx_v_mat); /*proto*/
-static PyMethodDef __pyx_mdef_10simple_mat_3exp_mat = {"exp_mat", (PyCFunction)__pyx_pw_10simple_mat_3exp_mat, METH_O, 0};
-static PyObject *__pyx_pw_10simple_mat_3exp_mat(PyObject *__pyx_self, PyObject *__pyx_v_mat) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3exp_mat(PyObject *__pyx_self, PyObject *__pyx_v_mat); /*proto*/
+static PyMethodDef __pyx_mdef_12wahu_backend_19logistic_regression_10simple_mat_3exp_mat = {"exp_mat", (PyCFunction)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3exp_mat, METH_O, 0};
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3exp_mat(PyObject *__pyx_self, PyObject *__pyx_v_mat) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("exp_mat (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mat), __pyx_ptype_10simple_mat_Mat, 1, "mat", 0))) __PYX_ERR(0, 503, __pyx_L1_error)
-  __pyx_r = __pyx_pf_10simple_mat_2exp_mat(__pyx_self, ((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_mat));
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mat), __pyx_ptype_12wahu_backend_19logistic_regression_10simple_mat_Mat, 1, "mat", 0))) __PYX_ERR(0, 503, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_2exp_mat(__pyx_self, ((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_mat));
 
   /* function exit code */
   goto __pyx_L0;
@@ -7420,8 +7420,8 @@ static PyObject *__pyx_pw_10simple_mat_3exp_mat(PyObject *__pyx_self, PyObject *
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_2exp_mat(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_10simple_mat_Mat *__pyx_v_mat) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__ret;
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_2exp_mat(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_mat) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__ret;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -7430,25 +7430,25 @@ static PyObject *__pyx_pf_10simple_mat_2exp_mat(CYTHON_UNUSED PyObject *__pyx_se
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("exp_mat", 0);
 
-  /* "simple_mat.pyx":504
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":504
  * 
  * def exp_mat(Mat mat):
  *     cdef _Mat *_ret = Mat._new__mat(mat._mat.rows, mat._mat.cols)             # <<<<<<<<<<<<<<
  * 
  *     _Mat_exp(mat._mat, _ret)
  */
-  __pyx_v__ret = __pyx_f_10simple_mat_3Mat__new__mat(__pyx_v_mat->_mat->rows, __pyx_v_mat->_mat->cols);
+  __pyx_v__ret = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(__pyx_v_mat->_mat->rows, __pyx_v_mat->_mat->cols);
 
-  /* "simple_mat.pyx":506
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":506
  *     cdef _Mat *_ret = Mat._new__mat(mat._mat.rows, mat._mat.cols)
  * 
  *     _Mat_exp(mat._mat, _ret)             # <<<<<<<<<<<<<<
  * 
  *     return Mat._from_pointer(_ret)
  */
-  (void)(__pyx_f_10simple_mat__Mat_exp(__pyx_v_mat->_mat, __pyx_v__ret));
+  (void)(__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_exp(__pyx_v_mat->_mat, __pyx_v__ret));
 
-  /* "simple_mat.pyx":508
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":508
  *     _Mat_exp(mat._mat, _ret)
  * 
  *     return Mat._from_pointer(_ret)             # <<<<<<<<<<<<<<
@@ -7456,13 +7456,13 @@ static PyObject *__pyx_pf_10simple_mat_2exp_mat(CYTHON_UNUSED PyObject *__pyx_se
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 508, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 508, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":503
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":503
  * 
  * 
  * def exp_mat(Mat mat):             # <<<<<<<<<<<<<<
@@ -7473,7 +7473,7 @@ static PyObject *__pyx_pf_10simple_mat_2exp_mat(CYTHON_UNUSED PyObject *__pyx_se
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.exp_mat", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.exp_mat", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -7481,7 +7481,7 @@ static PyObject *__pyx_pf_10simple_mat_2exp_mat(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "simple_mat.pyx":511
+/* "wahu_backend/logistic_regression/simple_mat.pyx":511
  * 
  * 
  * def log_mat(Mat mat):             # <<<<<<<<<<<<<<
@@ -7490,17 +7490,17 @@ static PyObject *__pyx_pf_10simple_mat_2exp_mat(CYTHON_UNUSED PyObject *__pyx_se
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10simple_mat_5log_mat(PyObject *__pyx_self, PyObject *__pyx_v_mat); /*proto*/
-static PyMethodDef __pyx_mdef_10simple_mat_5log_mat = {"log_mat", (PyCFunction)__pyx_pw_10simple_mat_5log_mat, METH_O, 0};
-static PyObject *__pyx_pw_10simple_mat_5log_mat(PyObject *__pyx_self, PyObject *__pyx_v_mat) {
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_5log_mat(PyObject *__pyx_self, PyObject *__pyx_v_mat); /*proto*/
+static PyMethodDef __pyx_mdef_12wahu_backend_19logistic_regression_10simple_mat_5log_mat = {"log_mat", (PyCFunction)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_5log_mat, METH_O, 0};
+static PyObject *__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_5log_mat(PyObject *__pyx_self, PyObject *__pyx_v_mat) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("log_mat (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mat), __pyx_ptype_10simple_mat_Mat, 1, "mat", 0))) __PYX_ERR(0, 511, __pyx_L1_error)
-  __pyx_r = __pyx_pf_10simple_mat_4log_mat(__pyx_self, ((struct __pyx_obj_10simple_mat_Mat *)__pyx_v_mat));
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mat), __pyx_ptype_12wahu_backend_19logistic_regression_10simple_mat_Mat, 1, "mat", 0))) __PYX_ERR(0, 511, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_4log_mat(__pyx_self, ((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)__pyx_v_mat));
 
   /* function exit code */
   goto __pyx_L0;
@@ -7511,8 +7511,8 @@ static PyObject *__pyx_pw_10simple_mat_5log_mat(PyObject *__pyx_self, PyObject *
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10simple_mat_4log_mat(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_10simple_mat_Mat *__pyx_v_mat) {
-  struct __pyx_t_10simple_mat__Mat *__pyx_v__ret;
+static PyObject *__pyx_pf_12wahu_backend_19logistic_regression_10simple_mat_4log_mat(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *__pyx_v_mat) {
+  struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *__pyx_v__ret;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -7521,37 +7521,37 @@ static PyObject *__pyx_pf_10simple_mat_4log_mat(CYTHON_UNUSED PyObject *__pyx_se
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("log_mat", 0);
 
-  /* "simple_mat.pyx":512
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":512
  * 
  * def log_mat(Mat mat):
  *     cdef _Mat *_ret = Mat._new__mat(mat._mat.rows, mat._mat.cols)             # <<<<<<<<<<<<<<
  * 
  *     _Mat_log(mat._mat, _ret)
  */
-  __pyx_v__ret = __pyx_f_10simple_mat_3Mat__new__mat(__pyx_v_mat->_mat->rows, __pyx_v_mat->_mat->cols);
+  __pyx_v__ret = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat(__pyx_v_mat->_mat->rows, __pyx_v_mat->_mat->cols);
 
-  /* "simple_mat.pyx":514
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":514
  *     cdef _Mat *_ret = Mat._new__mat(mat._mat.rows, mat._mat.cols)
  * 
  *     _Mat_log(mat._mat, _ret)             # <<<<<<<<<<<<<<
  * 
  *     return Mat._from_pointer(_ret)
  */
-  (void)(__pyx_f_10simple_mat__Mat_log(__pyx_v_mat->_mat, __pyx_v__ret));
+  (void)(__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_log(__pyx_v_mat->_mat, __pyx_v__ret));
 
-  /* "simple_mat.pyx":516
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":516
  *     _Mat_log(mat._mat, _ret)
  * 
  *     return Mat._from_pointer(_ret)             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 516, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer(__pyx_v__ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 516, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "simple_mat.pyx":511
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":511
  * 
  * 
  * def log_mat(Mat mat):             # <<<<<<<<<<<<<<
@@ -7562,17 +7562,17 @@ static PyObject *__pyx_pf_10simple_mat_4log_mat(CYTHON_UNUSED PyObject *__pyx_se
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("simple_mat.log_mat", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("wahu_backend.logistic_regression.simple_mat.log_mat", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
-static struct __pyx_vtabstruct_10simple_mat_Mat __pyx_vtable_10simple_mat_Mat;
+static struct __pyx_vtabstruct_12wahu_backend_19logistic_regression_10simple_mat_Mat __pyx_vtable_12wahu_backend_19logistic_regression_10simple_mat_Mat;
 
-static PyObject *__pyx_tp_new_10simple_mat_Mat(PyTypeObject *t, PyObject *a, PyObject *k) {
-  struct __pyx_obj_10simple_mat_Mat *p;
+static PyObject *__pyx_tp_new_12wahu_backend_19logistic_regression_10simple_mat_Mat(PyTypeObject *t, PyObject *a, PyObject *k) {
+  struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -7580,16 +7580,16 @@ static PyObject *__pyx_tp_new_10simple_mat_Mat(PyTypeObject *t, PyObject *a, PyO
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_10simple_mat_Mat *)o);
-  p->__pyx_vtab = __pyx_vtabptr_10simple_mat_Mat;
-  if (unlikely(__pyx_pw_10simple_mat_3Mat_1__cinit__(o, a, k) < 0)) goto bad;
+  p = ((struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat *)o);
+  p->__pyx_vtab = __pyx_vtabptr_12wahu_backend_19logistic_regression_10simple_mat_Mat;
+  if (unlikely(__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_1__cinit__(o, a, k) < 0)) goto bad;
   return o;
   bad:
   Py_DECREF(o); o = 0;
   return NULL;
 }
 
-static void __pyx_tp_dealloc_10simple_mat_Mat(PyObject *o) {
+static void __pyx_tp_dealloc_12wahu_backend_19logistic_regression_10simple_mat_Mat(PyObject *o) {
   #if CYTHON_USE_TP_FINALIZE
   if (unlikely(PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE) && Py_TYPE(o)->tp_finalize) && (!PyType_IS_GC(Py_TYPE(o)) || !_PyGC_FINALIZED(o))) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
@@ -7599,13 +7599,13 @@ static void __pyx_tp_dealloc_10simple_mat_Mat(PyObject *o) {
     PyObject *etype, *eval, *etb;
     PyErr_Fetch(&etype, &eval, &etb);
     __Pyx_SET_REFCNT(o, Py_REFCNT(o) + 1);
-    __pyx_pw_10simple_mat_3Mat_3__dealloc__(o);
+    __pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_3__dealloc__(o);
     __Pyx_SET_REFCNT(o, Py_REFCNT(o) - 1);
     PyErr_Restore(etype, eval, etb);
   }
   (*Py_TYPE(o)->tp_free)(o);
 }
-static PyObject *__pyx_sq_item_10simple_mat_Mat(PyObject *o, Py_ssize_t i) {
+static PyObject *__pyx_sq_item_12wahu_backend_19logistic_regression_10simple_mat_Mat(PyObject *o, Py_ssize_t i) {
   PyObject *r;
   PyObject *x = PyInt_FromSsize_t(i); if(!x) return 0;
   r = Py_TYPE(o)->tp_as_mapping->mp_subscript(o, x);
@@ -7613,48 +7613,48 @@ static PyObject *__pyx_sq_item_10simple_mat_Mat(PyObject *o, Py_ssize_t i) {
   return r;
 }
 
-static PyObject *__pyx_getprop_10simple_mat_3Mat_rows(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_10simple_mat_3Mat_4rows_1__get__(o);
+static PyObject *__pyx_getprop_12wahu_backend_19logistic_regression_10simple_mat_3Mat_rows(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_4rows_1__get__(o);
 }
 
-static PyObject *__pyx_getprop_10simple_mat_3Mat_cols(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_10simple_mat_3Mat_4cols_1__get__(o);
+static PyObject *__pyx_getprop_12wahu_backend_19logistic_regression_10simple_mat_3Mat_cols(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_4cols_1__get__(o);
 }
 
-static PyObject *__pyx_getprop_10simple_mat_3Mat_T(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_10simple_mat_3Mat_1T_1__get__(o);
+static PyObject *__pyx_getprop_12wahu_backend_19logistic_regression_10simple_mat_3Mat_T(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_1T_1__get__(o);
 }
 
-static PyMethodDef __pyx_methods_10simple_mat_Mat[] = {
-  {"as_list", (PyCFunction)__pyx_pw_10simple_mat_3Mat_5as_list, METH_NOARGS, 0},
-  {"dot", (PyCFunction)__pyx_pw_10simple_mat_3Mat_7dot, METH_O, 0},
-  {"copy", (PyCFunction)__pyx_pw_10simple_mat_3Mat_9copy, METH_NOARGS, 0},
-  {"add", (PyCFunction)__pyx_pw_10simple_mat_3Mat_13add, METH_O, 0},
-  {"subtract", (PyCFunction)__pyx_pw_10simple_mat_3Mat_15subtract, METH_O, 0},
-  {"add_double", (PyCFunction)__pyx_pw_10simple_mat_3Mat_17add_double, METH_O, 0},
-  {"subtract_double", (PyCFunction)__pyx_pw_10simple_mat_3Mat_19subtract_double, METH_O, 0},
-  {"subtractedby_double", (PyCFunction)__pyx_pw_10simple_mat_3Mat_21subtractedby_double, METH_O, 0},
-  {"scale", (PyCFunction)__pyx_pw_10simple_mat_3Mat_23scale, METH_O, 0},
-  {"mul", (PyCFunction)__pyx_pw_10simple_mat_3Mat_25mul, METH_O, 0},
-  {"div", (PyCFunction)__pyx_pw_10simple_mat_3Mat_27div, METH_O, 0},
-  {"divedby_double", (PyCFunction)__pyx_pw_10simple_mat_3Mat_29divedby_double, METH_O, 0},
-  {"average", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_10simple_mat_3Mat_31average, METH_VARARGS|METH_KEYWORDS, 0},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_10simple_mat_3Mat_43__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_10simple_mat_3Mat_45__setstate_cython__, METH_O, 0},
+static PyMethodDef __pyx_methods_12wahu_backend_19logistic_regression_10simple_mat_Mat[] = {
+  {"as_list", (PyCFunction)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_5as_list, METH_NOARGS, 0},
+  {"dot", (PyCFunction)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_7dot, METH_O, 0},
+  {"copy", (PyCFunction)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_9copy, METH_NOARGS, 0},
+  {"add", (PyCFunction)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_13add, METH_O, 0},
+  {"subtract", (PyCFunction)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_15subtract, METH_O, 0},
+  {"add_double", (PyCFunction)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_17add_double, METH_O, 0},
+  {"subtract_double", (PyCFunction)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_19subtract_double, METH_O, 0},
+  {"subtractedby_double", (PyCFunction)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_21subtractedby_double, METH_O, 0},
+  {"scale", (PyCFunction)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_23scale, METH_O, 0},
+  {"mul", (PyCFunction)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_25mul, METH_O, 0},
+  {"div", (PyCFunction)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_27div, METH_O, 0},
+  {"divedby_double", (PyCFunction)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_29divedby_double, METH_O, 0},
+  {"average", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_31average, METH_VARARGS|METH_KEYWORDS, 0},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_43__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_45__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
-static struct PyGetSetDef __pyx_getsets_10simple_mat_Mat[] = {
-  {(char *)"rows", __pyx_getprop_10simple_mat_3Mat_rows, 0, (char *)0, 0},
-  {(char *)"cols", __pyx_getprop_10simple_mat_3Mat_cols, 0, (char *)0, 0},
-  {(char *)"T", __pyx_getprop_10simple_mat_3Mat_T, 0, (char *)0, 0},
+static struct PyGetSetDef __pyx_getsets_12wahu_backend_19logistic_regression_10simple_mat_Mat[] = {
+  {(char *)"rows", __pyx_getprop_12wahu_backend_19logistic_regression_10simple_mat_3Mat_rows, 0, (char *)0, 0},
+  {(char *)"cols", __pyx_getprop_12wahu_backend_19logistic_regression_10simple_mat_3Mat_cols, 0, (char *)0, 0},
+  {(char *)"T", __pyx_getprop_12wahu_backend_19logistic_regression_10simple_mat_3Mat_T, 0, (char *)0, 0},
   {0, 0, 0, 0, 0}
 };
 
 static PyNumberMethods __pyx_tp_as_number_Mat = {
-  __pyx_pw_10simple_mat_3Mat_33__add__, /*nb_add*/
-  __pyx_pw_10simple_mat_3Mat_35__sub__, /*nb_subtract*/
-  __pyx_pw_10simple_mat_3Mat_37__mul__, /*nb_multiply*/
+  __pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_33__add__, /*nb_add*/
+  __pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_35__sub__, /*nb_subtract*/
+  __pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_37__mul__, /*nb_multiply*/
   #if PY_MAJOR_VERSION < 3 || (CYTHON_COMPILING_IN_PYPY && PY_VERSION_HEX < 0x03050000)
   0, /*nb_divide*/
   #endif
@@ -7701,7 +7701,7 @@ static PyNumberMethods __pyx_tp_as_number_Mat = {
   0, /*nb_inplace_xor*/
   0, /*nb_inplace_or*/
   0, /*nb_floor_divide*/
-  __pyx_pw_10simple_mat_3Mat_39__truediv__, /*nb_true_divide*/
+  __pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_39__truediv__, /*nb_true_divide*/
   0, /*nb_inplace_floor_divide*/
   0, /*nb_inplace_true_divide*/
   0, /*nb_index*/
@@ -7717,7 +7717,7 @@ static PySequenceMethods __pyx_tp_as_sequence_Mat = {
   0, /*sq_length*/
   0, /*sq_concat*/
   0, /*sq_repeat*/
-  __pyx_sq_item_10simple_mat_Mat, /*sq_item*/
+  __pyx_sq_item_12wahu_backend_19logistic_regression_10simple_mat_Mat, /*sq_item*/
   0, /*sq_slice*/
   0, /*sq_ass_item*/
   0, /*sq_ass_slice*/
@@ -7728,16 +7728,16 @@ static PySequenceMethods __pyx_tp_as_sequence_Mat = {
 
 static PyMappingMethods __pyx_tp_as_mapping_Mat = {
   0, /*mp_length*/
-  __pyx_pw_10simple_mat_3Mat_41__getitem__, /*mp_subscript*/
+  __pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_41__getitem__, /*mp_subscript*/
   0, /*mp_ass_subscript*/
 };
 
-static PyTypeObject __pyx_type_10simple_mat_Mat = {
+static PyTypeObject __pyx_type_12wahu_backend_19logistic_regression_10simple_mat_Mat = {
   PyVarObject_HEAD_INIT(0, 0)
-  "simple_mat.Mat", /*tp_name*/
-  sizeof(struct __pyx_obj_10simple_mat_Mat), /*tp_basicsize*/
+  "wahu_backend.logistic_regression.simple_mat.Mat", /*tp_name*/
+  sizeof(struct __pyx_obj_12wahu_backend_19logistic_regression_10simple_mat_Mat), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_10simple_mat_Mat, /*tp_dealloc*/
+  __pyx_tp_dealloc_12wahu_backend_19logistic_regression_10simple_mat_Mat, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -7758,7 +7758,7 @@ static PyTypeObject __pyx_type_10simple_mat_Mat = {
   &__pyx_tp_as_mapping_Mat, /*tp_as_mapping*/
   0, /*tp_hash*/
   0, /*tp_call*/
-  __pyx_pw_10simple_mat_3Mat_11__str__, /*tp_str*/
+  __pyx_pw_12wahu_backend_19logistic_regression_10simple_mat_3Mat_11__str__, /*tp_str*/
   0, /*tp_getattro*/
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
@@ -7770,9 +7770,9 @@ static PyTypeObject __pyx_type_10simple_mat_Mat = {
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_10simple_mat_Mat, /*tp_methods*/
+  __pyx_methods_12wahu_backend_19logistic_regression_10simple_mat_Mat, /*tp_methods*/
   0, /*tp_members*/
-  __pyx_getsets_10simple_mat_Mat, /*tp_getset*/
+  __pyx_getsets_12wahu_backend_19logistic_regression_10simple_mat_Mat, /*tp_getset*/
   0, /*tp_base*/
   0, /*tp_dict*/
   0, /*tp_descr_get*/
@@ -7780,7 +7780,7 @@ static PyTypeObject __pyx_type_10simple_mat_Mat = {
   0, /*tp_dictoffset*/
   0, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_10simple_mat_Mat, /*tp_new*/
+  __pyx_tp_new_12wahu_backend_19logistic_regression_10simple_mat_Mat, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -7898,13 +7898,13 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_scale, __pyx_k_scale, sizeof(__pyx_k_scale), 0, 0, 1, 1},
   {&__pyx_n_s_setstate, __pyx_k_setstate, sizeof(__pyx_k_setstate), 0, 0, 1, 1},
   {&__pyx_n_s_setstate_cython, __pyx_k_setstate_cython, sizeof(__pyx_k_setstate_cython), 0, 0, 1, 1},
-  {&__pyx_n_s_simple_mat, __pyx_k_simple_mat, sizeof(__pyx_k_simple_mat), 0, 0, 1, 1},
   {&__pyx_n_s_subtract, __pyx_k_subtract, sizeof(__pyx_k_subtract), 0, 0, 1, 1},
   {&__pyx_n_s_subtract_double, __pyx_k_subtract_double, sizeof(__pyx_k_subtract_double), 0, 0, 1, 1},
   {&__pyx_n_s_subtractedby_double, __pyx_k_subtractedby_double, sizeof(__pyx_k_subtractedby_double), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_n_s_val, __pyx_k_val, sizeof(__pyx_k_val), 0, 0, 1, 1},
   {&__pyx_kp_s_wahu_backend_logistic_regression, __pyx_k_wahu_backend_logistic_regression, sizeof(__pyx_k_wahu_backend_logistic_regression), 0, 0, 1, 0},
+  {&__pyx_n_s_wahu_backend_logistic_regression_2, __pyx_k_wahu_backend_logistic_regression_2, sizeof(__pyx_k_wahu_backend_logistic_regression_2), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
@@ -7923,7 +7923,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "simple_mat.pyx":360
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":360
  *         cdef int ret_code = _Mat_add(self._mat, other._mat, _ret)
  *         if ret_code == -1:
  *             raise ValueError('a  b ')             # <<<<<<<<<<<<<<
@@ -7934,7 +7934,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "simple_mat.pyx":430
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":430
  *             _ret = Mat._new__mat(self._mat.rows, 1)
  *         else:
  *             raise ValueError('axis  1  2')             # <<<<<<<<<<<<<<
@@ -7945,7 +7945,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "simple_mat.pyx":442
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":442
  *             return self.add_double(other)
  *         else:
  *             raise TypeError(' float / Mat')             # <<<<<<<<<<<<<<
@@ -7956,7 +7956,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "simple_mat.pyx":451
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":451
  *                 return other.subtractedby_double(self)
  *             else:
  *                 raise TypeError(' float / Mat ')             # <<<<<<<<<<<<<<
@@ -7967,7 +7967,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
 
-  /* "simple_mat.pyx":456
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":456
  *             return self.subtract_double(other)
  *         else:
  *             raise TypeError(' float / Mat')             # <<<<<<<<<<<<<<
@@ -7978,7 +7978,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__6);
   __Pyx_GIVEREF(__pyx_tuple__6);
 
-  /* "simple_mat.pyx":465
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":465
  *             return self.mul(other)
  *         else:
  *             raise TypeError(' float / Mat')             # <<<<<<<<<<<<<<
@@ -7989,7 +7989,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
 
-  /* "simple_mat.pyx":477
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":477
  *                 return other.divedby_double(self)
  *             else:
  *                 raise TypeError(' float / Mat ')             # <<<<<<<<<<<<<<
@@ -8019,7 +8019,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__12);
   __Pyx_GIVEREF(__pyx_tuple__12);
 
-  /* "simple_mat.pyx":493
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":493
  * 
  * 
  * def many(int rows, int cols, double val):             # <<<<<<<<<<<<<<
@@ -8031,7 +8031,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__13);
   __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_wahu_backend_logistic_regression, __pyx_n_s_many, 493, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) __PYX_ERR(0, 493, __pyx_L1_error)
 
-  /* "simple_mat.pyx":503
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":503
  * 
  * 
  * def exp_mat(Mat mat):             # <<<<<<<<<<<<<<
@@ -8043,7 +8043,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__15);
   __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__15, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_wahu_backend_logistic_regression, __pyx_n_s_exp_mat, 503, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) __PYX_ERR(0, 503, __pyx_L1_error)
 
-  /* "simple_mat.pyx":511
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":511
  * 
  * 
  * def log_mat(Mat mat):             # <<<<<<<<<<<<<<
@@ -8102,21 +8102,21 @@ static int __Pyx_modinit_function_export_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_function_export_code", 0);
   /*--- Function export code ---*/
-  if (__Pyx_ExportFunction("_Mat_new", (void (*)(void))__pyx_f_10simple_mat__Mat_new, "struct __pyx_t_10simple_mat__Mat *(int, int)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("_Mat_dot", (void (*)(void))__pyx_f_10simple_mat__Mat_dot, "int (struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("_Mat_copy", (void (*)(void))__pyx_f_10simple_mat__Mat_copy, "int (struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("_Mat_transpose", (void (*)(void))__pyx_f_10simple_mat__Mat_transpose, "int (struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("_Mat_add", (void (*)(void))__pyx_f_10simple_mat__Mat_add, "int (struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("_Mat_add_double", (void (*)(void))__pyx_f_10simple_mat__Mat_add_double, "int (struct __pyx_t_10simple_mat__Mat *, double, struct __pyx_t_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("_Mat_subtract", (void (*)(void))__pyx_f_10simple_mat__Mat_subtract, "int (struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("_Mat_subtract_double", (void (*)(void))__pyx_f_10simple_mat__Mat_subtract_double, "int (struct __pyx_t_10simple_mat__Mat *, double, struct __pyx_t_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("_Mat_subtractedby_double", (void (*)(void))__pyx_f_10simple_mat__Mat_subtractedby_double, "int (struct __pyx_t_10simple_mat__Mat *, double, struct __pyx_t_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("_Mat_scale", (void (*)(void))__pyx_f_10simple_mat__Mat_scale, "int (struct __pyx_t_10simple_mat__Mat *, double, struct __pyx_t_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("_Mat_exp", (void (*)(void))__pyx_f_10simple_mat__Mat_exp, "int (struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("_Mat_log", (void (*)(void))__pyx_f_10simple_mat__Mat_log, "int (struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("_Mat_mul", (void (*)(void))__pyx_f_10simple_mat__Mat_mul, "int (struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("_Mat_div", (void (*)(void))__pyx_f_10simple_mat__Mat_div, "int (struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *, struct __pyx_t_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("_Mat_divedby_double", (void (*)(void))__pyx_f_10simple_mat__Mat_divedby_double, "int (struct __pyx_t_10simple_mat__Mat *, double, struct __pyx_t_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_Mat_new", (void (*)(void))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_new, "struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *(int, int)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_Mat_dot", (void (*)(void))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_dot, "int (struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_Mat_copy", (void (*)(void))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_copy, "int (struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_Mat_transpose", (void (*)(void))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_transpose, "int (struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_Mat_add", (void (*)(void))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_add, "int (struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_Mat_add_double", (void (*)(void))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_add_double, "int (struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, double, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_Mat_subtract", (void (*)(void))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_subtract, "int (struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_Mat_subtract_double", (void (*)(void))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_subtract_double, "int (struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, double, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_Mat_subtractedby_double", (void (*)(void))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_subtractedby_double, "int (struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, double, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_Mat_scale", (void (*)(void))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_scale, "int (struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, double, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_Mat_exp", (void (*)(void))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_exp, "int (struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_Mat_log", (void (*)(void))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_log, "int (struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_Mat_mul", (void (*)(void))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_mul, "int (struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_Mat_div", (void (*)(void))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_div, "int (struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_Mat_divedby_double", (void (*)(void))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat__Mat_divedby_double, "int (struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *, double, struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -8131,20 +8131,20 @@ static int __Pyx_modinit_type_init_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
-  __pyx_vtabptr_10simple_mat_Mat = &__pyx_vtable_10simple_mat_Mat;
-  __pyx_vtable_10simple_mat_Mat._from_pointer = (PyObject *(*)(struct __pyx_t_10simple_mat__Mat *))__pyx_f_10simple_mat_3Mat__from_pointer;
-  __pyx_vtable_10simple_mat_Mat._new__mat = (struct __pyx_t_10simple_mat__Mat *(*)(int, int))__pyx_f_10simple_mat_3Mat__new__mat;
-  if (PyType_Ready(&__pyx_type_10simple_mat_Mat) < 0) __PYX_ERR(0, 259, __pyx_L1_error)
+  __pyx_vtabptr_12wahu_backend_19logistic_regression_10simple_mat_Mat = &__pyx_vtable_12wahu_backend_19logistic_regression_10simple_mat_Mat;
+  __pyx_vtable_12wahu_backend_19logistic_regression_10simple_mat_Mat._from_pointer = (PyObject *(*)(struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__from_pointer;
+  __pyx_vtable_12wahu_backend_19logistic_regression_10simple_mat_Mat._new__mat = (struct __pyx_t_12wahu_backend_19logistic_regression_10simple_mat__Mat *(*)(int, int))__pyx_f_12wahu_backend_19logistic_regression_10simple_mat_3Mat__new__mat;
+  if (PyType_Ready(&__pyx_type_12wahu_backend_19logistic_regression_10simple_mat_Mat) < 0) __PYX_ERR(0, 259, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
-  __pyx_type_10simple_mat_Mat.tp_print = 0;
+  __pyx_type_12wahu_backend_19logistic_regression_10simple_mat_Mat.tp_print = 0;
   #endif
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_10simple_mat_Mat.tp_dictoffset && __pyx_type_10simple_mat_Mat.tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_type_10simple_mat_Mat.tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_12wahu_backend_19logistic_regression_10simple_mat_Mat.tp_dictoffset && __pyx_type_12wahu_backend_19logistic_regression_10simple_mat_Mat.tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_type_12wahu_backend_19logistic_regression_10simple_mat_Mat.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (__Pyx_SetVtable(__pyx_type_10simple_mat_Mat.tp_dict, __pyx_vtabptr_10simple_mat_Mat) < 0) __PYX_ERR(0, 259, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Mat, (PyObject *)&__pyx_type_10simple_mat_Mat) < 0) __PYX_ERR(0, 259, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_10simple_mat_Mat) < 0) __PYX_ERR(0, 259, __pyx_L1_error)
-  __pyx_ptype_10simple_mat_Mat = &__pyx_type_10simple_mat_Mat;
+  if (__Pyx_SetVtable(__pyx_type_12wahu_backend_19logistic_regression_10simple_mat_Mat.tp_dict, __pyx_vtabptr_12wahu_backend_19logistic_regression_10simple_mat_Mat) < 0) __PYX_ERR(0, 259, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Mat, (PyObject *)&__pyx_type_12wahu_backend_19logistic_regression_10simple_mat_Mat) < 0) __PYX_ERR(0, 259, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_12wahu_backend_19logistic_regression_10simple_mat_Mat) < 0) __PYX_ERR(0, 259, __pyx_L1_error)
+  __pyx_ptype_12wahu_backend_19logistic_regression_10simple_mat_Mat = &__pyx_type_12wahu_backend_19logistic_regression_10simple_mat_Mat;
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -8348,14 +8348,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_simple_mat) {
+  if (__pyx_module_is_main_wahu_backend__logistic_regression__simple_mat) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "simple_mat")) {
-      if (unlikely(PyDict_SetItemString(modules, "simple_mat", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "wahu_backend.logistic_regression.simple_mat")) {
+      if (unlikely(PyDict_SetItemString(modules, "wahu_backend.logistic_regression.simple_mat", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -8376,43 +8376,43 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "simple_mat.pyx":493
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":493
  * 
  * 
  * def many(int rows, int cols, double val):             # <<<<<<<<<<<<<<
  *     cdef _Mat *_new = Mat._new__mat(rows, cols)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10simple_mat_1many, NULL, __pyx_n_s_simple_mat); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 493, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_12wahu_backend_19logistic_regression_10simple_mat_1many, NULL, __pyx_n_s_wahu_backend_logistic_regression_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 493, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_many, __pyx_t_1) < 0) __PYX_ERR(0, 493, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "simple_mat.pyx":503
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":503
  * 
  * 
  * def exp_mat(Mat mat):             # <<<<<<<<<<<<<<
  *     cdef _Mat *_ret = Mat._new__mat(mat._mat.rows, mat._mat.cols)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10simple_mat_3exp_mat, NULL, __pyx_n_s_simple_mat); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 503, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_12wahu_backend_19logistic_regression_10simple_mat_3exp_mat, NULL, __pyx_n_s_wahu_backend_logistic_regression_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 503, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_exp_mat, __pyx_t_1) < 0) __PYX_ERR(0, 503, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "simple_mat.pyx":511
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":511
  * 
  * 
  * def log_mat(Mat mat):             # <<<<<<<<<<<<<<
  *     cdef _Mat *_ret = Mat._new__mat(mat._mat.rows, mat._mat.cols)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10simple_mat_5log_mat, NULL, __pyx_n_s_simple_mat); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 511, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_12wahu_backend_19logistic_regression_10simple_mat_5log_mat, NULL, __pyx_n_s_wahu_backend_logistic_regression_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 511, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_log_mat, __pyx_t_1) < 0) __PYX_ERR(0, 511, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "simple_mat.pyx":1
+  /* "wahu_backend/logistic_regression/simple_mat.pyx":1
  * from libc.stdlib cimport malloc, free             # <<<<<<<<<<<<<<
  * from libc.string cimport memcpy
  * from libc.math cimport log, exp
@@ -8429,11 +8429,11 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_1);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init simple_mat", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init wahu_backend.logistic_regression.simple_mat", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     Py_CLEAR(__pyx_m);
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init simple_mat");
+    PyErr_SetString(PyExc_ImportError, "init wahu_backend.logistic_regression.simple_mat");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();

@@ -21,14 +21,6 @@
             "justMyCode": true
         },
         {
-            "name": "Python: 调试服务器",
-            "type": "python",
-            "request": "launch",
-            "program": "dev_stuff/dev_server.py",
-            "console": "integratedTerminal",
-            "justMyCode": true
-        },
-        {
             "name": "Python: 调试命令行启动服务器",
             "type": "python",
             "request": "launch",

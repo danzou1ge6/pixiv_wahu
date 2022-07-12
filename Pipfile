@@ -9,6 +9,7 @@ click = "*"
 fuzzywuzzy = "*"
 toml = "*"
 prettytable = "*"
+python-levenshtein = "*"
 
 [dev-packages]
 pytest = "*"

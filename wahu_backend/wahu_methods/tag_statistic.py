@@ -3,7 +3,7 @@ from collections import Counter
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, AsyncGenerator, Optional, Type, TypeVar
 
-from anyio import Event
+from asyncio import Event
 
 from ..aiopixivpy import IllustTag
 from ..logistic_regression import (DataLoader, DataSet,

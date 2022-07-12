@@ -29,11 +29,11 @@ def create_app(ctx: WahuContext) -> web.Application:
         app.logger.debug('Server: 使用 wahu_frontend 包中的静态文件')
         app.add_routes([web.static('/', res_path.parent)])
     except ModuleNotFoundError:
-        if Path('static').exists():
-            app.logger.debug('Server: 使用工作目录下的 static 文件夹')
-            app.add_routes([web.static('/', 'static')])
+        if Path('dist/wahu_frontend').exists():
+            app.logger.debug('Server: 使用 dist/wahu_frontend 文件夹')
+            app.add_routes([web.static('/', 'dist/wahu_frontend')])
         else:
-            app.logger.warn('Server: create_app: 资源文件夹 static 不存在，假设作为调试服务器运行')
+            app.logger.warn('Server: 缺少前端文件')
 
     return app
 

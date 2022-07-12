@@ -12,7 +12,7 @@ wahu_frontend = "dist/wahu_frontend"
 wahu_cli = "wahu_cli"
 
 [tool.setuptools.package-data]
-wahu_frontend = ["*"]
+wahu_frontend = ["**/*"]
 
 [buid-system]
 requires = ["Cython", "setuptools", "wheel"]
