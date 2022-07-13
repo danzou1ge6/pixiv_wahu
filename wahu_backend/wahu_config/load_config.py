@@ -8,7 +8,7 @@ from .config_exceptions import (ConfigLoadBadPath, ConfigLoadError,
 from .config_object import WahuConfig
 from logging import config as log_cfg
 
-from ..manual_dns.dns_resolve import set_doh_url
+from ..manual_dns.dns_resolve import set_doh_ssl, set_doh_url
 
 
 class WPath:
@@ -93,7 +93,10 @@ def load_config(config_file: Path) -> WahuConfig:
         agenerator_pool_size = d['app'].get('agenerator_pool_size', 200)
         image_pool_size = d['app'].get('image_pool_size', 100)
         default_fuzzy_cutoff = d['app'].get('default_fuzzy_cutoff', 80)
+
+        # network
         doh_urls = d['app'].get('dns_over_https_urls', None)
+        doh_ssl = d['app'].get('dns_over_https_ssl', True)
 
         # logging
         log_rpc_ret_length = d['logging'].get('rpc_return_length', 1000)
@@ -119,6 +122,7 @@ def load_config(config_file: Path) -> WahuConfig:
         cli_script_dir=cli_script_dir,
         tag_model_dir=tag_model_dir,
         doh_urls=doh_urls,
+        doh_ssl=doh_ssl,
         account_session_path=account_session_path,
         illust_detail_pool_size=illust_detail_pool_size,
         api_timeout=api_timeout,
@@ -145,10 +149,11 @@ def conf_side_effects(conf: WahuConfig):
     """
     设置日志，模块级配置
     """
+    # pylogging
+    log_cfg.dictConfig(conf.pylogging_cfg_dict)
 
     # 全局设定
     if conf.doh_urls is not None:
         set_doh_url(conf.doh_urls)
+        set_doh_ssl(conf.doh_ssl)
 
-    # pylogging
-    log_cfg.dictConfig(conf.pylogging_cfg_dict)

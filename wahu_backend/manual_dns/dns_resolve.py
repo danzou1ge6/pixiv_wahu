@@ -1,4 +1,5 @@
 import asyncio
+import traceback
 import aiohttp
 import logging
 
@@ -12,12 +13,21 @@ from .logger import logger
 # ]  # 这些都寄了
 
 DNS_URLS = ['https://45.11.45.11/dns-query']  # 目前来看最稳定的
+USE_SSL = True
 
 def set_doh_url(urls: list[str]) -> None:
     """全局修改 DNS over HTTPS 的 URL"""
 
     global DNS_URLS
     DNS_URLS = urls
+
+def set_doh_ssl(ssl: bool) -> None:
+    """全局修改 DNS over HTTPS 是否使用 SSL"""
+    global USE_SSL
+    USE_SSL = ssl
+
+    if not ssl:
+        logger.warn('set_doh_ssl: 进行 DNS 解析时将不验证 SSL 证书')
 
 
 class DNSResolveError(Exception):
@@ -56,7 +66,7 @@ async def _resolve_host_using(client: aiohttp.ClientSession,
                               dns_url: str,
                               timeout: float=5) -> list[str]:
     try:
-        async with client.get(dns_url,
+        async with client.get(dns_url, ssl=USE_SSL,
                               params={'name': host_name, 'type': 'A', 'do': 'false', 'cd': 'false'},
                               timeout=timeout) as resp:
             json_data = await resp.json()
@@ -99,7 +109,7 @@ async def resolve_host(host_name: str, timeout: float=5) -> list[str]:
             try:
                 result.extend(await task)
             except DNSResolveError as dre:
-                logger.warning(dre, exc_info=True)
+                logger.warning(str(dre) + ':\n' + traceback.format_exc())
 
     if result == []:
         raise DNSResolveAllFailError(host_name, DNS_URLS)

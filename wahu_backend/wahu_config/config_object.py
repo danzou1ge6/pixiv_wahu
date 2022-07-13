@@ -19,6 +19,7 @@ class WahuConfig:
     tag_model_dir: Path
     # network
     doh_urls: Optional[list[str]]
+    doh_ssl: bool
     # pixiv
     refresh_token_path: Optional[Path]
     account_session_path: Path

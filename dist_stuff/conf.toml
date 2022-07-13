@@ -89,6 +89,8 @@ image_pool_size = 100
 default_fuzzy_size = 80
 # Dns over HTTPS 服务器地址
 dns_over_https_urls = ['https://45.11.45.11/dns-query']
+# DNS over HTTPS 是否验证 SSL 证书
+dns_over_https_ssl = true
 
 [logging]
 # 应用的日志配置
