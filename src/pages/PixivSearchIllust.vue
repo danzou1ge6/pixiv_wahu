@@ -95,7 +95,6 @@ function invokeGenerator() {
 
 function asignAndInvokeGenerator(gen: typeof generator.value) {
   asignGenerator(gen)
-  illusts.value = []
   invokeGenerator()
 }
 
@@ -115,9 +114,10 @@ function executeQuery() {
   queryLoading.value = true
   wm.p_query(queryString.value)
     .then(gen => {
+      illusts.value = []
+      scores.value = []
       asignAndInvokeGenerator(gen)
       queryLoading.value = false
-      illusts.value = []
     })
     .catch(e => {
       queryStringError.value = true
