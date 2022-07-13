@@ -210,6 +210,8 @@ async function wahuRPCCall<T>(method: string, args: Array<any>)
     return p
 }
 
+let onOpenHooks: Array<()=>void> = []
+
 function initWahuWsBridge(): void {
     pushNoti({ level: 'info', msg: '尝试连接 WebSocket RPC' })
     socket = new WebSocket(`ws://${location.host}${wsRPCURL}`)
@@ -222,6 +224,10 @@ function initWahuWsBridge(): void {
             soecketStatusReact.value = WebSocket.OPEN
 
             socket.addEventListener('message', handleSoecketMessage)
+
+            for(const hook of onOpenHooks) {
+                hook()
+            }
 
             socket.addEventListener('close', () => {
                 pushNoti({ level: 'warning', msg: 'WebSocket RPC 连接关闭' })
@@ -240,6 +246,22 @@ function initWahuWsBridge(): void {
 
 }
 
+function onSocketOpen(hook: ()=>void) : (()=>void) | undefined {
+    for(const h of onOpenHooks) {
+        if(h == hook) {
+            return undefined
+        }
+    }
+    onOpenHooks.push(hook)
+    return () => {
+        onOpenHooks.forEach((h, idx) => {
+            if(h == hook) {
+                onOpenHooks.splice(idx, 1)
+            }
+        })
+    }
+}
+
 
 export { wahuRPCCall, initWahuWsBridge, WahuStopIteration,
-    soecketStatusReact, WahuBackendException }
+    soecketStatusReact, WahuBackendException, onSocketOpen }

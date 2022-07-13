@@ -39,6 +39,7 @@ import { AppNotification, appAllNoti, pushNoti } from '../plugins/notifications'
 import { onMounted, ref, watch } from 'vue'
 import { notificationTime } from '../constants'
 import { wahu_logger_client } from '../plugins/wahuBridge/methods'
+import { onSocketOpen } from '../plugins/wahuBridge/client'
 
 
 interface Props {
@@ -68,7 +69,7 @@ async function listenLogGen(gen: AsyncGenerator<[number, string], undefined, nul
   }
 }
 
-onMounted(() => {
+onSocketOpen(() => {
   wahu_logger_client()
     .then(logGen => {
       listenLogGen(logGen)
