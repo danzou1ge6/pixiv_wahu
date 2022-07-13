@@ -11,7 +11,10 @@ setup(
         [
             Extension(
                 'wahu_backend.logistic_regression.simple_mat',
-                ['./wahu_backend/logistic_regression/simple_mat.pyx'])
+                [
+                    './wahu_backend/logistic_regression/simple_mat.pyx',
+                    './wahu_backend/logistic_regression/simple_mat.pxd'
+                ])
         ],
 
     ),
