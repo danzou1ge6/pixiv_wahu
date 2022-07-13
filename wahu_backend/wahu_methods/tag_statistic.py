@@ -110,7 +110,7 @@ class WahuTagStatisticMethods:
         epoch: int,
         test_set_ratio: float
     ) -> AsyncGenerator[
-            tuple[float,  # 进度
+            tuple[tuple[int, int],  # 进度
             Optional[tuple[list[float], list[float], TagRegressionModel]]
             # ( 训练损失，测试集正确率，模型 )
         ], None]:
@@ -154,7 +154,7 @@ class WahuTagStatisticMethods:
         omega = simple_mat.many(len(x_list[0]), 1, 0.)  # dim1: 特征 dim2: 1
         bias = 0.
 
-        report_interval = int(epoch / 100)
+        report_interval = int(epoch / 100) + 1
 
         async def train_gen():
             nonlocal omega, bias
@@ -179,7 +179,7 @@ class WahuTagStatisticMethods:
                     loss_list.append(loss)
                     accu_list.append(accuracy)
 
-                    yield (i + 1) / epoch, None
+                    yield (i, epoch), None
 
 
             weighed_tags = [
@@ -188,7 +188,7 @@ class WahuTagStatisticMethods:
             ]
             weighed_tags.sort(key=lambda item: item.weight, reverse=True)
 
-            yield 1, (loss_list, accu_list, TagRegressionModel(weighed_tags, bias))
+            yield (epoch, epoch), (loss_list, accu_list, TagRegressionModel(weighed_tags, bias))
 
         return train_gen()
 

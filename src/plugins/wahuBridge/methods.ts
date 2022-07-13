@@ -218,8 +218,8 @@ export async function ibd_update (name: string) : Promise<number> {
 export async function ibdtag_count (names: Array<string>) : Promise<Array<CountedIllustTag>> {
     return await wahuRPCCall('ibdtag_count', [names])as Array<CountedIllustTag>}
 
-export async function ibdtag_logistic_regression (pos: Array<string>, neg: Array<string>, tags: Array<IllustTag>, lr: number, batch_size: number, epoch: number, test_set_ratio: number) : Promise<AsyncGenerator<[number, null | [Array<number>, Array<number>, TagRegressionModel]], undefined, null>> {
-    return await wahuRPCCall('ibdtag_logistic_regression', [pos, neg, tags, lr, batch_size, epoch, test_set_ratio])as AsyncGenerator<[number, null | [Array<number>, Array<number>, TagRegressionModel]], undefined, null>}
+export async function ibdtag_logistic_regression (pos: Array<string>, neg: Array<string>, tags: Array<IllustTag>, lr: number, batch_size: number, epoch: number, test_set_ratio: number) : Promise<AsyncGenerator<[[number, number], null | [Array<number>, Array<number>, TagRegressionModel]], undefined, null>> {
+    return await wahuRPCCall('ibdtag_logistic_regression', [pos, neg, tags, lr, batch_size, epoch, test_set_ratio])as AsyncGenerator<[[number, number], null | [Array<number>, Array<number>, TagRegressionModel]], undefined, null>}
 
 export async function ibdtag_write_model (model: TagRegressionModel, model_name: string) : Promise<null> {
     return await wahuRPCCall('ibdtag_write_model', [model, model_name])as null}

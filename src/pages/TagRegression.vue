@@ -36,7 +36,7 @@
                 <li>测试集占比：测试集用于评估模型的准确率</li>
               </ul>
             </li>
-            <li>第四步，评估模型. 求解完成后会出现「损失曲线」「测试集准确率」的曲线，无论「迭代次数」设为多少，图中总是有 100 个左右数据点</li>
+            <li>第四步，评估模型. 求解完成后会出现「损失曲线」「测试集准确率」的曲线</li>
             <li>
               第五步，保存模型. 求解完成后会出现模型参数表格. 在表格下方可以给定一个「模型名」保存到配置文件中的 `tag_model_dir` 目录中.
               保存后可以在「搜索 Pixiv 插画」页面使用「-m ;&lt模型名;&gt」选项调用模型
@@ -231,11 +231,12 @@ const testSetRatio = ref<number>(0.05)
 
 const model = ref<wm.TagRegressionModel>()
 const lossList = ref<Array<number>>([])
+const epochList = ref<Array<number>>([])
 const accuracyList = ref<Array<number>>([])
 const trainProgress = ref<number>(0)
 
 const chartData = computed(() => ({
-    labels: [...Array(lossList.value.length).keys()],
+    labels: epochList.value,
     datasets: [
     {
       label: '损失',
@@ -260,7 +261,7 @@ const chartOptions = {
 }
 
 async function listenReport(
-  trainGen: AsyncGenerator<[number, [Array<number>, Array<number>, wm.TagRegressionModel] | null], undefined, null>
+  trainGen: AsyncGenerator<[[number, number], [Array<number>, Array<number>, wm.TagRegressionModel] | null], undefined, null>
 ) {
 
   while(true) {
@@ -268,7 +269,7 @@ async function listenReport(
 
     if(ret.value == undefined) { throw(new TypeError('ret.value is undefined')) }
 
-    const [perc, result] = ret.value
+    const [progress, result] = ret.value
 
     if(result !== null) {
       const [loss_list, accu_list, m] = result
@@ -277,12 +278,12 @@ async function listenReport(
       accuracyList.value = accu_list
       model.value = m
 
-      trainProgress.value = 0
-
       break
     }
 
-    trainProgress.value = perc
+    const [current, all] = progress
+    trainProgress.value = (current + 1) / all
+    epochList.value.push(current)
 
   }
 
@@ -291,6 +292,10 @@ async function listenReport(
 
 function runRegression() {
   regressionLoading.value = true
+
+  lossList.value = []
+  epochList.value = []
+  accuracyList.value = []
 
   wm.ibdtag_logistic_regression(
     selectedPosDb.value,
