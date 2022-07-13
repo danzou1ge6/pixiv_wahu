@@ -25,9 +25,8 @@ PixivWahu 直接基于的开源库
 ## 安装
 
 ### 使用打包好的 Python Embeded 解释器
-下载发行版中的 `PixivWahu-win64.zip` 或 `PixivWahu-win64-guilauncher.zip`，解压
+下载发行版中的 `PixivWahu-win64.zip`，解压
 
-前者没有图形界面启动器，而后者有，但是由于打包入了 `tkinter` ，体积也更大
 
 #### 命令行启动
 双击 `PixivWahu.exe` 即可以默认配置启动
@@ -37,13 +36,6 @@ PixivWahu 直接基于的开源库
 .\PixivWahu.exe --help
 ```
 
-#### GUI 启动
-仅 `PixivWahu-win4-guilauncher.zip` 中包含
-
-执行 `WahuLauncher.ps1` 可以启动图形化启动器
-> 右键 `WahuLauncher.ps1` -> 在 Powershell 中运行
-> 根据 Windows 设置不同，有的情况下可能需要修改 Powershell 脚本执行策略
-
 
 ### 使用系统级 Python 解释器
 下载发行版中的 `.whl` 文件，然后使用 `pip` 或者其他包管理器安装
@@ -51,11 +43,6 @@ PixivWahu 直接基于的开源库
 命令行启动
 ```shell
 pixiv-wahu
-```
-
-图形化启动
-```shell
-wahu-gui
 ```
 
 
