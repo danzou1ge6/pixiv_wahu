@@ -1,7 +1,7 @@
 import click
 
 from wahu_backend.wahu_core.wahu_cli_util import wahu_cli_wrap
-from wahu_backend.constants import homeImageURL
+from wahu_backend.constants import lazyimageURL
 
 NAME = '打印 Wahu'
 DESCRIPTION = 'Wahu!'
@@ -22,6 +22,6 @@ def mount(wexe: click.Group):
         """Wahu!
         """
         if image:
-            wctx.obj.pipe.put(src=homeImageURL)
+            wctx.obj.pipe.put(src=lazyimageURL)
         else:
             wctx.obj.pipe.putline(_WAHU)

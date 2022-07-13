@@ -7,7 +7,7 @@
         </div>
       </div>
       <q-input :model-value="cmdInp" @keyup.enter="enter" dense :prefix="inpPrefix" autofocus
-        :dark="dark" class="cli-input" @keyup.up="previousHistory" @keyup.down="nextHistory"
+        class="cli-input" @keyup.up="previousHistory" @keyup.down="nextHistory"
         :loading="loading" ref="inputBox" @update:model-value="handleInput">
       </q-input>
       <pre v-show="cmdInp != '' && generator === undefined" class="text-grey-5">{{ ' ' + completions.join(' ') }}</pre>
@@ -25,9 +25,6 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { wahu_exec, wahu_cli_complete } from 'src/plugins/wahuBridge/methods';
 import WahuCliItem from './WahuCliItem.vue';
 
-const props = defineProps<{
-  dark: boolean,
-}>()
 
 const displayedHistoryNum = 5
 

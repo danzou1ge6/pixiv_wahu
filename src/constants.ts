@@ -1,6 +1,5 @@
 export const lazyimageURL = '/lazyimage.jpg'
 export const notfoundimageURL = '/notfound.jpg'
-export const homeImageURL = '/home.png'
 
 export const illustDbImageURL = '/ilstdbimage'
 export const serverImageURL = '/image'

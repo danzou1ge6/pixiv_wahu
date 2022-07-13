@@ -1,18 +1,14 @@
 <template>
-    <q-img :src="homeImageURL" v-show="showKud" ref="image" fit="cover"
-      class="animated fadeInDown bg-img">
 
-      <Transition appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
-          <WahuCli :dark="true" v-show="showCli" class="wahu-cli"></WahuCli>
-      </Transition>
+  <div class="container">
+    <WahuCli v-show="showCli" class="wahu-cli"></WahuCli>
 
-      <div class="text-body-2 absolute-top-right animated fadeInUp" v-show="showWahu">クドリャフカ - 73072668 by クー </div>
-    </q-img>
+  </div>
+
 
 </template>
 
 <script setup lang="ts">
-import { homeImageURL } from 'src/constants';
 import WahuCli from 'src/components/WahuCli.vue';
 import { computed, onMounted, ref } from 'vue';
 import { useQuasar } from 'quasar';
@@ -55,15 +51,16 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.bg-img {
-  position: fixed;
+.container {
+  position: absolute;
   left: 0px;
-  width: 100%;
+  top: 0px;
   height: $page-height;
+  width: 100vw;
 }
 
 .wahu-cli {
-  width: 75vw;
+  width: 100%;
   height: 100%;
 }
 </style>
