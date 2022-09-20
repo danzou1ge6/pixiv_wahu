@@ -169,7 +169,7 @@ class IllustRepoMethods:
                         for i, fid in enumerate(bm.as_fids())
                     ]
 
-                file_entrie_list: tuple[list[FileEntryWithURL]] = await asyncio.gather(
+                file_entrie_list: list[list[FileEntryWithURL]] = await asyncio.gather(
                     *(get_file_entries(bm) for bm in bms)
                 )
 

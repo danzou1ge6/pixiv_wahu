@@ -1,17 +1,4 @@
 <template>
-  <div v-show="!modelValue" class="noti-box px-1">
-    <transition-group enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight">
-      <div v-for="(noti, i) in displayedNotifications" :key="i" class="pa-1">
-        <q-banner :class="bannerClass(noti.level)" class="q-ma-sm semi-transparent">
-          <template v-slot:avatar>
-            <q-icon :name="iconName(noti.level)"></q-icon>
-          </template>
-          <pre>{{ noti.msg }}</pre>
-        </q-banner>
-      </div>
-    </transition-group>
-  </div>
-
   <transition appear enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp">
     <div v-show="modelValue" class="noti-box-opened">
       <q-card class="noti-card">
@@ -36,10 +23,11 @@
 
 <script setup lang="ts">
 import { AppNotification, appAllNoti, pushNoti } from '../plugins/notifications'
-import { onMounted, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { notificationTime } from '../constants'
 import { wahu_logger_client } from '../plugins/wahuBridge/methods'
 import { onSocketOpen } from '../plugins/wahuBridge/client'
+import { useQuasar } from 'quasar'
 
 
 interface Props {
@@ -79,19 +67,20 @@ onSocketOpen(() => {
 
 const displayedNotifications = ref<Array<AppNotification>>([])
 
+const $q = useQuasar()
+
 watch(appAllNoti.value, (n: Array<AppNotification>) => {
-
-  displayedNotifications.value.push(n.slice(-1)[0])
-
-  if (displayedNotifications.value.length > maxDisp) {
-    displayedNotifications.value.splice(
-      0, displayedNotifications.value.length - maxDisp)
-  }
-
-  setTimeout(() => {
-    displayedNotifications.value.splice(0, 1)
-  }, notificationTime)
+  const noti = n[n.length - 1]
+  $q.notify({
+    type: notifyType(noti.level),
+    message: noti.msg,
+    position: 'bottom-right',
+    closeBtn: true,
+    progress: true,
+    timeout: notificationTime
+  })
 })
+
 
 function bannerClass(level: 'error' | 'warning' | 'info' | 'success'): string {
   switch (level) {
@@ -119,20 +108,16 @@ function iconName(level: 'error' | 'warning' | 'info' | 'success'): string {
   }
 }
 
+function notifyType(level: 'error' | 'warning' | 'info' | 'success'): string {
+  if (level == 'error') return 'negative'
+  if (level == 'success') return 'positive'
+  else return level
+}
+
 
 </script>
 
 <style scoped lang="scss">
-.noti-box {
-  position: fixed;
-  width: 500px;
-  max-width: 95vw;
-  max-height: 90vh;
-  right: 10px;
-  top: 55px;
-  z-index: 999;
-}
-
 .noti-box-opened {
   position: fixed;
   @media (min-width: $breakpoint-md-min) {
@@ -157,8 +142,4 @@ pre {
   white-space: break-spaces;
 }
 
-.semi-transparent {
-  opacity: 0.8;
-  backdrop-filter: blur(5px);
-}
 </style>

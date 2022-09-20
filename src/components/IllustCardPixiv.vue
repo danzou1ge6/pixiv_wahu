@@ -30,22 +30,24 @@
       <div class="text-body-2 text-grey-6">
         / iid = {{ detail.iid }} / uid = {{ detail.user.uid }}
       </div>
-      <div v-if="detail.is_bookmarked">
-        <q-badge>
-          <q-icon name="bookmark"></q-icon>
-        </q-badge>
-      </div>
-      <div v-if="detail.page_count != 1" style="display: inline-block" class="q-mx-sm">
-        <q-badge>
-          <q-icon name="photo"></q-icon>
-          {{ detail.page_count }}
-        </q-badge>
-      </div>
-      <div style="display: inline-block">
-        <q-badge>
-          <q-icon name="bookmarks"></q-icon>
-          {{ detail.total_bookmarks }}
-        </q-badge>
+      <div>
+        <span v-if="detail.is_bookmarked">
+          <q-badge>
+            <q-icon name="bookmark"></q-icon>
+          </q-badge>
+        </span>
+        <span v-if="detail.page_count != 1" style="display: inline-block" class="q-mx-sm">
+          <q-badge>
+            <q-icon name="photo"></q-icon>
+            {{ detail.page_count }}
+          </q-badge>
+        </span>
+        <span style="display: inline-block">
+          <q-badge>
+            <q-icon name="bookmarks"></q-icon>
+            {{ detail.total_bookmarks }}
+          </q-badge>
+        </span>
       </div>
     </div>
 
