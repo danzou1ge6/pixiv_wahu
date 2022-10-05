@@ -28,6 +28,7 @@ import { notificationTime } from '../constants'
 import { wahu_logger_client } from '../plugins/wahuBridge/methods'
 import { onSocketOpen } from '../plugins/wahuBridge/client'
 import { useQuasar } from 'quasar'
+import { Console } from 'console'
 
 
 interface Props {
@@ -39,30 +40,6 @@ const { modelValue, maxDisp = 5 } = defineProps<Props>()
 const emits = defineEmits<{
   (e: 'update:modelValue', id: boolean): void
 }>()
-
-async function listenLogGen(gen: AsyncGenerator<[number, string], undefined, null>) {
-  while(true) {
-    const ret = await gen.next()
-
-    if(ret.value === undefined) {
-      throw(new Error('logGen returned undefined'))
-    }
-
-    const [level, msg] = ret.value
-    if(level == 30) { // warning
-      pushNoti({level: 'warning', msg})
-    }else if(level >= 40) {  // error, fatal
-      pushNoti({level: 'error', msg})
-    }
-  }
-}
-
-onSocketOpen(() => {
-  wahu_logger_client()
-    .then(logGen => {
-      listenLogGen(logGen)
-    })
-})
 
 
 const displayedNotifications = ref<Array<AppNotification>>([])

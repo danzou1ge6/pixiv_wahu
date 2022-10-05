@@ -264,4 +264,4 @@ function onSocketOpen(hook: ()=>void) : (()=>void) | undefined {
 
 
 export { wahuRPCCall, initWahuWsBridge, WahuStopIteration,
-    soecketStatusReact, WahuBackendException, onSocketOpen }
+    soecketStatusReact, WahuBackendException, onSocketOpen, onOpenHooks }

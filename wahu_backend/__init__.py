@@ -133,7 +133,8 @@ def ui(
         if browser:
             host = '127.0.0.1' if wctx.config.server_host == '0.0.0.0' else wctx.config.server_host
             webbrowser.open(
-                f'http://{host}:{wctx.config.server_port}/index.html')
+                f'http://{host}:{wctx.config.server_port}/index.html'
+            )
 
         web.run_app(app, host=wctx.config.server_host, port=wctx.config.server_port)
 

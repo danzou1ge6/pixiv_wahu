@@ -46,11 +46,12 @@ __pycache__/
 /pixiv_wahu.egg-info
 
 *.pyd
+*.so
 
 PipFile.lock
 
 # pytest
-.pytest_cache/
+.pytest_cache
 
 # scratch
 dev_stuff/
