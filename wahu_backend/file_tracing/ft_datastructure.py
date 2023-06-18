@@ -19,8 +19,8 @@ class FileEntryRaw:
     def __hash__(self) -> int:
         return hash(self.fid)
 
-    def __eq__(self, __o: object) -> bool:
-        return self.fid == __o.__dict__.get('fid')
+    def __eq__(self, __o: 'FileEntryRaw') -> bool:
+        return self.fid == __o.fid
 
 
 class FileEntry(FileEntryRaw, DatabaseRow):
