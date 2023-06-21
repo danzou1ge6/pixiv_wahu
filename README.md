@@ -141,6 +141,37 @@ PixivWahu 为了优化体验使用了两个缓存池
 
 PixivWahu 分为前端和后端，后端由 Python 实现，前端在浏览器中运行，因此使用了 `WebSocket` 协议进行前后端通信
 
+## 过滤 AI 绘画标签
+通过 PixivWahu 内置的权重模型支持，可以手动过滤掉某些标签，如 `AI` `NovelAI` 
+
+首先，在 `user/tag_models` 文件夹下新建 `noai.toml` ，并写入
+```toml
+bias = 0.5
+[[weight]]
+name = "AI"
+translated = "AI"
+weight = -1
+
+[[weight]]
+name = "NovelAI"
+translated = "NovelAI"
+weight = -1
+
+[[weight]]
+name = "NovelAi"
+translated = "NovelAi"
+weight = -1
+
+[[weight]]
+name = "Ai"
+translated = "Ai"
+weight = -1
+```
+
+然后在 Pixiv 插画页面的搜索命令后加上 `-m noai -F 0.5` ，意为 "使用 `noai.toml` 中的权重计算得分，过滤掉低于 0.5 的插画"
+
+例如，为了过滤推荐插画，使用搜索命令 `-r -m noai -F 0.5`
+
 
 ## 打包 Wheel
 
