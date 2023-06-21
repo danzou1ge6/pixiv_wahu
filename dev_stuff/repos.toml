@@ -1,0 +1,5 @@
+[[repos]]
+path = "./dev_stuff/dev_repo"
+name = "dev_repo"
+linked_databases = [ "dev",]
+

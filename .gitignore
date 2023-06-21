@@ -40,7 +40,7 @@ logs
 /static
 
 # python
-__pycache__/
+**/__pycache__/
 *.pyc
 /build
 /pixiv_wahu.egg-info
@@ -53,5 +53,12 @@ PipFile.lock
 # pytest
 .pytest_cache
 
+# password
+dev_stuff/refresh_token.txt
+dev_stuff/account_session.toml
+
 # scratch
-dev_stuff/
+dev_stuff/dev_repo/*
+dev_stuff/scratch.py
+dev_stuff/nbscratch.ipynb
+

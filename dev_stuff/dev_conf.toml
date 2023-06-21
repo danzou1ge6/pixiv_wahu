@@ -1,0 +1,59 @@
+[path]
+dist_stuff = 'dist_stuff'
+
+[local]
+database_dir = '{$this}/databases'
+repos_file = '{$this}/repos.toml'
+file_name_template = '{0.title:} - {0.iid:}_{1:}'
+temp_download_dir = '{$this}/temp_dl'
+cli_script_dir = '{dist_stuff}/cli_script'
+tag_model_dir = '{$this}/tag_models'
+
+ibd_subscrip = '{dist_stuff}/ibd_subscrip.toml'
+
+[pixiv]
+refresh_token_path = '{$this}/refresh_token.txt'
+account_session_path = '{$this}/account_session.toml'
+timeout = 5.0
+# host_ip =
+tag_language = 'en-us'
+connection_limit = 10
+
+[image]
+timeout = 5.0
+# host_ip =
+fallback_size = 'medium'
+connection_limit = 3
+num_parallel = 2
+download_record_size = 100
+
+[app]
+server_host = '0.0.0.0'
+server_port = 18080
+agenerator_pool_size = 200
+illust_detail_pool_size = 500
+image_pool_size = 100
+default_fuzzy_size = 80
+dns_over_https_urls = ['https://45.11.45.11/dns-query']
+dns_over_https_ssl = true
+
+[logging]
+rpc_return_length = 1000
+
+[pylogging]
+version = 1
+disable_existing_loggers = false
+
+[pylogging.formatters.standard]
+format = "[%(asctime)s][%(levelname)s][%(filename)s:%(lineno)s]%(message)s"
+datefmt = "%H:%M:%S"
+
+[pylogging.handlers.console]
+class = "logging.StreamHandler"
+formatter = "standard"
+stream = "ext://sys.stdout"
+
+[pylogging.root]
+level = "DEBUG"
+handlers = ["console"]
+
