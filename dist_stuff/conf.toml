@@ -31,7 +31,6 @@ cli_script_dir = '{prefix}/scripts'
 tag_model_dir = '{prefix}/tag_models'
 
 # 数据库订阅文件
-# 用于命令行脚本 `ibd subscrip`
 ibd_subscrip = '{prefix}/ibd_subscrip.toml'
 
 [pixiv]

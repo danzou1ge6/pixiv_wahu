@@ -215,6 +215,9 @@ export async function ibd_set_bm (name: string, iid: number, pages: Array<number
 export async function ibd_update (name: string) : Promise<number> {
     return await wahuRPCCall('ibd_update', [name])as number}
 
+export async function ibdsubs_update (name: string) : Promise<null> {
+    return await wahuRPCCall('ibdsubs_update', [name])as null}
+
 export async function ibdtag_count (names: Array<string>) : Promise<Array<CountedIllustTag>> {
     return await wahuRPCCall('ibdtag_count', [names])as Array<CountedIllustTag>}
 

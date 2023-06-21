@@ -55,6 +55,7 @@ def load_config(config_file: Path) -> WahuConfig:
         temp_download_dir = wpath(d['local']['temp_download_dir'])
         cli_script_dir = wpath(d['local']['cli_script_dir'])
         tag_model_dir = wpath(d['local']['tag_model_dir'])
+        ibd_subscrip = wpath(d['local']['ibd_subscrip'])
 
         # pixiv
         refresh_token_path = d['pixiv'].get('refresh_token_path', None)
@@ -121,6 +122,7 @@ def load_config(config_file: Path) -> WahuConfig:
         temp_download_dir=temp_download_dir,
         cli_script_dir=cli_script_dir,
         tag_model_dir=tag_model_dir,
+        ibd_subscrip=ibd_subscrip,
         doh_urls=doh_urls,
         doh_ssl=doh_ssl,
         account_session_path=account_session_path,

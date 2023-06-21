@@ -1,0 +1,8 @@
++ [ok] 修复插画储存库同步不能索引的bug
++ [ok] 预设一个 favourite 收藏夹，订阅用户的 pixiv 收藏，并关联到一个储存库
++ 一键更新订阅并同步储存库
++ 启动自动更新 favourite 收藏夹并同步储存库
++ 添加自动获取 access token
++ 修复 refresh_token 获取失败的问题 
++ 添加订阅 pixiv 收藏夹到本地收藏夹的文档
++ 历史记录 （使用一个叫 history 的收藏夹保存）

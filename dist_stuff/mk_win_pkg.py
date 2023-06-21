@@ -98,6 +98,7 @@ def main():
 
         print('Write pre-built database')
         zf.write(dist_stuff / 'danzou1ge6.db', 'user/databases/danzou1ge6.db')
+        zf.write(dist_stuff / 'my_favourite.db', 'user/databases/my_favourite.db')
 
         print('Write scripts')
         zf.write_dir(dist_stuff / 'cli_script', Path('user/scripts'))

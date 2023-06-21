@@ -1,2 +1,15 @@
-[danzou1ge6]
-subscribed_bookmark_uid = [57132094]
+[danzou1ge6]  # 数据库 "danzou1ge6" 的订阅设置
+overwrite = false  # 写入新插画时不会删除原有插画
+page = 3  # 一次从 Pixiv 拉取 3 页插画，约 90 张
+
+[[danzou1ge6.subscriptions]]  # 数据库 "danzou1ge6" 的一项订阅
+type = "bookmark"  # 类型为订阅 uid 的收藏
+uid = 57132094
+
+[my_favourite]  # 数据库 "my_favourite" 的订阅设置
+overwrite = false
+page = 3
+
+[[my_favourite.subscriptions]]
+type = "bookmark"
+uid = "me"  # uid 设置成特殊值 "me" 表示用户自己
