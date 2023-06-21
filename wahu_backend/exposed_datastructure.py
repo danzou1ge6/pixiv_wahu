@@ -8,6 +8,7 @@ from .aiopixivpy.pixivpy_typing import (PixivRecomMode, PixivSearchTarget,
                                         PixivSort)
 from .file_tracing import FileEntry, FileTracingConfig
 from .illust_bookmarking import IllustBookmark
+from .illust_bookmarking.subscription import IllustsSubscription, DatabaseSubscription
 from .pixiv_image import DownloadProgress
 from .wahu_methods.cli import CliScriptInfo
 from .wahu_methods.illust_repo import FileEntryWithURL, RepoSyncAddReport
@@ -22,7 +23,7 @@ exports = [PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserDet
            PixivUserPreview, IllustBookmark, FileEntry, TrendingTagIllusts,
            FileTracingConfig, RepoSyncAddReport, AccountSession,
            FileEntryWithURL, DownloadProgress, CliScriptInfo, WeighedIllustTag,
-           CountedIllustTag, TagRegressionModel]
+           CountedIllustTag, TagRegressionModel, IllustsSubscription, DatabaseSubscription]
 
 exports_type = {
     'PixivRecomMode': PixivRecomMode,

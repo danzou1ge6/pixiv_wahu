@@ -144,7 +144,19 @@ interface TagRegressionModel {
     bias: number;
 }
 
-export type {PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserDetail, PixivUserPreview, IllustBookmark, FileEntry, TrendingTagIllusts, FileTracingConfig, RepoSyncAddReport, AccountSession, FileEntryWithURL, DownloadProgress, CliScriptInfo, WeighedIllustTag, CountedIllustTag, TagRegressionModel}
+interface IllustsSubscription {
+    s_type: 'work' | 'bookmark';
+    uid: number;
+}
+
+interface DatabaseSubscription {
+    name: string;
+    overwrite: boolean;
+    page: number;
+    subscriptions: Array<IllustsSubscription>;
+}
+
+export type {PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserDetail, PixivUserPreview, IllustBookmark, FileEntry, TrendingTagIllusts, FileTracingConfig, RepoSyncAddReport, AccountSession, FileEntryWithURL, DownloadProgress, CliScriptInfo, WeighedIllustTag, CountedIllustTag, TagRegressionModel, IllustsSubscription, DatabaseSubscription}
 
 export async function cli_list () : Promise<Array<CliScriptInfo>> {
     return await wahuRPCCall('cli_list', [])as Array<CliScriptInfo>}
@@ -214,6 +226,9 @@ export async function ibd_set_bm (name: string, iid: number, pages: Array<number
 
 export async function ibd_update (name: string) : Promise<number> {
     return await wahuRPCCall('ibd_update', [name])as number}
+
+export async function ibdsubs_get () : Promise<Array<DatabaseSubscription>> {
+    return await wahuRPCCall('ibdsubs_get', [])as Array<DatabaseSubscription>}
 
 export async function ibdsubs_update (name: string) : Promise<null> {
     return await wahuRPCCall('ibdsubs_update', [name])as null}

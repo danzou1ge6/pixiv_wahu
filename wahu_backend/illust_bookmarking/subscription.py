@@ -55,6 +55,8 @@ class SubscriptionManager:
         self.sub_file = sub_file
         self.papi = papi
         self.ibds = ibds
+
+        self.load_subs()  # in case 前端需要使用
     
     def load_subs(self):
         """
