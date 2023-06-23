@@ -144,19 +144,17 @@ interface TagRegressionModel {
     bias: number;
 }
 
-interface IllustsSubscription {
-    s_type: 'work' | 'bookmark';
-    uid: number;
-}
-
-interface DatabaseSubscription {
+interface IllustBookmarkingConfig {
+    did: number;
     name: string;
-    overwrite: boolean;
-    page: number;
-    subscriptions: Array<IllustsSubscription>;
+    description: string;
+    subscribed_user_uid: Array<number>;
+    subscribed_bookmark_uid: Array<number>;
+    subscribe_overwrite: boolean;
+    subscribe_pages: number;
 }
 
-export type {PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserDetail, PixivUserPreview, IllustBookmark, FileEntry, TrendingTagIllusts, FileTracingConfig, RepoSyncAddReport, AccountSession, FileEntryWithURL, DownloadProgress, CliScriptInfo, WeighedIllustTag, CountedIllustTag, TagRegressionModel, IllustsSubscription, DatabaseSubscription}
+export type {PixivComment, PixivUserSummery, IllustTag, IllustDetail, PixivUserDetail, PixivUserPreview, IllustBookmark, FileEntry, TrendingTagIllusts, FileTracingConfig, RepoSyncAddReport, AccountSession, FileEntryWithURL, DownloadProgress, CliScriptInfo, WeighedIllustTag, CountedIllustTag, TagRegressionModel, IllustBookmarkingConfig}
 
 export async function cli_list () : Promise<Array<CliScriptInfo>> {
     return await wahuRPCCall('cli_list', [])as Array<CliScriptInfo>}
@@ -187,6 +185,9 @@ export async function ibd_filter_restricted (name: string) : Promise<Array<numbe
 
 export async function ibd_fuzzy_query (name: string, target: 'title' | 'caption' | 'tag' | 'username', keyword: string, cutoff: null | number) : Promise<Array<[number, number]>> {
     return await wahuRPCCall('ibd_fuzzy_query', [name, target, keyword, cutoff])as Array<[number, number]>}
+
+export async function ibd_get_config (name: string) : Promise<IllustBookmarkingConfig> {
+    return await wahuRPCCall('ibd_get_config', [name])as IllustBookmarkingConfig}
 
 export async function ibd_ilst_count (name: string) : Promise<number> {
     return await wahuRPCCall('ibd_ilst_count', [name])as number}
@@ -224,8 +225,14 @@ export async function ibd_remove (name: string) : Promise<null> {
 export async function ibd_set_bm (name: string, iid: number, pages: Array<number>) : Promise<[boolean, boolean]> {
     return await wahuRPCCall('ibd_set_bm', [name, iid, pages])as [boolean, boolean]}
 
-export async function ibd_update (name: string) : Promise<number> {
-    return await wahuRPCCall('ibd_update', [name])as number}
+export async function ibd_set_config (name: string, config: IllustBookmarkingConfig) : Promise<null> {
+    return await wahuRPCCall('ibd_set_config', [name, config])as null}
+
+export async function ibd_update (name: string) : Promise<null> {
+    return await wahuRPCCall('ibd_update', [name])as null}
+
+export async function ibd_update_subs (name: string, page_num: null | number) : Promise<AsyncGenerator<string, undefined, null | string>> {
+    return await wahuRPCCall('ibd_update_subs', [name, page_num])as AsyncGenerator<string, undefined, null | string>}
 
 export async function ibdsubs_get () : Promise<Array<DatabaseSubscription>> {
     return await wahuRPCCall('ibdsubs_get', [])as Array<DatabaseSubscription>}

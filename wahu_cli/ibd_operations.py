@@ -12,7 +12,6 @@ from wahu_backend.wahu_core.wahu_cli_util import (dumps_dataclass,
 from wahu_backend.constants import illustDbImageURL
 from wahu_backend.wahu_methods import WahuMethods
 
-from ibd_subscrip import mount as mount_ibd_subscrip
 from ibd_count import mount as mount_ibd_count
 from helpers import format_bookmarked_illust_detail
 
@@ -30,7 +29,6 @@ def mount(wexe: click.Group):
         """一些对插画数据库的操作"""
         pass
 
-    mount_ibd_subscrip(ibd)
     mount_ibd_count(ibd)
 
     @ibd.command()
