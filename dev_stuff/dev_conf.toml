@@ -9,7 +9,6 @@ temp_download_dir = '{$this}/temp_dl'
 cli_script_dir = '{dist_stuff}/cli_script'
 tag_model_dir = '{$this}/tag_models'
 
-ibd_subscrip = '{dist_stuff}/ibd_subscrip.toml'
 
 [pixiv]
 refresh_token_path = '{$this}/refresh_token.txt'

@@ -17,7 +17,6 @@ class WahuConfig:
     temp_download_dir: Path
     cli_script_dir: Path
     tag_model_dir: Path
-    ibd_subscrip: Path
     # network
     doh_urls: Optional[list[str]]
     doh_ssl: bool

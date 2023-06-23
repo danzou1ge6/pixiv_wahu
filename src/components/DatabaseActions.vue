@@ -58,7 +58,6 @@ const emits = defineEmits<{
 
 const showConfig = ref<boolean>(false)
 const showUpdateSubs = ref<boolean>(false)
-const updateSubsPageCount = ref<number>(-1)
 const updateSubSInfo = ref<string>('更新订阅..\n')
 
 const infoScroller = ref<QScrollArea|null>(null)
@@ -70,27 +69,26 @@ const updateSubsLoading = ref<boolean>(false)
 async function consumePipedInfo(pipe: AsyncGenerator<string, undefined, string|null>) {
   while (true) {
     let value = await pipe.next()
-    updateSubSInfo.value += value.value;
-    if (infoScroller.value != null)
-      infoScroller.value.setScrollPercentage('vertical', 1, 0.1)
+
     if (value.done) {
       updateSubsLoading.value = false
+      updateSubSInfo.value += '完成'
       emits('updateSubscrip')
       return
     }
+
+    updateSubSInfo.value += value.value;
+    if (infoScroller.value != null)
+      infoScroller.value.setScrollPercentage('vertical', 1, 0.1)
   }
 }
 
 function updateSubscribe() {
   showUpdateSubs.value = true
 
-  let pc: number
-  if (updateSubsPageCount.value == -1) { pc = -1 }
-  else { pc = updateSubsPageCount.value }
-
   updateSubsLoading.value = true
 
-  wm.ibd_update_subs(props.dbName, pc)
+  wm.ibd_update_subs(props.dbName, null)
     .then(consumePipedInfo)
 }
 

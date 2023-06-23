@@ -14,7 +14,6 @@ from ..illust_bookmarking import IllustBookmarkDatabase
 from ..pixiv_image import PixivImagePool
 from ..sqlite_tools.database_ctx_man import DatabaseContextManager
 from ..wahu_config.config_object import WahuConfig
-from ..illust_bookmarking import subscription
 from .repo_db_link import RepoDatabaseLink, RepoEntry
 from .wahu_cli import WahuCliScript, load_cli_scripts
 from .wahu_generator_pool import WahuAsyncGeneratorPool
@@ -88,10 +87,6 @@ class WahuContext:
             repo_ref=self.ilst_repos,
             ibd_ref=self.ilst_bmdbs
         )  # 设置 repo ibd 的引用
-
-        # 数据库订阅
-        self.ibdsub_man = subscription.SubscriptionManager(
-            self.config.ibd_subscrip, self.papi, self.ilst_bmdbs)
 
         # 图片服务
         self.image_pool = PixivImagePool(

@@ -12,8 +12,12 @@
             <NumberArrayInput v-model="config.subscribed_bookmark_uid" label="订阅用户收藏 UID">
             </NumberArrayInput>
             <NumberArrayInput v-model="config.subscribed_user_uid" label="订阅画师 UID"></NumberArrayInput>
-            <q-checkbox v-model="config.subscribe_overwrite" label="更新订阅前清空数据库"></q-checkbox>
+            <q-select v-model="config.subscribe_overwrite" :options="['append', 'intelligent', 'replace']"
+              label="覆写模式" hide-hint
+              hint="intelligent: 当某一页所有插画均在数据库中，停止更新；append: 追加指定页数的插画；replace: 删除原有插画"></q-select>
+            
             <q-input type="number" v-model="config.subscribe_pages" label="更新订阅的页数"
+                v-if="config.subscribe_overwrite != 'intelligent'"
                 hint="-1 表示不限页数" hide-hint></q-input>
   
             <q-btn flat label="提交" type="submit" color="primary" :loading="submitLoading" class="float-right q-ma-md">

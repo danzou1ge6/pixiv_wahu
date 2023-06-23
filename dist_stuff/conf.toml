@@ -30,8 +30,6 @@ cli_script_dir = '{prefix}/scripts'
 # 标签逻辑回归模型存放目录
 tag_model_dir = '{prefix}/tag_models'
 
-# 数据库订阅文件
-ibd_subscrip = '{prefix}/ibd_subscrip.toml'
 
 [pixiv]
 # Pixiv 服务相关配置

@@ -2,6 +2,7 @@ import argparse
 import dataclasses
 import json
 from pathlib import Path
+import asyncio
 from typing import TYPE_CHECKING, Literal, Optional, Type, TypeVar, AsyncGenerator
 
 import click
@@ -394,9 +395,16 @@ class WahuIllustDatabaseMethods:
         """更新数据库订阅"""
 
         with await ctx.ilst_bmdbs[name](readonly=False) as ibd:
-            pipe = await ibd.update_subscrip(
+            coro_update, pipe = await ibd.update_subscrip(
                 get_user_bookmarks=ctx.papi.user_bookmarks_illusts,
                 get_user_illusts=ctx.papi.user_illusts,
                 page_num=page_num
             )
-            return pipe
+        
+        async def coro():
+            with await ctx.ilst_bmdbs[name](readonly=False) as ibd:
+                await coro_update
+        
+        asyncio.create_task(coro())
+
+        return pipe

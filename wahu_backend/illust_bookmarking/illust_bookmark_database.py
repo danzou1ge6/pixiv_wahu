@@ -1,22 +1,64 @@
 import asyncio
-import itertools
 import sqlite3
 from pathlib import Path
 from random import getrandbits
 from time import time
-from typing import (AsyncGenerator, Callable, Coroutine, Iterable, Optional,
-                    Tuple, Union)
+from typing import (AsyncGenerator, AsyncIterable, Callable, Coroutine, Iterable, Optional,
+                    Tuple, Union, AsyncIterable)
 
-from wahu_backend.wahu_core.wahu_cli import AsyncGenPipe
+from ..wahu_core.wahu_cli import AsyncGenPipe
 
 from ..aiopixivpy import IllustDetail
 from ..sqlite_tools import ConfigStoredinSqlite, SqliteTableEditor
 from ..sqlite_tools.abc import DependingDatabase
 
-from .aitertools import alist_illusts_piped
-from .ib_datastructure import IllustBookmark, IllustBookmarkingConfig
+from .ib_datastructure import IllustBookmark, IllustBookmarkingConfig, OverwriteMode
 from .log_adapter import IllustBookmarkDatabaseLogAdapter
 from .logger import logger
+
+
+async def alist_illusts_piped(
+    g: AsyncIterable[list[IllustDetail]],
+    ibd: 'IllustBookmarkDatabase',
+    pipe: AsyncGenPipe,
+    count: int = -1,
+    intelligent: bool = False
+):
+    """
+    将一个 `AsyncIterable` 中元素提取到一个 `list` 中
+    - `:param count:` 提取的最大元素数量, -1 表示耗尽
+    """
+    def add_to(illusts: list[IllustDetail]):
+        ibd.illusts_te.insert(illusts)
+        ibd.bookmarks_te.insert(
+            [IllustBookmark(ilst.iid, list(range(ilst.page_count)), int(time()))
+            for ilst in illusts]
+        )
+        pipe.output('\n'.join([f"{ilst.title} - {ilst.iid}" for ilst in illusts]))
+
+    try:
+        if intelligent:
+            async for item in g:
+                if all((ibd.query_detail(ilst.iid) != None for ilst in item)):
+                    raise StopAsyncIteration
+                add_to(item)
+
+        elif count == -1:
+            async for item in g:
+                add_to(item)
+
+        else:
+            i = 0
+            async for item in g:
+                add_to(item)
+                i += 1
+                if i == count:
+                    raise StopAsyncIteration
+
+    except StopAsyncIteration:
+        pass
+    finally:
+        pipe.close()
 
 
 class IllustBookmarkDatabase(DependingDatabase):
@@ -29,7 +71,7 @@ class IllustBookmarkDatabase(DependingDatabase):
             description='',
             subscribed_bookmark_uid=[],
             subscribed_user_uid=[],
-            subscribe_overwrite=False,
+            subscribe_overwrite='intelligent',
             subscribe_pages=-1
         )
         return cfg
@@ -180,9 +222,9 @@ class IllustBookmarkDatabase(DependingDatabase):
         self,
         get_user_illusts: Callable[[int], AsyncGenerator[list[IllustDetail], None]],
         get_user_bookmarks: Callable[[int], AsyncGenerator[list[IllustDetail], None]],
-        overwrite: Optional[bool] = None,
+        overwrite: Optional[OverwriteMode] = None,
         page_num: Optional[int] = None
-    ) -> AsyncGenPipe:
+    ) -> tuple[Coroutine[None, None, None], AsyncGenPipe]:
         """
         更新订阅的用户作品和用户收藏
         - `:param get_user_illusts:` 获取用户作品的方法，如 `PixivAPI.user_illusts`
@@ -199,43 +241,36 @@ class IllustBookmarkDatabase(DependingDatabase):
         if page_num is None:
             page_num = cfg.subscribe_pages
 
-        coro_list = [
-            *(
-                alist_illusts_piped(get_user_illusts(uid), pipe, page_num)
-                for uid in cfg.subscribed_user_uid
-            ),
-            *(
-                alist_illusts_piped(get_user_bookmarks(uid), pipe, page_num)
-                for uid in cfg.subscribed_bookmark_uid
-            )
-        ]
-
-        illusts_lllist = await asyncio.gather(*coro_list)
-        # illusts_lllist' s type is tuple[list[list[IllustsDetail]]]
-
-        illusts = list(itertools.chain(*itertools.chain(*illusts_lllist)))
-
-        self.log_adapter.info('update_subscrip: 加入收藏 ID %s'
-                              % [ilst.iid for ilst in illusts])
-        
         if overwrite is None:
             overwrite = cfg.subscribe_overwrite
 
-        if overwrite and page_num == None:
+        if overwrite == "replace":
 
             self.log_adapter.info('update_subscrip: 清空数据')
 
             self.illusts_te.delete()
             self.bookmarks_te.delete()
+        
+        async def coro():
+            assert page_num != None
+            coro_list = [
+                *(
+                    alist_illusts_piped(
+                        get_user_illusts(uid),
+                        self, pipe, page_num, intelligent=overwrite == "intelligent")
+                    for uid in cfg.subscribed_user_uid
+                ),
+                *(
+                    alist_illusts_piped(
+                        get_user_bookmarks(uid),
+                        self, pipe, page_num, intelligent=overwrite == "intelligent")
+                    for uid in cfg.subscribed_bookmark_uid
+                )
+            ]
 
-        self.illusts_te.insert(illusts)
+            await asyncio.gather(*coro_list)
 
-        self.bookmarks_te.insert(
-            [IllustBookmark(ilst.iid, list(range(ilst.page_count)), int(time()))
-             for ilst in illusts]
-        )
-
-        return pipe
+        return (coro(), pipe)
 
     def query_detail(self, iid: int) -> Optional[IllustDetail]:
         """在数据库中查询 `iid` 的详情，若无则返回 `None`"""

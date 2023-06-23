@@ -2,7 +2,7 @@
   <q-card class="q-ma-md">
     <div class="text-h5 q-ma-md" style="display: inline-block">{{ dbName }}</div>
 
-    <DatabaseActions :db-name="dbName"></DatabaseActions>
+    <DatabaseActions :db-name="dbName" @update-subscrip="executeQuery"></DatabaseActions>
 
     <div class="absolute-bottom-right">
       <q-btn icon="help" size="sm" flat @click="getHelpText(); showHelp = !showHelp">
@@ -56,7 +56,6 @@
 import { computed, onMounted, ref } from 'vue'
 import IllustCardLocal from '../components/IllustCardLocal.vue'
 import * as wm from '../plugins/wahuBridge/methods'
-import { pushNoti } from '../plugins/notifications';
 import { numPerPage } from '../constants';
 import DatabaseToolbar from 'src/components/DatabaseToolbar.vue';
 import CheckboxGroup from 'src/components/CheckboxGroup.vue';

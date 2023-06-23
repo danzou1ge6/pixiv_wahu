@@ -150,7 +150,7 @@ interface IllustBookmarkingConfig {
     description: string;
     subscribed_user_uid: Array<number>;
     subscribed_bookmark_uid: Array<number>;
-    subscribe_overwrite: boolean;
+    subscribe_overwrite: 'intelligent' | 'append' | 'replace';
     subscribe_pages: number;
 }
 
@@ -233,12 +233,6 @@ export async function ibd_update (name: string) : Promise<null> {
 
 export async function ibd_update_subs (name: string, page_num: null | number) : Promise<AsyncGenerator<string, undefined, null | string>> {
     return await wahuRPCCall('ibd_update_subs', [name, page_num])as AsyncGenerator<string, undefined, null | string>}
-
-export async function ibdsubs_get () : Promise<Array<DatabaseSubscription>> {
-    return await wahuRPCCall('ibdsubs_get', [])as Array<DatabaseSubscription>}
-
-export async function ibdsubs_update (name: string) : Promise<null> {
-    return await wahuRPCCall('ibdsubs_update', [name])as null}
 
 export async function ibdtag_count (names: Array<string>) : Promise<Array<CountedIllustTag>> {
     return await wahuRPCCall('ibdtag_count', [names])as Array<CountedIllustTag>}
