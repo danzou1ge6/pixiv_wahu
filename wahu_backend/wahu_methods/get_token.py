@@ -6,6 +6,7 @@ from secrets import token_urlsafe
 from urllib.parse import urlencode
 import aiohttp
 
+from typing import Optional
 
 from ..wahu_core import wahu_methodize, WahuContext
 from .lib_logger import logger
@@ -21,6 +22,13 @@ HASH_SECRET = "28c1fdd170a5204386cb1313c7077b34f83e4aaf4aa829ce78c231e05b0bae2c"
 class TokenGetFail(Exception):
     """当获取 refresh_token 失败时抛出"""
 
+def get_proxy() -> Optional[str]:
+    from os import environ
+    if "https_proxy" in environ:
+        return environ["https_proxy"]
+    elif "http_proxy" in environ:
+        return environ["http_proxy"]
+    return None
 
 class TokenGetter:
     host = "oauth.secure.pixiv.net"
@@ -84,7 +92,8 @@ class TokenGetter:
                 },
                 ssl=False,
                 timeout=10,
-                headers=self.get_header()
+                headers=self.get_header(),
+                proxy=get_proxy()
             ) as resp:
                 rst = await resp.json()
 
