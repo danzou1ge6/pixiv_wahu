@@ -36,7 +36,6 @@ PixivWahu 直接基于的开源库
 .\PixivWahu.exe --help
 ```
 
-
 ### 使用系统级 Python 解释器
 下载发行版中的 `.whl` 文件，然后使用 `pip` 或者其他包管理器安装
 
@@ -69,6 +68,8 @@ PixivWahu 使用 TOML 格式配置
 在 PixivWahu 的导航抽屉中点击「获取 Refresh Token」，按照说明操作即可
 > 来自[PixivBiu@txperl](https://github.com/txperl/PixivBiu)
 > 还可参考[@ZipFile Pixiv OAuth Flow](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362) 及 [OAuth with Selenium/ChromeDriver]( https://gist.github.com/upbit/6edda27cb1644e94183291109b8a5fde)
+
+在中国大陆获取 `refresh_token` 需要冲浪工具. PixivWahu 会依次查看环境变量中是否存在 `https_proxy` 和 `http_proxy` ，如果有，则作为发起网络请求的代理服务器. 例如，`http_proxy=http://127.0.0.1:7890` .
 
 `refresh_token` 默认储存在 `user/refresh_token.txt` 中
 **明码储存，注意保管**
@@ -171,6 +172,54 @@ weight = -1
 然后在 Pixiv 插画页面的搜索命令后加上 `-m noai -F 0.5` ，意为 "使用 `noai.toml` 中的权重计算得分，过滤掉低于 0.5 的插画"
 
 例如，为了过滤推荐插画，使用搜索命令 `-r -m noai -F 0.5`
+
+## 开发环境
+
+需要 Python 和 Nodejs .因为本项目使用的 NodeJS 版本较低 ，推荐使用 docker 或者 podman.
+
+### NodeJS
+
+运行 NodeJS v18 容器，将当前工作目录挂载到容器中 `/work` 目录. 容器和主机共用网络：
+
+```bash
+podman run -it -v ./:/work --network=host  node:18 bash
+```
+
+在容器中安装前端依赖项：
+
+```bash
+yarn install
+```
+
+启动开发服务器：
+
+```bash
+yarn quasar dev
+```
+
+### Python
+
+本项目的 Python 依赖使用 Pipenv 管理. 安装 Python 依赖：
+
+```bash
+pipenv install --dev
+```
+
+进入 Python 虚拟环境：
+
+```bash
+pipenv shell
+```
+
+启动后端：
+
+```bash
+python -m wahu_backend.__init__ -c dev_stuff/dev_conf.toml ui -n
+```
+
+或者在 VSCode 的调试菜单中选择 "Python: 调试命令行启动服务器".
+
+至此前后端开发服务器都已经启动成功。按照前端开发服务器的提示打开浏览器即可看到界面。
 
 
 ## 打包 Wheel
