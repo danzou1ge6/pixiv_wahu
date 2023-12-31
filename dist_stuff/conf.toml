@@ -34,6 +34,8 @@ tag_model_dir = '{prefix}/tag_models'
 [pixiv]
 # Pixiv 服务相关配置
 
+# 是否在启动时自动获取 Refresh Token
+login_on_startup = false
 # refresh_token 的储存位置
 refresh_token_path = '{prefix}/refresh_token.txt'
 # 暂存会话信息的文件的保存位置

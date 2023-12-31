@@ -11,6 +11,7 @@ tag_model_dir = '{$this}/tag_models'
 
 
 [pixiv]
+login_on_startup = true
 refresh_token_path = '{$this}/refresh_token.txt'
 account_session_path = '{$this}/account_session.toml'
 timeout = 5.0

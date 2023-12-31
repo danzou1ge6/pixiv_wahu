@@ -83,6 +83,18 @@ class WsMsgHandler:
         self.ctx = ctx
 
         self.gen_key_record = []  # 记录与当前 ws 连接有关的生成器 key
+    
+    async def send_exception(self, excep: Exception):
+        resp = {
+            'type': 'failure',
+            'mcid': mcid,
+            'return': [
+                type(excp).__name__, str(excp)
+            ]
+        }
+        self.app.logger.error(str(excp) + '\n' + traceback.format_exc())
+
+        await self.ws.send_str(json.dumps(resp))
 
     async def handle(self, msg: WSMessage) -> None:
 
@@ -144,17 +156,7 @@ class WsMsgHandler:
                 await self.ws.send_str(json.dumps(resp))
 
             except Exception as excp:
-
-                resp = {
-                    'type': 'failure',
-                    'mcid': mcid,
-                    'return': [
-                        type(excp).__name__, str(excp)
-                    ]
-                }
-                self.app.logger.error(str(excp) + '\n' + traceback.format_exc())
-
-                await self.ws.send_str(json.dumps(resp))
+                self.send_exception(excp)
 
     def clear_related_gen(self):
         for key in self.gen_key_record:
@@ -238,6 +240,11 @@ def register(app: web.Application, ctx: WahuContext) -> None:
         app.logger.info('Backend: WS RPC 已连接')
 
         handler = WsMsgHandler(ws, app, ctx)
+
+        try:
+            await ctx.on_frontend_connect()
+        except Exception as excp:
+            handler.send_exception(excp)
 
         async for msg in ws:
             asyncio.create_task(handler.handle(msg))

@@ -21,6 +21,7 @@ class WahuConfig:
     doh_urls: Optional[list[str]]
     doh_ssl: bool
     # pixiv
+    login_on_startup: bool
     refresh_token_path: Optional[Path]
     account_session_path: Path
     illust_detail_pool_size: int

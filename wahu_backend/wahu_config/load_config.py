@@ -57,6 +57,7 @@ def load_config(config_file: Path) -> WahuConfig:
         tag_model_dir = wpath(d['local']['tag_model_dir'])
 
         # pixiv
+        login_on_startup = d['pixiv'].get('login_on_startup', False)
         refresh_token_path = d['pixiv'].get('refresh_token_path', None)
         account_session_path = wpath(d['pixiv']['account_session_path'])
 
@@ -123,6 +124,7 @@ def load_config(config_file: Path) -> WahuConfig:
         tag_model_dir=tag_model_dir,
         doh_urls=doh_urls,
         doh_ssl=doh_ssl,
+        login_on_startup=login_on_startup,
         account_session_path=account_session_path,
         illust_detail_pool_size=illust_detail_pool_size,
         api_timeout=api_timeout,

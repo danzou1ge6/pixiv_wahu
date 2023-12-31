@@ -104,7 +104,6 @@ class WahuContext:
         # 命令行脚本
         self.load_cli_scripts()
 
-
     def load_cli_scripts(self, reload: bool=False):
 
         self.cli_scripts, self.wexe = load_cli_scripts(
@@ -152,3 +151,7 @@ class WahuContext:
 
         if excpt_value is not None:
             raise excpt_value
+    
+    async def on_frontend_connect(self):
+        if self.config.login_on_startup:
+            asyncio.create_task(self.papi.ensure_loggedin())
